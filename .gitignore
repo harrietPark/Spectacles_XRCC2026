@@ -1,0 +1,14 @@
+# Lens Studio / Snap Spectacles
+
+Cache/**
+PluginsUserPreferences/**
+Support/**
+BackUp/**
+Workspaces/**
+
+# IDE / system
+.vscode/
+/jsconfig.json
+/tsconfig.json
+.DS_Store
+*.lock
