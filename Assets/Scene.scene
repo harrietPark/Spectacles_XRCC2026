@@ -949,6 +949,21 @@
     - !<own> 0068db3e-2c37-4d91-9264-0d3c16b25cb2
   Components:
     []
+- !<SceneObject/17e7c054-137c-4dea-a1b3-53ef49c07247>
+  PrefabRemaps:
+    []
+  Name: Midas_Touch_Visual
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 3.000000, y: 3.000000, z: 3.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b1cfffe8-054e-437d-88bc-9bfc7f6685c2
 - !<ScriptComponent/19367564-8482-4184-b034-c442d461776a>
   PrefabRemaps:
     []
@@ -3935,7 +3950,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 17e7c054-137c-4dea-a1b3-53ef49c07247
   Components:
     []
 - !<ScriptComponent/9e70681c-d894-4394-ba22-f6cad0e8228f>
@@ -4600,6 +4615,26 @@
     - !<own> 63e52055-056a-4fdb-aa8d-8e21a73445d7
   Components:
     []
+- !<RenderMeshVisual/b1cfffe8-054e-437d-88bc-9bfc7f6685c2>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 6a940136-d459-42a2-820b-d058861b9fd7
+  Mesh: !<reference> 89e3db36-d63f-43ce-957b-77db81b0a792
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<Text/b32d9a07-9cf9-447f-8a8c-ff75bfe43e95>
   PrefabRemaps:
     []

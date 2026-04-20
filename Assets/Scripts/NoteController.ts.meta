@@ -26,6 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    MidasTouchVisual: false
     PictureController: false
   ScriptTypesHidden:
     {}
@@ -37,8 +38,15 @@
     []
   DefaultScriptInputs:
     - PictureController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
   InputLines:
+    - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
     - // @input AssignableType PictureController
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'
+    - // @input SceneObject MidasTouchVisual
+    - '// @ui {"widget":"group_end"}'
