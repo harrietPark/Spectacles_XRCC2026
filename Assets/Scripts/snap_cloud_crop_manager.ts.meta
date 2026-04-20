@@ -1,0 +1,71 @@
+- !<AssetImportMetadata/eee6e70e-36a5-4e73-995f-3e63a2656460>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> dea6b24a-83ea-4869-82dd-60785e18239d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> dea6b24a-83ea-4869-82dd-60785e18239d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 1ebfa2b5-0f8d-446e-a287-4635bd9386ba
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/1ebfa2b5-0f8d-446e-a287-4635bd9386ba>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 298c817d-ff28-41ac-a1bf-d88ce2cb0303
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoHideLoading: false
+    bridgeCaption: false
+    captureRendMesh: false
+    capturesTableName: false
+    cloudFolderPrefix: false
+    loadingIndicator: false
+    saveToCloud: false
+    storageBucket: false
+    supabaseProject: false
+    syncCapturesTable: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - supabaseProject: !<reference.SupabaseProject> 00000000-0000-0000-0000-000000000000
+      saveToCloud: true
+      storageBucket: specs-captures
+      cloudFolderPrefix: captures
+      syncCapturesTable: false
+      capturesTableName: captures
+      captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      bridgeCaption: capture
+      autoHideLoading: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.SupabaseProject supabaseProject {"hint":"PinPoint Snap Cloud project asset (url + publicToken). Required on the manager instance."}'
+    - '// @input bool saveToCloud = true {"hint":"Master switch for uploading cropped captures to Snap Cloud storage"}'
+    - '// @input string storageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket configured in the Snap Cloud dashboard."}'
+    - '// @input string cloudFolderPrefix = "captures" {"hint":"Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg"}'
+    - '// @input bool syncCapturesTable {"hint":"Also insert a row into the captures table for each upload"}'
+    - '// @input string capturesTableName = "captures" {"hint":"Table name used when syncCapturesTable is true"}'
+    - '// @input Component.RenderMeshVisual captureRendMesh {"hint":"Bridge: RenderMeshVisual whose mainPass.captureImage holds the cropped texture."}'
+    - '// @input SceneObject loadingIndicator {"hint":"Bridge: SceneObject whose enabled state goes true when a capture is ready."}'
+    - '// @input string bridgeCaption = "capture" {"hint":"Bridge: optional caption/title to attach to uploads from this bridge."}'
+    - '// @input bool autoHideLoading = true {"hint":"Bridge: disable the loadingIndicator automatically when upload finishes (success or fail)."}'

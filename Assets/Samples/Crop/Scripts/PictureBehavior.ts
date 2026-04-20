@@ -3,6 +3,13 @@ import { CaptionBehavior } from "./CaptionBehavior"
 import { ChatGPT } from "./ChatGPT"
 import { CropRegion } from "./CropRegion"
 
+// ============================================================================
+// [SnapCloudCrop] Added: Snap Cloud (Supabase) sync for cropped captures.
+// Upload is dispatched from processImage() below. See snap_cloud_crop_manager.ts.
+// ============================================================================
+import { SnapCloudCropManager } from "../../../Scripts/snap_cloud_crop_manager"
+// ============================================================================
+
 const BOX_MIN_SIZE = 8 //min size in cm for image capture
 
 @component
@@ -136,6 +143,27 @@ export class PictureBehavior extends BaseScriptComponent {
       //   this.loadingObj.enabled = false
       //   this.loadCaption(response)
       // })
+
+      // ======================================================================
+      // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
+      // Uses the singleton SnapCloudCropManager wired in the scene root.
+      // onDone fires after the upload finishes (success or failure) so we can
+      // turn off the loading spinner regardless of outcome.
+      // ======================================================================
+      const snapCloud = SnapCloudCropManager.getInstance()
+      if (snapCloud) {
+        snapCloud.uploadCroppedCapture(
+          this.captureRendMesh.mainPass.captureImage,
+          undefined, // use manager's sessionId
+          "capture", // caption / slug for the filename
+          () => {
+            this.loadingObj.enabled = false
+          }
+        )
+      } else {
+        print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
+      }
+      // ======================================================================
     }
   }
 
