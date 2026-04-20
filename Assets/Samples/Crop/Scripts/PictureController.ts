@@ -12,13 +12,24 @@ export class PictureController extends BaseScriptComponent {
   private leftDown = false
   private rightDown = false
 
+  private isCropEnabled: boolean = false;
+
+  public enableCrop() {
+    this.isCropEnabled = true;
+  }
+
+  public disableCrop() {
+    this.isCropEnabled = false;
+  }
+
   onAwake() {
     this.rightHand.onPinchUp.add(this.rightPinchUp)
     this.rightHand.onPinchDown.add(this.rightPinchDown)
     this.leftHand.onPinchUp.add(this.leftPinchUp)
     this.leftHand.onPinchDown.add(this.leftPinchDown)
     if (this.isEditor) {
-      this.createEvent("TouchStartEvent").bind(this.editorTest.bind(this))
+      // // disable editor testing for now
+      // this.createEvent("TouchStartEvent").bind(this.editorTest.bind(this))
     } else {
       const obj = this.getSceneObject()
       if (obj.getChildrenCount() > 0) {
@@ -63,6 +74,8 @@ export class PictureController extends BaseScriptComponent {
   }
 
   createScanner() {
+    if (!this.isCropEnabled) return;
+    
     const scanner = this.scannerPrefab.instantiate(this.getSceneObject())
   }
 }

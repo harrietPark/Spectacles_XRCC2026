@@ -1,7 +1,7 @@
-import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
-import {CaptionBehavior} from "./CaptionBehavior"
-import {ChatGPT} from "./ChatGPT"
-import {CropRegion} from "./CropRegion"
+import { SIK } from "SpectaclesInteractionKit.lspkg/SIK"
+import { CaptionBehavior } from "./CaptionBehavior"
+import { ChatGPT } from "./ChatGPT"
+import { CropRegion } from "./CropRegion"
 
 const BOX_MIN_SIZE = 8 //min size in cm for image capture
 
@@ -61,11 +61,10 @@ export class PictureBehavior extends BaseScriptComponent {
         this.loadingObj.enabled = true
         this.cropRegion.enabled = false
         this.captureRendMesh.mainPass.captureImage = ProceduralTextureProvider.createFromTexture(this.screenCropTexture)
-        // // disable cloud AI call for now
-        // this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-        //   this.loadingObj.enabled = false
-        //   this.loadCaption(response)
-        // })
+        this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+          this.loadingObj.enabled = false
+          this.loadCaption(response)
+        })
       })
       delayedEvent.reset(0.1)
     } else {

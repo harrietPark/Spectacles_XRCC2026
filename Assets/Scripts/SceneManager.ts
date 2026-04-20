@@ -1,8 +1,11 @@
 import {HandInputData} from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData"
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
+import { NoteController } from "./NoteController";
 
 @component
 export class SceneManager extends BaseScriptComponent {
+    @input private NoteController: NoteController;
+
     private handProvider: HandInputData = SIK.HandInputData
     private leftHand = this.handProvider.getHand("left")
     private rightHand = this.handProvider.getHand("right")
@@ -30,13 +33,19 @@ export class SceneManager extends BaseScriptComponent {
 
     private onStart() {
         // left hand pinch down to activate note creation process
-        this.leftHand.onPinchDown.add(this.activateNoteCreation.bind(this));
+        this.leftHand.onPinchUp.add(this.activateNoteCreation.bind(this));
     }
 
     private onUpdate() {}
 
     private activateNoteCreation() {
         print("... Activating note creation process");
+        this.NoteController.activateCreationProcess();
+    }
+
+    private deactivateNoteCreation() {
+        print("... Deactivating note creation process");
+        this.NoteController.deactivateCreationProcess();
     }
 
 }
