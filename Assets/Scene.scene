@@ -1407,7 +1407,9 @@
     {}
   ScriptInputs:
     "":
+      HandDwellingTimeThreshold: !<float> 3.000000
       PictureController: !<MappingBased.AssignableType> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
   ScriptTypes:
     "":
       {}
@@ -4628,7 +4630,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 6a940136-d459-42a2-820b-d058861b9fd7
+    - !<reference> 9d7cff10-e916-4da5-be22-1de7d2752a2c
   Mesh: !<reference> 89e3db36-d63f-43ce-957b-77db81b0a792
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
