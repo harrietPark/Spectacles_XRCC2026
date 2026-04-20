@@ -2,16 +2,13 @@
   PackagePath: ""
   objects:
     - !<own> 00000000-0000-0065-0000-000000000064
+    - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
-    - !<own> 23cba19d-75ed-4436-854f-ca6b9a2a7c78
-    - !<own> a59274cb-d2c3-4ad3-8466-a6171758b89a
-    - !<own> 0005641c-028d-459a-0000-000000014b4d
-    - !<own> ef0c8ffe-9686-4e30-8f53-25b4ee43fade
+    - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
     - !<own> e77e50d7-ddb1-4bcc-8447-b7d071e2355c
-    - !<own> 12b7e20a-b174-4911-82e3-4b7a4b48d307
     - !<own> 7a9be6c1-01e4-42be-8ec1-57f58f5db1c4
-    - !<own> 78752a2b-2733-4fa8-b1a2-5b3261ebc305
+    - !<own> 6eb0a0ff-3a7a-4d25-b5e1-83fcaf7f74b7
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -1008,6 +1005,25 @@
     []
   Components:
     - !<own> 14619c21-7839-412a-b2b3-80b82ab2bd9d
+- !<SceneObject/25c4f13d-d02f-42a4-9cc4-f967aa7ce560>
+  PrefabRemaps:
+    []
+  Name: SpatialPersistence
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 23cba19d-75ed-4436-854f-ca6b9a2a7c78
+    - !<own> a59274cb-d2c3-4ad3-8466-a6171758b89a
+    - !<own> 12b7e20a-b174-4911-82e3-4b7a4b48d307
+    - !<own> 78752a2b-2733-4fa8-b1a2-5b3261ebc305
+    - !<own> ef0c8ffe-9686-4e30-8f53-25b4ee43fade
+  Components:
+    []
 - !<ScriptComponent/275c4ffb-2f9b-47c1-8f50-ea88c9424686>
   PrefabRemaps:
     []
@@ -2322,6 +2338,21 @@
     bottom: -1.049999
     right: 3.750000
     top: 1.049999
+- !<SceneObject/6eb0a0ff-3a7a-4d25-b5e1-83fcaf7f74b7>
+  PrefabRemaps:
+    []
+  Name: "-------- Pls Do Not Change Above --------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/701fbb04-a4f3-4636-b95a-4051b851b122>
   PrefabRemaps:
     []
@@ -2787,6 +2818,21 @@
     Fingers_length: 0.000000
     Thumb_inflate: 0.000000
     Thumb_length: 0.000000
+- !<SceneObject/88d2f0c2-5277-422a-ae69-53758f758238>
+  PrefabRemaps:
+    []
+  Name: Samples
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 25c4f13d-d02f-42a4-9cc4-f967aa7ce560
+  Components:
+    []
 - !<SceneObject/8a183e24-bc4c-41b6-9d21-63dbdafb91fe>
   PrefabRemaps:
     []
@@ -3213,6 +3259,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 7ce82029-ae11-42b7-9d76-68feceb2729e
+  Components:
+    []
+- !<SceneObject/9d1fd12b-4de8-4060-9559-485ec7790114>
+  PrefabRemaps:
+    []
+  Name: "-------- Spatial Anchor Section --------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 88d2f0c2-5277-422a-ae69-53758f758238
   Components:
     []
 - !<SceneObject/9e45ebde-5972-45a7-b964-854e3462cbae>
