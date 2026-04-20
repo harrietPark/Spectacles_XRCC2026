@@ -61,10 +61,11 @@ export class PictureBehavior extends BaseScriptComponent {
         this.loadingObj.enabled = true
         this.cropRegion.enabled = false
         this.captureRendMesh.mainPass.captureImage = ProceduralTextureProvider.createFromTexture(this.screenCropTexture)
-        this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-          this.loadingObj.enabled = false
-          this.loadCaption(response)
-        })
+        // // disable cloud AI call for now
+        // this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+        //   this.loadingObj.enabled = false
+        //   this.loadCaption(response)
+        // })
       })
       delayedEvent.reset(0.1)
     } else {
@@ -131,10 +132,11 @@ export class PictureBehavior extends BaseScriptComponent {
       this.loadingObj.enabled = true
       this.cropRegion.enabled = false
 
-      this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-        this.loadingObj.enabled = false
-        this.loadCaption(response)
-      })
+      // // disable cloud AI call for now
+      // this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+      //   this.loadingObj.enabled = false
+      //   this.loadCaption(response)
+      // })
     }
   }
 
