@@ -1,10 +1,17 @@
 import { PictureController } from "Samples/Crop/Scripts/PictureController";
-import { SnapToWorld } from "Samples/Spatial_Persistence/SpatialPersistance/WorldQuery/SnapToWorld";
+import { WidgetSelectionEvent } from "Samples/Spatial_Persistence/SpatialPersistance/MenuUI/WidgetSelection";
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
+import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
 @component
 export class NoteController extends BaseScriptComponent {
+    private onUserViewSnappedEvent = new Event<Texture>();
+    public readonly onUserViewSnapped: PublicApi<Texture> = this.onUserViewSnappedEvent.publicApi();
+
+    private onNoteSpawnedEvent = new Event<WidgetSelectionEvent>();
+    public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
+
     @ui.group_start("Note Anchoring Setup")
     @input private HandDwellingTimeThreshold: number = 3; // in seconds
     @ui.group_end
@@ -20,11 +27,9 @@ export class NoteController extends BaseScriptComponent {
     private rightHand = this.handProvider.getHand("right")
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
-    private handMovementRadiusRange: number = 0.05; // in meters
+    private handMovementRadiusRange: number = 0.1; // in meters
 
     private isNoteAnchoringActive: boolean = false;
-    private snapToWorld: SnapToWorld;
-    // https://developers.snap.com/spectacles/about-spectacles-features/apis/spatial-anchors
 
     public activateCreationProcess() {
         this.activateNoteAnchoringVisual();
@@ -41,8 +46,6 @@ export class NoteController extends BaseScriptComponent {
     private onAwake() {
         this.deactivateNoteAnchoringVisual();
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
-
-        this.snapToWorld = SnapToWorld.getInstance()
     }
 
     private onUpdate() {
@@ -68,19 +71,29 @@ export class NoteController extends BaseScriptComponent {
             this.prevHandPosition = currHandPosition;
             // print("DISTANCE: " + distance);
             if (distance < this.handMovementRadiusRange) {
+                this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(5));
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
+                    this.handDwellingTimer = 0;
                     return true;
                 }
             }
         } else {
             this.handDwellingTimer = 0;
+            this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(3));
             return false;
         }
     }
 
     private anchorNote() {
-        print("... Anchoring note");
+        // Spawn a spatial note
+        this.onNoteSpawnedEvent.invoke({
+            widgetIndex: 0,
+            position: this.rightHand.indexTip.position,
+            rotation: this.rightHand.indexTip.rotation
+        });
+        // get camera texture
+        // this.onNoteAnchored.invoke();
     }
 
 }

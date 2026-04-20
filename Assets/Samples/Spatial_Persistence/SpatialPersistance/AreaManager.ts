@@ -18,6 +18,7 @@ import {SerializationManager} from "./Serialization/SerializationManager"
 import {AnchorManager} from "./SpatialPersistence/AnchorManager"
 import {TextInputManager} from "./TextInputManager"
 import {Widget} from "./Widget"
+import { NoteController } from "Scripts/NoteController"
 
 const CAMERA_GAZE_OFFSET_FACTOR = 60
 
@@ -44,6 +45,8 @@ class AreaRecord {
 
 @component
 export class AreaManager extends BaseScriptComponent {
+  @input private noteController: NoteController;
+
   // Note UI Components
   @input
   private widgetSelectionUI: WidgetSelectionUI
@@ -99,6 +102,9 @@ export class AreaManager extends BaseScriptComponent {
 
   private onStart() {
     this.instructionTextSceneObject = this.instructionText.sceneObject.getParent().getParent()
+
+    // NoteController event binding
+    this.noteController.onNoteSpawned.add(this.addWidget.bind(this));
 
     // Button events
     this.widgetSelectionUI.onAdd.add(this.addWidget.bind(this))

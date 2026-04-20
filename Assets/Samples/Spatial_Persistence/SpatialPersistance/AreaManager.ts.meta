@@ -30,6 +30,7 @@
     areaSelectionMenu: false
     instructionText: false
     lockWidgetButton: false
+    noteController: false
     textInputManager: false
     toggleMenuButton: false
     widgetParent: false
@@ -44,26 +45,28 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - widgetSelectionUI: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
-      lockWidgetButton: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      areaPromptButton: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
-      areaSelectionMenu: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
-      toggleMenuButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+    - noteController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      widgetSelectionUI: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      lockWidgetButton: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      areaPromptButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      areaSelectionMenu: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      toggleMenuButton: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
       widgetParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       widgetPrefabs: !<reference.ObjectPrefab[]>
         []
       instructionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      textInputManager: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      textInputManager: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
   InputLines:
-    - // @input AssignableType widgetSelectionUI
-    - // @input AssignableType_1 lockWidgetButton
-    - // @input AssignableType_2 areaPromptButton
-    - // @input AssignableType_3 areaSelectionMenu
-    - // @input AssignableType_4 toggleMenuButton
+    - // @input AssignableType noteController
+    - // @input AssignableType_1 widgetSelectionUI
+    - // @input AssignableType_2 lockWidgetButton
+    - // @input AssignableType_3 areaPromptButton
+    - // @input AssignableType_4 areaSelectionMenu
+    - // @input AssignableType_5 toggleMenuButton
     - // @input SceneObject widgetParent
     - "// @input Asset.ObjectPrefab[] widgetPrefabs"
     - // @input Component.Text instructionText
-    - // @input AssignableType_5 textInputManager
+    - // @input AssignableType_6 textInputManager
