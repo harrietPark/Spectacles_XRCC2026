@@ -231,7 +231,7 @@
     {}
   ScriptInputs:
     "":
-      cameraService: !<MappingBased.AssignableType> d852d808-b8c8-49b3-8c03-d6110d870730
+      cameraService: !<MappingBased.AssignableType> 958820fe-0fc9-4758-8ff3-72c904b158ca
       screenCropTexture: !<reference.Texture> cd12b01a-61d6-4671-bba2-6c3bde1a9812
       pointsToTrack: !<reference.SceneObject[]>
         - !<reference> fa156da8-f8ce-4b91-81ba-f70b806bb2a6
@@ -264,7 +264,7 @@
       captureRendMesh: !<reference.RenderMeshVisual> 3421453f-ec56-434f-9be7-5f786f76b39d
       screenCropTexture: !<reference.Texture> cd12b01a-61d6-4671-bba2-6c3bde1a9812
       cropRegion: !<MappingBased.AssignableType> 6b19d9dd-ebde-482a-b9d5-e431af376743
-      chatGPT: !<MappingBased.AssignableType_1> 65938027-d818-4923-8afa-8b3b06f5c4a9
+      chatGPT: !<MappingBased.AssignableType_1> 13d5d433-3d4b-42fd-b940-3dffcbdb95ae
       caption: !<MappingBased.AssignableType_2> 565a8d68-ef62-423f-92cd-f2b8848efaab
   ScriptTypes:
     "":
