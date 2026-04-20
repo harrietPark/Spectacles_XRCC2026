@@ -1,4 +1,5 @@
 import { PictureController } from "Samples/Crop/Scripts/PictureController";
+import { SnapToWorld } from "Samples/Spatial_Persistence/SpatialPersistance/WorldQuery/SnapToWorld";
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 
@@ -22,6 +23,8 @@ export class NoteController extends BaseScriptComponent {
     private handMovementRadiusRange: number = 0.05; // in meters
 
     private isNoteAnchoringActive: boolean = false;
+    private snapToWorld: SnapToWorld;
+    // https://developers.snap.com/spectacles/about-spectacles-features/apis/spatial-anchors
 
     public activateCreationProcess() {
         this.activateNoteAnchoringVisual();
@@ -38,6 +41,8 @@ export class NoteController extends BaseScriptComponent {
     private onAwake() {
         this.deactivateNoteAnchoringVisual();
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
+
+        this.snapToWorld = SnapToWorld.getInstance()
     }
 
     private onUpdate() {
