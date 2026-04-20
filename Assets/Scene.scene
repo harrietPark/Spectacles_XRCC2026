@@ -9,6 +9,7 @@
     - !<own> e77e50d7-ddb1-4bcc-8447-b7d071e2355c
     - !<own> 7a9be6c1-01e4-42be-8ec1-57f58f5db1c4
     - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
+    - !<own> 9ac3c862-1f07-400c-80d1-2af734e2e267
     - !<own> 6eb0a0ff-3a7a-4d25-b5e1-83fcaf7f74b7
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
@@ -3291,6 +3292,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 7ce82029-ae11-42b7-9d76-68feceb2729e
+  Components:
+    []
+- !<SceneObject/9ac3c862-1f07-400c-80d1-2af734e2e267>
+  PrefabRemaps:
+    []
+  Name: "--------- Crop ---------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<SceneObject/9d1fd12b-4de8-4060-9559-485ec7790114>

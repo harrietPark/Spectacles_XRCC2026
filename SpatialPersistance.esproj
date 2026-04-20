@@ -13,7 +13,7 @@ metaInfo:
     []
   tags:
     []
-  lensName: SpatialPersistence
+  lensName: PinPoint
   lensDescriptors:
     - EXPERIMENTAL_API
   lensApplicability:
