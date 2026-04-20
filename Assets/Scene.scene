@@ -3849,7 +3849,7 @@
 - !<SceneObject/9ac3c862-1f07-400c-80d1-2af734e2e267>
   PrefabRemaps:
     []
-  Name: "--------- Crop ---------"
+  Name: "------------------- Crop -------------------"
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -3879,7 +3879,7 @@
 - !<SceneObject/9d1fd12b-4de8-4060-9559-485ec7790114>
   PrefabRemaps:
     []
-  Name: "-------- Spatial Anchor --------"
+  Name: "-------------- Spatial Anchor --------------"
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
