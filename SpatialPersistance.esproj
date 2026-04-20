@@ -13,9 +13,9 @@ metaInfo:
     []
   tags:
     []
-  lensName: Specs Starter
+  lensName: SpatialPersistence
   lensDescriptors:
-    []
+    - EXPERIMENTAL_API
   lensApplicability:
     - Front
     - Back
@@ -24,8 +24,8 @@ metaInfo:
   platformBundlesEnabled: false
   iconHash: ""
   videoPreviewHash: ""
-  fromTemplateName: Spectacles
-  fromTemplateUrl: Lens Studio 5.15.4.26022322
+  fromTemplateName: Default
+  fromTemplateUrl: Lens Studio 5.1.0.24090603
   activationCamera: Front
   sourceMapEnabled: false
   usingMinClientVersions: false
@@ -39,5 +39,5 @@ metaInfo:
     minor: 0
     patch: 0
     build: 0
-  documentId: 31da3704-8538-4589-8607-0c31920dbfdf
-  originalDocumentId: 4492aa5f-47e4-4abe-9643-7d6f708b0869
+  documentId: 87d622e7-0882-4eb6-a270-b7f74991aace
+  originalDocumentId: 87d622e7-0882-4eb6-a270-b7f74991aace
