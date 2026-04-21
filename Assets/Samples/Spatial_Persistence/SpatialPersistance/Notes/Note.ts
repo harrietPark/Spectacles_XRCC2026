@@ -69,6 +69,7 @@ export class Note extends BaseScriptComponent {
   private recordingDuration = 0
   private currentPlaybackTime = 0
   private isRecording = false
+  private isPlayingBack = false
   private asrModule: AsrModule | undefined
   private isAsrRunning = false
 
@@ -270,6 +271,13 @@ export class Note extends BaseScriptComponent {
   }
 
   private onPlaybackAudio(): void {
+    if (!this.isPlayingBack) {
+      if (this.playbackAudioUpdateEvent) {
+        this.playbackAudioUpdateEvent.enabled = false
+      }
+      return
+    }
+
     this.currentPlaybackTime += getDeltaTime()
     this.currentPlaybackTime = Math.min(this.currentPlaybackTime, this.recordingDuration)
 
@@ -278,10 +286,7 @@ export class Note extends BaseScriptComponent {
     )
 
     if (this.currentPlaybackTime >= this.recordingDuration) {
-      this.audioComponent?.stop(false)
-      if (this.playbackAudioUpdateEvent) {
-        this.playbackAudioUpdateEvent.enabled = false
-      }
+      this.stopPlayback("Playback complete")
     }
   }
 
@@ -308,6 +313,7 @@ export class Note extends BaseScriptComponent {
     this.numberOfSamples = 0
     this.recordingDuration = 0
     this.currentPlaybackTime = 0
+    this.isPlayingBack = false
     this.audioComponent?.stop(false)
     this.microphoneControl.start()
     this.startSpeechToText()
@@ -329,6 +335,11 @@ export class Note extends BaseScriptComponent {
       return
     }
 
+    if (this.isPlayingBack) {
+      this.stopPlayback("Playback stopped")
+      return
+    }
+
     if (this.isRecording) {
       this.recordMicrophoneAudio(false)
     }
@@ -341,6 +352,7 @@ export class Note extends BaseScriptComponent {
     this.currentPlaybackTime = 0
     this.audioComponent.stop(false)
     this.audioComponent.play(-1)
+    this.isPlayingBack = true
 
     for (let i = 0; i < this.recordedAudioFrames.length; i++) {
       this.audioOutputProvider.enqueueAudioFrame(
@@ -352,6 +364,22 @@ export class Note extends BaseScriptComponent {
     if (this.playbackAudioUpdateEvent) {
       this.playbackAudioUpdateEvent.enabled = true
     }
+
+    this.updateVoiceStatusText(
+      `Playback ${this.currentPlaybackTime.toFixed(1)}s / ${this.recordingDuration.toFixed(1)}s`
+    )
+  }
+
+  private stopPlayback(statusMessage: string): void {
+    this.audioComponent?.stop(false)
+    this.isPlayingBack = false
+    this.currentPlaybackTime = 0
+
+    if (this.playbackAudioUpdateEvent) {
+      this.playbackAudioUpdateEvent.enabled = false
+    }
+
+    this.updateVoiceStatusText(statusMessage)
   }
 
   private updateVoiceStatusText(message: string): void {
