@@ -119,7 +119,13 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private updateNotes(widgets: Widget[]) {
-        this.notes = widgets.map(widget => widget.getSceneObject().getComponent(Note.getTypeName()));
+        this.notes = [];
+        for (let i = 0; i < widgets.length; i++) {
+            const note = widgets[i].getSceneObject().getComponent(Note.getTypeName());
+            if (note) {
+                this.notes.push(note);
+            }
+        }
     }
 
     private enableCrop() {
@@ -130,9 +136,13 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private addCroppedImage(image: Texture) {
-        if(this.notes.length == 0) return;
+        if (this.notes.length === 0) {
+            print("[NoteController] No spawned notes found for cropped image.");
+            return;
+        }
 
-        this.notes[this.notes.length - 1].setCroppedImage(image);
+        const latestNote = this.notes[this.notes.length - 1];
+        latestNote.setCroppedImage(image);
     }
 
     private activateNoteAnchoringVisual() {

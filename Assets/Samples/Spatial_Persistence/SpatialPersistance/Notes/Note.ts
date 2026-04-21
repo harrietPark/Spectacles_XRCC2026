@@ -16,7 +16,10 @@ const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000
 @component
 export class Note extends BaseScriptComponent {
   @input private _textField: Text
-  @input private _croppedImage: Image;
+  @input
+  @allowUndefined
+  @hint("Optional image component used to show a cropped capture on the note.")
+  private _croppedImage: Image | undefined
   @input private _editToggle: ToggleButton
   @input @allowUndefined private deleteButton: PinchButton | undefined
   @input @allowUndefined private noteInteractable: Interactable | undefined
@@ -93,8 +96,10 @@ export class Note extends BaseScriptComponent {
     this.meshMaterial = this.noteMesh.mainMaterial.clone()
     this.noteMesh.mainMaterial = this.meshMaterial
 
-    this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
-    this._croppedImage.getSceneObject().enabled = false;
+    if (this._croppedImage && this._croppedImage.mainMaterial) {
+      this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
+      this._croppedImage.getSceneObject().enabled = false
+    }
 
     this.widget = this.sceneObject.getComponent(Widget.getTypeName())
 
@@ -395,10 +400,13 @@ export class Note extends BaseScriptComponent {
   }
 
   public setCroppedImage(image: Texture) {
-    // this._croppedImage.mainPass.captureImage = ProceduralTextureProvider.createFromTexture(image);
-    this._croppedImage.getSceneObject().enabled = true;
-    this._croppedImage.mainMaterial.mainPass.baseTex = image;
-    // print("----- Note: Setting cropped image: " + image.getWidth());
+    if (!this._croppedImage || !this._croppedImage.mainMaterial) {
+      print("[Note] Cropped image target is not assigned on " + this.sceneObject.name)
+      return
+    }
+
+    this._croppedImage.getSceneObject().enabled = true
+    this._croppedImage.mainMaterial.mainPass.baseTex = image
   }
 
   /**
