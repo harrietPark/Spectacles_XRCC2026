@@ -1,8 +1,8 @@
-- !<Material/adc3126f-3f6d-41e1-983a-7e4dfe1ef269>
+- !<Material/c8378284-a8b1-4b82-b98e-296faee29090>
   PackagePath: ""
   PassesInfo:
-    - !<own> 49479c1e-c3a4-42e4-97e1-3bc5d6de6c6c
-- !<PassInfo/49479c1e-c3a4-42e4-97e1-3bc5d6de6c6c>
+    - !<own> a31329e2-d32e-40a9-a837-6aece9273b34
+- !<PassInfo/a31329e2-d32e-40a9-a837-6aece9273b34>
   CachedProperties:
     - Port_Depth_N004:
         typeIdx: 1
@@ -25,39 +25,24 @@
     - Port_GSplatScale_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 0.000000}
-    - Port_PrevWorldPosition_N004:
-        typeIdx: 4
-        value: {x: 0.000000, y: 0.000000, z: 0.000000}
     - Port_RayDirection_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 1.000000, z: 0.000000}
     - Port_RayOrigin_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 0.000000}
-    - Port_Value1_N026:
-        typeIdx: 1
-        value: 0.000000
-    - Port_Value2_N026:
-        typeIdx: 1
-        value: 0.000000
-    - Port_Value3_N026:
-        typeIdx: 1
-        value: 0.000000
-    - Port_Value4_N026:
-        typeIdx: 1
-        value: 0.000000
-    - Port_Value_N027:
-        typeIdx: 5
-        value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
-    - Port_WorldNormal_N004:
-        typeIdx: 4
-        value: {x: 0.000000, y: 1.000000, z: 0.000000}
     - Port_WorldTangent_N004:
         typeIdx: 4
         value: {x: 0.000000, y: 0.000000, z: 1.000000}
-    - alphaTestThreshold:
+    - overrideTimeDelta:
         typeIdx: 1
-        value: 0.500000
+        value: 0.000000
+    - overrideTimeElapsed:
+        typeIdx: 1
+        value: 0.000000
+    - overrideTimeEnabled:
+        typeIdx: 0
+        value: 0
   DepthWrite: false
   DepthTest: true
   DepthFunction: LessEqual
@@ -70,39 +55,36 @@
   InstanceCount: 2
   Defines:
     []
-  BlendMode: PremultipliedAlphaAuto
+  BlendMode: AlphaTest
   Properties:
-    Port_Input1_N008:
+    Port_Input1_N013:
       typeIdx: 1
       value: 0.000000
-    Port_Input2_N008:
-      typeIdx: 1
-      value: 1.000000
-    Port_Input2_N017:
+    Port_Input1_N016:
       typeIdx: 1
       value: 0.000000
-    Port_RangeMaxA_N025:
+    Port_Input1_N017:
       typeIdx: 1
-      value: 1.000000
-    Port_RangeMaxB_N025:
-      typeIdx: 1
-      value: 1.000000
-    Port_RangeMinA_N025:
-      typeIdx: 1
-      value: -1.000000
-    Port_RangeMinB_N025:
+      value: 0.500000
+    Port_Input1_N024:
       typeIdx: 1
       value: 0.000000
+    Port_Value1_N015:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+    Port_Value1_N022:
+      typeIdx: 5
+      value: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}
     PreviewEnabled:
       typeIdx: 0
       value: 0
-    Tweak_N15:
+    alphaTestThreshold:
       typeIdx: 1
-      value: 1.000000
+      value: 0.270000
     lineColor:
       typeIdx: 5
-      value: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      value: {x: 0.333333, y: 1.000000, z: 1.000000, w: 1.000000}
     lineWeight:
       typeIdx: 1
-      value: 0.100000
-  Pass: !<reference> e2da03d9-8a8b-4b7a-b02c-107f8f07b659
+      value: 0.250000
+  Pass: !<reference> 9e7c19e6-50a6-4ba6-a5d9-b93099004641
