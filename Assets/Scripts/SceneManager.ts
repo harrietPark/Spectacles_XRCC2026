@@ -6,9 +6,8 @@ import { NoteController } from "./NoteController";
 export class SceneManager extends BaseScriptComponent {
     @input private NoteController: NoteController;
 
-    private handProvider: HandInputData = SIK.HandInputData
-    private leftHand = this.handProvider.getHand("left")
-    private rightHand = this.handProvider.getHand("right")
+    private handProvider: HandInputData = SIK.HandInputData;
+    private leftHand = this.handProvider.getHand("left");
 
     private static instance;
 

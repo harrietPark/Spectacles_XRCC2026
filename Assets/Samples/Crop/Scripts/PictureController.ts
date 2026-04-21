@@ -77,5 +77,7 @@ export class PictureController extends BaseScriptComponent {
     if (!this.isCropEnabled) return;
     
     const scanner = this.scannerPrefab.instantiate(this.getSceneObject())
+
+    this.disableCrop();
   }
 }

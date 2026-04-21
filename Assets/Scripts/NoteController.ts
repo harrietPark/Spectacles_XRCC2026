@@ -6,12 +6,13 @@ import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
 @component
 export class NoteController extends BaseScriptComponent {
-    private onUserViewSnappedEvent = new Event<Texture>();
-    public readonly onUserViewSnapped: PublicApi<Texture> = this.onUserViewSnappedEvent.publicApi();
+    private onUserViewCapturedEvent = new Event<Texture>();
+    public readonly onUserViewCaptured: PublicApi<Texture> = this.onUserViewCapturedEvent.publicApi();
 
     private onNoteSpawnedEvent = new Event<WidgetSelectionEvent>();
     public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
 
+    // @input private camera: CameraModule;
     @ui.group_start("Note Anchoring Setup")
     @input private HandDwellingTimeThreshold: number = 3; // in seconds
     @ui.group_end
@@ -34,17 +35,15 @@ export class NoteController extends BaseScriptComponent {
     public activateCreationProcess() {
         this.activateNoteAnchoringVisual();
         this.isNoteAnchoringActive = true;
-        this.PictureController.enableCrop();
     }
 
     public deactivateCreationProcess() {
         this.deactivateNoteAnchoringVisual();
         this.isNoteAnchoringActive = false;
-        this.PictureController.disableCrop();
     }
     
     private onAwake() {
-        this.deactivateNoteAnchoringVisual();
+        this.deactivateCreationProcess();
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
     }
 
@@ -92,8 +91,15 @@ export class NoteController extends BaseScriptComponent {
             position: this.rightHand.indexTip.position,
             rotation: this.rightHand.indexTip.rotation
         });
-        // get camera texture
-        // this.onNoteAnchored.invoke();
+
+        this.deactivateCreationProcess();
+        this.enableCrop();
+
+        // // Capture camera texture
+        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
     }
 
+    private enableCrop() {
+        this.PictureController.enableCrop();
+    }
 }
