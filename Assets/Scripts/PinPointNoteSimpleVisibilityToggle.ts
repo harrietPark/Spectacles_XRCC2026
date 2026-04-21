@@ -44,6 +44,26 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
   private showSwayDamping: number = 4.0
 
   @input
+  @hint("Enable hide animation: fall, shrink, then disappear.")
+  private enableHideDropAnimation: boolean = true
+
+  @input
+  @hint("Hide animation duration in seconds.")
+  private hideDropDuration: number = 0.3
+
+  @input
+  @hint("How far the note drops while disappearing (local Y units).")
+  private hideDropDistance: number = 4.0
+
+  @input
+  @hint("Extra Z rotation while falling (degrees).")
+  private hideDropRotateDegrees: number = 10.0
+
+  @input
+  @hint("Final scale multiplier at the end of hide animation.")
+  private hideDropEndScaleMultiplier: number = 0.7
+
+  @input
   @hint("Use a top pivot so note feels like it hangs from pin.")
   private useHangingPivot: boolean = true
 
@@ -66,9 +86,15 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
   private noteRootTransform: Transform | undefined
   private noteRootBaseRotation: quat | undefined
   private noteRootBasePosition: vec3 | undefined
+  private noteRootBaseScale: vec3 | undefined
   private hangingAnchorTarget: vec3 | undefined
   private swayElapsed: number = 0
   private swayPlaying: boolean = false
+  private hideAnimPlaying: boolean = false
+  private hideAnimElapsed: number = 0
+  private hideStartPosition: vec3 | undefined
+  private hideStartRotation: quat | undefined
+  private hideStartScale: vec3 | undefined
 
   onAwake(): void {
     this.createEvent("OnStartEvent").bind(() => this.onStart())
@@ -81,6 +107,7 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
       this.noteRootTransform = this.noteObjectsRoot.getTransform()
       this.noteRootBasePosition = this.noteRootTransform.getLocalPosition()
       this.noteRootBaseRotation = this.noteRootTransform.getLocalRotation()
+      this.noteRootBaseScale = this.noteRootTransform.getLocalScale()
       this.hangingAnchorTarget = this.noteRootBasePosition.add(
         this.noteRootBaseRotation.multiplyVec3(this.hangingPivotLocal)
       )
@@ -97,6 +124,9 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
 
       button.onStateChanged.add(() => {
         if (!this.isReady) {
+          return
+        }
+        if (this.hideAnimPlaying) {
           return
         }
         this.toggleVisibility()
@@ -118,14 +148,15 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
   }
 
   private toggleVisibility(): void {
-    this.isVisible = !this.isVisible
-    this.applyVisibility()
-    this.startPinScaleAnimation(this.isVisible ? 1.0 : this.hiddenPinScaleMultiplier)
     if (this.isVisible) {
-      this.startShowSwayAnimation()
-    } else {
-      this.stopShowSwayAnimation()
+      this.startHideAnimation()
+      return
     }
+
+    this.isVisible = true
+    this.applyVisibility()
+    this.startPinScaleAnimation(1.0)
+    this.startShowSwayAnimation()
   }
 
   private applyVisibility(): void {
@@ -157,6 +188,10 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
 
     if (this.swayPlaying) {
       this.updateShowSwayAnimation()
+    }
+
+    if (this.hideAnimPlaying) {
+      this.updateHideAnimation()
     }
   }
 
@@ -273,6 +308,81 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
     }
   }
 
+  private startHideAnimation(): void {
+    if (!this.noteRootTransform || !this.noteRootBasePosition || !this.noteRootBaseRotation) {
+      this.isVisible = false
+      this.applyVisibility()
+      this.startPinScaleAnimation(this.hiddenPinScaleMultiplier)
+      return
+    }
+
+    this.stopShowSwayAnimation()
+    this.isVisible = false
+    this.startPinScaleAnimation(this.hiddenPinScaleMultiplier)
+
+    if (!this.enableHideDropAnimation) {
+      this.applyVisibility()
+      return
+    }
+
+    this.hideAnimPlaying = true
+    this.hideAnimElapsed = 0
+    this.hideStartPosition = this.noteRootTransform.getLocalPosition()
+    this.hideStartRotation = this.noteRootTransform.getLocalRotation()
+    this.hideStartScale = this.noteRootTransform.getLocalScale()
+  }
+
+  private updateHideAnimation(): void {
+    if (!this.noteRootTransform || !this.hideStartPosition || !this.hideStartRotation || !this.hideStartScale) {
+      this.finishHideAnimation()
+      return
+    }
+
+    const duration = Math.max(0.01, this.hideDropDuration)
+    this.hideAnimElapsed += getDeltaTime()
+    const t = Math.min(1, this.hideAnimElapsed / duration)
+    const rotateStartT = 0.45 // first 45% is mostly straight drop
+    const turnT = t <= rotateStartT ? 0 : (t - rotateStartT) / (1 - rotateStartT)
+    const turnEased = this.easeInOutCubic(turnT)
+
+    const angle = this.hideDropRotateDegrees * turnEased
+    const rotOffset = quat.angleAxis(angle * (Math.PI / 180), vec3.forward())
+    const currentRot = this.hideStartRotation.multiply(rotOffset)
+    this.noteRootTransform.setLocalRotation(currentRot)
+
+    // Keep hide movement straight down to avoid sideways drift.
+    const dropEased = this.easeInCubic(t)
+    const pos = this.hideStartPosition.add(new vec3(0, -this.hideDropDistance * dropEased, 0))
+    this.noteRootTransform.setLocalPosition(pos)
+
+    const scaleMultiplier = this.lerp(1, this.hideDropEndScaleMultiplier, turnEased)
+    this.noteRootTransform.setLocalScale(
+      new vec3(
+        this.hideStartScale.x * scaleMultiplier,
+        this.hideStartScale.y * scaleMultiplier,
+        this.hideStartScale.z * scaleMultiplier
+      )
+    )
+
+    if (t >= 1) {
+      this.finishHideAnimation()
+    }
+  }
+
+  private finishHideAnimation(): void {
+    this.hideAnimPlaying = false
+    if (!this.noteRootTransform || !this.noteRootBasePosition || !this.noteRootBaseRotation) {
+      return
+    }
+
+    this.noteRootTransform.setLocalPosition(this.noteRootBasePosition)
+    this.noteRootTransform.setLocalRotation(this.noteRootBaseRotation)
+    if (this.noteRootBaseScale) {
+      this.noteRootTransform.setLocalScale(this.noteRootBaseScale)
+    }
+    this.applyVisibility()
+  }
+
   private lerp(a: number, b: number, t: number): number {
     return a + (b - a) * t
   }
@@ -283,6 +393,10 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
     }
     const p = -2 * t + 2
     return 1 - (p * p * p) / 2
+  }
+
+  private easeInCubic(t: number): number {
+    return t * t * t
   }
 
   private findChildByName(parent: SceneObject, name: string): SceneObject | undefined {

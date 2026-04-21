@@ -182,7 +182,7 @@ export class Note extends BaseScriptComponent {
       this.playbackRecordedAudio()
     })
 
-    this.updateVoiceStatusText("Voice note ready")
+    this.updateVoiceStatusText("Press record button")
   }
 
   private getAsrModule(): AsrModule | undefined {
