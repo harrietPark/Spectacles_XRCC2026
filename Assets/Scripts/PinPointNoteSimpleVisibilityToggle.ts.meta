@@ -26,7 +26,10 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    hiddenPinScaleMultiplier: false
     noteObjectsRoot: false
+    pinScaleAnimationDuration: false
+    pinScaleObjects: false
     pinToggleButtons: false
     startVisible: false
   ScriptTypesHidden:
@@ -42,6 +45,10 @@
         []
       noteObjectsRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       startVisible: true
+      hiddenPinScaleMultiplier: 1.250000
+      pinScaleAnimationDuration: 0.220000
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
   ScriptTypes:
     -
       {}
@@ -49,3 +56,6 @@
     - '// @input AssignableType[] pinToggleButtons = {} {"hint":"Pin toggles that trigger visibility changes (e.g. BluePin + RedPin)."}'
     - '// @input SceneObject noteObjectsRoot {"hint":"Single root object to hide/show (recommended: NoteObjects)."}'
     - '// @input bool startVisible = true {"hint":"If true, note objects start visible. If false, hidden."}'
+    - '// @input float hiddenPinScaleMultiplier = 1.25 {"hint":"Pin scale multiplier while note is hidden."}'
+    - '// @input float pinScaleAnimationDuration = 0.22 {"hint":"Pin scale animation duration in seconds."}'
+    - '// @input SceneObject[] pinScaleObjects = {} {"hint":"Optional explicit pin objects to scale (preferred: BluePin/Mesh + RedPin/Mesh)."}'

@@ -8215,6 +8215,7 @@
   ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
   ScriptInputsDefault:
     startVisible: true
+    pinScaleAnimationDuration: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -8224,6 +8225,11 @@
         - !<reference> 3396cd66-9985-47af-b6ec-ad00fdced1c6
       noteObjectsRoot: !<reference.SceneObject> efff12d9-6b82-4b5d-9ba0-b9599ecef72c
       startVisible: true
+      hiddenPinScaleMultiplier: !<float> 3.000000
+      pinScaleAnimationDuration: 0.220000
+      pinScaleObjects: !<reference.SceneObject[]>
+        - !<reference> 94ab5cba-d861-441e-98f2-e2202bff8cc2
+        - !<reference> 0a639c99-b085-42e8-9932-20e883b65004
   ScriptTypes:
     "":
       {}
