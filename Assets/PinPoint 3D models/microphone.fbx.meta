@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> 981610b8-6318-499b-8d93-4ae7625db1a4
     .hidden/white: !<reference> d4e9e402-48aa-48cf-b65e-ef86ed963bb3
-    66780cf3a4dcb2b8: !<reference> 34f60c8a-a98a-46c6-b554-844011a154cf
-    72c714cf4f36a5cd: !<reference> 0bfc3e9d-8673-4746-aed5-e113cb1ed332
+    573610c9cf6b6922: !<reference> 793d7dc0-4bb3-4a77-8016-006dbc3ead0d
+    7a0dd5cd69df73fa: !<reference> 52333de5-d891-49f6-a070-690c01a450ee
     Materials/Material.001: !<reference> d80b6e2b-fa5b-46f8-b59f-ecdae6bd778b
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> 7c739d25-d10a-46b9-a2f0-cd3e28d624e3
     Meshes/Mesh_0: !<reference> a653faa2-75df-4a34-88d0-0c5c29556b68
     Scene: !<reference> 071c4587-0e33-4489-9a93-481cc518e329
     Textures/Image_0: !<reference> 5d5eac8c-ba7a-4b60-ad32-63df97798bde
     Textures/normal: !<reference> 4e3fa598-0ba2-4b99-921a-91ec269d1ebe
-    acb1925c659c99f8: !<reference> 89ba33d4-3bb9-414c-bec5-442f040f2ad1
+    a5dd961b4db1c70e: !<reference> 6f9d2ad1-eb37-41e3-9218-b49d5c18ea95
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> 071c4587-0e33-4489-9a93-481cc518e329
   PackageType: LegacyPackage
@@ -53,7 +53,42 @@
       png: Performance Compression
     Overrides:
       {}
-- !<RenderMeshVisual/0bfc3e9d-8673-4746-512a-1eec34e12ccd>
+- !<ObjectPrefabAssetData/38435817-cb6e-4175-94be-3cc1e8447eef>
+  Prototype: !<ObjectOwner/6226d33a-cf26-4723-98cf-66cf7e99a711>
+    PackagePath: ""
+    objects:
+      - !<own> 52333de5-d891-49f6-5f8f-96f3fe5baf11
+- !<SceneObject/52333de5-d891-49f6-5f8f-96f3fe5baf11>
+  PrefabRemaps:
+    []
+  Name: microphone
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 6f9d2ad1-eb37-41e3-6de7-4b62a3e7156a
+  Components:
+    []
+- !<SceneObject/6f9d2ad1-eb37-41e3-6de7-4b62a3e7156a>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 793d7dc0-4bb3-4a77-7fe9-ff9243c152f2
+- !<RenderMeshVisual/793d7dc0-4bb3-4a77-7fe9-ff9243c152f2>
   PrefabRemaps:
     []
   Name: component_0
@@ -73,38 +108,3 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/34f60c8a-a98a-46c6-4aab-7bbfee5eab30>
-  PrefabRemaps:
-    []
-  Name: microphone
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 89ba33d4-3bb9-414c-413a-bbd0fbf0d52e
-  Components:
-    []
-- !<ObjectPrefabAssetData/38435817-cb6e-4175-94be-3cc1e8447eef>
-  Prototype: !<ObjectOwner/6226d33a-cf26-4723-98cf-66cf7e99a711>
-    PackagePath: ""
-    objects:
-      - !<own> 34f60c8a-a98a-46c6-4aab-7bbfee5eab30
-- !<SceneObject/89ba33d4-3bb9-414c-413a-bbd0fbf0d52e>
-  PrefabRemaps:
-    []
-  Name: Mesh_0
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
-    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 0bfc3e9d-8673-4746-512a-1eec34e12ccd
