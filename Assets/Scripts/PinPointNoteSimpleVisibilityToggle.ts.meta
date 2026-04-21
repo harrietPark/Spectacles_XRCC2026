@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/fd375249-f289-46e4-b06e-5b79c11af359>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 64637fe9-9982-46be-9b98-64de7759e3d1
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/64637fe9-9982-46be-9b98-64de7759e3d1>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 10370c2e-9356-4b98-ad08-6bbb39815fa5
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    noteObjectsRoot: false
+    pinToggleButtons: false
+    startVisible: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      startVisible: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType[] pinToggleButtons = {} {"hint":"Pin toggles that trigger visibility changes (e.g. BluePin + RedPin)."}'
+    - '// @input SceneObject noteObjectsRoot {"hint":"Single root object to hide/show (recommended: NoteObjects)."}'
+    - '// @input bool startVisible = true {"hint":"If true, note objects start visible. If false, hidden."}'

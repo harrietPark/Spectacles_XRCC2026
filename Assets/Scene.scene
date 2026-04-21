@@ -1418,41 +1418,6 @@
     - !<own> 95625266-5e6b-49ae-891b-a1f50ea71325
   Components:
     []
-- !<ScriptComponent/218bd982-0acf-43fa-a41c-d4b6a6d3f017>
-  PrefabRemaps:
-    []
-  Name: PinPointNoteVisibilityAnimator
-  Enabled: true
-  ScriptAsset: !<reference> d7a36932-4a1b-4e54-b34c-bfc3c7461ab4
-  ScriptInputsDefault:
-    hideOnAwake: true
-    slideDistance: true
-    showDurationSeconds: true
-    hideDurationSeconds: true
-    showOvershoot: true
-    swingDegrees: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      noteMeshRoot: !<reference.SceneObject> 4e565807-622d-45fa-b409-66d875214887
-      pinToggleButtons: !<MappingBased.AssignableType[]>
-        - !<reference> 5143c55d-f231-4cb2-ac1e-2c1dc885a940
-        - !<reference> 3396cd66-9985-47af-b6ec-ad00fdced1c6
-      noteUiObjects: !<reference.SceneObject[]>
-        - !<reference> a840db65-ce4d-48b0-87b5-79324f8fc9cd
-        - !<reference> 7ce9566b-3f5b-4ea1-b1dd-6c8088b2b776
-        - !<reference> afee1b9c-6e07-45b4-925e-194b02636c2c
-        - !<reference> ca367393-a076-4292-9ab5-6b0e12c8ad03
-      hideOnAwake: true
-      slideDistance: !<float> 3.000000
-      showDurationSeconds: 0.320000
-      hideDurationSeconds: 0.220000
-      showOvershoot: 0.450000
-      swingDegrees: !<float> 5.000000
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/22c7c61b-364c-4f1b-a7c2-5fd27aa8e3df>
   PrefabRemaps:
     []
@@ -8242,6 +8207,26 @@
     []
   Components:
     - !<own> 1e3e8365-1cea-4df0-8dd7-3b60c75d402c
+- !<ScriptComponent/e840a9d7-2702-4a18-afe2-0dac9faac9d9>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    startVisible: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        - !<reference> 5143c55d-f231-4cb2-ac1e-2c1dc885a940
+        - !<reference> 3396cd66-9985-47af-b6ec-ad00fdced1c6
+      noteObjectsRoot: !<reference.SceneObject> efff12d9-6b82-4b5d-9ba0-b9599ecef72c
+      startVisible: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e8cfcc79-59da-4b3c-ab1a-3a01253562cc>
   PrefabRemaps:
     []
@@ -8530,6 +8515,27 @@
   BlendShapes:
     Pinch: 0.000000
     Z depth: 0.000000
+- !<SceneObject/efff12d9-6b82-4b5d-9ba0-b9599ecef72c>
+  PrefabRemaps:
+    []
+  Name: NoteObjects
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 19d100f9-8394-48ac-b1bd-d6b4be1bca4a
+    - !<own> 5e7db70a-a3b1-42f0-8552-2dde9d6b8e82
+    - !<own> 89b4d914-c0db-4c7e-b1d4-a1a9b577f95b
+    - !<own> a840db65-ce4d-48b0-87b5-79324f8fc9cd
+    - !<own> 7ce9566b-3f5b-4ea1-b1dd-6c8088b2b776
+    - !<own> afee1b9c-6e07-45b4-925e-194b02636c2c
+    - !<own> ca367393-a076-4292-9ab5-6b0e12c8ad03
+  Components:
+    []
 - !<ColliderComponent/f0ad0434-0358-40d2-94eb-c098ecf8465b>
   PrefabRemaps:
     []
@@ -8613,15 +8619,9 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 19d100f9-8394-48ac-b1bd-d6b4be1bca4a
-    - !<own> 5e7db70a-a3b1-42f0-8552-2dde9d6b8e82
-    - !<own> 89b4d914-c0db-4c7e-b1d4-a1a9b577f95b
-    - !<own> a840db65-ce4d-48b0-87b5-79324f8fc9cd
+    - !<own> efff12d9-6b82-4b5d-9ba0-b9599ecef72c
     - !<own> 8ef6c89d-1c5d-43ba-bd22-2cda0e3a6064
     - !<own> 75f73dcc-250b-41a9-a1a6-9794b81746f1
-    - !<own> 7ce9566b-3f5b-4ea1-b1dd-6c8088b2b776
-    - !<own> afee1b9c-6e07-45b4-925e-194b02636c2c
-    - !<own> ca367393-a076-4292-9ab5-6b0e12c8ad03
   Components:
     - !<own> ab84c60a-6a86-4b5e-abe6-3ca5d874fdf4
     - !<own> e2d03e4f-5bff-4d83-bcdf-b4a3eaf9877b
@@ -8633,7 +8633,7 @@
     - !<own> d23ac46d-a332-4ee6-9735-e5cc0c57b9e0
     - !<own> 059c5a6c-85e6-4ceb-a861-f68e2a263375
     - !<own> a934c4bd-17f1-4173-97ed-ea5b7e74867c
-    - !<own> 218bd982-0acf-43fa-a41c-d4b6a6d3f017
+    - !<own> e840a9d7-2702-4a18-afe2-0dac9faac9d9
 - !<RenderMeshVisual/f304930e-b3aa-4572-8032-8b29c2fc9975>
   PrefabRemaps:
     []
