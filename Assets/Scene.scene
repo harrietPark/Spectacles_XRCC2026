@@ -1403,16 +1403,14 @@
   Enabled: true
   ScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
   ScriptInputsDefault:
-    areaManager: true
     HandDwellingTimeThreshold: true
-    pictureController: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
       HandDwellingTimeThreshold: !<float> 1.000000
-      pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
       MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
   ScriptTypes:
     "":
@@ -1920,6 +1918,7 @@
       toggleMenuButton: !<MappingBased.AssignableType_5> a15d748b-215d-4a91-8693-ca891a9a5505
       widgetParent: !<reference.SceneObject> 12b7e20a-b174-4911-82e3-4b7a4b48d307
       widgetPrefabs: !<reference.ObjectPrefab[]>
+        - !<reference> 7dea65b0-7044-44f3-a205-a4f46c471a57
         - !<reference> 91afcf2c-6d9f-4b66-bc0a-f8eb4d552939
         - !<reference> cb54d61a-6f7e-480e-8281-fe6e65510145
         - !<reference> 30bfee42-6ed4-4d5e-86a7-7ec0cdc70fdf
