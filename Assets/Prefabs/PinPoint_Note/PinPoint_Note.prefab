@@ -910,12 +910,13 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    _croppedImage: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       _textField: !<reference.Text> d72b59b2-8382-4a3f-a5af-9fc5b0da6da3
+      _croppedImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       _editToggle: !<MappingBased.AssignableType> 5db6a093-feff-4e81-9e48-1bc353de9a3d
       deleteButton: !<MappingBased.AssignableType_1> d64cb1a9-7c45-4d8c-b471-64224d7a2bf8
       noteInteractable: !<MappingBased.AssignableType_2> 3dc0432b-bab6-4a91-b624-250f834bc308

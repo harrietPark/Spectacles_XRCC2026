@@ -28,7 +28,8 @@
   ScriptInputsHidden:
     HandDwellingTimeThreshold: false
     MidasTouchVisual: false
-    PictureController: false
+    areaManager: false
+    pictureController: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,18 +39,20 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - HandDwellingTimeThreshold: !<float> 1.000000
-      PictureController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+    - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      HandDwellingTimeThreshold: !<float> 1.000000
+      pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
   InputLines:
+    - // @input AssignableType areaManager
     - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
     - // @input float HandDwellingTimeThreshold = 3
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
-    - // @input AssignableType PictureController
+    - // @input AssignableType_1 pictureController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'

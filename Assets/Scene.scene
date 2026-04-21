@@ -1403,14 +1403,16 @@
   Enabled: true
   ScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
   ScriptInputsDefault:
+    areaManager: true
     HandDwellingTimeThreshold: true
+    pictureController: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
+      areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       HandDwellingTimeThreshold: !<float> 1.000000
-      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
   ScriptTypes:
     "":
