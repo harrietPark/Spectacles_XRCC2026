@@ -8,12 +8,16 @@ import { CropRegion } from "./CropRegion"
 // Upload is dispatched from processImage() below. See snap_cloud_crop_manager.ts.
 // ============================================================================
 import { SnapCloudCropManager } from "../../../Scripts/snap_cloud_crop_manager"
+import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event"
 // ============================================================================
 
 const BOX_MIN_SIZE = 8 //min size in cm for image capture
 
 @component
 export class PictureBehavior extends BaseScriptComponent {
+  private onImageCapturedEvent = new Event<Texture>();
+  public readonly onImageCaptured: PublicApi<Texture> = this.onImageCapturedEvent.publicApi();
+  
   @input circleObjs: SceneObject[]
   @input editorCamObj: SceneObject
   @input picAnchorObj: SceneObject
@@ -145,25 +149,30 @@ export class PictureBehavior extends BaseScriptComponent {
       // })
 
       // ======================================================================
-      // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
-      // Uses the singleton SnapCloudCropManager wired in the scene root.
-      // onDone fires after the upload finishes (success or failure) so we can
-      // turn off the loading spinner regardless of outcome.
+      // [Display Cropped Image on Note UI]
       // ======================================================================
-      const snapCloud = SnapCloudCropManager.getInstance()
-      if (snapCloud) {
-        snapCloud.uploadCroppedCapture(
-          this.captureRendMesh.mainPass.captureImage,
-          undefined, // use manager's sessionId
-          "capture", // caption / slug for the filename
-          () => {
-            this.loadingObj.enabled = false
-          }
-        )
-      } else {
-        print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
-      }
-      // ======================================================================
+      this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
+
+      // // ======================================================================
+      // // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
+      // // Uses the singleton SnapCloudCropManager wired in the scene root.
+      // // onDone fires after the upload finishes (success or failure) so we can
+      // // turn off the loading spinner regardless of outcome.
+      // // ======================================================================
+      // const snapCloud = SnapCloudCropManager.getInstance()
+      // if (snapCloud) {
+      //   snapCloud.uploadCroppedCapture(
+      //     this.captureRendMesh.mainPass.captureImage,
+      //     undefined, // use manager's sessionId
+      //     "capture", // caption / slug for the filename
+      //     () => {
+      //       this.loadingObj.enabled = false
+      //     }
+      //   )
+      // } else {
+      //   print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
+      // }
+      // // ======================================================================
     }
   }
 

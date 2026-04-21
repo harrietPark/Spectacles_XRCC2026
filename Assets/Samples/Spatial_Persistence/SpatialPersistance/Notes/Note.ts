@@ -8,6 +8,7 @@ import {Widget} from "../Widget"
 @component
 export class Note extends BaseScriptComponent {
   @input private _textField: Text
+  @input private _croppedImage: RenderMeshVisual;
   @input private _editToggle: ToggleButton
   @input private deleteButton: PinchButton
   @input private noteInteractable: Interactable
@@ -69,6 +70,11 @@ export class Note extends BaseScriptComponent {
       this._editToggle.getSceneObject().enabled = false
       this.deleteButton.getSceneObject().enabled = false
     }
+  }
+
+  public setCroppedImage(image: Texture) {
+    print("----- Note: Setting cropped image: " + image.getWidth());
+    // this._croppedImage.
   }
 
   /**

@@ -333,6 +333,7 @@
   Children:
     - !<own> 924c4558-7a73-466e-5525-2b8a771e68ba
     - !<own> 36990e78-9fff-4388-72e0-347e6f2ea696
+    - !<own> a36f82f4-222f-488c-80f4-e7f239b70bb5
     - !<own> e54a323f-5ee5-4d3b-724b-e9ea28ddc43e
     - !<own> 933719e6-4682-4fb5-7176-9f99d120c414
   Components:
@@ -463,6 +464,7 @@
   ScriptInputs:
     "":
       _textField: !<reference.Text> 0752e611-8f51-4cbc-46c2-d294d953d594
+      _croppedImage: !<reference.RenderMeshVisual> b0c70157-d16e-4678-920d-0cfa1a896b6d
       _editToggle: !<MappingBased.AssignableType> 9ef90c73-99d7-452d-491d-b185f9b6018c
       deleteButton: !<MappingBased.AssignableType_1> c4011673-f692-4ce6-74ff-b724aef80805
       noteInteractable: !<MappingBased.AssignableType_2> 1269eb50-bcc8-44ce-50e4-9673cdfa5a0a
@@ -599,6 +601,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/a36f82f4-222f-488c-80f4-e7f239b70bb5>
+  PrefabRemaps:
+    []
+  Name: Image_From_Crop
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b0c70157-d16e-4678-920d-0cfa1a896b6d
 - !<ColliderComponent/a6e36104-9499-4bab-458d-864405d51ce2>
   PrefabRemaps:
     []
@@ -661,6 +678,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/b0c70157-d16e-4678-920d-0cfa1a896b6d>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 269c4b89-727f-4c97-a1e3-60ddea643014
+  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ColliderComponent/b1ca75bf-6a48-430b-4b0d-8a51761315db>
   PrefabRemaps:
     []

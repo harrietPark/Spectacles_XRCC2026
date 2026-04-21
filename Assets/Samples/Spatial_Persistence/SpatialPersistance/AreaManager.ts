@@ -7,7 +7,7 @@ import {LoggerVisualization} from "Spatial Anchors.lspkg/SpatialPersistence/Logg
 import {Interactable} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable"
 import {InteractableManipulation} from "SpectaclesInteractionKit.lspkg/Components/Interaction/InteractableManipulation/InteractableManipulation"
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
-import {unsubscribe} from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import Event, {PublicApi, unsubscribe} from "SpectaclesInteractionKit.lspkg/Utils/Event"
 import {AreaPromptButton} from "./MenuUI/AreaPromptButton"
 import {AreaSelectionMenu} from "./MenuUI/AreaSelectionMenu"
 import {ToggleMenuButton} from "./MenuUI/ToggleMenuButton"
@@ -45,6 +45,18 @@ class AreaRecord {
 
 @component
 export class AreaManager extends BaseScriptComponent {
+  private _widgets: Widget[] = []
+  public get widgets(): Widget[] {
+    return this._widgets;
+  }
+  public set widgets(value: Widget[]) {
+    this._widgets = value;
+    this.onWidgetsUpdatedEvent.invoke(value);
+  }
+
+  private onWidgetsUpdatedEvent = new Event<Widget[]>();
+  public readonly onWidgetsUpdated: PublicApi<Widget[]> = this.onWidgetsUpdatedEvent.publicApi();
+
   @input private noteController: NoteController;
 
   // Note UI Components
@@ -70,8 +82,6 @@ export class AreaManager extends BaseScriptComponent {
 
   @input
   private textInputManager: TextInputManager
-
-  private widgets: Widget[] = []
 
   // Current area selected by menu.
   private currentArea: AreaRecord
