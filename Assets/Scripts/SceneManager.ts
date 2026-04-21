@@ -5,9 +5,20 @@ import { NoteController } from "./NoteController";
 @component
 export class SceneManager extends BaseScriptComponent {
     @input private NoteController: NoteController;
+    @input
+    @hint("If enabled, request microphone permission on lens start.")
+    private requestMicrophonePermissionOnStart: boolean = true;
+    @input
+    @allowUndefined
+    @hint("Assign the same microphone asset used by Note.ts to trigger permission prompt.")
+    private microphoneAsset: AudioTrackAsset | undefined;
+    @input
+    @hint("How long to keep the mic open (seconds) before stopping warmup.")
+    private microphoneWarmupDurationSeconds: number = 0.25;
 
     private handProvider: HandInputData = SIK.HandInputData;
     private leftHand = this.handProvider.getHand("left");
+    private microphoneControl: MicrophoneAudioProvider | undefined;
 
     private static instance;
 
@@ -33,6 +44,7 @@ export class SceneManager extends BaseScriptComponent {
     private onStart() {
         // left hand pinch down to activate note creation process
         this.leftHand.onPinchUp.add(this.activateNoteCreation.bind(this));
+        this.requestMicrophonePermissionEarly();
     }
 
     private onUpdate() {}
@@ -45,6 +57,30 @@ export class SceneManager extends BaseScriptComponent {
     private deactivateNoteCreation() {
         print("... Deactivating note creation process");
         this.NoteController.deactivateCreationProcess();
+    }
+
+    private requestMicrophonePermissionEarly(): void {
+        if (!this.requestMicrophonePermissionOnStart) {
+            return;
+        }
+
+        if (!this.microphoneAsset) {
+            print("[SceneManager] microphoneAsset not assigned; skipping early microphone permission request.");
+            return;
+        }
+
+        try {
+            this.microphoneControl = this.microphoneAsset.control as MicrophoneAudioProvider;
+            this.microphoneControl.start();
+
+            const stopEvent = this.createEvent("DelayedCallbackEvent");
+            stopEvent.bind(() => {
+                this.microphoneControl?.stop();
+            });
+            stopEvent.reset(Math.max(0.05, this.microphoneWarmupDurationSeconds));
+        } catch (_error) {
+            print("[SceneManager] Failed to request microphone permission at startup.");
+        }
     }
 
 }

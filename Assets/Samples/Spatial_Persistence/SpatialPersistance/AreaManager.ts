@@ -78,6 +78,10 @@ export class AreaManager extends BaseScriptComponent {
   private widgetPrefabs: ObjectPrefab[]
 
   @input
+  @hint("Default scale multiplier applied when spawning widgets/notes.")
+  private spawnedWidgetScaleMultiplier: number = 1.0
+
+  @input
   private instructionText: Text
 
   @input
@@ -231,7 +235,10 @@ export class AreaManager extends BaseScriptComponent {
     const transform = widgetObject.getTransform()
 
     // Place the widget in front of gaze.
-    transform.setLocalTransform(mat4.compose(localPosition, localRotation, vec3.one()))
+    const safeScaleMultiplier = Math.max(0.05, this.spawnedWidgetScaleMultiplier)
+    transform.setLocalTransform(
+      mat4.compose(localPosition, localRotation, vec3.one().uniformScale(safeScaleMultiplier))
+    )
 
     const widget = widgetObject.getComponent(Widget.getTypeName())
     widget.prefabIndex = prefabIndex

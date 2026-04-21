@@ -1674,12 +1674,16 @@
   Enabled: true
   ScriptAsset: !<reference> 8f6d7147-98af-4df6-ac00-577e73caa027
   ScriptInputsDefault:
-    {}
+    requestMicrophonePermissionOnStart: true
+    microphoneWarmupDurationSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       NoteController: !<MappingBased.AssignableType> 2f431dbe-a179-4c15-9baa-233f30fe08e0
+      requestMicrophonePermissionOnStart: true
+      microphoneAsset: !<reference.AudioTrackAsset> acf855e3-f791-416d-9d81-6fc09fc68d96
+      microphoneWarmupDurationSeconds: 0.250000
   ScriptTypes:
     "":
       {}
@@ -1905,7 +1909,7 @@
   Enabled: true
   ScriptAsset: !<reference> db6e3391-b235-4fce-8965-b9d5fa785088
   ScriptInputsDefault:
-    {}
+    spawnedWidgetScaleMultiplier: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1923,6 +1927,7 @@
         - !<reference> cb54d61a-6f7e-480e-8281-fe6e65510145
         - !<reference> 30bfee42-6ed4-4d5e-86a7-7ec0cdc70fdf
         - !<reference> 758a3f1d-72a2-4b84-a81d-818861d2b846
+      spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
       textInputManager: !<MappingBased.AssignableType_6> e92c9815-b474-4f37-9ceb-1cffeac1afb1
   ScriptTypes:

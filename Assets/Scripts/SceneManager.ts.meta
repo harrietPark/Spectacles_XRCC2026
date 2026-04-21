@@ -27,6 +27,9 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     NoteController: false
+    microphoneAsset: false
+    microphoneWarmupDurationSeconds: false
+    requestMicrophonePermissionOnStart: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -37,8 +40,14 @@
     []
   DefaultScriptInputs:
     - NoteController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      requestMicrophonePermissionOnStart: true
+      microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      microphoneWarmupDurationSeconds: 0.250000
   ScriptTypes:
     -
       {}
   InputLines:
     - // @input AssignableType NoteController
+    - '// @input bool requestMicrophonePermissionOnStart = true {"hint":"If enabled, request microphone permission on lens start."}'
+    - '// @input Asset.AudioTrackAsset microphoneAsset {"hint":"Assign the same microphone asset used by Note.ts to trigger permission prompt."}'
+    - '// @input float microphoneWarmupDurationSeconds = 0.25 {"hint":"How long to keep the mic open (seconds) before stopping warmup."}'
