@@ -8216,6 +8216,9 @@
   ScriptInputsDefault:
     startVisible: true
     pinScaleAnimationDuration: true
+    enableShowSway: true
+    useHangingPivot: true
+    hangingPivotLocal: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -8227,6 +8230,13 @@
       startVisible: true
       hiddenPinScaleMultiplier: !<float> 3.000000
       pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 100.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
       pinScaleObjects: !<reference.SceneObject[]>
         - !<reference> 94ab5cba-d861-441e-98f2-e2202bff8cc2
         - !<reference> 0a639c99-b085-42e8-9932-20e883b65004

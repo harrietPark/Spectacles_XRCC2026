@@ -26,12 +26,19 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    enableShowSway: false
+    hangingPivotLocal: false
     hiddenPinScaleMultiplier: false
     noteObjectsRoot: false
     pinScaleAnimationDuration: false
     pinScaleObjects: false
     pinToggleButtons: false
+    showSwayDamping: false
+    showSwayDuration: false
+    showSwayFrequencyHz: false
+    showSwayMaxAngleDegrees: false
     startVisible: false
+    useHangingPivot: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -47,6 +54,13 @@
       startVisible: true
       hiddenPinScaleMultiplier: 1.250000
       pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.550000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: 3.200000
+      showSwayDamping: !<float> 4.000000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
       pinScaleObjects: !<reference.SceneObject[]>
         []
   ScriptTypes:
@@ -58,4 +72,11 @@
     - '// @input bool startVisible = true {"hint":"If true, note objects start visible. If false, hidden."}'
     - '// @input float hiddenPinScaleMultiplier = 1.25 {"hint":"Pin scale multiplier while note is hidden."}'
     - '// @input float pinScaleAnimationDuration = 0.22 {"hint":"Pin scale animation duration in seconds."}'
+    - '// @input bool enableShowSway = true {"hint":"Enable hanging sway when note becomes visible."}'
+    - '// @input float showSwayDuration = 0.55 {"hint":"Total sway duration in seconds."}'
+    - '// @input float showSwayMaxAngleDegrees = 11 {"hint":"Starting sway angle in degrees."}'
+    - '// @input float showSwayFrequencyHz = 3.2 {"hint":"How quickly sway oscillates (cycles per second)."}'
+    - '// @input float showSwayDamping = 4 {"hint":"How quickly sway settles (higher = faster settle)."}'
+    - '// @input bool useHangingPivot = true {"hint":"Use a top pivot so note feels like it hangs from pin."}'
+    - '// @input vec3 hangingPivotLocal = {0,5,0} {"hint":"Local pivot point on note root (top-middle). Tune Y for best hanging look."}'
     - '// @input SceneObject[] pinScaleObjects = {} {"hint":"Optional explicit pin objects to scale (preferred: BluePin/Mesh + RedPin/Mesh)."}'
