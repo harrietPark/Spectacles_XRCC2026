@@ -1,0 +1,110 @@
+- !<AssetImportMetadata/130d3de2-849b-4854-b27e-2b6986116231>
+  ImportedAssetIds:
+    .hidden/Material.001: !<reference> b245c88b-f0d4-49d7-9521-1117a9414a5c
+    .hidden/white: !<reference> 86a02783-2329-4386-a78f-7f3dec6af86d
+    34bdc6b9055eebed: !<reference> 06a1ab7a-d678-4097-a4ad-b0673f07b70b
+    7a0dd5cd69df73fa: !<reference> 84e46d7d-3e00-42ee-8024-a3ea5685e2a6
+    Materials/Material.001: !<reference> 95b0bd9b-5615-4578-b933-84fa6aef9dac
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 62552eca-6de1-407d-99e3-42b9cb80305d
+    Meshes/Mesh1.0: !<reference> 34cb4d0b-706e-4db7-9baf-344e1217f9b7
+    Scene: !<reference> d29de3dc-4827-4987-a811-0044f699a924
+    Textures/Baked_BaseColor: !<reference> e586834a-0e50-4325-bcde-de3a32d9ca3d
+    Textures/normal: !<reference> 43680676-cf27-4134-8210-06bf60720acd
+    f67b8335867a4b89: !<reference> a76ff3e5-030e-499c-af22-8b5e7fa28958
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> d29de3dc-4827-4987-a811-0044f699a924
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 1e142f9d-729d-475d-ac59-c490c53fae6a
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      png: Performance Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<SceneObject/06a1ab7a-d678-4097-5b52-4f98c0f848f4>
+  PrefabRemaps:
+    []
+  Name: Mesh1.0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a76ff3e5-030e-499c-50dd-74a1805d76a7
+- !<ObjectPrefabAssetData/1e142f9d-729d-475d-ac59-c490c53fae6a>
+  Prototype: !<ObjectOwner/aeb816a9-601e-4b9b-9243-47bafccd4008>
+    PackagePath: ""
+    objects:
+      - !<own> 84e46d7d-3e00-42ee-7fdb-5c15a97a1d59
+- !<SceneObject/84e46d7d-3e00-42ee-7fdb-5c15a97a1d59>
+  PrefabRemaps:
+    []
+  Name: note_3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 06a1ab7a-d678-4097-5b52-4f98c0f848f4
+  Components:
+    []
+- !<RenderMeshVisual/a76ff3e5-030e-499c-50dd-74a1805d76a7>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 95b0bd9b-5615-4578-b933-84fa6aef9dac
+  Mesh: !<reference> 34cb4d0b-706e-4db7-9baf-344e1217f9b7
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}

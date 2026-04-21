@@ -1,0 +1,110 @@
+- !<AssetImportMetadata/1599e0f8-9dfd-4a60-ae7d-6cdb2802eaa5>
+  ImportedAssetIds:
+    .hidden/Material.001: !<reference> bde29387-2204-49b4-99b4-13b8cc2f51bc
+    .hidden/white: !<reference> f6bc0d9d-6dca-49c6-9a30-4a2b56149032
+    34bdc6b9055eebed: !<reference> 12a1da6a-6446-4f54-955b-51a31e01cc73
+    7a0dd5cd69df73fa: !<reference> 6010ca84-2338-4be2-86ff-fa89ca419496
+    Materials/Material.001: !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 6d7b130f-a2a6-4eef-80e3-3af3b3a0b1d2
+    Meshes/Mesh1.0: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
+    Scene: !<reference> 2872d28b-d3aa-461e-8718-9e6a36a89d06
+    Textures/Baked_BaseColor: !<reference> 3c590a06-3566-4079-bba1-4944852be6e6
+    Textures/normal: !<reference> 617f1d7d-2b5a-422a-be73-1247dba875b8
+    f67b8335867a4b89: !<reference> 0b042826-1419-45f3-95be-4b2c343f6e2b
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> 2872d28b-d3aa-461e-8718-9e6a36a89d06
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> cce5632f-bbce-419f-b523-b97c1fbf1130
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      png: Performance Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<RenderMeshVisual/0b042826-1419-45f3-6a41-b4d3cbc091d4>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
+  Mesh: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/12a1da6a-6446-4f54-6aa4-ae5ce1fe338c>
+  PrefabRemaps:
+    []
+  Name: Mesh1.0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0b042826-1419-45f3-6a41-b4d3cbc091d4
+- !<SceneObject/6010ca84-2338-4be2-7900-057635be6b69>
+  PrefabRemaps:
+    []
+  Name: microphone_2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 12a1da6a-6446-4f54-6aa4-ae5ce1fe338c
+  Components:
+    []
+- !<ObjectPrefabAssetData/cce5632f-bbce-419f-b523-b97c1fbf1130>
+  Prototype: !<ObjectOwner/4d91b6a8-a1b3-400d-91cd-1a1eec6910db>
+    PackagePath: ""
+    objects:
+      - !<own> 6010ca84-2338-4be2-7900-057635be6b69

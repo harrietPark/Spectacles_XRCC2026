@@ -27,8 +27,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 85821a7f-fcdb-45b7-b52f-311f0d1ab257
-  Mesh: !<reference> 351d8831-6c4a-47f0-a5ac-0371d4a8bcf0
+    - !<reference> 95b0bd9b-5615-4578-b933-84fa6aef9dac
+  Mesh: !<reference> 34cb4d0b-706e-4db7-9baf-344e1217f9b7
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -203,8 +203,8 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Sphere>
-    FitVisual: true
-    Radius: 1.000000
+    FitVisual: false
+    Radius: 2.000000
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -248,7 +248,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.622585, y: -10.141144, z: 0.587644}
+    Position: {x: -5.115598, y: -15.268072, z: 1.822509}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -263,7 +263,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 2.802827, y: -6.713742, z: 1.615313}
+    Position: {x: 7.473204, y: -11.233904, z: 6.360468}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -324,7 +324,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: -90.000000, y: 0.000000, z: 180.000000}
-    Scale: {x: 0.550000, y: 0.750000, z: 0.600000}
+    Scale: {x: 1.250000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -553,8 +553,8 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -10.215765, y: -0.135070, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -4.946052, y: -6.320723, z: 1.709547}
+    Rotation: {x: -18.657831, y: 0.000000, z: 0.000000}
     Scale: {x: 4.000000, y: 4.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -671,7 +671,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 6.732400, y: 3.864157, z: 0.403323}
+    Position: {x: 13.651752, y: 8.297361, z: 0.403323}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -941,7 +941,7 @@
   Enabled: true
   Shape: !<Box>
     FitVisual: false
-    Size: {x: 9.900000, y: 10.000000, z: 4.300000}
+    Size: {x: 20.000000, y: 20.000000, z: 6.000000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1104,17 +1104,17 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Status
+  Text: StatusStatusStatusStatusStatusStatusStatus
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 30
+  FontSize: 50
   Font: !<reference> 76ac6b13-6f57-46f5-ba0c-550ed0cb1928
   LayoutRect:
     left: -4.000000
     bottom: -4.000000
-    right: 4.000000
+    right: 10.000000
     top: 5.000000
   OverflowVertical: Truncate
   OverflowHorizontal: Wrap
@@ -1236,8 +1236,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> d80b6e2b-fa5b-46f8-b59f-ecdae6bd778b
-  Mesh: !<reference> a653faa2-75df-4a34-88d0-0c5c29556b68
+    - !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
+  Mesh: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -1413,9 +1413,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.166781, y: 4.098771, z: -0.667428}
+    Position: {x: -0.166781, y: 7.682649, z: -1.394412}
     Rotation: {x: 180.000000, y: -13.403732, z: 180.000000}
-    Scale: {x: 0.400000, y: 0.400000, z: 0.400000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> ac0876d7-9614-4c74-7bba-e6ad78ca43bf
@@ -1459,7 +1459,7 @@
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 0.750000, y: 0.750000, z: 0.750000}
+    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1635,7 +1635,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.081415, y: -0.613977, z: 0.351438}
+    Position: {x: -4.451681, y: 2.205112, z: 0.351438}
     Rotation: {x: -9.621787, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -1756,12 +1756,12 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 30
+  FontSize: 50
   Font: !<reference> 76ac6b13-6f57-46f5-ba0c-550ed0cb1928
   LayoutRect:
     left: -4.000000
-    bottom: -4.000000
-    right: 4.000000
+    bottom: -6.000000
+    right: 13.000000
     top: 4.400000
   OverflowVertical: Truncate
   OverflowHorizontal: Wrap
@@ -1827,7 +1827,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 6.732389, y: -3.357456, z: 1.615300}
+    Position: {x: 13.539566, y: -4.966609, z: 4.780752}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -1849,9 +1849,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 1.217497}
+    Position: {x: 0.000000, y: 0.000000, z: 2.154095}
     Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1900,9 +1900,9 @@
   Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.107846, y: 4.104351, z: -0.533860}
+    Position: {x: -0.107846, y: 7.952804, z: -1.219969}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 2.300000, y: 2.300000, z: 2.300000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 0b0931d2-7e35-431b-4dd6-c02de56bd3fa
@@ -1939,8 +1939,8 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Sphere>
-    FitVisual: true
-    Radius: 1.000000
+    FitVisual: false
+    Radius: 2.000000
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1979,8 +1979,8 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Sphere>
-    FitVisual: true
-    Radius: 1.000000
+    FitVisual: false
+    Radius: 2.000000
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
