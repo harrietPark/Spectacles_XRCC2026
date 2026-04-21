@@ -1,0 +1,201 @@
+- !<AssetImportMetadata/d9af822c-c110-4224-bd1f-88de9cdabb04>
+  ImportedAssetIds:
+    .hidden/Pin2: !<reference> 86cfdf96-5c3a-4445-baed-d59dd46b2cda
+    182fada3212dde5e: !<reference> 3c573066-b8d8-40a8-988a-65c532c7e9c8
+    2c419dd781183de2: !<reference> 375a47dc-1258-409e-ba3b-2f92d792307d
+    534a0e4624c7d456: !<reference> b68f7570-3f60-428d-bb34-a9603d136bfa
+    6219d73ae8e2a78e: !<reference> cc5df91b-4194-470f-9c6a-aecdbeefeef9
+    624f6792bd6e379e: !<reference> 8e4e7306-3e2c-420c-a120-648ba9fe31af
+    662ca2c9a7258176: !<reference> 31ce2efc-1b85-4c37-82ba-242c4e45292c
+    7a0dd5cd69df73fa: !<reference> b69141f9-ae07-4ace-89ed-f72692d7fb68
+    83437620bbb97154: !<reference> 88f17c7c-ea19-4c9c-9eb7-d5a0dc895865
+    Materials/Pin2: !<reference> 338c1472-965b-4282-b621-79fefeebb79b
+    Materials/Pin2|Pin2|GraphPassInfo: !<reference> 3e55146e-ccc3-4b5d-8f98-730a3b459ceb
+    Meshes/Pin2_Pin2_0: !<reference> b70c3500-2da2-4382-a2d4-48edf226b16e
+    Scene: !<reference> c09a3057-d47b-4f5e-8f27-2ae7888ec2cf
+    Textures/texture: !<reference> 517fca9f-c280-480b-89d1-170786117544
+    Textures/texture 3: !<reference> f7330c03-1671-4030-8bdc-b2a663173ef9
+    Textures/texture 6: !<reference> 0fbf1a7e-92cb-43f5-9a36-9e0ed227d2b3
+    d12faccfa99984a0: !<reference> 0777cfd0-0d69-49d8-949f-3bab481a7f82
+  ImporterName: GltfImporter
+  PrimaryAsset: !<reference> c09a3057-d47b-4f5e-8f27-2ae7888ec2cf
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 1dd83f6c-1b88-4ed0-934e-8a93992e6595
+  DependentFiles:
+    []
+  ImporterSettings: !<GltfImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangents: true
+    ImportMorphTargetAnimation: true
+    ConvertMetersToCentimeters: true
+    RegenerateTangents: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      png: Performance Compression
+    Overrides:
+      {}
+- !<SceneObject/0777cfd0-0d69-49d8-6b60-c454b7e5807d>
+  PrefabRemaps:
+    []
+  Name: Pin2_Pin2_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 3c573066-b8d8-40a8-6775-9a3acd381637
+- !<ObjectPrefabAssetData/1dd83f6c-1b88-4ed0-934e-8a93992e6595>
+  Prototype: !<ObjectOwner/1b73924b-a61a-40e8-8cd6-9b02b4d1eea4>
+    PackagePath: ""
+    objects:
+      - !<own> b69141f9-ae07-4ace-7612-08d96d280497
+- !<SceneObject/31ce2efc-1b85-4c37-7d45-dbd3b1bad6d3>
+  PrefabRemaps:
+    []
+  Name: Pin2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: -0.000739, z: -0.000000}
+    Rotation: {x: -65.001289, y: 39.133163, z: -1.160588}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 0777cfd0-0d69-49d8-6b60-c454b7e5807d
+  Components:
+    []
+- !<SceneObject/375a47dc-1258-409e-45c4-d06d286dcf82>
+  PrefabRemaps:
+    []
+  Name: 1c31d7bb12504fc3af76163339c65cdd.fbx
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 0.025400, y: 0.025400, z: 0.025400}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b68f7570-3f60-428d-44cb-569fc2ec9405
+  Components:
+    []
+- !<RenderMeshVisual/3c573066-b8d8-40a8-6775-9a3acd381637>
+  PrefabRemaps:
+    []
+  Name: Pin2_Pin2_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 338c1472-965b-4282-b621-79fefeebb79b
+  Mesh: !<reference> b70c3500-2da2-4382-a2d4-48edf226b16e
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/88f17c7c-ea19-4c9c-6148-2a5f2376a79a>
+  PrefabRemaps:
+    []
+  Name: Sketchfab_model
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 375a47dc-1258-409e-45c4-d06d286dcf82
+  Components:
+    []
+- !<SceneObject/8e4e7306-3e2c-420c-5edf-9b745601ce50>
+  PrefabRemaps:
+    []
+  Name: Scenes
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> cc5df91b-4194-470f-6395-513241101106
+  Components:
+    []
+- !<SceneObject/b68f7570-3f60-428d-44cb-569fc2ec9405>
+  PrefabRemaps:
+    []
+  Name: RootNode
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 31ce2efc-1b85-4c37-7d45-dbd3b1bad6d3
+  Components:
+    []
+- !<SceneObject/b69141f9-ae07-4ace-7612-08d96d280497>
+  PrefabRemaps:
+    []
+  Name: push_pin_2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 8e4e7306-3e2c-420c-5edf-9b745601ce50
+  Components:
+    []
+- !<SceneObject/cc5df91b-4194-470f-6395-513241101106>
+  PrefabRemaps:
+    []
+  Name: Sketchfab_Scene
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 88f17c7c-ea19-4c9c-6148-2a5f2376a79a
+  Components:
+    []
