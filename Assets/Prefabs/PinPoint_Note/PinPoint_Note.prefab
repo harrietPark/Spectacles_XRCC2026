@@ -624,7 +624,7 @@
   PrefabRemaps:
     []
   Name: DeleteButton
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -6.974315, y: -2.409206, z: 1.000000}
@@ -829,7 +829,7 @@
   PrefabRemaps:
     []
   Name: EditButton
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -6.934019, y: 3.123033, z: 1.000000}
