@@ -1,51 +1,54 @@
 import { PictureController } from "Samples/Crop/Scripts/PictureController";
+import { AreaManager } from "Samples/Spatial_Persistence/SpatialPersistance/AreaManager";
 import { WidgetSelectionEvent } from "Samples/Spatial_Persistence/SpatialPersistance/MenuUI/WidgetSelection";
+import { Note } from "Samples/Spatial_Persistence/SpatialPersistance/Notes/Note";
+import { Widget } from "Samples/Spatial_Persistence/SpatialPersistance/Widget";
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
 @component
 export class NoteController extends BaseScriptComponent {
-    private onUserViewSnappedEvent = new Event<Texture>();
-    public readonly onUserViewSnapped: PublicApi<Texture> = this.onUserViewSnappedEvent.publicApi();
+    private onUserViewCapturedEvent = new Event<Texture>();
+    public readonly onUserViewCaptured: PublicApi<Texture> = this.onUserViewCapturedEvent.publicApi();
 
     private onNoteSpawnedEvent = new Event<WidgetSelectionEvent>();
     public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
 
+    // @input private camera: CameraModule;
+    @input private areaManager: AreaManager;
     @ui.group_start("Note Anchoring Setup")
     @input private HandDwellingTimeThreshold: number = 3; // in seconds
     @ui.group_end
     @ui.group_start("Crop to Photo")
-    @input private PictureController: PictureController;
+    @input private pictureController: PictureController;
     @ui.group_end
     @ui.separator
     @ui.group_start("Visual Feedback")
     @input private MidasTouchVisual: SceneObject;
     @ui.group_end
 
+    // Hand tracking
     private handProvider: HandInputData = SIK.HandInputData
     private rightHand = this.handProvider.getHand("right")
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
     private handMovementRadiusRange: number = 0.1; // in meters
 
+    // State booleans
     private isNoteAnchoringActive: boolean = false;
 
-    public activateCreationProcess() {
-        this.activateNoteAnchoringVisual();
-        this.isNoteAnchoringActive = true;
-        this.PictureController.enableCrop();
-    }
-
-    public deactivateCreationProcess() {
-        this.deactivateNoteAnchoringVisual();
-        this.isNoteAnchoringActive = false;
-        this.PictureController.disableCrop();
-    }
+    private notes: Note[] = [];
     
     private onAwake() {
-        this.deactivateNoteAnchoringVisual();
+        this.deactivateCreationProcess();
+        this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
+    }
+
+    private onStart() {
+        this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
+        this.areaManager.onWidgetsUpdated.add(this.updateNotes.bind(this));
     }
 
     private onUpdate() {
@@ -56,12 +59,14 @@ export class NoteController extends BaseScriptComponent {
         }
     }
 
-    private activateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = true;
+    public activateCreationProcess() {
+        this.activateNoteAnchoringVisual();
+        this.isNoteAnchoringActive = true;
     }
 
-    private deactivateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = false;
+    public deactivateCreationProcess() {
+        this.deactivateNoteAnchoringVisual();
+        this.isNoteAnchoringActive = false;
     }
 
     private tryAnchorNote() : boolean {
@@ -92,8 +97,34 @@ export class NoteController extends BaseScriptComponent {
             position: this.rightHand.indexTip.position,
             rotation: this.rightHand.indexTip.rotation
         });
-        // get camera texture
-        // this.onNoteAnchored.invoke();
+
+        this.deactivateCreationProcess();
+        this.enableCrop();
+
+        // // Capture camera texture
+        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
     }
 
+    private updateNotes(widgets: Widget[]) {
+        this.notes = widgets.map(widget => widget.getSceneObject().getComponent(Note.getTypeName()));
+    }
+
+    private enableCrop() {
+        this.pictureController.enableCrop();
+    }
+
+    private addCroppedImage(image: Texture) {
+        if(this.notes.length == 0) return;
+
+        this.notes[this.notes.length - 1].setCroppedImage(image);
+    }
+
+    private activateNoteAnchoringVisual() {
+        this.MidasTouchVisual.enabled = true;
+
+    }
+
+    private deactivateNoteAnchoringVisual() {
+        this.MidasTouchVisual.enabled = false;
+    }
 }

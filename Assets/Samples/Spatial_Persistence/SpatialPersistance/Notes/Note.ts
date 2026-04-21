@@ -16,6 +16,7 @@ const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000
 @component
 export class Note extends BaseScriptComponent {
   @input private _textField: Text
+  @input private _croppedImage: Image;
   @input private _editToggle: ToggleButton
   @input @allowUndefined private deleteButton: PinchButton | undefined
   @input @allowUndefined private noteInteractable: Interactable | undefined
@@ -91,6 +92,9 @@ export class Note extends BaseScriptComponent {
 
     this.meshMaterial = this.noteMesh.mainMaterial.clone()
     this.noteMesh.mainMaterial = this.meshMaterial
+
+    this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
+    this._croppedImage.getSceneObject().enabled = false;
 
     this.widget = this.sceneObject.getComponent(Widget.getTypeName())
 
@@ -388,6 +392,13 @@ export class Note extends BaseScriptComponent {
     }
 
     this.voiceStatusText.text = message
+  }
+
+  public setCroppedImage(image: Texture) {
+    // this._croppedImage.mainPass.captureImage = ProceduralTextureProvider.createFromTexture(image);
+    this._croppedImage.getSceneObject().enabled = true;
+    this._croppedImage.mainMaterial.mainPass.baseTex = image;
+    // print("----- Note: Setting cropped image: " + image.getWidth());
   }
 
   /**

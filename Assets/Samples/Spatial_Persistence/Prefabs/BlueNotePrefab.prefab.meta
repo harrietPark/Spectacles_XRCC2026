@@ -568,28 +568,18 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    recordButton: true
-    playbackButton: true
-    microphoneAsset: true
-    audioOutputAsset: true
-    voiceStatusText: true
-    sampleRate: true
+    _croppedImage: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       _textField: !<reference.Text> 5ebe61dc-611b-476f-5e6c-266c5a6ecf1f
+      _croppedImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       _editToggle: !<MappingBased.AssignableType> 98888268-7b28-400f-4acf-c0fd65cad693
       deleteButton: !<MappingBased.AssignableType_1> 1ee0869f-c723-4de0-78bf-5586152c935c
       noteInteractable: !<MappingBased.AssignableType_2> 3204a4f1-800c-4f47-7fcd-c34819527a60
       noteMesh: !<reference.RenderMeshVisual> 4039f798-8fc4-4b5a-5956-385ec88e47d2
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
-      recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
-      playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
-      microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
-      audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
-      voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      sampleRate: !<float> 0.000000
   ScriptTypes:
     "":
       {}

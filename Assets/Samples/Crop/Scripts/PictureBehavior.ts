@@ -8,12 +8,16 @@ import { CropRegion } from "./CropRegion"
 // Upload is dispatched from processImage() below. See snap_cloud_crop_manager.ts.
 // ============================================================================
 import { SnapCloudCropManager } from "../../../Scripts/snap_cloud_crop_manager"
+import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event"
 // ============================================================================
 
 const BOX_MIN_SIZE = 8 //min size in cm for image capture
 
 @component
 export class PictureBehavior extends BaseScriptComponent {
+  private onImageCapturedEvent = new Event<Texture>();
+  public readonly onImageCaptured: PublicApi<Texture> = this.onImageCapturedEvent.publicApi();
+  
   @input circleObjs: SceneObject[]
   @input editorCamObj: SceneObject
   @input picAnchorObj: SceneObject
@@ -138,11 +142,12 @@ export class PictureBehavior extends BaseScriptComponent {
       this.loadingObj.enabled = true
       this.cropRegion.enabled = false
 
-      // // disable cloud AI call for now
-      // this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-      //   this.loadingObj.enabled = false
-      //   this.loadCaption(response)
-      // })
+      this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+        this.loadingObj.enabled = false
+        this.loadCaption(response)
+      })
+
+      this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
 
       // ======================================================================
       // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
