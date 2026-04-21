@@ -144,5 +144,8 @@ export class Widget extends BaseScriptComponent {
 
   public delete(): void {
     this.onDeleteEvent.invoke(this._widgetIndex)
+    // Also delete locally so manually placed widgets (not registered in AreaManager)
+    // are still removable via the Delete button.
+    this.sceneObject.destroy()
   }
 }

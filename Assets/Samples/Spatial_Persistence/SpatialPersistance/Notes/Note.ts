@@ -108,6 +108,9 @@ export class Note extends BaseScriptComponent {
         this.recordMicrophoneAudio(false)
         if (this.widget) {
           this.widget.delete()
+        } else {
+          // Fallback safety: still remove note if Widget component lookup failed.
+          this.sceneObject.destroy()
         }
       })
     }

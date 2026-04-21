@@ -538,12 +538,13 @@ export class AreaManager extends BaseScriptComponent {
    * @param index - index of the widget that was assigned when it is spawned
    */
   public deleteWidget(widget: Widget) {
-    if (this.areaAnchor !== undefined || global.deviceInfoSystem.isEditor()) {
-      this.widgets.splice(this.widgets.indexOf(widget))
+    const widgetIndex = this.widgets.indexOf(widget)
+    if (widgetIndex >= 0) {
+      this.widgets.splice(widgetIndex, 1)
       this.widgets = [...this.widgets]
+    }
 
-      widget.sceneObject.destroy()
-
+    if ((this.areaAnchor !== undefined || global.deviceInfoSystem.isEditor()) && this.currentArea !== undefined) {
       this.saveWidgets()
     }
   }
