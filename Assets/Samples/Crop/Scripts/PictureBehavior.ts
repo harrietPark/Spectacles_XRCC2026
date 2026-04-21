@@ -142,11 +142,10 @@ export class PictureBehavior extends BaseScriptComponent {
       this.loadingObj.enabled = true
       this.cropRegion.enabled = false
 
-      // // disable cloud AI call for now
-      // this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-      //   this.loadingObj.enabled = false
-      //   this.loadCaption(response)
-      // })
+      this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+        this.loadingObj.enabled = false
+        this.loadCaption(response)
+      })
 
       this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
 
