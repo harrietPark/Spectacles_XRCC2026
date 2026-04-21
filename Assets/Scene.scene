@@ -1418,6 +1418,41 @@
     - !<own> 95625266-5e6b-49ae-891b-a1f50ea71325
   Components:
     []
+- !<ScriptComponent/218bd982-0acf-43fa-a41c-d4b6a6d3f017>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteVisibilityAnimator
+  Enabled: true
+  ScriptAsset: !<reference> d7a36932-4a1b-4e54-b34c-bfc3c7461ab4
+  ScriptInputsDefault:
+    hideOnAwake: true
+    slideDistance: true
+    showDurationSeconds: true
+    hideDurationSeconds: true
+    showOvershoot: true
+    swingDegrees: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      noteMeshRoot: !<reference.SceneObject> 4e565807-622d-45fa-b409-66d875214887
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        - !<reference> 5143c55d-f231-4cb2-ac1e-2c1dc885a940
+        - !<reference> 3396cd66-9985-47af-b6ec-ad00fdced1c6
+      noteUiObjects: !<reference.SceneObject[]>
+        - !<reference> a840db65-ce4d-48b0-87b5-79324f8fc9cd
+        - !<reference> 7ce9566b-3f5b-4ea1-b1dd-6c8088b2b776
+        - !<reference> afee1b9c-6e07-45b4-925e-194b02636c2c
+        - !<reference> ca367393-a076-4292-9ab5-6b0e12c8ad03
+      hideOnAwake: true
+      slideDistance: !<float> 3.000000
+      showDurationSeconds: 0.320000
+      hideDurationSeconds: 0.220000
+      showOvershoot: 0.450000
+      swingDegrees: !<float> 5.000000
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/22c7c61b-364c-4f1b-a7c2-5fd27aa8e3df>
   PrefabRemaps:
     []
@@ -5510,7 +5545,7 @@
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Top
-  HorizontalAlignment: Center
+  HorizontalAlignment: Left
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
@@ -5519,7 +5554,7 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 40
+  FontSize: 30
   Font: !<reference> 76ac6b13-6f57-46f5-ba0c-550ed0cb1928
   LayoutRect:
     left: -4.000000
@@ -7638,12 +7673,7 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    recordButton: true
-    playbackButton: true
-    microphoneAsset: true
-    audioOutputAsset: true
-    voiceStatusText: true
-    sampleRate: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -7654,12 +7684,12 @@
       noteInteractable: !<MappingBased.AssignableType_2> ab84c60a-6a86-4b5e-abe6-3ca5d874fdf4
       noteMesh: !<reference.RenderMeshVisual> 85c3ad87-2f05-4526-ba73-caafc78cbe74
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
-      recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
-      playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
-      microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
-      audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
-      voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      sampleRate: !<float> 0.000000
+      recordButton: !<MappingBased.AssignableType_3> a0c82fb4-033f-439b-b6aa-ea40b2d6582d
+      playbackButton: !<MappingBased.AssignableType_4> 2fbd810e-899e-41d4-b077-9df06c25c1a9
+      microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
+      audioOutputAsset: !<reference.AudioTrackAsset> c6a15f33-e393-45b8-a87d-3814027f7713
+      voiceStatusText: !<reference.Text> d353c442-93a7-47d3-8ec9-5eeb24cca960
+      sampleRate: !<float> 44100.000000
   ScriptTypes:
     "":
       {}
@@ -8603,6 +8633,7 @@
     - !<own> d23ac46d-a332-4ee6-9735-e5cc0c57b9e0
     - !<own> 059c5a6c-85e6-4ceb-a861-f68e2a263375
     - !<own> a934c4bd-17f1-4173-97ed-ea5b7e74867c
+    - !<own> 218bd982-0acf-43fa-a41c-d4b6a6d3f017
 - !<RenderMeshVisual/f304930e-b3aa-4572-8032-8b29c2fc9975>
   PrefabRemaps:
     []

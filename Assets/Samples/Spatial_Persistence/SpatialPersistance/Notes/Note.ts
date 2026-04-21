@@ -17,8 +17,8 @@ const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000
 export class Note extends BaseScriptComponent {
   @input private _textField: Text
   @input private _editToggle: ToggleButton
-  @input private deleteButton: PinchButton
-  @input private noteInteractable: Interactable
+  @input @allowUndefined private deleteButton: PinchButton | undefined
+  @input @allowUndefined private noteInteractable: Interactable | undefined
   @input private noteMesh: RenderMeshVisual
   @input
   @hint("Outline material that appears when the note is being edited")
@@ -78,19 +78,35 @@ export class Note extends BaseScriptComponent {
   }
 
   private onStart() {
+    if (!this.noteMesh || !this.noteMesh.mainMaterial) {
+      print("[Note] Missing noteMesh or noteMesh.mainMaterial on " + this.sceneObject.name)
+      return
+    }
+
+    if (!this._editToggle) {
+      print("[Note] Missing edit toggle on " + this.sceneObject.name)
+      return
+    }
+
     this.meshMaterial = this.noteMesh.mainMaterial.clone()
     this.noteMesh.mainMaterial = this.meshMaterial
 
     this.widget = this.sceneObject.getComponent(Widget.getTypeName())
 
-    this.deleteButton.onButtonPinched.add(() => {
-      this.recordMicrophoneAudio(false)
-      this.widget.delete()
-    })
+    if (this.deleteButton && this.deleteButton.onButtonPinched) {
+      this.deleteButton.onButtonPinched.add(() => {
+        this.recordMicrophoneAudio(false)
+        if (this.widget) {
+          this.widget.delete()
+        }
+      })
+    }
 
-    this.noteInteractable.onHoverUpdate.add(() => {
-      this.lastHoveredTime = getTime()
-    })
+    if (this.noteInteractable) {
+      this.noteInteractable.onHoverUpdate.add(() => {
+        this.lastHoveredTime = getTime()
+      })
+    }
 
     this.outlineFeedback = this.sceneObject.getComponent(InteractableOutlineFeedback.getTypeName())
 
@@ -116,7 +132,9 @@ export class Note extends BaseScriptComponent {
   private onUpdate() {
     const shouldShowButtons = getTime() - this.timeToShowButtonsAfterHover < this.lastHoveredTime
     this._editToggle.getSceneObject().enabled = shouldShowButtons
-    this.deleteButton.getSceneObject().enabled = shouldShowButtons
+    if (this.deleteButton) {
+      this.deleteButton.getSceneObject().enabled = shouldShowButtons
+    }
 
     if (this.recordButton) {
       this.recordButton.getSceneObject().enabled = shouldShowButtons
