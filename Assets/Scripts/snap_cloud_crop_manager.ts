@@ -8,6 +8,8 @@ import {createClient, SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcl
  *   Manager role (put one on a scene-root SceneObject):
  *     - Wire `supabaseProject`.
  *     - Creates the Supabase client, registers the singleton, owns the sessionId.
+ *     - On awake, automatically inserts a row into `sessions` so the FK constraint
+ *       on `captures.session_id` is satisfied.
  *
  *   Bridge role (put one on the Scanner prefab alongside PictureBehavior):
  *     - Wire `captureRendMesh` and `loadingIndicator` to the SAME objects PictureBehavior uses.
@@ -21,6 +23,7 @@ import {createClient, SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcl
 @component
 export class SnapCloudCropManager extends BaseScriptComponent {
   // --- Manager role inputs -------------------------------------------------
+
   @input @hint("PinPoint Snap Cloud project asset (url + publicToken). Required on the manager instance.")
   @allowUndefined
   supabaseProject: SupabaseProject | undefined
@@ -34,13 +37,28 @@ export class SnapCloudCropManager extends BaseScriptComponent {
   @input @hint("Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg")
   cloudFolderPrefix: string = "captures"
 
+  // ==========================================================================
+  // [SnapCloudCrop] Changed: default flipped to true so every upload also
+  // writes a metadata row into the `captures` table (id, session_id,
+  // file_path, title, created_at).
+  // ==========================================================================
   @input @hint("Also insert a row into the captures table for each upload")
-  syncCapturesTable: boolean = false
+  syncCapturesTable: boolean = true
+  // ==========================================================================
 
   @input @hint("Table name used when syncCapturesTable is true")
   capturesTableName: string = "captures"
 
+  // ==========================================================================
+  // [SnapCloudCrop] Added: sessions table name input so the manager can
+  // insert a session row on startup, satisfying the FK constraint on captures.
+  // ==========================================================================
+  @input @hint("Table name for session records. A row is inserted here on startup before any captures.")
+  sessionsTableName: string = "sessions"
+  // ==========================================================================
+
   // --- Bridge role inputs --------------------------------------------------
+
   @input @hint("Bridge: RenderMeshVisual whose mainPass.captureImage holds the cropped texture.")
   @allowUndefined
   captureRendMesh: RenderMeshVisual | undefined
@@ -72,9 +90,18 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     if (this.supabaseProject) {
       this.initClient()
       this.sessionId = `session_${Date.now()}`
+
       if (!SnapCloudCropManager.instanceRef) {
         SnapCloudCropManager.instanceRef = this
         print(`[SnapCloudCrop] Manager registered. sessionId=${this.sessionId}`)
+
+        // ====================================================================
+        // [SnapCloudCrop] Added: insert the session row immediately so the FK
+        // constraint `captures_session_id_fkey` is satisfied before any
+        // capture uploads attempt to reference this session_id.
+        // ====================================================================
+        this.insertSessionRecord()
+        // ====================================================================
       } else {
         print("[SnapCloudCrop] Another manager already registered; this instance will act only as a bridge if wired.")
       }
@@ -261,6 +288,45 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     }
   }
 
+  // ==========================================================================
+  // [SnapCloudCrop] Added: inserts a row into `sessions` on manager startup.
+  // This must run before any capture upload so the FK constraint
+  // `captures_session_id_fkey` (captures.session_id -> sessions.id) is
+  // satisfied. Schema: id text/uuid PK, started_at timestamptz.
+  // ==========================================================================
+  private insertSessionRecord(): void {
+    if (!this.client) {
+      print("[SnapCloudCrop] Session insert skipped: client not ready.")
+      return
+    }
+    if (!this.sessionsTableName) {
+      print("[SnapCloudCrop] Session insert skipped: sessionsTableName is empty.")
+      return
+    }
+
+    this.client
+      .from(this.sessionsTableName)
+      .insert([
+        {
+          id: this.sessionId,
+          started_at: new Date().toISOString()
+        }
+      ])
+      .then((res: {error: unknown}) => {
+        if (res.error) {
+          print(`[SnapCloudCrop] Session insert failed: ${JSON.stringify(res.error)}`)
+          return
+        }
+        print(`[SnapCloudCrop] Session row inserted. id=${this.sessionId}`)
+      })
+  }
+  // ==========================================================================
+
+  // ==========================================================================
+  // [SnapCloudCrop] Updated: insertCaptureRecord now includes a client-side
+  // generated UUID v4 as `id`, matching the captures table schema:
+  //   id uuid PK, session_id text, file_path text, title text, created_at timestamptz
+  // ==========================================================================
   private async insertCaptureRecord(sessionId: string, imagePath: string, caption: string): Promise<void> {
     if (!this.client) {
       return
@@ -270,20 +336,22 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       return
     }
 
-    const {error} = await this.client.from(this.capturesTableName).insert([
-      {
-        session_id: sessionId,
-        file_path: imagePath,
-        title: caption,
-        created_at: new Date().toISOString()
-      }
-    ])
+    const row = {
+      id: this.generateUuidV4(),
+      session_id: sessionId,
+      file_path: imagePath,
+      title: caption,
+      created_at: new Date().toISOString()
+    }
+
+    const {error} = await this.client.from(this.capturesTableName).insert([row])
 
     if (error) {
       throw new Error(`Capture insert failed: ${JSON.stringify(error)}`)
     }
-    print("[SnapCloudCrop] Capture row inserted.")
+    print(`[SnapCloudCrop] Capture row inserted. id=${row.id}`)
   }
+  // ==========================================================================
 
   private buildCloudPath(sessionId: string, timestamp: number, extension: string, title: string): string {
     const prefix = this.cloudFolderPrefix ? this.cloudFolderPrefix.replace(/^\/+|\/+$/g, "") : ""
@@ -311,6 +379,25 @@ export class SnapCloudCropManager extends BaseScriptComponent {
 
     return slug.length > 0 ? slug : fallback
   }
+
+  // ==========================================================================
+  // [SnapCloudCrop] Added: client-side UUID v4 generator. Lens Studio runtime
+  // does not expose crypto.randomUUID, so we build one from Math.random().
+  // Sufficient for use as a primary key for the `captures` table.
+  // ==========================================================================
+  private generateUuidV4(): string {
+    const hex = (n: number) => Math.floor(Math.random() * n).toString(16)
+    const s4 = () => {
+      let out = ""
+      for (let i = 0; i < 4; i++) {
+        out += hex(16)
+      }
+      return out
+    }
+    const variant = (8 + Math.floor(Math.random() * 4)).toString(16) // 8,9,a,b
+    return `${s4()}${s4()}-${s4()}-4${s4().slice(1)}-${variant}${s4().slice(1)}-${s4()}${s4()}${s4()}`
+  }
+  // ==========================================================================
 
   private base64ToBytes(base64: string): Uint8Array {
     const decoded = Base64.decode(base64) as unknown as Uint8Array | string

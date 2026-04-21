@@ -3674,8 +3674,8 @@
     saveToCloud: true
     storageBucket: true
     cloudFolderPrefix: true
-    syncCapturesTable: true
     capturesTableName: true
+    sessionsTableName: true
     captureRendMesh: true
     loadingIndicator: true
     bridgeCaption: true
@@ -3688,8 +3688,9 @@
       saveToCloud: true
       storageBucket: specs-captures
       cloudFolderPrefix: captures
-      syncCapturesTable: false
+      syncCapturesTable: true
       capturesTableName: captures
+      sessionsTableName: sessions
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       bridgeCaption: capture

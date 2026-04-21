@@ -142,32 +142,34 @@ export class PictureBehavior extends BaseScriptComponent {
       this.loadingObj.enabled = true
       this.cropRegion.enabled = false
 
+      // ======================================================================
+      // [SnapCloudCrop] Changed: upload is chained INSIDE the ChatGPT callback
+      // so the `response` caption is forwarded to Snap Cloud as:
+      //   - the slugified filename  (e.g. captures/session_…/red-apple_<ts>.jpg)
+      //   - the `title` column in the `captures` DB row
+      // The loading spinner stays on until the upload finishes (onDone), so
+      // the user sees feedback for the full Storage + DB write, not just GPT.
+      // ======================================================================
       this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
-        this.loadingObj.enabled = false
         this.loadCaption(response)
+
+        const snapCloud = SnapCloudCropManager.getInstance()
+        if (snapCloud) {
+          snapCloud.uploadCroppedCapture(
+            this.captureRendMesh.mainPass.captureImage,
+            undefined, // use manager's sessionId
+            response,  // ChatGPT caption -> filename slug + captures.title
+            () => {
+              this.loadingObj.enabled = false
+            }
+          )
+        } else {
+          this.loadingObj.enabled = false
+          print("[SnapCloudCrop] No manager in scene; upload skipped.")
+        }
       })
 
       this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
-
-      // ======================================================================
-      // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
-      // Uses the singleton SnapCloudCropManager wired in the scene root.
-      // onDone fires after the upload finishes (success or failure) so we can
-      // turn off the loading spinner regardless of outcome.
-      // ======================================================================
-      const snapCloud = SnapCloudCropManager.getInstance()
-      if (snapCloud) {
-        snapCloud.uploadCroppedCapture(
-          this.captureRendMesh.mainPass.captureImage,
-          undefined, // use manager's sessionId
-          "capture", // caption / slug for the filename
-          () => {
-            this.loadingObj.enabled = false
-          }
-        )
-      } else {
-        print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
-      }
       // ======================================================================
     }
   }
