@@ -290,10 +290,10 @@
     {}
   ScriptInputs:
     "":
-      targetOutlineMaterial: !<reference.Material> babacee2-e36c-4385-8c5c-aecfd6955c16
+      targetOutlineMaterial: !<reference.Material> c8378284-a8b1-4b82-b98e-296faee29090
       hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       activatingColor: !<Vec4> {x: 0.000000, y: 0.666667, z: 1.000000, w: 1.000000}
-      outlineWeight: 0.300000
+      outlineWeight: 0.250000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> afcfa04d-e9de-46a2-5e29-dfc0f7e90bb7
   ScriptTypes:
@@ -658,7 +658,7 @@
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
       hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
-      outlineWeight: 0.250000
+      outlineWeight: 0.200000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> a087c37e-57cd-4847-728e-3dba0541b9fe
   ScriptTypes:
@@ -1733,7 +1733,7 @@
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
       hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
-      outlineWeight: 0.250000
+      outlineWeight: 0.200000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> eb2a0844-a8a6-4477-44b5-6cd90194301f
   ScriptTypes:
