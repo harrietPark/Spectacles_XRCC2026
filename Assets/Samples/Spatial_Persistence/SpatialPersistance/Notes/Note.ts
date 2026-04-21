@@ -143,6 +143,10 @@ export class Note extends BaseScriptComponent {
     if (this.playbackButton) {
       this.playbackButton.getSceneObject().enabled = shouldShowButtons
     }
+
+    if (this.voiceStatusText) {
+      this.voiceStatusText.getSceneObject().enabled = shouldShowButtons
+    }
   }
 
   private setupVoiceNoteControls(): void {
