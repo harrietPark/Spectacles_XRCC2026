@@ -4045,12 +4045,12 @@
   PrefabRemaps:
     []
   Name: RedPin
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 3.095778, y: 3.763718, z: -0.388021}
+    Position: {x: -0.107846, y: 4.104351, z: -0.533860}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 2.500000, y: 2.500000, z: 2.500000}
+    Scale: {x: 2.300000, y: 2.300000, z: 2.300000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 0a639c99-b085-42e8-9932-20e883b65004
@@ -4712,7 +4712,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -1.794340, y: 3.763718, z: 0.035052}
+    Position: {x: -0.166781, y: 4.098771, z: -0.667428}
     Rotation: {x: 180.000000, y: -13.403732, z: 180.000000}
     Scale: {x: 0.400000, y: 0.400000, z: 0.400000}
     HasSegmentScaleCompensation: false
@@ -5525,7 +5525,7 @@
     left: -4.000000
     bottom: -4.000000
     right: 4.000000
-    top: 4.500000
+    top: 4.400000
   OverflowVertical: Truncate
   OverflowHorizontal: Wrap
   Fill: !<TextFill>

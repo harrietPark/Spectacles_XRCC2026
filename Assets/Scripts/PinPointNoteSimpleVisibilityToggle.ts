@@ -39,7 +39,14 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
       })
     })
 
-    this.isReady = true
+    // ToggleButton can emit initial state-change callbacks on startup.
+    // Arm interactions on the next tick so startVisible is respected.
+    const armEvent = this.createEvent("DelayedCallbackEvent")
+    armEvent.bind(() => {
+      this.isReady = true
+    })
+    armEvent.reset(0)
+
     print(
       `[PinPointNoteSimpleVisibilityToggle] Ready on ${this.getSceneObject().name}. ` +
         `startVisible=${this.startVisible}, hasRoot=${this.noteObjectsRoot ? "yes" : "no"}, pins=${this.pinToggleButtons.length}`
