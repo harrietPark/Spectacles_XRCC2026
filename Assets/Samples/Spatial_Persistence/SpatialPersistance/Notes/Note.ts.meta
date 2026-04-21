@@ -28,10 +28,16 @@
   ScriptInputsHidden:
     _editToggle: false
     _textField: false
+    audioOutputAsset: false
     deleteButton: false
     editOutlineMaterial: false
+    microphoneAsset: false
     noteInteractable: false
     noteMesh: false
+    playbackButton: false
+    recordButton: false
+    sampleRate: false
+    voiceStatusText: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -47,6 +53,12 @@
       noteInteractable: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
       noteMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       editOutlineMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      sampleRate: !<float> 0.000000
   ScriptTypes:
     -
       {}
@@ -57,3 +69,9 @@
     - // @input AssignableType_2 noteInteractable
     - // @input Component.RenderMeshVisual noteMesh
     - '// @input Asset.Material editOutlineMaterial {"hint":"Outline material that appears when the note is being edited"}'
+    - '// @input AssignableType_3 recordButton {"hint":"Optional button used to start/stop voice recording"}'
+    - '// @input AssignableType_4 playbackButton {"hint":"Optional button used to playback the recorded voice note"}'
+    - '// @input Asset.AudioTrackAsset microphoneAsset {"hint":"Audio From Microphone track asset"}'
+    - '// @input Asset.AudioTrackAsset audioOutputAsset {"hint":"Audio Output track asset used for playback"}'
+    - '// @input Component.Text voiceStatusText {"hint":"Optional text component used to show record/playback status"}'
+    - '// @input float sampleRate {"hint":"Sample rate used for recording and playback"}'
