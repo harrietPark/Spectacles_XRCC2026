@@ -18,6 +18,8 @@
     - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 5fea7acf-f65c-4cf4-8dea-826df0c50577
     - !<own> 6eb0a0ff-3a7a-4d25-b5e1-83fcaf7f74b7
+    - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
+    - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -1283,6 +1285,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/2a66df0a-94f5-4475-b285-eefbd9fedf21>
+  PrefabRemaps:
+    []
+  Name: SnapCloudCropManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 979cb68b-aba2-4cd6-b779-3443c550b9c7
 - !<SceneObject/2b0f1f13-048a-4ca6-82c8-2f9bbdcd3ecc>
   PrefabRemaps:
     []
@@ -3413,6 +3430,21 @@
     - !<own> 25c4f13d-d02f-42a4-9cc4-f967aa7ce560
   Components:
     []
+- !<SceneObject/8984b67f-2f44-4b17-8fa3-8ff9b2085e42>
+  PrefabRemaps:
+    []
+  Name: "------------ Backend_Syncing ---------------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/8a183e24-bc4c-41b6-9d21-63dbdafb91fe>
   PrefabRemaps:
     []
@@ -3643,6 +3675,39 @@
       specsRightCamera: !<reference.Camera> e5ed91b2-205c-403c-b67d-687ed5ee0cbe
       screenCropTexture: !<reference.Texture> cd12b01a-61d6-4671-bba2-6c3bde1a9812
       deviceCamTexture: !<reference.Texture> 996c6f4e-b2ad-4117-9e3e-3db82e6e97f5
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/979cb68b-aba2-4cd6-b779-3443c550b9c7>
+  PrefabRemaps:
+    []
+  Name: snap_cloud_crop_manager
+  Enabled: true
+  ScriptAsset: !<reference> dea6b24a-83ea-4869-82dd-60785e18239d
+  ScriptInputsDefault:
+    saveToCloud: true
+    storageBucket: true
+    cloudFolderPrefix: true
+    syncCapturesTable: true
+    capturesTableName: true
+    captureRendMesh: true
+    loadingIndicator: true
+    bridgeCaption: true
+    autoHideLoading: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      supabaseProject: !<reference.SupabaseProject> f966595d-849a-4274-b396-5d33056d2a40
+      saveToCloud: true
+      storageBucket: specs-captures
+      cloudFolderPrefix: captures
+      syncCapturesTable: false
+      capturesTableName: captures
+      captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      bridgeCaption: capture
+      autoHideLoading: true
   ScriptTypes:
     "":
       {}
