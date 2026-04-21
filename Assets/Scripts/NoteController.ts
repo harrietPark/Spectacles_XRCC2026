@@ -114,9 +114,8 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private addCroppedImage(image: Texture) {
-        print("----- Note Controller: " + image.getWidth());
         if(this.notes.length == 0) return;
-        
+
         this.notes[this.notes.length - 1].setCroppedImage(image);
     }
 

@@ -242,7 +242,8 @@ export class AreaManager extends BaseScriptComponent {
     widget.onUpdateContent.add(() => {
       this.saveWidgets()
     })
-    this.widgets.push(widget)
+    // this.widgets.push(widget)
+    this.widgets = [...this.widgets, widget];
 
     const manipulationComponent: InteractableManipulation = widgetObject.getComponent(
       InteractableManipulation.getTypeName()
@@ -532,6 +533,7 @@ export class AreaManager extends BaseScriptComponent {
   public deleteWidget(widget: Widget) {
     if (this.areaAnchor !== undefined || global.deviceInfoSystem.isEditor()) {
       this.widgets.splice(this.widgets.indexOf(widget))
+      this.widgets = [...this.widgets]
 
       widget.sceneObject.destroy()
 
