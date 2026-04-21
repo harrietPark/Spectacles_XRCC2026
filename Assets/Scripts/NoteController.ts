@@ -16,12 +16,16 @@ export class NoteController extends BaseScriptComponent {
     public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
 
     // @input private camera: CameraModule;
-    @input private areaManager: AreaManager;
+    @input
+    @allowUndefined
+    private areaManager: AreaManager | undefined;
     @ui.group_start("Note Anchoring Setup")
     @input private HandDwellingTimeThreshold: number = 3; // in seconds
     @ui.group_end
     @ui.group_start("Crop to Photo")
-    @input private pictureController: PictureController;
+    @input
+    @allowUndefined
+    private pictureController: PictureController | undefined;
     @ui.group_end
     @ui.separator
     @ui.group_start("Visual Feedback")
@@ -47,8 +51,17 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private onStart() {
-        this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
-        this.areaManager.onWidgetsUpdated.add(this.updateNotes.bind(this));
+        if (this.pictureController) {
+            this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
+        } else {
+            print("[NoteController] pictureController is not assigned; crop flow is disabled.");
+        }
+
+        if (this.areaManager) {
+            this.areaManager.onWidgetsUpdated.add(this.updateNotes.bind(this));
+        } else {
+            print("[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.");
+        }
     }
 
     private onUpdate() {
@@ -110,6 +123,9 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private enableCrop() {
+        if (!this.pictureController) {
+            return;
+        }
         this.pictureController.enableCrop();
     }
 
