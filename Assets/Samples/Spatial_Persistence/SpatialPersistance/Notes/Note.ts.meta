@@ -43,7 +43,7 @@
     []
   DefaultScriptInputs:
     - _textField: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      _croppedImage: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      _croppedImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       _editToggle: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       deleteButton: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       noteInteractable: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
@@ -54,7 +54,7 @@
       {}
   InputLines:
     - // @input Component.Text _textField
-    - // @input Component.RenderMeshVisual _croppedImage
+    - // @input Component.Image _croppedImage
     - // @input AssignableType _editToggle
     - // @input AssignableType_1 deleteButton
     - // @input AssignableType_2 noteInteractable

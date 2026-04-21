@@ -8,7 +8,7 @@ import {Widget} from "../Widget"
 @component
 export class Note extends BaseScriptComponent {
   @input private _textField: Text
-  @input private _croppedImage: RenderMeshVisual;
+  @input private _croppedImage: Image;
   @input private _editToggle: ToggleButton
   @input private deleteButton: PinchButton
   @input private noteInteractable: Interactable
@@ -32,6 +32,9 @@ export class Note extends BaseScriptComponent {
   private onStart() {
     this.meshMaterial = this.noteMesh.mainMaterial.clone()
     this.noteMesh.mainMaterial = this.meshMaterial
+
+    this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
+    this._croppedImage.getSceneObject().enabled = false;
 
     this.widget = this.sceneObject.getComponent(Widget.getTypeName())
 
@@ -73,8 +76,10 @@ export class Note extends BaseScriptComponent {
   }
 
   public setCroppedImage(image: Texture) {
-    print("----- Note: Setting cropped image: " + image.getWidth());
-    // this._croppedImage.
+    // this._croppedImage.mainPass.captureImage = ProceduralTextureProvider.createFromTexture(image);
+    this._croppedImage.getSceneObject().enabled = true;
+    this._croppedImage.mainMaterial.mainPass.baseTex = image;
+    // print("----- Note: Setting cropped image: " + image.getWidth());
   }
 
   /**

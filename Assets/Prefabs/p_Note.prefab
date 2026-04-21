@@ -251,7 +251,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.587644}
+    Position: {x: 0.000000, y: 2.197900, z: 0.100000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -278,12 +278,12 @@
   Enabled: true
   ScriptAsset: !<reference> 476cf78a-9eb3-4293-9f5c-e577a6adefb0
   ScriptInputsDefault:
-    _text: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      _text: ""
+      _text: Reminder
       textComponent: !<reference.Text> 0752e611-8f51-4cbc-b93d-2d6b26ac2a6b
   ScriptTypes:
     "":
@@ -336,8 +336,8 @@
     - ba3a8a9e-9b4b-40eb-b11a-49e8b50c95a2: ba3a8a9e-9b4b-40eb-4ee5-b6174af36a5d
     - c4011673-f692-4ce6-8b00-48db5107f7fa: c4011673-f692-4ce6-74ff-b724aef80805
     - cd3b75e7-c44b-41b2-b5c2-5806196f6757: cd3b75e7-c44b-41b2-4a3d-a7f9e69098a8
-    - cf68cc30-9f0e-47a5-86ac-9d975eea3b70: b0c70157-d16e-4678-920d-0cfa1a896b6d
     - d35a210c-13bb-4d0a-9b83-0fd26ed20df0: d35a210c-13bb-4d0a-647c-f02d912df20f
+    - d9c2cd7e-d75f-42e7-a1db-8de54e618c06: ca96ad60-656d-4844-ab30-51cc50bff613
     - d9caa29f-df4c-41b7-85c9-8753d6df7f03: d9caa29f-df4c-41b7-7a36-78ac292080fc
     - dc5af47d-f390-4b01-ac9d-5b686712ea27: dc5af47d-f390-4b01-5362-a49798ed15d8
     - e38cb3bb-51b6-4a10-8680-9e5644a26e85: e38cb3bb-51b6-4a10-797f-61a9bb5d917a
@@ -482,14 +482,14 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -2.278047, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 4.000000, y: 4.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
-    - !<own> cf68cc30-9f0e-47a5-86ac-9d975eea3b70
+    - !<own> d9c2cd7e-d75f-42e7-a1db-8de54e618c06
 - !<ScriptComponent/8af05f93-00a1-4fb1-86d8-0a1bd265ff2a>
   PrefabRemaps:
     []
@@ -503,7 +503,7 @@
   ScriptInputs:
     "":
       _textField: !<reference.Text> 0752e611-8f51-4cbc-b93d-2d6b26ac2a6b
-      _croppedImage: !<reference.RenderMeshVisual> cf68cc30-9f0e-47a5-86ac-9d975eea3b70
+      _croppedImage: !<reference.Image> d9c2cd7e-d75f-42e7-a1db-8de54e618c06
       _editToggle: !<MappingBased.AssignableType> 9ef90c73-99d7-452d-b6e2-4e7a0649fe73
       deleteButton: !<MappingBased.AssignableType_1> c4011673-f692-4ce6-8b00-48db5107f7fa
       noteInteractable: !<MappingBased.AssignableType_2> 1269eb50-bcc8-44ce-af1b-698c3205a5f5
@@ -797,26 +797,6 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<RenderMeshVisual/cf68cc30-9f0e-47a5-86ac-9d975eea3b70>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 269c4b89-727f-4c97-a1e3-60ddea643014
-  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<ScriptComponent/d35a210c-13bb-4d0a-9b83-0fd26ed20df0>
   PrefabRemaps:
     []
@@ -833,6 +813,25 @@
   ScriptTypes:
     "":
       {}
+- !<Image/d9c2cd7e-d75f-42e7-a1db-8de54e618c06>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 41fccaf3-1125-43ef-8252-695e2f7d4774
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<RenderMeshVisual/d9caa29f-df4c-41b7-85c9-8753d6df7f03>
   PrefabRemaps:
     []

@@ -862,7 +862,7 @@
   ScriptInputs:
     "":
       _textField: !<reference.Text> 102ed44e-ca13-409b-5969-2d058fe7f3a5
-      _croppedImage: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      _croppedImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       _editToggle: !<MappingBased.AssignableType> 102c7fb6-4716-4c0c-4602-e9826509c5fd
       deleteButton: !<MappingBased.AssignableType_1> 3e437fe9-9b27-4c1c-6cbd-654f85fef594
       noteInteractable: !<MappingBased.AssignableType_2> 36a44e42-532e-4d94-77ff-644582ba9219

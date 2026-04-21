@@ -148,31 +148,28 @@ export class PictureBehavior extends BaseScriptComponent {
       //   this.loadCaption(response)
       // })
 
-      // ======================================================================
-      // [Display Cropped Image on Note UI]
-      // ======================================================================
       this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
 
-      // // ======================================================================
-      // // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
-      // // Uses the singleton SnapCloudCropManager wired in the scene root.
-      // // onDone fires after the upload finishes (success or failure) so we can
-      // // turn off the loading spinner regardless of outcome.
-      // // ======================================================================
-      // const snapCloud = SnapCloudCropManager.getInstance()
-      // if (snapCloud) {
-      //   snapCloud.uploadCroppedCapture(
-      //     this.captureRendMesh.mainPass.captureImage,
-      //     undefined, // use manager's sessionId
-      //     "capture", // caption / slug for the filename
-      //     () => {
-      //       this.loadingObj.enabled = false
-      //     }
-      //   )
-      // } else {
-      //   print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
-      // }
-      // // ======================================================================
+      // ======================================================================
+      // [SnapCloudCrop] Added: send cropped image to Snap Cloud (Supabase).
+      // Uses the singleton SnapCloudCropManager wired in the scene root.
+      // onDone fires after the upload finishes (success or failure) so we can
+      // turn off the loading spinner regardless of outcome.
+      // ======================================================================
+      const snapCloud = SnapCloudCropManager.getInstance()
+      if (snapCloud) {
+        snapCloud.uploadCroppedCapture(
+          this.captureRendMesh.mainPass.captureImage,
+          undefined, // use manager's sessionId
+          "capture", // caption / slug for the filename
+          () => {
+            this.loadingObj.enabled = false
+          }
+        )
+      } else {
+        print("[SnapCloudCrop] No manager in scene; leaving loadingObj enabled.")
+      }
+      // ======================================================================
     }
   }
 
