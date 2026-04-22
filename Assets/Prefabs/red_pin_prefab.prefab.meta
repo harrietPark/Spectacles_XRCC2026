@@ -1,0 +1,71 @@
+- !<AssetImportMetadata/a914ee78-29d3-4125-ab8f-f83a9a40957e>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> 473fa665-f729-4d41-bc4c-78a9a8f187c2
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> 473fa665-f729-4d41-bc4c-78a9a8f187c2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    ObjectPrefab: !<own> 2bd5cd42-f21f-4427-86e9-15911e3f2acc
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ObjectPrefabAssetData/2bd5cd42-f21f-4427-86e9-15911e3f2acc>
+  Prototype: !<ObjectOwner/49fa7c5c-9ced-4466-89d4-f2449c043fc3>
+    PackagePath: ""
+    objects:
+      - !<own> cdfb3ca0-ceed-4315-4f8d-f57acb61ddcb
+- !<SceneObject/9b976936-0647-492b-6035-d54a6ec6910e>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ca53fcfe-c2b2-4300-6f52-af396e7b6a87
+- !<RenderMeshVisual/ca53fcfe-c2b2-4300-6f52-af396e7b6a87>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
+  Mesh: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/cdfb3ca0-ceed-4315-4f8d-f57acb61ddcb>
+  PrefabRemaps:
+    []
+  Name: red_pin_prefab
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 2.000000, y: 2.000000, z: 2.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 9b976936-0647-492b-6035-d54a6ec6910e
+  Components:
+    []
