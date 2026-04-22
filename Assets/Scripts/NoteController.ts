@@ -29,7 +29,8 @@ export class NoteController extends BaseScriptComponent {
     @ui.group_end
     @ui.separator
     @ui.group_start("Visual & Audio Feedback")
-    @input private VisualRightIndexTip: SceneObject;
+    @input private VisualRightIndexTipHighlight: SceneObject;
+    // @input private VisualVisualRightIndexTipDwellingProgress: SceneObject;
     @ui.group_end
 
     // Hand tracking
@@ -68,35 +69,41 @@ export class NoteController extends BaseScriptComponent {
     private onUpdate() {
         if (this.isNoteAnchoringActive) {
             if (this.tryAnchorNote()) {
-                this.anchorNote();
+                this.spawnNote();
             }
         }
     }
 
     public activateCreationProcess() {
-        this.VisualRightIndexTip.enabled = true;
+        this.VisualRightIndexTipHighlight.enabled = true;
+        // this.VisualVisualRightIndexTipDwellingProgress.enabled = true;
         this.isNoteAnchoringActive = true;
     }
 
     public deactivateCreationProcess() {
-        this.VisualRightIndexTip.enabled = false;
+        this.VisualRightIndexTipHighlight.enabled = false;
+        // this.VisualVisualRightIndexTipDwellingProgress.enabled = false;
         this.isNoteAnchoringActive = false;
     }
 
     private tryAnchorNote() : boolean {
         if (this.rightHand.isTracked()) {
             const currHandPosition = this.rightHand.indexTip.position;
-            this.VisualRightIndexTip.getTransform().setWorldPosition(currHandPosition);
+            this.VisualRightIndexTipHighlight.getTransform().setWorldPosition(currHandPosition);
 
             const distance = currHandPosition.distance(this.prevHandPosition);
             this.prevHandPosition = currHandPosition;
             // print("--- DISTANCE: " + distance);
             if (distance < this.handMovementRadiusRange) {
+                // this.VisualRightIndexTipHighlight.enabled = true;
+
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
                     this.handDwellingTimer = 0;
                     return true;
                 }
+            } else {
+                // this.VisualVisualRightIndexTipDwellingProgress.enabled = false;
             }
         } else {
             this.handDwellingTimer = 0;
@@ -104,7 +111,7 @@ export class NoteController extends BaseScriptComponent {
         }
     }
 
-    private anchorNote() {
+    private spawnNote() {
         this.deactivateCreationProcess();
 
         // Spawn a spatial note
