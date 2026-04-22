@@ -31,7 +31,7 @@
     microphoneAsset: false
     microphoneWarmupDurationSeconds: false
     requestMicrophonePermissionOnStart: false
-    uxFeedbackController: false
+    uxFeedbackControllerComponent: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,7 +41,7 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - uxFeedbackController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+    - uxFeedbackControllerComponent: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       NoteController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       buttonActivateNoteCreation: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
       requestMicrophonePermissionOnStart: true
@@ -52,7 +52,7 @@
       {}
   InputLines:
     - '// @ui {"widget":"group_start", "label":"Controller References"}'
-    - // @input AssignableType uxFeedbackController
+    - '// @input AssignableType uxFeedbackControllerComponent {"hint":"Assign UXFeedbackController component. Uses safe no-op fallback if missing or still compiling."}'
     - // @input AssignableType_1 NoteController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"UI References"}'

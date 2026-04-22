@@ -30,9 +30,11 @@
     dwellNotReadyColor: false
     dwellNotReadyStatePrefab: false
     dwellNotReadyStateScale: false
+    dwellReadyAfterSeconds: false
     dwellReadyColor: false
     dwellReadyStatePrefab: false
     dwellReadyStateScale: false
+    dwellSignalDebounceSeconds: false
     midasTouchColorParameter: false
     midasTouchVisualMesh: false
   ScriptTypesHidden:
@@ -53,6 +55,8 @@
       midasTouchColorParameter: baseColor
       dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
+      dwellSignalDebounceSeconds: 0.080000
+      dwellReadyAfterSeconds: 1.500000
   ScriptTypes:
     -
       {}
@@ -67,4 +71,6 @@
     - '// @input string midasTouchColorParameter = "baseColor" {"hint":"Shader color parameter name on the dwell indicator material."}'
     - '// @input vec4 dwellNotReadyColor = {1,0,0,1} {"widget":"color"}'
     - '// @input vec4 dwellReadyColor = {0,1,0,1} {"widget":"color"}'
+    - '// @input float dwellSignalDebounceSeconds = 0.08 {"hint":"Seconds the dwell signal must remain changed before applying state (reduces jitter flicker)."}'
+    - '// @input float dwellReadyAfterSeconds = 1.5 {"hint":"Seconds in active dwell before switching from not-ready to ready visual."}'
     - '// @ui {"widget":"group_end"}'

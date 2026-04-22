@@ -32,6 +32,12 @@ export class UXFeedbackController extends BaseScriptComponent {
     @input
     @widget(new ColorWidget())
     private dwellReadyColor: vec4 = new vec4(0, 1, 0, 1);
+    @input
+    @hint("Seconds the dwell signal must remain changed before applying state (reduces jitter flicker).")
+    private dwellSignalDebounceSeconds: number = 0.08;
+    @input
+    @hint("Seconds in active dwell before switching from not-ready to ready visual.")
+    private dwellReadyAfterSeconds: number = 1.5;
     @ui.group_end
 
     // Hand tracking
@@ -46,6 +52,10 @@ export class UXFeedbackController extends BaseScriptComponent {
     private dwellNotReadyStateObject: SceneObject | undefined;
     private dwellReadyStateObject: SceneObject | undefined;
     private lastDwellReadyVisualState: boolean | undefined;
+    private isDwellSignalActive: boolean = false;
+    private pendingDwellSignalActive: boolean = false;
+    private dwellSignalChangedAt: number = 0;
+    private dwellActivatedAt: number = 0;
 
     private onAwake() {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -56,15 +66,22 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
         this.setDwellIndicatorReady(false);
+        this.isDwellSignalActive = false;
+        this.pendingDwellSignalActive = false;
+        this.dwellSignalChangedAt = getTime();
+        this.dwellActivatedAt = 0;
     }
 
     private onUpdate() {
         if (this.isIndexTipHighlightActive) {
             this.MidasTouchVisual.getTransform().setWorldPosition(this.rightHand.indexTip.position);
         }
+
+        this.updateDwellVisualState();
     }
 
     public activateIndexTipHighlight() {
+        this.forceNotReadyVisualState();
         this.MidasTouchVisual.enabled = true;
         this.isIndexTipHighlightActive = true;
     }
@@ -75,12 +92,57 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     public activateDwellIndicator() {
-        this.setDwellIndicatorReady(true);
+        this.requestDwellSignalState(true);
     }
 
     public deactivateDwellIndicator() {
-        this.setDwellIndicatorReady(false);
+        this.requestDwellSignalState(false);
     }
+
+    private forceNotReadyVisualState(): void {
+        this.isDwellSignalActive = false;
+        this.pendingDwellSignalActive = false;
+        this.dwellActivatedAt = 0;
+        this.dwellSignalChangedAt = getTime();
+        this.applyDwellIndicatorState(false, true);
+    }
+    private requestDwellSignalState(isActive: boolean): void {
+        if (this.pendingDwellSignalActive === isActive) {
+            return;
+        }
+
+        this.pendingDwellSignalActive = isActive;
+        this.dwellSignalChangedAt = getTime();
+    }
+
+    private updateDwellVisualState(): void {
+        const now = getTime();
+        const debounceSeconds = Math.max(0, this.dwellSignalDebounceSeconds);
+        if (this.pendingDwellSignalActive !== this.isDwellSignalActive) {
+            if (now - this.dwellSignalChangedAt < debounceSeconds) {
+                return;
+            }
+
+            this.isDwellSignalActive = this.pendingDwellSignalActive;
+            if (this.isDwellSignalActive) {
+                this.dwellActivatedAt = now;
+                this.setDwellIndicatorReady(false);
+            } else {
+                this.dwellActivatedAt = 0;
+                this.setDwellIndicatorReady(false);
+            }
+        }
+
+        if (!this.isDwellSignalActive) {
+            return;
+        }
+
+        const readyAfterSeconds = Math.max(0, this.dwellReadyAfterSeconds);
+        if (now - this.dwellActivatedAt >= readyAfterSeconds) {
+            this.setDwellIndicatorReady(true);
+        }
+    }
+
     
     private initializeDwellIndicatorMaterial(): void {
         this.dwellBaseMeshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
@@ -116,7 +178,11 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     private setDwellIndicatorReady(isReady: boolean): void {
-        if (this.lastDwellReadyVisualState !== undefined && this.lastDwellReadyVisualState === isReady) {
+        this.applyDwellIndicatorState(isReady, false);
+    }
+
+    private applyDwellIndicatorState(isReady: boolean, force: boolean): void {
+        if (!force && this.lastDwellReadyVisualState !== undefined && this.lastDwellReadyVisualState === isReady) {
             return;
         }
         this.lastDwellReadyVisualState = isReady;
@@ -140,7 +206,7 @@ export class UXFeedbackController extends BaseScriptComponent {
             return;
         }
 
-        const pass = this.dwellIndicatorMaterial.mainPass as unknown as {[key: string]: vec4};
+        const pass = this.dwellIndicatorMaterial.mainPass as unknown as { [key: string]: vec4 };
         pass[this.midasTouchColorParameter] = isReady ? this.dwellReadyColor : this.dwellNotReadyColor;
     }
     

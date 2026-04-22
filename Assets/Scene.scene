@@ -1708,13 +1708,14 @@
   Enabled: true
   ScriptAsset: !<reference> 8f6d7147-98af-4df6-ac00-577e73caa027
   ScriptInputsDefault:
+    uxFeedbackControllerComponent: true
     requestMicrophonePermissionOnStart: true
     microphoneWarmupDurationSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      uxFeedbackController: !<MappingBased.AssignableType> 648bc0d7-3193-45df-8075-2b9da42f35b7
+      uxFeedbackControllerComponent: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       NoteController: !<MappingBased.AssignableType_1> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
       buttonActivateNoteCreation: !<MappingBased.AssignableType_2> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
       requestMicrophonePermissionOnStart: true
@@ -2728,6 +2729,8 @@
     midasTouchColorParameter: true
     dwellNotReadyColor: true
     dwellReadyColor: true
+    dwellSignalDebounceSeconds: true
+    dwellReadyAfterSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2741,6 +2744,8 @@
       midasTouchColorParameter: baseColor
       dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
+      dwellSignalDebounceSeconds: 0.080000
+      dwellReadyAfterSeconds: 1.500000
   ScriptTypes:
     "":
       {}

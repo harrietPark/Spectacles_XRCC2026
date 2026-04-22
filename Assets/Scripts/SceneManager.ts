@@ -1,11 +1,20 @@
 import { NoteController } from "./NoteController";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
-import { UXFeedbackController } from "./UXFeedbackController";
+
+type UXFeedbackControllerApi = {
+    activateIndexTipHighlight: () => void;
+    deactivateIndexTipHighlight: () => void;
+    activateDwellIndicator: () => void;
+    deactivateDwellIndicator: () => void;
+};
 
 @component
 export class SceneManager extends BaseScriptComponent {
     @ui.group_start("Controller References")
-    @input public uxFeedbackController: UXFeedbackController;
+    @input
+    @allowUndefined
+    @hint("Assign UXFeedbackController component. Uses safe no-op fallback if missing or still compiling.")
+    private uxFeedbackControllerComponent: BaseScriptComponent | undefined;
     @input private NoteController: NoteController;
     @ui.group_end
     @ui.group_start("UI References")
@@ -25,8 +34,15 @@ export class SceneManager extends BaseScriptComponent {
     private microphoneWarmupDurationSeconds: number = 0.25;
     @ui.group_end
     private microphoneControl: MicrophoneAudioProvider | undefined;
+    private didWarnMissingUxFeedbackController: boolean = false;
 
     private static instance;
+    private readonly noopUxFeedbackController: UXFeedbackControllerApi = {
+        activateIndexTipHighlight: () => {},
+        deactivateIndexTipHighlight: () => {},
+        activateDwellIndicator: () => {},
+        deactivateDwellIndicator: () => {},
+    };
 
     private onAwake() {
         if (!SceneManager.instance) {
@@ -49,6 +65,27 @@ export class SceneManager extends BaseScriptComponent {
             throw new Error("SceneManager not initialized");
         }
         return SceneManager.instance;
+    }
+
+    public get uxFeedbackController(): UXFeedbackControllerApi {
+        const candidate = this.uxFeedbackControllerComponent as unknown as Partial<UXFeedbackControllerApi> | undefined;
+        if (
+            candidate &&
+            typeof candidate.activateIndexTipHighlight === "function" &&
+            typeof candidate.deactivateIndexTipHighlight === "function" &&
+            typeof candidate.activateDwellIndicator === "function" &&
+            typeof candidate.deactivateDwellIndicator === "function"
+        ) {
+            return candidate as UXFeedbackControllerApi;
+        }
+
+        if (!this.didWarnMissingUxFeedbackController) {
+            this.didWarnMissingUxFeedbackController = true;
+            print(
+                "[SceneManager] uxFeedbackController is missing or not ready; using no-op fallback until component loads."
+            );
+        }
+        return this.noopUxFeedbackController;
     }
 
     public sendProductViewToBackend() {
