@@ -1,33 +1,33 @@
-import {createClient, SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
+import {SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
+import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
 
 /**
- * Handles syncing cropped captures from the Lens front end to Snap Cloud (Supabase).
+ * Handles syncing cropped captures from the Lens front end to Snap Cloud.
  *
- * Supports two roles on the same component, controlled by which inputs are wired:
+ * NOTE: This script no longer owns the Supabase client or sessionId. Those
+ * are owned by `SnapCloudSessionManager` -- see that file. This script now
+ * does ONE thing: take a cropped texture and write it to Supabase Storage
+ * + optionally insert a row into the `captures` table. It still exposes the
+ * same `getInstance()` / `uploadCroppedCapture()` API so existing callers
+ * (PictureBehavior etc.) keep working unchanged.
  *
- *   Manager role (put one on a scene-root SceneObject):
- *     - Wire `supabaseProject`.
- *     - Creates the Supabase client, registers the singleton, owns the sessionId.
- *     - On awake, automatically inserts a row into `sessions` so the FK constraint
- *       on `captures.session_id` is satisfied.
+ * Two roles live on the same component, controlled by which inputs are wired:
+ *
+ *   Standalone role (put one on a scene-root SceneObject):
+ *     - No inputs required beyond the defaults.
+ *     - Registers the singleton so `SnapCloudCropManager.getInstance()` works.
+ *     - Exposes `uploadCroppedCapture(texture, sessionId?, caption?, onDone?)`
+ *       for external callers.
  *
  *   Bridge role (put one on the Scanner prefab alongside PictureBehavior):
- *     - Wire `captureRendMesh` and `loadingIndicator` to the SAME objects PictureBehavior uses.
- *     - Watches `loadingIndicator.enabled` for a false->true rising edge
- *       (the moment PictureBehavior.processImage enables the loading spinner),
- *       grabs `captureRendMesh.mainPass.captureImage`, uploads via the singleton,
- *       and turns the loading spinner back off when done.
- *
- * Both roles can coexist on the same component if all inputs are wired.
+ *     - Wire `captureRendMesh` and `loadingIndicator` to the SAME objects
+ *       PictureBehavior uses.
+ *     - Watches `loadingIndicator.enabled` for a false->true rising edge,
+ *       grabs `captureRendMesh.mainPass.captureImage`, and uploads.
  */
 @component
 export class SnapCloudCropManager extends BaseScriptComponent {
-  // --- Manager role inputs -------------------------------------------------
-
-  @input @hint("PinPoint Snap Cloud project asset (url + publicToken). Required on the manager instance.")
-  @allowUndefined
-  supabaseProject: SupabaseProject | undefined
-
+  // --- Upload behavior inputs ---------------------------------------------
   @input @hint("Master switch for uploading cropped captures to Snap Cloud storage")
   saveToCloud: boolean = true
 
@@ -37,25 +37,11 @@ export class SnapCloudCropManager extends BaseScriptComponent {
   @input @hint("Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg")
   cloudFolderPrefix: string = "captures"
 
-  // ==========================================================================
-  // [SnapCloudCrop] Changed: default flipped to true so every upload also
-  // writes a metadata row into the `captures` table (id, session_id,
-  // file_path, title, created_at).
-  // ==========================================================================
   @input @hint("Also insert a row into the captures table for each upload")
   syncCapturesTable: boolean = true
-  // ==========================================================================
 
   @input @hint("Table name used when syncCapturesTable is true")
   capturesTableName: string = "captures"
-
-  // ==========================================================================
-  // [SnapCloudCrop] Added: sessions table name input so the manager can
-  // insert a session row on startup, satisfying the FK constraint on captures.
-  // ==========================================================================
-  @input @hint("Table name for session records. A row is inserted here on startup before any captures.")
-  sessionsTableName: string = "sessions"
-  // ==========================================================================
 
   // --- Bridge role inputs --------------------------------------------------
 
@@ -73,10 +59,8 @@ export class SnapCloudCropManager extends BaseScriptComponent {
   @input @hint("Bridge: disable the loadingIndicator automatically when upload finishes (success or fail).")
   autoHideLoading: boolean = true
 
-  // --- Manager state -------------------------------------------------------
+  // --- Singleton state ------------------------------------------------------
   private static instanceRef: SnapCloudCropManager | null = null
-  private client: SupabaseClient | null = null
-  private sessionId: string = ""
 
   // --- Bridge state --------------------------------------------------------
   private prevLoadingEnabled: boolean = false
@@ -87,24 +71,9 @@ export class SnapCloudCropManager extends BaseScriptComponent {
   }
 
   onAwake() {
-    if (this.supabaseProject) {
-      this.initClient()
-      this.sessionId = `session_${Date.now()}`
-
-      if (!SnapCloudCropManager.instanceRef) {
-        SnapCloudCropManager.instanceRef = this
-        print(`[SnapCloudCrop] Manager registered. sessionId=${this.sessionId}`)
-
-        // ====================================================================
-        // [SnapCloudCrop] Added: insert the session row immediately so the FK
-        // constraint `captures_session_id_fkey` is satisfied before any
-        // capture uploads attempt to reference this session_id.
-        // ====================================================================
-        this.insertSessionRecord()
-        // ====================================================================
-      } else {
-        print("[SnapCloudCrop] Another manager already registered; this instance will act only as a bridge if wired.")
-      }
+    if (!SnapCloudCropManager.instanceRef) {
+      SnapCloudCropManager.instanceRef = this
+      print("[SnapCloudCrop] Singleton registered.")
     }
 
     if (this.captureRendMesh && this.loadingIndicator) {
@@ -119,54 +88,34 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     if (SnapCloudCropManager.instanceRef === this) {
       SnapCloudCropManager.instanceRef = null
     }
-    if (this.client) {
-      this.client.removeAllChannels()
-      this.client = null
-    }
   }
 
-  private initClient(): void {
-    if (!this.supabaseProject) {
-      return
-    }
+  // ---------------------------------------------------------------- client
 
-    this.client = createClient(this.supabaseProject.url, this.supabaseProject.publicToken, {
-      realtime: {
-        heartbeatIntervalMs: 2500
-      }
-    })
-
-    if (this.client) {
-      print(`[SnapCloudCrop] Client ready. bucket=${this.storageBucket} prefix=${this.cloudFolderPrefix}`)
-    } else {
-      print("[SnapCloudCrop] Failed to create Supabase client.")
-    }
-  }
-
+  /**
+   * Delegate to SnapCloudSessionManager. Kept as a public method so older
+   * callers that used to read the client from this script still work.
+   */
   getClient(): SupabaseClient | null {
-    return this.client
+    const sm = SnapCloudSessionManager.getInstance()
+    return sm ? sm.getClient() : null
   }
 
   getSessionId(): string {
-    return this.sessionId
+    const sm = SnapCloudSessionManager.getInstance()
+    return sm ? sm.getSessionId() : ""
   }
 
   // ---------------------------------------------------------------- public API
 
   /**
-   * Upload a cropped capture to the configured Snap Cloud bucket. If this
-   * component is only a bridge, the call is forwarded to the singleton manager.
-   * `onDone` fires once the upload finishes (success or failure) so callers can
-   * e.g. hide a loading spinner.
+   * Upload a cropped capture to the configured Snap Cloud bucket. `onDone`
+   * fires once the upload finishes (success or failure) so callers can e.g.
+   * hide a loading spinner.
    */
   uploadCroppedCapture(texture: Texture, sessionId?: string, caption?: string, onDone?: () => void): void {
-    const manager = this.client ? this : SnapCloudCropManager.instanceRef
-    if (!manager) {
-      print("[SnapCloudCrop] Skipped: no manager with an initialized client.")
-      if (onDone) onDone()
-      return
-    }
-    manager.performUpload(texture, sessionId || manager.sessionId, caption || "capture", onDone)
+    const activeSessionId = sessionId || this.getSessionId()
+    this.performUpload(texture, activeSessionId, caption || "capture", onDone)
   }
 
   // ------------------------------------------------------------------ bridge
@@ -195,17 +144,8 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       return
     }
 
-    const manager = this.client ? this : SnapCloudCropManager.instanceRef
-    if (!manager) {
-      print("[SnapCloudCrop] Bridge: no manager available; nothing to upload.")
-      if (this.autoHideLoading) {
-        this.loadingIndicator.enabled = false
-      }
-      return
-    }
-
     this.uploadInFlight = true
-    manager.performUpload(texture, manager.sessionId, this.bridgeCaption, () => {
+    this.performUpload(texture, this.getSessionId(), this.bridgeCaption, () => {
       this.uploadInFlight = false
       if (this.autoHideLoading && this.loadingIndicator) {
         this.loadingIndicator.enabled = false
@@ -232,12 +172,13 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       return
     }
     if (!sessionId) {
-      print("[SnapCloudCrop] Skipped: missing sessionId.")
+      print("[SnapCloudCrop] Skipped: no sessionId (SnapCloudSessionManager not ready?).")
       if (onDone) onDone()
       return
     }
-    if (!this.client) {
-      print("[SnapCloudCrop] Skipped: Supabase client unavailable (is the manager instance wired?).")
+    const client = this.getClient()
+    if (!client) {
+      print("[SnapCloudCrop] Skipped: Supabase client unavailable (SnapCloudSessionManager not ready?).")
       if (onDone) onDone()
       return
     }
@@ -252,10 +193,10 @@ export class SnapCloudCropManager extends BaseScriptComponent {
           const imagePath = this.buildCloudPath(sessionId, timestamp, "jpg", caption)
           const imageBytes = this.base64ToBytes(base64String)
 
-          await this.uploadBytes(imagePath, imageBytes, "image/jpeg")
+          await this.uploadBytes(client, imagePath, imageBytes, "image/jpeg")
 
           if (this.syncCapturesTable) {
-            await this.insertCaptureRecord(sessionId, imagePath, caption)
+            await this.insertCaptureRecord(client, sessionId, imagePath, caption)
           }
 
           print(`[SnapCloudCrop] Success. imagePath=${imagePath}`)
@@ -274,12 +215,14 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     )
   }
 
-  private async uploadBytes(path: string, bytes: Uint8Array, contentType: string): Promise<void> {
-    if (!this.client) {
-      throw new Error("Supabase client unavailable.")
-    }
+  private async uploadBytes(
+    client: SupabaseClient,
+    path: string,
+    bytes: Uint8Array,
+    contentType: string
+  ): Promise<void> {
     print(`[SnapCloudCrop] Uploading ${contentType} -> ${path}`)
-    const {error} = await this.client.storage.from(this.storageBucket).upload(path, bytes, {
+    const {error} = await client.storage.from(this.storageBucket).upload(path, bytes, {
       contentType: contentType,
       upsert: true
     })
@@ -288,49 +231,12 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     }
   }
 
-  // ==========================================================================
-  // [SnapCloudCrop] Added: inserts a row into `sessions` on manager startup.
-  // This must run before any capture upload so the FK constraint
-  // `captures_session_id_fkey` (captures.session_id -> sessions.id) is
-  // satisfied. Schema: id text/uuid PK, started_at timestamptz.
-  // ==========================================================================
-  private insertSessionRecord(): void {
-    if (!this.client) {
-      print("[SnapCloudCrop] Session insert skipped: client not ready.")
-      return
-    }
-    if (!this.sessionsTableName) {
-      print("[SnapCloudCrop] Session insert skipped: sessionsTableName is empty.")
-      return
-    }
-
-    this.client
-      .from(this.sessionsTableName)
-      .insert([
-        {
-          id: this.sessionId,
-          started_at: new Date().toISOString()
-        }
-      ])
-      .then((res: {error: unknown}) => {
-        if (res.error) {
-          print(`[SnapCloudCrop] Session insert failed: ${JSON.stringify(res.error)}`)
-          return
-        }
-        print(`[SnapCloudCrop] Session row inserted. id=${this.sessionId}`)
-      })
-  }
-  // ==========================================================================
-
-  // ==========================================================================
-  // [SnapCloudCrop] Updated: insertCaptureRecord now includes a client-side
-  // generated UUID v4 as `id`, matching the captures table schema:
-  //   id uuid PK, session_id text, file_path text, title text, created_at timestamptz
-  // ==========================================================================
-  private async insertCaptureRecord(sessionId: string, imagePath: string, caption: string): Promise<void> {
-    if (!this.client) {
-      return
-    }
+  private async insertCaptureRecord(
+    client: SupabaseClient,
+    sessionId: string,
+    imagePath: string,
+    caption: string
+  ): Promise<void> {
     if (!this.capturesTableName) {
       print("[SnapCloudCrop] Missing captures table name.")
       return
@@ -344,14 +250,13 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       created_at: new Date().toISOString()
     }
 
-    const {error} = await this.client.from(this.capturesTableName).insert([row])
+    const {error} = await client.from(this.capturesTableName).insert([row])
 
     if (error) {
       throw new Error(`Capture insert failed: ${JSON.stringify(error)}`)
     }
     print(`[SnapCloudCrop] Capture row inserted. id=${row.id}`)
   }
-  // ==========================================================================
 
   private buildCloudPath(sessionId: string, timestamp: number, extension: string, title: string): string {
     const prefix = this.cloudFolderPrefix ? this.cloudFolderPrefix.replace(/^\/+|\/+$/g, "") : ""
@@ -380,11 +285,6 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     return slug.length > 0 ? slug : fallback
   }
 
-  // ==========================================================================
-  // [SnapCloudCrop] Added: client-side UUID v4 generator. Lens Studio runtime
-  // does not expose crypto.randomUUID, so we build one from Math.random().
-  // Sufficient for use as a primary key for the `captures` table.
-  // ==========================================================================
   private generateUuidV4(): string {
     const hex = (n: number) => Math.floor(Math.random() * n).toString(16)
     const s4 = () => {
@@ -397,7 +297,6 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     const variant = (8 + Math.floor(Math.random() * 4)).toString(16) // 8,9,a,b
     return `${s4()}${s4()}-${s4()}-4${s4().slice(1)}-${variant}${s4().slice(1)}-${s4()}${s4()}${s4()}`
   }
-  // ==========================================================================
 
   private base64ToBytes(base64: string): Uint8Array {
     const decoded = Base64.decode(base64) as unknown as Uint8Array | string
