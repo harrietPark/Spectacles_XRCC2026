@@ -1404,6 +1404,10 @@
   ScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
   ScriptInputsDefault:
     HandDwellingTimeThreshold: true
+    midasTouchVisualMesh: true
+    midasTouchColorParameter: true
+    dwellNotReadyColor: true
+    dwellReadyColor: true
     noteSpawnYawOffsetDegrees: true
   ScriptTypesDefault:
     {}
@@ -1413,6 +1417,10 @@
       HandDwellingTimeThreshold: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
       MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
+      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      midasTouchColorParameter: baseColor
+      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
     "":

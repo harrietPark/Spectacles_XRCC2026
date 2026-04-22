@@ -31,6 +31,19 @@ export class NoteController extends BaseScriptComponent {
     @ui.separator
     @ui.group_start("Visual Feedback")
     @input private MidasTouchVisual: SceneObject;
+    @input
+    @allowUndefined
+    @hint("Optional mesh visual for dwell indicator color feedback. If empty, uses first RenderMeshVisual on MidasTouchVisual.")
+    private midasTouchVisualMesh: RenderMeshVisual | undefined;
+    @input
+    @hint("Shader color parameter name on the dwell indicator material.")
+    private midasTouchColorParameter: string = "baseColor";
+    @input
+    @widget(new ColorWidget())
+    private dwellNotReadyColor: vec4 = new vec4(1, 0, 0, 1);
+    @input
+    @widget(new ColorWidget())
+    private dwellReadyColor: vec4 = new vec4(0, 1, 0, 1);
     @ui.group_end
     @ui.group_start("Spawn Rotation")
     @input
@@ -45,6 +58,8 @@ export class NoteController extends BaseScriptComponent {
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
     private handMovementRadiusRange: number = 0.1; // in meters
+    private dwellIndicatorMaterial: Material | undefined;
+    private lastDwellReadyVisualState: boolean | undefined;
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
@@ -58,6 +73,9 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private onStart() {
+        this.initializeDwellIndicatorMaterial();
+        this.setDwellIndicatorReady(false);
+
         if (this.pictureController) {
             this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
         } else {
@@ -99,13 +117,20 @@ export class NoteController extends BaseScriptComponent {
                 this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(5));
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
+                    this.setDwellIndicatorReady(true);
                     this.handDwellingTimer = 0;
                     return true;
                 }
+                this.setDwellIndicatorReady(false);
+                return false;
             }
+            this.handDwellingTimer = 0;
+            this.setDwellIndicatorReady(false);
+            return false;
         } else {
             this.handDwellingTimer = 0;
             this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(3));
+            this.setDwellIndicatorReady(false);
             return false;
         }
     }
@@ -155,11 +180,12 @@ export class NoteController extends BaseScriptComponent {
 
     private activateNoteAnchoringVisual() {
         this.MidasTouchVisual.enabled = true;
-
+        this.setDwellIndicatorReady(false);
     }
 
     private deactivateNoteAnchoringVisual() {
         this.MidasTouchVisual.enabled = false;
+        this.setDwellIndicatorReady(false);
     }
 
     private getSpawnRotation(spawnPosition: vec3): quat {
@@ -177,5 +203,30 @@ export class NoteController extends BaseScriptComponent {
     private getYawOffsetRotation(): quat {
         const yawRadians = this.noteSpawnYawOffsetDegrees * Math.PI / 180;
         return quat.angleAxis(yawRadians, vec3.up());
+    }
+
+    private initializeDwellIndicatorMaterial(): void {
+        const meshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
+        if (!meshVisual || !meshVisual.mainMaterial) {
+            print("[NoteController] Dwell indicator mesh/material not found; color feedback disabled.");
+            return;
+        }
+
+        this.dwellIndicatorMaterial = meshVisual.mainMaterial.clone();
+        meshVisual.mainMaterial = this.dwellIndicatorMaterial;
+    }
+
+    private setDwellIndicatorReady(isReady: boolean): void {
+        if (this.lastDwellReadyVisualState !== undefined && this.lastDwellReadyVisualState === isReady) {
+            return;
+        }
+        this.lastDwellReadyVisualState = isReady;
+
+        if (!this.dwellIndicatorMaterial) {
+            return;
+        }
+
+        const pass = this.dwellIndicatorMaterial.mainPass as unknown as {[key: string]: vec4};
+        pass[this.midasTouchColorParameter] = isReady ? this.dwellReadyColor : this.dwellNotReadyColor;
     }
 }
