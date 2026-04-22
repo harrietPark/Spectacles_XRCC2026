@@ -1941,11 +1941,9 @@
       toggleMenuButton: !<MappingBased.AssignableType_5> a15d748b-215d-4a91-8693-ca891a9a5505
       widgetParent: !<reference.SceneObject> 12b7e20a-b174-4911-82e3-4b7a4b48d307
       widgetPrefabs: !<reference.ObjectPrefab[]>
+        - !<reference> ee27b61d-5e96-4b8b-9511-45b7a045cc5b
         - !<reference> 7dea65b0-7044-44f3-a205-a4f46c471a57
         - !<reference> 91afcf2c-6d9f-4b66-bc0a-f8eb4d552939
-        - !<reference> cb54d61a-6f7e-480e-8281-fe6e65510145
-        - !<reference> 30bfee42-6ed4-4d5e-86a7-7ec0cdc70fdf
-        - !<reference> 758a3f1d-72a2-4b84-a81d-818861d2b846
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
       textInputManager: !<MappingBased.AssignableType_6> e92c9815-b474-4f37-9ceb-1cffeac1afb1

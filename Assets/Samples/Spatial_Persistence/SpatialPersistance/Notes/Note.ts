@@ -4,6 +4,7 @@ import {PinchButton} from "SpectaclesInteractionKit.lspkg/Components/UI/PinchBut
 import {ToggleButton} from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleButton/ToggleButton"
 import {TextInputManager} from "../TextInputManager"
 import {Widget} from "../Widget"
+import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 
 type AudioFrameData = {
   audioFrame: Float32Array
@@ -16,6 +17,8 @@ const MIN_VALID_SAMPLE_RATE = 8000
 
 @component
 export class Note extends BaseScriptComponent {
+  public readonly onTranscriptionFinal = new Event<string>();
+
   @input private _textField: Text
   @input
   @allowUndefined
@@ -228,7 +231,8 @@ export class Note extends BaseScriptComponent {
 
     const options = AsrModule.AsrTranscriptionOptions.create()
     options.silenceUntilTerminationMs = ASR_SILENCE_UNTIL_TERMINATION_MS
-    options.mode = AsrModule.AsrMode.HighAccuracy
+    // options.mode = AsrModule.AsrMode.HighAccuracy
+    options.mode = AsrModule.AsrMode.Balanced // Balanced speed and accuracy
     options.onTranscriptionUpdateEvent.add((eventArgs: AsrModule.TranscriptionUpdateEvent) => {
       const transcript = eventArgs.text ? eventArgs.text.trim() : ""
       if (transcript === "") {
@@ -236,6 +240,12 @@ export class Note extends BaseScriptComponent {
       }
 
       this._textField.text = transcript
+
+      // Invoke transcription end event if it is final
+      if (eventArgs.isFinal) {
+        this.onTranscriptionFinal.invoke(eventArgs.text);
+        print("--- Final Transcription: " + eventArgs.text)
+      }
     })
     options.onTranscriptionErrorEvent.add((statusCode: AsrModule.AsrStatusCode) => {
       this.updateVoiceStatusText(`Speech-to-text error: ${statusCode}`)

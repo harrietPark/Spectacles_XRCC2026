@@ -32,6 +32,9 @@ export class NoteController extends BaseScriptComponent {
     private pictureController: PictureController | undefined;
     private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule;
     @ui.group_end
+    // @ui.separator
+    // @ui.group_start("Speech To Text")
+    // @ui.group_end
     @ui.separator
     @ui.group_start("Spawn Rotation")
     @input
@@ -51,7 +54,7 @@ export class NoteController extends BaseScriptComponent {
     private isNoteAnchoringActive: boolean = false;
     private wasFingerDwellIndicatorActive: boolean = false;
 
-    // State objects
+    // Stateful objects
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
 
