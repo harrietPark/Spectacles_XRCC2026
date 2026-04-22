@@ -36,6 +36,20 @@ export class NoteController extends BaseScriptComponent {
     @hint("Optional mesh visual for dwell indicator color feedback. If empty, uses first RenderMeshVisual on MidasTouchVisual.")
     private midasTouchVisualMesh: RenderMeshVisual | undefined;
     @input
+    @allowUndefined
+    @hint("Optional prefab shown while dwell is not ready. Falls back to color sphere when unassigned.")
+    private dwellNotReadyStatePrefab: ObjectPrefab | undefined;
+    @input
+    @allowUndefined
+    @hint("Optional prefab shown when dwell is ready to place a note. Falls back to color sphere when unassigned.")
+    private dwellReadyStatePrefab: ObjectPrefab | undefined;
+    @input
+    @hint("Uniform scale multiplier for the not-ready state prefab.")
+    private dwellNotReadyStateScale: number = 1.0;
+    @input
+    @hint("Uniform scale multiplier for the ready state prefab.")
+    private dwellReadyStateScale: number = 1.0;
+    @input
     @hint("Shader color parameter name on the dwell indicator material.")
     private midasTouchColorParameter: string = "baseColor";
     @input
@@ -58,7 +72,10 @@ export class NoteController extends BaseScriptComponent {
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
     private handMovementRadiusRange: number = 0.1; // in meters
+    private dwellBaseMeshVisual: RenderMeshVisual | undefined;
     private dwellIndicatorMaterial: Material | undefined;
+    private dwellNotReadyStateObject: SceneObject | undefined;
+    private dwellReadyStateObject: SceneObject | undefined;
     private lastDwellReadyVisualState: boolean | undefined;
 
     // State booleans
@@ -73,6 +90,7 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private onStart() {
+        this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
         this.setDwellIndicatorReady(false);
 
@@ -206,14 +224,36 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private initializeDwellIndicatorMaterial(): void {
-        const meshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
-        if (!meshVisual || !meshVisual.mainMaterial) {
+        this.dwellBaseMeshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
+        if (!this.dwellBaseMeshVisual || !this.dwellBaseMeshVisual.mainMaterial) {
             print("[NoteController] Dwell indicator mesh/material not found; color feedback disabled.");
             return;
         }
 
-        this.dwellIndicatorMaterial = meshVisual.mainMaterial.clone();
-        meshVisual.mainMaterial = this.dwellIndicatorMaterial;
+        this.dwellIndicatorMaterial = this.dwellBaseMeshVisual.mainMaterial.clone();
+        this.dwellBaseMeshVisual.mainMaterial = this.dwellIndicatorMaterial;
+    }
+
+    private initializeDwellStateVisuals(): void {
+        this.dwellNotReadyStateObject = this.instantiateStatePrefab(
+            this.dwellNotReadyStatePrefab,
+            this.dwellNotReadyStateScale
+        );
+        this.dwellReadyStateObject = this.instantiateStatePrefab(this.dwellReadyStatePrefab, this.dwellReadyStateScale);
+    }
+
+    private instantiateStatePrefab(prefab: ObjectPrefab | undefined, scaleMultiplier: number): SceneObject | undefined {
+        if (!prefab) {
+            return undefined;
+        }
+
+        const stateObject = prefab.instantiate(this.MidasTouchVisual);
+        const stateTransform = stateObject.getTransform();
+        stateTransform.setLocalPosition(vec3.zero());
+        stateTransform.setLocalRotation(quat.quatIdentity());
+        stateTransform.setLocalScale(vec3.one().uniformScale(Math.max(0.01, scaleMultiplier)));
+        stateObject.enabled = false;
+        return stateObject;
     }
 
     private setDwellIndicatorReady(isReady: boolean): void {
@@ -222,7 +262,22 @@ export class NoteController extends BaseScriptComponent {
         }
         this.lastDwellReadyVisualState = isReady;
 
-        if (!this.dwellIndicatorMaterial) {
+        const activeStateObject = isReady ? this.dwellReadyStateObject : this.dwellNotReadyStateObject;
+        const inactiveStateObject = isReady ? this.dwellNotReadyStateObject : this.dwellReadyStateObject;
+
+        if (inactiveStateObject) {
+            inactiveStateObject.enabled = false;
+        }
+        if (activeStateObject) {
+            activeStateObject.enabled = true;
+        }
+
+        const shouldUseColorFallback = !activeStateObject;
+        if (this.dwellBaseMeshVisual) {
+            this.dwellBaseMeshVisual.enabled = shouldUseColorFallback;
+        }
+
+        if (!shouldUseColorFallback || !this.dwellIndicatorMaterial) {
             return;
         }
 

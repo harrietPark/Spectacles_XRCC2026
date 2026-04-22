@@ -30,7 +30,11 @@
     MidasTouchVisual: false
     areaManager: false
     dwellNotReadyColor: false
+    dwellNotReadyStatePrefab: false
+    dwellNotReadyStateScale: false
     dwellReadyColor: false
+    dwellReadyStatePrefab: false
+    dwellReadyStateScale: false
     midasTouchColorParameter: false
     midasTouchVisualMesh: false
     noteSpawnYawOffsetDegrees: false
@@ -49,6 +53,10 @@
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      dwellReadyStatePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      dwellNotReadyStateScale: !<float> 1.000000
+      dwellReadyStateScale: !<float> 1.000000
       midasTouchColorParameter: baseColor
       dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
@@ -68,6 +76,10 @@
     - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'
     - // @input SceneObject MidasTouchVisual
     - '// @input Component.RenderMeshVisual midasTouchVisualMesh {"hint":"Optional mesh visual for dwell indicator color feedback. If empty, uses first RenderMeshVisual on MidasTouchVisual."}'
+    - '// @input Asset.ObjectPrefab dwellNotReadyStatePrefab {"hint":"Optional prefab shown while dwell is not ready. Falls back to color sphere when unassigned."}'
+    - '// @input Asset.ObjectPrefab dwellReadyStatePrefab {"hint":"Optional prefab shown when dwell is ready to place a note. Falls back to color sphere when unassigned."}'
+    - '// @input float dwellNotReadyStateScale = 1 {"hint":"Uniform scale multiplier for the not-ready state prefab."}'
+    - '// @input float dwellReadyStateScale = 1 {"hint":"Uniform scale multiplier for the ready state prefab."}'
     - '// @input string midasTouchColorParameter = "baseColor" {"hint":"Shader color parameter name on the dwell indicator material."}'
     - '// @input vec4 dwellNotReadyColor = {1,0,0,1} {"widget":"color"}'
     - '// @input vec4 dwellReadyColor = {0,1,0,1} {"widget":"color"}'
