@@ -22,6 +22,8 @@
     - !<own> cf3a6135-553d-4be9-a0fd-a85dd4708bf2
     - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
+    - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
+    - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -1085,6 +1087,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/1e6a709c-3ef4-4db8-9baa-b4c211994421>
+  PrefabRemaps:
+    []
+  Name: SnapCloudPinManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d7d4f5d7-4459-4bcf-8306-80bd1309e9c5
 - !<SceneObject/1fa65000-195a-4bb3-8c4e-12dc5e6b0dcf>
   PrefabRemaps:
     []
@@ -2797,6 +2814,33 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/67afd973-386c-45d9-8ff9-f5a8f98bf900>
+  PrefabRemaps:
+    []
+  Name: SnapCloudSessionManager
+  Enabled: true
+  ScriptAsset: !<reference> e98fd475-e2cb-4afa-a4c1-35410971ee36
+  ScriptInputsDefault:
+    customerId: true
+    employeeId: true
+    customerName: true
+    customerEmail: true
+    customersTableName: true
+    sessionsTableName: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      supabaseProject: !<reference.SupabaseProject> f966595d-849a-4274-b396-5d33056d2a40
+      customerId: 00000000-0000-4000-8000-000000000001
+      employeeId: 00000000-0000-4000-8000-000000000002
+      customerName: Demo Customer
+      customerEmail: demo@pinpoint.local
+      customersTableName: customers
+      sessionsTableName: sessions
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/6804557c-71d8-4455-af56-e85fcdf6eec1>
   PrefabRemaps:
     []
@@ -3743,7 +3787,6 @@
     storageBucket: true
     cloudFolderPrefix: true
     capturesTableName: true
-    sessionsTableName: true
     captureRendMesh: true
     loadingIndicator: true
     bridgeCaption: true
@@ -3752,13 +3795,11 @@
     {}
   ScriptInputs:
     "":
-      supabaseProject: !<reference.SupabaseProject> f966595d-849a-4274-b396-5d33056d2a40
       saveToCloud: true
       storageBucket: specs-captures
       cloudFolderPrefix: captures
       syncCapturesTable: true
       capturesTableName: captures
-      sessionsTableName: sessions
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       bridgeCaption: capture
@@ -4132,6 +4173,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/a3803e72-1505-41fc-9d17-7f8770f22791>
+  PrefabRemaps:
+    []
+  Name: SnapCloudSessionManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 67afd973-386c-45d9-8ff9-f5a8f98bf900
 - !<Text/a55eeb89-9ae7-4782-8d9a-f86a399c257d>
   PrefabRemaps:
     []
@@ -5887,6 +5943,28 @@
     - !<own> 8c3e6908-6f66-41d9-a952-50e91a350337
   Components:
     []
+- !<ScriptComponent/d7d4f5d7-4459-4bcf-8306-80bd1309e9c5>
+  PrefabRemaps:
+    []
+  Name: SnapCloudPinManager
+  Enabled: true
+  ScriptAsset: !<reference> f1e82177-232d-4375-b444-f11e2b43a7ea
+  ScriptInputsDefault:
+    pinsTableName: true
+    noteScanIntervalSeconds: true
+    processPinFunctionName: true
+    autoInvokeProcessPin: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinsTableName: pins
+      noteScanIntervalSeconds: !<float> 1.000000
+      processPinFunctionName: process_pin
+      autoInvokeProcessPin: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/d8110a6b-3dc8-4d5c-886e-0ded2ec1ac1b>
   PrefabRemaps:
     []
