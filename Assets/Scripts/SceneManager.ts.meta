@@ -27,6 +27,8 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     NoteController: false
+    activateDwellSfx: false
+    activateDwellSfxVolume: false
     buttonActivateNoteCreation: false
     microphoneAsset: false
     microphoneWarmupDurationSeconds: false
@@ -44,6 +46,8 @@
     - uxFeedbackControllerComponent: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       NoteController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       buttonActivateNoteCreation: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      activateDwellSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      activateDwellSfxVolume: !<float> 1.000000
       requestMicrophonePermissionOnStart: true
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       microphoneWarmupDurationSeconds: 0.250000
@@ -57,6 +61,10 @@
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"UI References"}'
     - // @input AssignableType_2 buttonActivateNoteCreation
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Sound Effects"}'
+    - '// @input Asset.AudioTrackAsset activateDwellSfx {"hint":"Played when pressing hand button to start finger dwell note placement."}'
+    - '// @input float activateDwellSfxVolume = 1 {"hint":"Volume for activate dwell sound effect."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Microphone Setup"}'

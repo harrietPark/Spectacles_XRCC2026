@@ -1,5 +1,6 @@
 import { NoteController } from "./NoteController";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
+import { SoundEffectsController } from "./SoundEffectsController";
 
 type UXFeedbackControllerApi = {
     activateIndexTipHighlight: () => void;
@@ -15,6 +16,10 @@ export class SceneManager extends BaseScriptComponent {
     @allowUndefined
     @hint("Assign UXFeedbackController component. Uses safe no-op fallback if missing or still compiling.")
     private uxFeedbackControllerComponent: BaseScriptComponent | undefined;
+    @input
+    @allowUndefined
+    @hint("Optional centralized sound effects controller.")
+    private soundEffectsController: SoundEffectsController | undefined;
     @input private NoteController: NoteController;
     @ui.group_end
     @ui.group_start("UI References")
@@ -96,6 +101,7 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private activateNoteCreation() {
+        this.soundEffectsController?.playActivateDwell();
         print("--- Activating note creation process");
         this.NoteController.activateCreationProcess();
     }
