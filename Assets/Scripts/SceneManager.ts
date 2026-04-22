@@ -1,5 +1,11 @@
 import { NotesController } from "./NotesController";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
+// ======================================================================
+// [SnapCloudCapture] Added: quiet camera capture uploader. Used below in
+// sendProductViewToBackend() to push a single frame to the
+// `specs-captures/captures/<session_id>/` folder on note-spawn.
+// ======================================================================
+import { SnapCloudCaptureManager } from "./SnapCloudCaptureManager";
 import { UXFeedbackController } from "./UXFeedbackController";
 
 @component
@@ -52,10 +58,14 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     public sendProductViewToBackend() {
-        // // Capture camera texture
-        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
-
-        // TODO: send camera texture and note ID to backend
+        const cap = SnapCloudCaptureManager.getInstance();
+        if (!cap) {
+            print("[SceneManager] SnapCloudCaptureManager not in scene; capture skipped.");
+            return;
+        }
+        cap.captureAndUpload((url) => {
+            print(`[SceneManager] product view uploaded -> ${url || "(failed)"}`);
+        });
     }
 
     private activateNoteCreation() {
