@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/caa9e8d8-1f4d-47c8-a191-4d6d86fe0efa>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> e98fd475-e2cb-4afa-a4c1-35410971ee36
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> e98fd475-e2cb-4afa-a4c1-35410971ee36
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> db3a601a-a5c3-4ced-9278-6296bd0e1ae7
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/db3a601a-a5c3-4ced-9278-6296bd0e1ae7>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: a4907757-4e75-4dfe-8201-e8d2034ac122
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    customerEmail: false
+    customerId: false
+    customerName: false
+    customersTableName: false
+    employeeId: false
+    sessionsTableName: false
+    supabaseProject: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - supabaseProject: !<reference.SupabaseProject> 00000000-0000-0000-0000-000000000000
+      customerId: 00000000-0000-4000-8000-000000000001
+      employeeId: 00000000-0000-4000-8000-000000000002
+      customerName: Demo Customer
+      customerEmail: demo@pinpoint.local
+      customersTableName: customers
+      sessionsTableName: sessions
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.SupabaseProject supabaseProject {"hint":"PinPoint Snap Cloud project asset (url + publicToken). Required."}'
+    - '// @input string customerId = "00000000-0000-4000-8000-000000000001" {"hint":"Dummy customer UUID used on customers, sessions and pins rows."}'
+    - '// @input string employeeId = "00000000-0000-4000-8000-000000000002" {"hint":"Dummy employee (salesperson) UUID used on the sessions row."}'
+    - '// @input string customerName = "Demo Customer" {"hint":"Display name written when auto-creating the dummy customer row."}'
+    - '// @input string customerEmail = "demo@pinpoint.local" {"hint":"Email written when auto-creating the dummy customer row."}'
+    - '// @input string customersTableName = "customers" {"hint":"Supabase table name for customers."}'
+    - '// @input string sessionsTableName = "sessions" {"hint":"Supabase table name for sessions."}'
