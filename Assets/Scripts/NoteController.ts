@@ -26,6 +26,7 @@ export class NoteController extends BaseScriptComponent {
     @input
     @allowUndefined
     private pictureController: PictureController | undefined;
+    private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule
     @ui.group_end
     @ui.separator
     @ui.group_start("Visual & Audio Feedback")
@@ -121,10 +122,8 @@ export class NoteController extends BaseScriptComponent {
             rotation: this.rightHand.indexTip.rotation
         });
 
+        this.sendUserViewToBackend();
         this.enableCrop();
-
-        // // Capture camera texture
-        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
     }
 
     private updateNotes(widgets: Widget[]) {
@@ -142,6 +141,13 @@ export class NoteController extends BaseScriptComponent {
             return;
         }
         this.pictureController.enableCrop();
+    }
+
+    private sendUserViewToBackend() {
+        // // Capture camera texture
+        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
+
+        // TODO: send camera texture and note ID to backend
     }
 
     private addCroppedImage(image: Texture) {
