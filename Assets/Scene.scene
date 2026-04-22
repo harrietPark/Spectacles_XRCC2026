@@ -3785,11 +3785,8 @@
   ScriptInputsDefault:
     saveToCloud: true
     storageBucket: true
-    cloudFolderPrefix: true
-    capturesTableName: true
     captureRendMesh: true
     loadingIndicator: true
-    bridgeCaption: true
     autoHideLoading: true
   ScriptTypesDefault:
     {}
@@ -3797,12 +3794,12 @@
     "":
       saveToCloud: true
       storageBucket: specs-captures
-      cloudFolderPrefix: captures
+      cloudFolderPrefix: crops
       syncCapturesTable: true
-      capturesTableName: captures
+      capturesTableName: crops
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      bridgeCaption: capture
+      bridgeCaption: crops
       autoHideLoading: true
   ScriptTypes:
     "":

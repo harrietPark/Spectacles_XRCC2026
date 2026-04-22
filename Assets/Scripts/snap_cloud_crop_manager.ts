@@ -7,9 +7,12 @@ import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
  * NOTE: This script no longer owns the Supabase client or sessionId. Those
  * are owned by `SnapCloudSessionManager` -- see that file. This script now
  * does ONE thing: take a cropped texture and write it to Supabase Storage
- * + optionally insert a row into the `captures` table. It still exposes the
- * same `getInstance()` / `uploadCroppedCapture()` API so existing callers
- * (PictureBehavior etc.) keep working unchanged.
+ * + optionally insert a row into the `crops` table. The inserted row
+ * carries an `image_url` (public URL from the `specs-captures` bucket) so
+ * a Snap Cloud DB webhook on crops INSERT can hand the URL to an edge
+ * function. It still exposes the same `getInstance()` /
+ * `uploadCroppedCapture()` API so existing callers (PictureBehavior etc.)
+ * keep working unchanged.
  *
  * Two roles live on the same component, controlled by which inputs are wired:
  *
@@ -41,7 +44,7 @@ export class SnapCloudCropManager extends BaseScriptComponent {
   syncCapturesTable: boolean = true
 
   @input @hint("Table name used when syncCapturesTable is true")
-  capturesTableName: string = "captures"
+  capturesTableName: string = "crops"
 
   // --- Bridge role inputs --------------------------------------------------
 
@@ -195,11 +198,17 @@ export class SnapCloudCropManager extends BaseScriptComponent {
 
           await this.uploadBytes(client, imagePath, imageBytes, "image/jpeg")
 
+          // NEW: resolve the public URL for the freshly-uploaded object so the
+          // captures row carries a ready-to-fetch link. The `specs-captures`
+          // bucket is public, so this is a pure string build (no network call).
+          // A DB webhook on captures INSERT consumes `image_url` downstream.
+          const imageUrl = this.resolveImageUrl(client, imagePath)
+
           if (this.syncCapturesTable) {
-            await this.insertCaptureRecord(client, sessionId, imagePath, caption)
+            await this.insertCaptureRecord(client, sessionId, imagePath, imageUrl, caption)
           }
 
-          print(`[SnapCloudCrop] Success. imagePath=${imagePath}`)
+          print(`[SnapCloudCrop] Success. imagePath=${imagePath} imageUrl=${imageUrl}`)
         } catch (e) {
           print("[SnapCloudCrop] Failed: " + e)
         } finally {
@@ -235,6 +244,7 @@ export class SnapCloudCropManager extends BaseScriptComponent {
     client: SupabaseClient,
     sessionId: string,
     imagePath: string,
+    imageUrl: string,
     caption: string
   ): Promise<void> {
     if (!this.capturesTableName) {
@@ -242,10 +252,14 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       return
     }
 
+    // NEW: `image_url` column — public URL to the object in `specs-captures`.
+    // An INSERT webhook on the `crops` table forwards the row (including
+    // image_url) to a Snap Cloud edge function.
     const row = {
       id: this.generateUuidV4(),
       session_id: sessionId,
       file_path: imagePath,
+      image_url: imageUrl,
       title: caption,
       created_at: new Date().toISOString()
     }
@@ -256,6 +270,28 @@ export class SnapCloudCropManager extends BaseScriptComponent {
       throw new Error(`Capture insert failed: ${JSON.stringify(error)}`)
     }
     print(`[SnapCloudCrop] Capture row inserted. id=${row.id}`)
+  }
+
+  // NEW: resolve the public URL for a just-uploaded object. `specs-captures`
+  // is a public bucket, so `getPublicUrl` is synchronous and cannot fail
+  // over the network. We still guard the shape defensively and fall back to
+  // an empty string so a URL hiccup never blocks the captures INSERT (the
+  // row + file_path stay authoritative).
+  private resolveImageUrl(client: SupabaseClient, imagePath: string): string {
+    try {
+      const result = client.storage.from(this.storageBucket).getPublicUrl(imagePath) as
+        | {data?: {publicUrl?: string}}
+        | undefined
+      const url = result && result.data ? result.data.publicUrl : undefined
+      if (!url) {
+        print("[SnapCloudCrop] getPublicUrl returned empty; image_url will be blank.")
+        return ""
+      }
+      return url
+    } catch (e) {
+      print("[SnapCloudCrop] getPublicUrl threw: " + e)
+      return ""
+    }
   }
 
   private buildCloudPath(sessionId: string, timestamp: number, extension: string, title: string): string {
