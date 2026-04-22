@@ -4,6 +4,7 @@ import { WidgetSelectionEvent } from "Samples/Spatial_Persistence/SpatialPersist
 import { Note } from "Samples/Spatial_Persistence/SpatialPersistance/Notes/Note";
 import { Widget } from "Samples/Spatial_Persistence/SpatialPersistance/Widget";
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
+import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider";
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
@@ -31,10 +32,16 @@ export class NoteController extends BaseScriptComponent {
     @ui.group_start("Visual Feedback")
     @input private MidasTouchVisual: SceneObject;
     @ui.group_end
+    @ui.group_start("Spawn Rotation")
+    @input
+    @hint("Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes.")
+    private noteSpawnYawOffsetDegrees: number = 180;
+    @ui.group_end
 
     // Hand tracking
     private handProvider: HandInputData = SIK.HandInputData
     private rightHand = this.handProvider.getHand("right")
+    private worldCameraTransform = WorldCameraFinderProvider.getInstance().getTransform();
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
     private handMovementRadiusRange: number = 0.1; // in meters
@@ -104,11 +111,12 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private anchorNote() {
+        const spawnPosition = this.rightHand.indexTip.position;
         // Spawn a spatial note
         this.onNoteSpawnedEvent.invoke({
             widgetIndex: 0,
-            position: this.rightHand.indexTip.position,
-            rotation: this.rightHand.indexTip.rotation
+            position: spawnPosition,
+            rotation: this.getSpawnRotation(spawnPosition)
         });
 
         this.deactivateCreationProcess();
@@ -152,5 +160,22 @@ export class NoteController extends BaseScriptComponent {
 
     private deactivateNoteAnchoringVisual() {
         this.MidasTouchVisual.enabled = false;
+    }
+
+    private getSpawnRotation(spawnPosition: vec3): quat {
+        const cameraPosition = this.worldCameraTransform.getWorldPosition();
+        const distanceToCamera = spawnPosition.distance(cameraPosition);
+
+        if (distanceToCamera < 0.001) {
+            return this.rightHand.indexTip.rotation.multiply(this.getYawOffsetRotation());
+        }
+
+        const cameraFacingRotation = quat.lookAt(cameraPosition.sub(spawnPosition), vec3.up());
+        return cameraFacingRotation.multiply(this.getYawOffsetRotation());
+    }
+
+    private getYawOffsetRotation(): quat {
+        const yawRadians = this.noteSpawnYawOffsetDegrees * Math.PI / 180;
+        return quat.angleAxis(yawRadians, vec3.up());
     }
 }

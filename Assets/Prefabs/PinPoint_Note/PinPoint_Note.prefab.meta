@@ -263,7 +263,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 7.473204, y: -11.233904, z: 6.360468}
+    Position: {x: 7.473204, y: -11.233904, z: 7.350883}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -941,7 +941,7 @@
   Enabled: true
   Shape: !<Box>
     FitVisual: false
-    Size: {x: 20.000000, y: 20.000000, z: 6.000000}
+    Size: {x: 20.000000, y: 25.000000, z: 12.000000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1031,7 +1031,7 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Box>
-    FitVisual: true
+    FitVisual: false
     Size: {x: 12.000000, y: 12.000000, z: 12.000000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1278,8 +1278,8 @@
   Name: Physics Collider
   Enabled: true
   Shape: !<Box>
-    FitVisual: true
-    Size: {x: 1.000000, y: 1.000000, z: 1.000000}
+    FitVisual: false
+    Size: {x: 2.500000, y: 2.500000, z: 2.500000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1827,7 +1827,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 13.539566, y: -4.966609, z: 4.780752}
+    Position: {x: 13.539566, y: -4.966609, z: 5.918234}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false

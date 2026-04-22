@@ -29,6 +29,7 @@
     HandDwellingTimeThreshold: false
     MidasTouchVisual: false
     areaManager: false
+    noteSpawnYawOffsetDegrees: false
     pictureController: false
   ScriptTypesHidden:
     {}
@@ -43,6 +44,7 @@
       HandDwellingTimeThreshold: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
     -
       {}
@@ -57,4 +59,7 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'
     - // @input SceneObject MidasTouchVisual
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Spawn Rotation"}'
+    - '// @input float noteSpawnYawOffsetDegrees = 180 {"hint":"Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes."}'
     - '// @ui {"widget":"group_end"}'
