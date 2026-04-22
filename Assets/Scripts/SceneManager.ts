@@ -7,6 +7,7 @@ import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/Rou
 // ======================================================================
 import { SnapCloudCaptureManager } from "./SnapCloudCaptureManager";
 import { UXFeedbackController } from "./UXFeedbackController";
+import { INoteData } from "./INoteData";
 
 @component
 export class SceneManager extends BaseScriptComponent {
@@ -66,6 +67,11 @@ export class SceneManager extends BaseScriptComponent {
         cap.captureAndUpload((url) => {
             print(`[SceneManager] product view uploaded -> ${url || "(failed)"}`);
         });
+    }
+
+    public sendCompleteNoteDataToBackend(noteData: INoteData) {
+        // TODO: send note data to backend
+        print("--- sending complete note data to backend: \n" + JSON.stringify(noteData));
     }
 
     private activateNoteCreation() {

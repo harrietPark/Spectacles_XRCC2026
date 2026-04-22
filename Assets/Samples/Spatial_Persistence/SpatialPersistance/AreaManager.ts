@@ -16,7 +16,6 @@ import {WidgetSelectionUI} from "./MenuUI/WidgetSelectionUI"
 import {Note} from "./Notes/Note"
 import {SerializationManager} from "./Serialization/SerializationManager"
 import {AnchorManager} from "./SpatialPersistence/AnchorManager"
-import {TextInputManager} from "./TextInputManager"
 import {Widget} from "./Widget"
 import { NotesController } from "Scripts/NotesController"
 
@@ -83,9 +82,6 @@ export class AreaManager extends BaseScriptComponent {
 
   @input
   private instructionText: Text
-
-  @input
-  private textInputManager: TextInputManager
 
   // Current area selected by menu.
   private currentArea: AreaRecord
@@ -201,11 +197,6 @@ export class AreaManager extends BaseScriptComponent {
     // Immediately prompt user to select an area.
     this.promptAreaSelection()
 
-    this.textInputManager.onKeyboardStateChanged.add((isOpen: boolean) => {
-      if (!isOpen) {
-        this.saveWidgets()
-      }
-    })
   }
 
   // Show/hide Note UI buttons.
@@ -261,8 +252,6 @@ export class AreaManager extends BaseScriptComponent {
     })
 
     const noteComponent = widgetObject.getComponent(Note.getTypeName())
-
-    this.textInputManager.registerTextInput(noteComponent.editToggle, noteComponent.textField)
 
     return widgetObject
   }

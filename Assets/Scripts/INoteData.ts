@@ -1,7 +1,7 @@
 export interface INoteData {
     noteId: number;
     createdAt: Date;
-    voiceTranscription?: string;
-    croppedImage?: Texture;
+    voiceTranscription: string;
+    croppedImageTexture?: Texture;
     croppedImageAISummary?: string;
 }

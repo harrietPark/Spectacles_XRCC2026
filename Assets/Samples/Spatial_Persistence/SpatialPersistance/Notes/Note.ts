@@ -2,9 +2,9 @@ import {InteractableOutlineFeedback} from "SpectaclesInteractionKit.lspkg/Compon
 import {Interactable} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable"
 import {PinchButton} from "SpectaclesInteractionKit.lspkg/Components/UI/PinchButton/PinchButton"
 import {ToggleButton} from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleButton/ToggleButton"
-// import {TextInputManager} from "../TextInputManager"
 import {Widget} from "../Widget"
-import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import { INoteData } from "Scripts/INoteData"
 
 type AudioFrameData = {
   audioFrame: Float32Array
@@ -12,13 +12,17 @@ type AudioFrameData = {
 }
 
 const DEFAULT_SAMPLE_RATE = 44100
-const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000
+// const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000 // in milliseconds
+const ASR_SILENCE_UNTIL_TERMINATION_MS = 1000 // in milliseconds
 const MIN_VALID_SAMPLE_RATE = 8000
 
 @component
 export class Note extends BaseScriptComponent {
-  public readonly onTranscriptionFinal = new Event<string>();
-  public voiceTranscription: string = "";
+  private readonly onTranscriptionFinalEvent = new Event<void>();
+  public readonly onTranscriptionFinal: PublicApi<void> = this.onTranscriptionFinalEvent.publicApi();
+
+  private readonly onNoteCompletedEvent = new Event<INoteData>();
+  public readonly onNoteCompleted: PublicApi<INoteData> = this.onNoteCompletedEvent.publicApi();
 
   @input private _textField: Text
   @input
@@ -84,6 +88,12 @@ export class Note extends BaseScriptComponent {
   private isAsrRunning = false
   private effectiveSampleRate = DEFAULT_SAMPLE_RATE
 
+  // Note's states
+  private createdAt: Date;
+  private voiceTranscription: string = "";
+  private croppedImageTexture?: Texture;
+  private croppedImageAISummary?: string;
+
   onAwake() {
     this.createEvent("OnStartEvent").bind(this.onStart.bind(this))
     this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this))
@@ -140,13 +150,8 @@ export class Note extends BaseScriptComponent {
       }
     })
 
-    // TextInputManager.getInstance().onKeyboardStateChanged.add((isOpen: boolean) => {
-    //   if (!isOpen && this._editToggle.isToggledOn) {
-    //     this._editToggle.isToggledOn = false
-    //   }
-    // })
-
     this.setupVoiceNoteControls()
+    this.createdAt = new Date(Date.now());
   }
 
   private onUpdate() {
@@ -170,7 +175,14 @@ export class Note extends BaseScriptComponent {
   }
 
   public sendCompleteNoteData() {
-
+    const noteData: INoteData = {
+      noteId: this.createdAt.getUTCSeconds(),
+      createdAt: this.createdAt,
+      voiceTranscription: this.voiceTranscription,
+      croppedImageTexture: this.croppedImageTexture,
+      croppedImageAISummary: this.croppedImageAISummary
+    }
+    this.onNoteCompletedEvent.invoke(noteData);
   }
 
   private setupVoiceNoteControls(): void {
@@ -237,7 +249,7 @@ export class Note extends BaseScriptComponent {
     const options = AsrModule.AsrTranscriptionOptions.create()
     options.silenceUntilTerminationMs = ASR_SILENCE_UNTIL_TERMINATION_MS
     // options.mode = AsrModule.AsrMode.HighAccuracy
-    options.mode = AsrModule.AsrMode.Balanced // Balanced speed and accuracy
+    options.mode = AsrModule.AsrMode.HighSpeed
     options.onTranscriptionUpdateEvent.add((eventArgs: AsrModule.TranscriptionUpdateEvent) => {
       const transcript = eventArgs.text ? eventArgs.text.trim() : ""
       if (transcript === "") {
@@ -248,8 +260,12 @@ export class Note extends BaseScriptComponent {
 
       // Invoke transcription end event if it is final
       if (eventArgs.isFinal) {
-        this.onTranscriptionFinal.invoke(eventArgs.text);
+        print("--- transcription final: " + eventArgs.text);
         this.voiceTranscription += eventArgs.text;
+        this.onTranscriptionFinalEvent.invoke();
+
+        // TODO: send complete note data when user looks away from the note
+        this.sendCompleteNoteData();
       }
     })
     options.onTranscriptionErrorEvent.add((statusCode: AsrModule.AsrStatusCode) => {
@@ -460,6 +476,12 @@ export class Note extends BaseScriptComponent {
 
     this._croppedImage.getSceneObject().enabled = true
     this._croppedImage.mainMaterial.mainPass.baseTex = image
+    this.croppedImageTexture = image;
+  }
+
+  public setCroppedImageAISummary(summary: string) {
+    // TODO: will we display the AI summary on Note UI?
+    this.croppedImageAISummary = summary;
   }
 
   /**

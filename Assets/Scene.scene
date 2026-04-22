@@ -3,7 +3,6 @@
   objects:
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 0005641c-028d-459a-0000-000000014b4d
-    - !<own> ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
     - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
@@ -1979,7 +1978,6 @@
         - !<reference> 91afcf2c-6d9f-4b66-bc0a-f8eb4d552939
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
-      textInputManager: !<MappingBased.AssignableType_6> e92c9815-b474-4f37-9ceb-1cffeac1afb1
   ScriptTypes:
     "":
       {}
@@ -5773,21 +5771,6 @@
     - !<own> e73dda55-e5c2-4d14-9710-257466ec1523
   Components:
     []
-- !<SceneObject/ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3>
-  PrefabRemaps:
-    []
-  Name: TextInputManager
-  Enabled: false
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> e92c9815-b474-4f37-9ceb-1cffeac1afb1
 - !<SceneObject/ceb8b752-125a-4234-8bf2-c96f9464702c>
   PrefabRemaps:
     []
@@ -6439,22 +6422,6 @@
     - !<own> b03ae636-873b-4d0a-ab3e-710a0c6bbaf9
   Components:
     - !<own> d04c1bfe-0946-4345-9d03-a7da70283e8c
-- !<ScriptComponent/e92c9815-b474-4f37-9ceb-1cffeac1afb1>
-  PrefabRemaps:
-    []
-  Name: TextInputManager
-  Enabled: true
-  ScriptAsset: !<reference> 5de60c08-3a73-47d2-b1e3-233637e425fb
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/ea6bcc6e-5fc1-4a45-bade-7f26df777aa1>
   PrefabRemaps:
     - 3573bafa-9cff-406e-9c61-3a96c3581d6c: 189c5ad4-6aeb-4d06-772f-c175e3c4623b

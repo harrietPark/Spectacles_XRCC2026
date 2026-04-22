@@ -32,7 +32,6 @@
     lockWidgetButton: false
     noteController: false
     spawnedWidgetScaleMultiplier: false
-    textInputManager: false
     toggleMenuButton: false
     widgetParent: false
     widgetPrefabs: false
@@ -57,7 +56,6 @@
         []
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      textInputManager: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -72,4 +70,3 @@
     - "// @input Asset.ObjectPrefab[] widgetPrefabs"
     - '// @input float spawnedWidgetScaleMultiplier = 1 {"hint":"Default scale multiplier applied when spawning widgets/notes."}'
     - // @input Component.Text instructionText
-    - // @input AssignableType_6 textInputManager

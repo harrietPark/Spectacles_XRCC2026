@@ -18,6 +18,9 @@ const BOX_MIN_SIZE = 8 //min size in cm for image capture
 export class PictureBehavior extends BaseScriptComponent {
   private onImageCapturedEvent = new Event<Texture>();
   public readonly onImageCaptured: PublicApi<Texture> = this.onImageCapturedEvent.publicApi();
+
+  private onImageAISummariedEvent = new Event<string>();
+  public readonly onImageAISummarised: PublicApi<string> = this.onImageAISummariedEvent.publicApi();
   
   @input circleObjs: SceneObject[]
   @input editorCamObj: SceneObject
@@ -154,6 +157,7 @@ export class PictureBehavior extends BaseScriptComponent {
       // ======================================================================
       this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
         this.loadCaption(response)
+        this.onImageAISummariedEvent.invoke(response);
 
         const snapCloud = SnapCloudCropManager.getInstance()
         if (snapCloud) {

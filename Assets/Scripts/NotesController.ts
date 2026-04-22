@@ -68,6 +68,7 @@ export class NotesController extends BaseScriptComponent {
     private onStart() {
         if (this.pictureController) {
             this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
+            this.pictureController.onCropAISummarised.add(this.addCropAISummary.bind(this));
         } else {
             print("[NoteController] pictureController is not assigned; crop flow is disabled.");
         }
@@ -149,12 +150,20 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private updateNotes(widgets: Widget[]) {
-        this.notes = [];
-        for (let i = 0; i < widgets.length; i++) {
-            const note = widgets[i].getSceneObject().getComponent(Note.getTypeName());
-            if (note) {
-                this.notes.push(note);
-            }
+        const updatedNotes = widgets.map((widget) => widget.getSceneObject().getComponent(Note.getTypeName()));
+
+        const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
+        for (const note of addedNotes) {
+            note.onNoteCompleted.add((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
+        }
+
+        const removedNotes = this.notes.filter((note) => !updatedNotes.includes(note));
+        for (const note of removedNotes) {
+            note.onNoteCompleted.remove((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
         }
     }
 
@@ -173,6 +182,16 @@ export class NotesController extends BaseScriptComponent {
 
         const latestNote = this.notes[this.notes.length - 1];
         latestNote.setCroppedImage(image);
+    }
+
+    private addCropAISummary(summary: string) {
+        if (this.notes.length === 0) {
+            print("[NoteController] No spawned notes found for cropped image summary.");
+            return;
+        }
+
+        const latestNote = this.notes[this.notes.length - 1];
+        latestNote.setCroppedImageAISummary(summary);
     }
 
     private getSpawnRotation(spawnPosition: vec3): quat {
