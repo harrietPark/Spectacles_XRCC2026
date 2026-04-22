@@ -22,11 +22,16 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 28bc70fa-816b-45d5-b9de-105ce9673d7f
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    activateDwellSfx: false
+    activateDwellSfxVolume: false
+    dwellReadySfx: false
+    dwellReadySfxVolume: false
+    noteSpawnedSfx: false
+    noteSpawnedSfxVolume: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +41,21 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - activateDwellSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      activateDwellSfxVolume: !<float> 1.000000
+      dwellReadySfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      dwellReadySfxVolume: !<float> 1.000000
+      noteSpawnedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      noteSpawnedSfxVolume: !<float> 1.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @ui {"widget":"group_start", "label":"Note Creation Sounds"}'
+    - '// @input Asset.AudioTrackAsset activateDwellSfx {"hint":"Played when pressing hand button to start finger dwell note placement."}'
+    - '// @input float activateDwellSfxVolume = 1 {"hint":"Volume for activate dwell sound effect."}'
+    - '// @input Asset.AudioTrackAsset dwellReadySfx {"hint":"Optional sound when dwell state becomes ready (green)."}'
+    - '// @input float dwellReadySfxVolume = 1 {"hint":"Volume for dwell-ready sound effect."}'
+    - '// @input Asset.AudioTrackAsset noteSpawnedSfx {"hint":"Optional sound when note spawn is confirmed."}'
+    - '// @input float noteSpawnedSfxVolume = 1 {"hint":"Volume for note-spawned sound effect."}'
+    - '// @ui {"widget":"group_end"}'
