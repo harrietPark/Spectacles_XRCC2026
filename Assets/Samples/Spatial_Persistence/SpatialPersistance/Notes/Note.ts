@@ -2,7 +2,7 @@ import {InteractableOutlineFeedback} from "SpectaclesInteractionKit.lspkg/Compon
 import {Interactable} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable"
 import {PinchButton} from "SpectaclesInteractionKit.lspkg/Components/UI/PinchButton/PinchButton"
 import {ToggleButton} from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleButton/ToggleButton"
-import {TextInputManager} from "../TextInputManager"
+// import {TextInputManager} from "../TextInputManager"
 import {Widget} from "../Widget"
 import Event from "SpectaclesInteractionKit.lspkg/Utils/Event"
 
@@ -140,11 +140,11 @@ export class Note extends BaseScriptComponent {
       }
     })
 
-    TextInputManager.getInstance().onKeyboardStateChanged.add((isOpen: boolean) => {
-      if (!isOpen && this._editToggle.isToggledOn) {
-        this._editToggle.isToggledOn = false
-      }
-    })
+    // TextInputManager.getInstance().onKeyboardStateChanged.add((isOpen: boolean) => {
+    //   if (!isOpen && this._editToggle.isToggledOn) {
+    //     this._editToggle.isToggledOn = false
+    //   }
+    // })
 
     this.setupVoiceNoteControls()
   }
@@ -167,6 +167,10 @@ export class Note extends BaseScriptComponent {
     if (this.voiceStatusText) {
       this.voiceStatusText.getSceneObject().enabled = shouldShowButtons
     }
+  }
+
+  public sendCompleteNoteData() {
+
   }
 
   private setupVoiceNoteControls(): void {

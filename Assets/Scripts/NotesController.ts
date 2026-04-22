@@ -24,7 +24,8 @@ export class NotesController extends BaseScriptComponent {
     private areaManager: AreaManager | undefined;
     @ui.group_start("Note Anchoring Setup")
     @input
-    private fingerDwellingTimeThreshold: number = 1.5; // in seconds
+    private fingerDwellingTimeThreshold: number = 2; // in seconds
+    @input private fingerDwellRadius: number = 3; // in cm
     @ui.group_end
     @ui.group_start("Crop to Photo")
     @input
@@ -48,7 +49,6 @@ export class NotesController extends BaseScriptComponent {
     private worldCameraTransform = WorldCameraFinderProvider.getInstance().getTransform();
     private fingerDwellTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
-    private fingerDwellRadius: number = 0.1; // in meters
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;

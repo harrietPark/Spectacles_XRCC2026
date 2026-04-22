@@ -153,6 +153,7 @@ export class PictureBehavior extends BaseScriptComponent {
       // the user sees feedback for the full Storage + DB write, not just GPT.
       // ======================================================================
       this.chatGPT.makeImageRequest(this.captureRendMesh.mainPass.captureImage, (response) => {
+        print("--- ChatGPT responded")
         this.loadCaption(response)
 
         const snapCloud = SnapCloudCropManager.getInstance()
@@ -179,6 +180,7 @@ export class PictureBehavior extends BaseScriptComponent {
   }
 
   private closeCropVisual() {
+    print("--- Closing crop visual")
     this.captureRendMesh.getSceneObject().enabled = false
     this.caption.closeCaption()
   }

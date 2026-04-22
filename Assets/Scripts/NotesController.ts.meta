@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     areaManager: false
+    fingerDwellRadius: false
     fingerDwellingTimeThreshold: false
     noteSpawnYawOffsetDegrees: false
     pictureController: false
@@ -41,6 +42,7 @@
   DefaultScriptInputs:
     - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       fingerDwellingTimeThreshold: !<float> 3.000000
+      fingerDwellRadius: !<float> 2.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
@@ -49,7 +51,8 @@
   InputLines:
     - // @input AssignableType areaManager
     - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
-    - // @input float fingerDwellingTimeThreshold = 1.5
+    - // @input float fingerDwellingTimeThreshold = 2
+    - // @input float fingerDwellRadius = 3
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
     - // @input AssignableType_1 pictureController
