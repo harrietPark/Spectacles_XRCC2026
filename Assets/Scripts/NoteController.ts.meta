@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/e2f08896-51f2-4257-b9ce-92dbf51067ce>
+- !<AssetImportMetadata/5bfd081a-8ed5-4404-ba8b-670887705cab>
   ImportedAssetIds:
-    TypeScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
+    TypeScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ImporterName: TypeScriptAssetImporter
-  PrimaryAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
+  PrimaryAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    TypeScriptAsset: !<own> 3f5f595c-9553-4c45-b4e6-c5cf3e8898cd
+    TypeScriptAsset: !<own> 6046354f-1991-4889-a7a3-abae4df4dbd8
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<TypeScriptAssetData/3f5f595c-9553-4c45-b4e6-c5cf3e8898cd>
+- !<TypeScriptAssetData/6046354f-1991-4889-a7a3-abae4df4dbd8>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,21 +22,12 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: f3590469-d466-4fd1-a650-931eba79d624
+  ComponentUid: d937e657-85d1-48e5-a8c6-557b645e7ec0
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    HandDwellingTimeThreshold: false
-    MidasTouchVisual: false
     areaManager: false
-    dwellNotReadyColor: false
-    dwellNotReadyStatePrefab: false
-    dwellNotReadyStateScale: false
-    dwellReadyColor: false
-    dwellReadyStatePrefab: false
-    dwellReadyStateScale: false
-    midasTouchColorParameter: false
-    midasTouchVisualMesh: false
+    fingerDwellingTimeThreshold: false
     noteSpawnYawOffsetDegrees: false
     pictureController: false
   ScriptTypesHidden:
@@ -49,17 +40,8 @@
     []
   DefaultScriptInputs:
     - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
-      HandDwellingTimeThreshold: !<float> 1.000000
+      fingerDwellingTimeThreshold: !<float> 3.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
-      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      dwellReadyStatePrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
-      dwellNotReadyStateScale: !<float> 1.000000
-      dwellReadyStateScale: !<float> 1.000000
-      midasTouchColorParameter: baseColor
-      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
     -
@@ -67,23 +49,12 @@
   InputLines:
     - // @input AssignableType areaManager
     - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
-    - // @input float HandDwellingTimeThreshold = 3
+    - // @input float fingerDwellingTimeThreshold = 1.5
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
     - // @input AssignableType_1 pictureController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
-    - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'
-    - // @input SceneObject MidasTouchVisual
-    - '// @input Component.RenderMeshVisual midasTouchVisualMesh {"hint":"Optional mesh visual for dwell indicator color feedback. If empty, uses first RenderMeshVisual on MidasTouchVisual."}'
-    - '// @input Asset.ObjectPrefab dwellNotReadyStatePrefab {"hint":"Optional prefab shown while dwell is not ready. Falls back to color sphere when unassigned."}'
-    - '// @input Asset.ObjectPrefab dwellReadyStatePrefab {"hint":"Optional prefab shown when dwell is ready to place a note. Falls back to color sphere when unassigned."}'
-    - '// @input float dwellNotReadyStateScale = 1 {"hint":"Uniform scale multiplier for the not-ready state prefab."}'
-    - '// @input float dwellReadyStateScale = 1 {"hint":"Uniform scale multiplier for the ready state prefab."}'
-    - '// @input string midasTouchColorParameter = "baseColor" {"hint":"Shader color parameter name on the dwell indicator material."}'
-    - '// @input vec4 dwellNotReadyColor = {1,0,0,1} {"widget":"color"}'
-    - '// @input vec4 dwellReadyColor = {0,1,0,1} {"widget":"color"}'
-    - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Spawn Rotation"}'
     - '// @input float noteSpawnYawOffsetDegrees = 180 {"hint":"Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes."}'
     - '// @ui {"widget":"group_end"}'

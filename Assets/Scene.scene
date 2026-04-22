@@ -5,6 +5,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
+    - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
     - !<own> e77e50d7-ddb1-4bcc-8447-b7d071e2355c
     - !<own> 7a9be6c1-01e4-42be-8ec1-57f58f5db1c4
@@ -15,10 +16,14 @@
     - !<own> 2b0f1f13-048a-4ca6-82c8-2f9bbdcd3ecc
     - !<own> e8cfcc79-59da-4b3c-ab1a-3a01253562cc
     - !<own> 69f84c06-7bb9-4c13-82da-f293bc9e0800
-    - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 5fea7acf-f65c-4cf4-8dea-826df0c50577
+    - !<own> 05f57816-8ad9-4999-86d9-a609911e4de9
+    - !<own> 70f154f4-9955-45f3-b199-862f3959cabd
+    - !<own> cf3a6135-553d-4be9-a0fd-a85dd4708bf2
     - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
+    - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
+    - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       []
@@ -277,6 +282,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 59e0866f-8125-4f7b-bf54-b6aa22d10417
+  Components:
+    []
+- !<SceneObject/05f57816-8ad9-4999-86d9-a609911e4de9>
+  PrefabRemaps:
+    []
+  Name: "------------------- UI, UX -------------------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<ScriptComponent/062e118c-1bf4-4a1e-8e55-e86bd429caf8>
@@ -952,19 +972,22 @@
     []
 - !<SceneObject/17e7c054-137c-4dea-a1b3-53ef49c07247>
   PrefabRemaps:
-    []
-  Name: Midas_Touch_Visual
+    - 17e7c054-137c-4dea-a1b3-53ef49c07247: 9f8776c9-4135-4aaa-51c5-81e6a6a58dab
+    - b1cfffe8-054e-437d-88bc-9bfc7f6685c2: 500a920d-1147-461c-6429-ab22b327ebcb
+    - e78c693d-55ba-48d1-9518-e4339ee3ecc1: a4e53774-e7c4-4ef8-48bd-c1db7e901c92
+  Name: Visual_RightIndexTip
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -20.927311, y: 10.754841, z: 3.287966}
+    Rotation: {x: 5.476802, y: -82.627777, z: -5.225273}
     Scale: {x: 3.000000, y: 3.000000, z: 3.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
     - !<own> b1cfffe8-054e-437d-88bc-9bfc7f6685c2
+    - !<own> e78c693d-55ba-48d1-9518-e4339ee3ecc1
 - !<ScriptComponent/19367564-8482-4184-b034-c442d461776a>
   PrefabRemaps:
     []
@@ -1064,6 +1087,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/1e6a709c-3ef4-4db8-9baa-b4c211994421>
+  PrefabRemaps:
+    []
+  Name: SnapCloudPinManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> d7d4f5d7-4459-4bcf-8306-80bd1309e9c5
 - !<SceneObject/1fa65000-195a-4bb3-8c4e-12dc5e6b0dcf>
   PrefabRemaps:
     []
@@ -1209,6 +1247,21 @@
     - !<own> ef0c8ffe-9686-4e30-8f53-25b4ee43fade
   Components:
     []
+- !<SceneObject/2680202a-f07f-480f-8681-eae7da5ceea1>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.100000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 2.000000, y: 2.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> fe53ac2d-fa27-48ec-a35e-68b8397ded75
 - !<ScriptComponent/275c4ffb-2f9b-47c1-8f50-ea88c9424686>
   PrefabRemaps:
     []
@@ -1396,41 +1449,6 @@
     []
   Components:
     - !<own> 7dd3977d-ba9f-4475-ae72-b53c47ea19bc
-- !<ScriptComponent/2f431dbe-a179-4c15-9baa-233f30fe08e0>
-  PrefabRemaps:
-    []
-  Name: NoteController
-  Enabled: true
-  ScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
-  ScriptInputsDefault:
-    HandDwellingTimeThreshold: true
-    midasTouchVisualMesh: true
-    dwellNotReadyStateScale: true
-    dwellReadyStateScale: true
-    midasTouchColorParameter: true
-    dwellNotReadyColor: true
-    dwellReadyColor: true
-    noteSpawnYawOffsetDegrees: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
-      HandDwellingTimeThreshold: !<float> 1.000000
-      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
-      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
-      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
-      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 473fa665-f729-4d41-bc4c-78a9a8f187c2
-      dwellReadyStatePrefab: !<reference.ObjectPrefab> 23ba0068-e57c-4489-aacf-54c7c5ac5450
-      dwellNotReadyStateScale: !<float> 1.000000
-      dwellReadyStateScale: !<float> 1.000000
-      midasTouchColorParameter: baseColor
-      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
-      noteSpawnYawOffsetDegrees: !<float> 180.000000
-  ScriptTypes:
-    "":
-      {}
 - !<ScreenTransform/30d42003-c1cf-4ad1-b32c-f326c3b98001>
   PrefabRemaps:
     []
@@ -1696,7 +1714,9 @@
     {}
   ScriptInputs:
     "":
-      NoteController: !<MappingBased.AssignableType> 2f431dbe-a179-4c15-9baa-233f30fe08e0
+      uxFeedbackController: !<MappingBased.AssignableType> 648bc0d7-3193-45df-8075-2b9da42f35b7
+      NoteController: !<MappingBased.AssignableType_1> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
+      buttonActivateNoteCreation: !<MappingBased.AssignableType_2> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
       requestMicrophonePermissionOnStart: true
       microphoneAsset: !<reference.AudioTrackAsset> acf855e3-f791-416d-9d81-6fc09fc68d96
       microphoneWarmupDurationSeconds: 0.250000
@@ -1930,7 +1950,7 @@
     {}
   ScriptInputs:
     "":
-      noteController: !<MappingBased.AssignableType> 2f431dbe-a179-4c15-9baa-233f30fe08e0
+      noteController: !<MappingBased.AssignableType> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
       widgetSelectionUI: !<MappingBased.AssignableType_1> dfb56e52-7044-43c4-9c10-80a951226a27
       lockWidgetButton: !<MappingBased.AssignableType_2> b651a30c-b09b-4f31-9830-07507232f7c9
       areaPromptButton: !<MappingBased.AssignableType_3> caebe164-0fd7-4964-bc6e-06d128bd9098
@@ -1938,11 +1958,9 @@
       toggleMenuButton: !<MappingBased.AssignableType_5> a15d748b-215d-4a91-8693-ca891a9a5505
       widgetParent: !<reference.SceneObject> 12b7e20a-b174-4911-82e3-4b7a4b48d307
       widgetPrefabs: !<reference.ObjectPrefab[]>
+        - !<reference> ee27b61d-5e96-4b8b-9511-45b7a045cc5b
         - !<reference> 7dea65b0-7044-44f3-a205-a4f46c471a57
         - !<reference> 91afcf2c-6d9f-4b66-bc0a-f8eb4d552939
-        - !<reference> cb54d61a-6f7e-480e-8281-fe6e65510145
-        - !<reference> 30bfee42-6ed4-4d5e-86a7-7ec0cdc70fdf
-        - !<reference> 758a3f1d-72a2-4b84-a81d-818861d2b846
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
       textInputManager: !<MappingBased.AssignableType_6> e92c9815-b474-4f37-9ceb-1cffeac1afb1
@@ -2131,6 +2149,7 @@
     []
   Components:
     - !<own> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+    - !<own> 648bc0d7-3193-45df-8075-2b9da42f35b7
 - !<SceneObject/4ca61d1f-7756-4804-bbd6-02101288bea6>
   PrefabRemaps:
     []
@@ -2619,7 +2638,7 @@
   Children:
     []
   Components:
-    - !<own> 2f431dbe-a179-4c15-9baa-233f30fe08e0
+    - !<own> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
 - !<SceneObject/628a18bf-b4c6-42a7-b0a7-a4bf7c54351f>
   PrefabRemaps:
     []
@@ -2696,6 +2715,35 @@
     - !<own> b4c9a379-71be-4b27-a113-6b69581413ac
   Components:
     []
+- !<ScriptComponent/648bc0d7-3193-45df-8075-2b9da42f35b7>
+  PrefabRemaps:
+    []
+  Name: UXFeedbackController
+  Enabled: true
+  ScriptAsset: !<reference> a98aa906-8c39-40df-b0a4-b63a23bb0222
+  ScriptInputsDefault:
+    midasTouchVisualMesh: true
+    dwellNotReadyStateScale: true
+    dwellReadyStateScale: true
+    midasTouchColorParameter: true
+    dwellNotReadyColor: true
+    dwellReadyColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
+      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 473fa665-f729-4d41-bc4c-78a9a8f187c2
+      dwellReadyStatePrefab: !<reference.ObjectPrefab> 23ba0068-e57c-4489-aacf-54c7c5ac5450
+      dwellNotReadyStateScale: !<float> 1.000000
+      dwellReadyStateScale: !<float> 1.000000
+      midasTouchColorParameter: baseColor
+      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/65d728e2-cc8c-4296-81a8-8f0c75930420>
   PrefabRemaps:
     []
@@ -2763,6 +2811,33 @@
       showRotationProperties: true
       _rotationAxis: !<string> Y
       isSynced: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/67afd973-386c-45d9-8ff9-f5a8f98bf900>
+  PrefabRemaps:
+    []
+  Name: SnapCloudSessionManager
+  Enabled: true
+  ScriptAsset: !<reference> e98fd475-e2cb-4afa-a4c1-35410971ee36
+  ScriptInputsDefault:
+    customerId: true
+    employeeId: true
+    customerName: true
+    customerEmail: true
+    customersTableName: true
+    sessionsTableName: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      supabaseProject: !<reference.SupabaseProject> f966595d-849a-4274-b396-5d33056d2a40
+      customerId: 00000000-0000-4000-8000-000000000001
+      employeeId: 00000000-0000-4000-8000-000000000002
+      customerName: Demo Customer
+      customerEmail: demo@pinpoint.local
+      customersTableName: customers
+      sessionsTableName: sessions
   ScriptTypes:
     "":
       {}
@@ -2960,6 +3035,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 6474f43c-809b-4511-ad1f-99f3b7778128
+  Components:
+    []
+- !<SceneObject/70f154f4-9955-45f3-b199-862f3959cabd>
+  PrefabRemaps:
+    []
+  Name: UXFeedback
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 17e7c054-137c-4dea-a1b3-53ef49c07247
   Components:
     []
 - !<ScriptComponent/71e9e0be-75f7-4932-874f-c422406684ab>
@@ -3697,7 +3787,6 @@
     storageBucket: true
     cloudFolderPrefix: true
     capturesTableName: true
-    sessionsTableName: true
     captureRendMesh: true
     loadingIndicator: true
     bridgeCaption: true
@@ -3706,13 +3795,11 @@
     {}
   ScriptInputs:
     "":
-      supabaseProject: !<reference.SupabaseProject> f966595d-849a-4274-b396-5d33056d2a40
       saveToCloud: true
       storageBucket: specs-captures
       cloudFolderPrefix: captures
       syncCapturesTable: true
       capturesTableName: captures
-      sessionsTableName: sessions
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       bridgeCaption: capture
@@ -3992,7 +4079,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 17e7c054-137c-4dea-a1b3-53ef49c07247
+    []
   Components:
     []
 - !<ScriptComponent/9e70681c-d894-4394-ba22-f6cad0e8228f>
@@ -4086,6 +4173,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/a3803e72-1505-41fc-9d17-7f8770f22791>
+  PrefabRemaps:
+    []
+  Name: SnapCloudSessionManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 67afd973-386c-45d9-8ff9-f5a8f98bf900
 - !<Text/a55eeb89-9ae7-4782-8d9a-f86a399c257d>
   PrefabRemaps:
     []
@@ -4544,6 +4646,25 @@
     - !<own> c1c80fb0-3e8a-4b96-9bf5-28922e7031e6
   Components:
     []
+- !<ScriptComponent/ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70>
+  PrefabRemaps:
+    []
+  Name: NoteController
+  Enabled: true
+  ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
+  ScriptInputsDefault:
+    noteSpawnYawOffsetDegrees: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
+      fingerDwellingTimeThreshold: 1.500000
+      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      noteSpawnYawOffsetDegrees: !<float> 180.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/ae91aa38-9c5c-4fa2-aa4e-fe1445eba3f8>
   PrefabRemaps:
     []
@@ -4625,6 +4746,50 @@
     - !<own> ee75947b-8b5e-45a1-825d-29e2487f3736
   Components:
     - !<own> 6964dcb4-7ddd-47f2-936f-0b77b6d22c23
+- !<ScriptComponent/b0f6950f-da9d-45ef-9b5a-d36cb27544aa>
+  PrefabRemaps:
+    []
+  Name: RoundButton
+  Enabled: true
+  ScriptAsset: !<reference> ecf4e352-5db4-4239-8a5e-c4c517a0f03c
+  ScriptInputsDefault:
+    _renderOrder: true
+    _inactive: true
+    _style: true
+    _shadowPositionOffset: true
+    _toggleable: true
+    _defaultToOn: true
+    addCallbacks: true
+    triggerUpCallbacks: true
+    triggerDownCallbacks: true
+    onValueChangeCallbacks: true
+    onFinishedCallbacks: true
+    _width: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      _renderOrder: 0
+      _inactive: false
+      _playAudio: true
+      _style: PrimaryNeutral
+      _hasShadow: true
+      _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
+      _toggleable: false
+      _defaultToOn: false
+      addCallbacks: false
+      triggerUpCallbacks:
+        []
+      triggerDownCallbacks:
+        []
+      onValueChangeCallbacks:
+        []
+      onFinishedCallbacks:
+        []
+      _width: !<float> 4.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b18f6572-8b14-49b8-aaf6-18e9010c615b>
   PrefabRemaps:
     []
@@ -4669,8 +4834,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 9d7cff10-e916-4da5-be22-1de7d2752a2c
-  Mesh: !<reference> 89e3db36-d63f-43ce-957b-77db81b0a792
+    - !<reference> fe009e28-322e-4544-95d3-5ed79ee2b9ae
+  Mesh: !<reference> 644b3437-7972-45ff-b275-59b185732bd3
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -5252,6 +5417,21 @@
     - !<own> 701fbb04-a4f3-4636-b95a-4051b851b122
     - !<own> 9117240c-239c-465f-b48b-35829aa436e7
     - !<own> 11e8f8cc-f89d-4ec4-b911-41f98be35837
+- !<SceneObject/c0da6ff6-10ee-4f4a-b3fc-c51dd08b1304>
+  PrefabRemaps:
+    []
+  Name: UIContainer
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> d3789ed4-03b1-4998-afda-d5a472661e3f
+  Components:
+    []
 - !<SceneObject/c114640d-eadb-414e-a88c-f73d71d7d2c4>
   PrefabRemaps:
     []
@@ -5557,6 +5737,27 @@
     bottom: -1.049999
     right: 3.750000
     top: 1.049999
+- !<SceneObject/cf3a6135-553d-4be9-a0fd-a85dd4708bf2>
+  PrefabRemaps:
+    - 2680202a-f07f-480f-8681-eae7da5ceea1: b9d15954-8ba5-4acf-7c46-d7fda667ce34
+    - b0f6950f-da9d-45ef-9b5a-d36cb27544aa: b6fece97-e9fb-45c9-5bd4-96695b4d247c
+    - c0da6ff6-10ee-4f4a-b3fc-c51dd08b1304: 41bf5b99-916a-49b9-7471-981e8a0fade4
+    - cf3a6135-553d-4be9-a0fd-a85dd4708bf2: f2655d77-6748-4280-5307-b67755929c61
+    - d3789ed4-03b1-4998-afda-d5a472661e3f: 7358205b-a48e-4a57-5e0f-056a901acaaf
+    - fe53ac2d-fa27-48ec-a35e-68b8397ded75: c116fc32-54d4-4b4a-7b5e-26ec1d0112e0
+    - ff833cc2-d19c-49e1-b021-f44ac7abc141: 5c7b6c58-f4ae-40ec-5ec2-3cd6d2503127
+  Name: LeftHandMenu
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> c0da6ff6-10ee-4f4a-b3fc-c51dd08b1304
+  Components:
+    - !<own> ff833cc2-d19c-49e1-b021-f44ac7abc141
 - !<SceneObject/cfd1b857-450e-4c18-b39e-0a35b2819e1c>
   PrefabRemaps:
     []
@@ -5605,6 +5806,21 @@
     - !<own> 645173f5-be87-45aa-b908-04e6800085bd
   Components:
     - !<own> 275c4ffb-2f9b-47c1-8f50-ea88c9424686
+- !<SceneObject/d3789ed4-03b1-4998-afda-d5a472661e3f>
+  PrefabRemaps:
+    []
+  Name: Button_ActivateNoteCreation
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 1.500000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2680202a-f07f-480f-8681-eae7da5ceea1
+  Components:
+    - !<own> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
 - !<SceneObject/d4c70c30-130a-4e49-998b-6c7fc4686b27>
   PrefabRemaps:
     []
@@ -5727,6 +5943,28 @@
     - !<own> 8c3e6908-6f66-41d9-a952-50e91a350337
   Components:
     []
+- !<ScriptComponent/d7d4f5d7-4459-4bcf-8306-80bd1309e9c5>
+  PrefabRemaps:
+    []
+  Name: SnapCloudPinManager
+  Enabled: true
+  ScriptAsset: !<reference> f1e82177-232d-4375-b444-f11e2b43a7ea
+  ScriptInputsDefault:
+    pinsTableName: true
+    noteScanIntervalSeconds: true
+    processPinFunctionName: true
+    autoInvokeProcessPin: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinsTableName: pins
+      noteScanIntervalSeconds: !<float> 1.000000
+      processPinFunctionName: process_pin
+      autoInvokeProcessPin: true
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/d8110a6b-3dc8-4d5c-886e-0ded2ec1ac1b>
   PrefabRemaps:
     []
@@ -6092,6 +6330,22 @@
     []
   Components:
     - !<own> 1e3e8365-1cea-4df0-8dd7-3b60c75d402c
+- !<ScriptComponent/e78c693d-55ba-48d1-9518-e4339ee3ecc1>
+  PrefabRemaps:
+    []
+  Name: BreathingAnimation
+  Enabled: true
+  ScriptAsset: !<reference> fed70c2d-2b52-4f58-aa86-65a868e5518b
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e8cfcc79-59da-4b3c-ab1a-3a01253562cc>
   PrefabRemaps:
     []
@@ -6671,6 +6925,46 @@
     - !<own> a85e6ea8-4f83-4a2d-a0e2-e18ee0f7b6a8
   Components:
     []
+- !<Image/fe53ac2d-fa27-48ec-a35e-68b8397ded75>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 41fccaf3-1125-43ef-8252-695e2f7d4774
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+- !<ScriptComponent/ff833cc2-d19c-49e1-b021-f44ac7abc141>
+  PrefabRemaps:
+    []
+  Name: HandMenu
+  Enabled: true
+  ScriptAsset: !<reference> 51c51f5d-2ad5-46e4-9fea-ac0e9993d320
+  ScriptInputsDefault:
+    maxNoTrackCount: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      menuType: !<float> 1.000000
+      maxAngleToCamera: !<float> 30.000000
+      maxNoTrackCount: !<float> 10.000000
+      uiContainer: !<reference.SceneObject> c0da6ff6-10ee-4f4a-b3fc-c51dd08b1304
+      distanceToHandOnXAxis: !<float> 3.000000
+      distanceToHandOnZAxis: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/ff8bde34-02dc-4f85-9552-69807e97d8cc>
   PrefabRemaps:
     []

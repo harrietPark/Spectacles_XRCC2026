@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/ee18ef73-3859-458c-a72a-4c1de6af055b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f1e82177-232d-4375-b444-f11e2b43a7ea
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f1e82177-232d-4375-b444-f11e2b43a7ea
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> d2f37739-09fc-4f60-b7c5-8b29f998fe2d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/d2f37739-09fc-4f60-b7c5-8b29f998fe2d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 6c9ca72f-ebf6-4705-b7d9-cd4647b6b8aa
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoInvokeProcessPin: false
+    noteScanIntervalSeconds: false
+    pinsTableName: false
+    processPinFunctionName: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pinsTableName: pins
+      noteScanIntervalSeconds: !<float> 1.000000
+      processPinFunctionName: process_pin
+      autoInvokeProcessPin: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input string pinsTableName = "pins" {"hint":"Supabase table name for pins."}'
+    - '// @input float noteScanIntervalSeconds = 1 {"hint":"How often (seconds) to re-scan the scene for new Note components."}'
+    - '// @input string processPinFunctionName = "process-pin" {"hint":"Name of the Supabase edge function to invoke after each pin write."}'
+    - '// @input bool autoInvokeProcessPin = true {"hint":"If true, invoke process-pin automatically after every INSERT/UPDATE."}'

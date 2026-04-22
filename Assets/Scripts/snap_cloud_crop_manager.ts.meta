@@ -33,9 +33,7 @@
     cloudFolderPrefix: false
     loadingIndicator: false
     saveToCloud: false
-    sessionsTableName: false
     storageBucket: false
-    supabaseProject: false
     syncCapturesTable: false
   ScriptTypesHidden:
     {}
@@ -46,13 +44,11 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - supabaseProject: !<reference.SupabaseProject> 00000000-0000-0000-0000-000000000000
-      saveToCloud: true
+    - saveToCloud: true
       storageBucket: specs-captures
       cloudFolderPrefix: captures
       syncCapturesTable: false
       capturesTableName: captures
-      sessionsTableName: sessions
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       bridgeCaption: capture
@@ -61,13 +57,11 @@
     -
       {}
   InputLines:
-    - '// @input Asset.SupabaseProject supabaseProject {"hint":"PinPoint Snap Cloud project asset (url + publicToken). Required on the manager instance."}'
     - '// @input bool saveToCloud = true {"hint":"Master switch for uploading cropped captures to Snap Cloud storage"}'
     - '// @input string storageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket configured in the Snap Cloud dashboard."}'
     - '// @input string cloudFolderPrefix = "captures" {"hint":"Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg"}'
     - '// @input bool syncCapturesTable = true {"hint":"Also insert a row into the captures table for each upload"}'
     - '// @input string capturesTableName = "captures" {"hint":"Table name used when syncCapturesTable is true"}'
-    - '// @input string sessionsTableName = "sessions" {"hint":"Table name for session records. A row is inserted here on startup before any captures."}'
     - '// @input Component.RenderMeshVisual captureRendMesh {"hint":"Bridge: RenderMeshVisual whose mainPass.captureImage holds the cropped texture."}'
     - '// @input SceneObject loadingIndicator {"hint":"Bridge: SceneObject whose enabled state goes true when a capture is ready."}'
     - '// @input string bridgeCaption = "capture" {"hint":"Bridge: optional caption/title to attach to uploads from this bridge."}'
