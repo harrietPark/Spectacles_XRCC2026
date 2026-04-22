@@ -1,4 +1,4 @@
-import { NoteController } from "./NoteController";
+import { NotesController } from "./NotesController";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
 import { UXFeedbackController } from "./UXFeedbackController";
 
@@ -6,7 +6,7 @@ import { UXFeedbackController } from "./UXFeedbackController";
 export class SceneManager extends BaseScriptComponent {
     @ui.group_start("Controller References")
     @input public uxFeedbackController: UXFeedbackController;
-    @input private NoteController: NoteController;
+    @input private NoteController: NotesController;
     @ui.group_end
     @ui.group_start("UI References")
     @input private buttonActivateNoteCreation: RoundButton;

@@ -10,7 +10,7 @@ import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
 
 @component
-export class NoteController extends BaseScriptComponent {
+export class NotesController extends BaseScriptComponent {
     private onUserViewCapturedEvent = new Event<Texture>();
     public readonly onUserViewCaptured: PublicApi<Texture> =
         this.onUserViewCapturedEvent.publicApi();

@@ -18,7 +18,7 @@ import {SerializationManager} from "./Serialization/SerializationManager"
 import {AnchorManager} from "./SpatialPersistence/AnchorManager"
 import {TextInputManager} from "./TextInputManager"
 import {Widget} from "./Widget"
-import { NoteController } from "Scripts/NoteController"
+import { NotesController } from "Scripts/NotesController"
 
 const CAMERA_GAZE_OFFSET_FACTOR = 60
 
@@ -57,7 +57,7 @@ export class AreaManager extends BaseScriptComponent {
   private onWidgetsUpdatedEvent = new Event<Widget[]>();
   public readonly onWidgetsUpdated: PublicApi<Widget[]> = this.onWidgetsUpdatedEvent.publicApi();
 
-  @input private noteController: NoteController;
+  @input private noteController: NotesController;
 
   // Note UI Components
   @input

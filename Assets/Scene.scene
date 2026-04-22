@@ -2627,7 +2627,7 @@
 - !<SceneObject/5fea7acf-f65c-4cf4-8dea-826df0c50577>
   PrefabRemaps:
     []
-  Name: NoteController
+  Name: NotesController
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -4646,7 +4646,7 @@
 - !<ScriptComponent/ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70>
   PrefabRemaps:
     []
-  Name: NoteController
+  Name: NotesController
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
