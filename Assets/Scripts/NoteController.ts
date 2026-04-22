@@ -129,7 +129,8 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private spawnNote() {
-        print("--- Spawning note");
+        this.sceneManager.uxFeedbackController.deactivateIndexTipHighlight();
+
         const spawnPosition = this.rightHand.indexTip.position;
         // Spawn a spatial note
         this.onNoteSpawnedEvent.invoke({
