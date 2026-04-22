@@ -1,0 +1,61 @@
+- !<ObjectPrefab/56289b6c-8a28-46d4-9a7b-e5776e5a3df0>
+  PackagePath: ""
+  objects:
+    - !<own> b01b05c5-8088-48c0-8f09-233d2ac6bec9
+  LazyLoading: false
+  RetainAssets: true
+- !<ScriptComponent/3a891598-0eac-41e6-8280-02c2665112b7>
+  PrefabRemaps:
+    []
+  Name: 3DLoadingIndicator
+  Enabled: true
+  ScriptAsset: !<reference> b39b9553-9bc9-4953-af6e-a3694ed8cdf6
+  ScriptInputsDefault:
+    startValue: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      loadingMesh: !<reference.MaterialMeshVisual> fe6058ba-27b4-456f-95f3-2e6d2fd6b599
+      startValue: !<float> 1.000000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/b01b05c5-8088-48c0-8f09-233d2ac6bec9>
+  PrefabRemaps:
+    - 3a891598-0eac-41e6-8280-02c2665112b7: 3a891598-0eac-41e6-7d7f-fd3d99aeed48
+    - b01b05c5-8088-48c0-8f09-233d2ac6bec9: b01b05c5-8088-48c0-70f6-dcc2d5394136
+    - fe6058ba-27b4-456f-95f3-2e6d2fd6b599: fe6058ba-27b4-456f-6a0c-d192d0294a66
+  Name: 3DLoadingIndicator__PLACE_IN_SCENE
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -100.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 180.000000}
+    Scale: {x: 200.000000, y: 200.000000, z: 200.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> fe6058ba-27b4-456f-95f3-2e6d2fd6b599
+    - !<own> 3a891598-0eac-41e6-8280-02c2665112b7
+- !<RenderMeshVisual/fe6058ba-27b4-456f-95f3-2e6d2fd6b599>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> f771bb51-4a3f-4484-8057-5eab3c4da88a
+  Mesh: !<reference> fb12c483-7c2d-49a2-a33b-a91a728feb93
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}

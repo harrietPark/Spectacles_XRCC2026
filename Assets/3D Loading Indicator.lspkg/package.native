@@ -1,0 +1,37 @@
+- !<NativePackageDescriptor/b1f5e2e3-7128-4dc4-b908-6aebb9ed1199>
+  PackagePath: ""
+  StudioVersion:
+    major: 5
+    minor: 15
+    patch: 4
+    build: 26022322
+    type: Unset
+    buildFlavor: ""
+    timestamp: 0
+    commit: ""
+  Description: 3D loading indicator A 3D indicator you can use to show progress while something is processing Click here to learn more about scripting and how to reference a script
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  VersionMajor: 1
+  VersionMinor: 0
+  VersionPatch: 0
+  UpdateCheckpoint: 76
+  ExportUid: ea938bea-f9e5-4e26-b34e-a80c54fcfb1d
+  ComponentUid: ac6dabd2-3597-4aad-af53-cf940f5a7fc0
+  PackagePolicy: CanBeUnpackedTransparent
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  Instantiable: !<reference> 00000000-0000-0000-0000-000000000000
+  AssetLibraryDependencyStructure: !<AssetLibraryDependencyStructure>
+    Name: ""
+    AssetId: ""
+    Hash: ""
+    Version:
+      major: 0
+      minor: 0
+      patch: 0
+      build: 0

@@ -38,9 +38,17 @@ export class AreaSelectionMenu extends BaseScriptComponent {
   private onAreaClearEvent: Event<AreaClearEvent> = new Event<AreaClearEvent>()
   readonly onAreaClear: PublicApi<AreaClearEvent> = this.onAreaClearEvent.publicApi()
 
-  private container = this.sceneObject.getParent().getParent().getComponent(ContainerFrame.getTypeName())
+  private container: ContainerFrame | undefined
 
   onAwake() {
+    this.container = this.findContainerFrame()
+    if (!this.container) {
+      throw new Error(
+        `[AreaSelectionMenu] Missing ContainerFrame in parent chain for ${this.sceneObject.name}. ` +
+          "Add a ContainerFrame on this object or one of its parents."
+      )
+    }
+
     this.areaSelectionButtonPrefab = requireAsset("Prefabs/AreaSelectionButtonPrefab") as ObjectPrefab
     this.areaDeleteButtonPrefab = requireAsset("Prefabs/AreaDeleteButtonPrefab") as ObjectPrefab
 
@@ -59,6 +67,11 @@ export class AreaSelectionMenu extends BaseScriptComponent {
    * @param areaNames - the names of all serialized areas available to load
    */
   public promptAreaSelection(areaNames: string[]) {
+    if (!this.container) {
+      print("[AreaSelectionMenu] promptAreaSelection skipped: container is not initialized.")
+      return
+    }
+
     const height = 3 * (areaNames.length - 1) + 6 + 6 + 4
     this.container.innerSize = new vec2(this.container.innerSize.x, height)
 
@@ -159,6 +172,11 @@ export class AreaSelectionMenu extends BaseScriptComponent {
   }
 
   private set selectionEnabled(enabled: boolean) {
+    if (!this.container) {
+      print("[AreaSelectionMenu] selectionEnabled ignored: container is not initialized.")
+      return
+    }
+
     if (enabled) {
       this.clearAreaSelectionButtons()
     }
@@ -185,5 +203,18 @@ export class AreaSelectionMenu extends BaseScriptComponent {
     }
 
     return areaName
+  }
+
+  private findContainerFrame(): ContainerFrame | undefined {
+    let current: SceneObject | undefined = this.sceneObject
+    while (current) {
+      const container = current.getComponent(ContainerFrame.getTypeName()) as ContainerFrame | undefined
+      if (container) {
+        return container
+      }
+      current = current.getParent()
+    }
+
+    return undefined
   }
 }
