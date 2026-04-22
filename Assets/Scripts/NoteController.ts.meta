@@ -26,8 +26,8 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    HandDwellingTimeThreshold: false
     areaManager: false
+    fingerDwellingTimeThreshold: false
     noteSpawnYawOffsetDegrees: false
     pictureController: false
   ScriptTypesHidden:
@@ -40,7 +40,7 @@
     []
   DefaultScriptInputs:
     - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
-      HandDwellingTimeThreshold: !<float> 3.000000
+      fingerDwellingTimeThreshold: !<float> 3.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
@@ -49,7 +49,7 @@
   InputLines:
     - // @input AssignableType areaManager
     - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
-    - // @input float HandDwellingTimeThreshold = 3
+    - // @input float fingerDwellingTimeThreshold = 1.5
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
     - // @input AssignableType_1 pictureController

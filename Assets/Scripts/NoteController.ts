@@ -12,23 +12,25 @@ import { SceneManager } from "./SceneManager";
 @component
 export class NoteController extends BaseScriptComponent {
     private onUserViewCapturedEvent = new Event<Texture>();
-    public readonly onUserViewCaptured: PublicApi<Texture> = this.onUserViewCapturedEvent.publicApi();
+    public readonly onUserViewCaptured: PublicApi<Texture> =
+        this.onUserViewCapturedEvent.publicApi();
 
     private onNoteSpawnedEvent = new Event<WidgetSelectionEvent>();
-    public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
+    public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> =
+        this.onNoteSpawnedEvent.publicApi();
 
-    // @input private camera: CameraModule;
     @input
     @allowUndefined
     private areaManager: AreaManager | undefined;
     @ui.group_start("Note Anchoring Setup")
-    @input private HandDwellingTimeThreshold: number = 3; // in seconds
+    @input
+    private fingerDwellingTimeThreshold: number = 1.5; // in seconds
     @ui.group_end
     @ui.group_start("Crop to Photo")
     @input
     @allowUndefined
     private pictureController: PictureController | undefined;
-    private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule
+    private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule;
     @ui.group_end
     @ui.separator
     @ui.group_start("Spawn Rotation")
@@ -38,21 +40,21 @@ export class NoteController extends BaseScriptComponent {
     @ui.group_end
 
     // Hand tracking
-    private handProvider: HandInputData = SIK.HandInputData
-    private rightHand = this.handProvider.getHand("right")
+    private handProvider: HandInputData = SIK.HandInputData;
+    private rightHand = this.handProvider.getHand("right");
     private worldCameraTransform = WorldCameraFinderProvider.getInstance().getTransform();
-    private handDwellingTimer: number = 0;
+    private fingerDwellTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
-    private handMovementRadiusRange: number = 0.1; // in meters
-
+    private fingerDwellRadius: number = 0.1; // in meters
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
+    private wasFingerDwellIndicatorActive: boolean = false;
 
     // State objects
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
-    
+
     private onAwake() {
         this.deactivateCreationProcess();
 
@@ -61,7 +63,6 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private onStart() {
-
         if (this.pictureController) {
             this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
         } else {
@@ -71,7 +72,9 @@ export class NoteController extends BaseScriptComponent {
         if (this.areaManager) {
             this.areaManager.onWidgetsUpdated.add(this.updateNotes.bind(this));
         } else {
-            print("[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.");
+            print(
+                "[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.",
+            );
         }
     }
 
@@ -94,32 +97,35 @@ export class NoteController extends BaseScriptComponent {
         this.isNoteAnchoringActive = false;
     }
 
-    private tryAnchorNote() : boolean {
+    private tryAnchorNote(): boolean {
+        const uxFeedbackController = this.sceneManager.uxFeedbackController;
+        const resetDwellState = () => {
+            this.fingerDwellTimer = 0;
+            this.wasFingerDwellIndicatorActive = false;
+            uxFeedbackController.deactivateDwellIndicator();
+        };
+
         if (this.rightHand.isTracked()) {
             const currHandPosition = this.rightHand.indexTip.position;
-
             const distance = currHandPosition.distance(this.prevHandPosition);
             this.prevHandPosition = currHandPosition;
-            // print("--- DISTANCE: " + distance);
-            if (distance < this.handMovementRadiusRange) {
-                this.sceneManager.uxFeedbackController.activateDwellIndicator();
 
-                this.handDwellingTimer += getDeltaTime();
-                if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
-                    this.spawnNote();
-                    this.handDwellingTimer = 0;
+            if (distance < this.fingerDwellRadius) {
+                if (!this.wasFingerDwellIndicatorActive) {
+                    this.wasFingerDwellIndicatorActive = true;
+                    uxFeedbackController.activateDwellIndicator();
+                }
+                this.fingerDwellTimer += getDeltaTime();
+                if (this.fingerDwellTimer >= this.fingerDwellingTimeThreshold) {
+                    resetDwellState();
                     return true;
                 }
                 return false;
             }
-            this.handDwellingTimer = 0;
-            this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
-            return false;
-        } else {
-            this.handDwellingTimer = 0;
-            this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
-            return false;
         }
+
+        resetDwellState();
+        return false;
     }
 
     private spawnNote() {
@@ -129,7 +135,7 @@ export class NoteController extends BaseScriptComponent {
         this.onNoteSpawnedEvent.invoke({
             widgetIndex: 0,
             position: spawnPosition,
-            rotation: this.getSpawnRotation(spawnPosition)
+            rotation: this.getSpawnRotation(spawnPosition),
         });
 
         this.sceneManager.sendProductViewToBackend();
@@ -176,8 +182,7 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private getYawOffsetRotation(): quat {
-        const yawRadians = this.noteSpawnYawOffsetDegrees * Math.PI / 180;
+        const yawRadians = (this.noteSpawnYawOffsetDegrees * Math.PI) / 180;
         return quat.angleAxis(yawRadians, vec3.up());
     }
-
 }
