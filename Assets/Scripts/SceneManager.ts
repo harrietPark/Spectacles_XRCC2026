@@ -69,12 +69,10 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private activateNoteCreation() {
-        print("--- Activating note creation process");
         this.NoteController.activateCreationProcess();
     }
 
     private deactivateNoteCreation() {
-        print("--- Deactivating note creation process");
         this.NoteController.deactivateCreationProcess();
     }
 

@@ -52,7 +52,7 @@
     - // @input AssignableType areaManager
     - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
     - // @input float fingerDwellingTimeThreshold = 2
-    - // @input float fingerDwellRadius = 3
+    - // @input float fingerDwellRadius = 1
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Crop to Photo"}'
     - // @input AssignableType_1 pictureController

@@ -25,7 +25,7 @@ export class NotesController extends BaseScriptComponent {
     @ui.group_start("Note Anchoring Setup")
     @input
     private fingerDwellingTimeThreshold: number = 2; // in seconds
-    @input private fingerDwellRadius: number = 3; // in cm
+    @input private fingerDwellRadius: number = 1; // in cm
     @ui.group_end
     @ui.group_start("Crop to Photo")
     @input
@@ -132,7 +132,7 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private spawnNote() {
-        this.sceneManager.uxFeedbackController.deactivateIndexTipHighlight();
+        this.deactivateCreationProcess();
 
         const spawnPosition = this.rightHand.indexTip.position;
         // Spawn a spatial note
@@ -144,6 +144,8 @@ export class NotesController extends BaseScriptComponent {
 
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
+
+        print("--- Spawned a note")
     }
 
     private updateNotes(widgets: Widget[]) {
