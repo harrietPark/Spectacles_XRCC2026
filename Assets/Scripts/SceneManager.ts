@@ -1,11 +1,11 @@
-import {HandInputData} from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData"
-import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { NoteController } from "./NoteController";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
+import { UXFeedbackController } from "./UXFeedbackController";
 
 @component
 export class SceneManager extends BaseScriptComponent {
     @ui.group_start("Controller References")
+    @input public uxFeedbackController: UXFeedbackController;
     @input private NoteController: NoteController;
     @ui.group_end
     @ui.group_start("UI References")
@@ -28,14 +28,6 @@ export class SceneManager extends BaseScriptComponent {
 
     private static instance;
 
-
-    public static getInstance(): SceneManager {
-        if (!SceneManager.instance) {
-            throw new Error("SceneManager not initialized");
-        }
-        return SceneManager.instance;
-    }
-
     private onAwake() {
         if (!SceneManager.instance) {
             SceneManager.instance = this;
@@ -44,7 +36,6 @@ export class SceneManager extends BaseScriptComponent {
         }
 
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
-        this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
     }
 
     private onStart() {
@@ -53,7 +44,19 @@ export class SceneManager extends BaseScriptComponent {
         this.requestMicrophonePermissionEarly();
     }
 
-    private onUpdate() {}
+    public static getInstance(): SceneManager {
+        if (!SceneManager.instance) {
+            throw new Error("SceneManager not initialized");
+        }
+        return SceneManager.instance;
+    }
+
+    public sendProductViewToBackend() {
+        // // Capture camera texture
+        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
+
+        // TODO: send camera texture and note ID to backend
+    }
 
     private activateNoteCreation() {
         print("--- Activating note creation process");

@@ -7,6 +7,7 @@ import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInpu
 import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider";
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
+import { SceneManager } from "./SceneManager";
 
 @component
 export class NoteController extends BaseScriptComponent {
@@ -30,36 +31,6 @@ export class NoteController extends BaseScriptComponent {
     private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule
     @ui.group_end
     @ui.separator
-    @ui.group_start("Visual Feedback")
-    @input private MidasTouchVisual: SceneObject;
-    @input
-    @allowUndefined
-    @hint("Optional mesh visual for dwell indicator color feedback. If empty, uses first RenderMeshVisual on MidasTouchVisual.")
-    private midasTouchVisualMesh: RenderMeshVisual | undefined;
-    @input
-    @allowUndefined
-    @hint("Optional prefab shown while dwell is not ready. Falls back to color sphere when unassigned.")
-    private dwellNotReadyStatePrefab: ObjectPrefab | undefined;
-    @input
-    @allowUndefined
-    @hint("Optional prefab shown when dwell is ready to place a note. Falls back to color sphere when unassigned.")
-    private dwellReadyStatePrefab: ObjectPrefab | undefined;
-    @input
-    @hint("Uniform scale multiplier for the not-ready state prefab.")
-    private dwellNotReadyStateScale: number = 1.0;
-    @input
-    @hint("Uniform scale multiplier for the ready state prefab.")
-    private dwellReadyStateScale: number = 1.0;
-    @input
-    @hint("Shader color parameter name on the dwell indicator material.")
-    private midasTouchColorParameter: string = "baseColor";
-    @input
-    @widget(new ColorWidget())
-    private dwellNotReadyColor: vec4 = new vec4(1, 0, 0, 1);
-    @input
-    @widget(new ColorWidget())
-    private dwellReadyColor: vec4 = new vec4(0, 1, 0, 1);
-    @ui.group_end
     @ui.group_start("Spawn Rotation")
     @input
     @hint("Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes.")
@@ -73,16 +44,14 @@ export class NoteController extends BaseScriptComponent {
     private handDwellingTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
     private handMovementRadiusRange: number = 0.1; // in meters
-    private dwellBaseMeshVisual: RenderMeshVisual | undefined;
-    private dwellIndicatorMaterial: Material | undefined;
-    private dwellNotReadyStateObject: SceneObject | undefined;
-    private dwellReadyStateObject: SceneObject | undefined;
-    private lastDwellReadyVisualState: boolean | undefined;
+
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
 
+    // State objects
     private notes: Note[] = [];
+    private sceneManager: SceneManager = SceneManager.getInstance();
     
     private onAwake() {
         this.deactivateCreationProcess();
@@ -92,9 +61,6 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private onStart() {
-        this.initializeDwellStateVisuals();
-        this.initializeDwellIndicatorMaterial();
-        this.setDwellIndicatorReady(false);
 
         if (this.pictureController) {
             this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
@@ -118,45 +84,40 @@ export class NoteController extends BaseScriptComponent {
     }
 
     public activateCreationProcess() {
-        this.MidasTouchVisual.enabled = true;
-        // this.VisualVisualRightIndexTipDwellingProgress.enabled = true;
+        this.sceneManager.uxFeedbackController.activateIndexTipHighlight();
         this.isNoteAnchoringActive = true;
     }
 
     public deactivateCreationProcess() {
-        this.MidasTouchVisual.enabled = false;
-        // this.VisualVisualRightIndexTipDwellingProgress.enabled = false;
+        this.sceneManager.uxFeedbackController.deactivateIndexTipHighlight();
+        this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
         this.isNoteAnchoringActive = false;
     }
 
     private tryAnchorNote() : boolean {
         if (this.rightHand.isTracked()) {
             const currHandPosition = this.rightHand.indexTip.position;
-            this.MidasTouchVisual.getTransform().setWorldPosition(currHandPosition);
 
             const distance = currHandPosition.distance(this.prevHandPosition);
             this.prevHandPosition = currHandPosition;
             // print("--- DISTANCE: " + distance);
             if (distance < this.handMovementRadiusRange) {
-                // this.VisualRightIndexTipHighlight.enabled = true;
+                this.sceneManager.uxFeedbackController.activateDwellIndicator();
 
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
-                    this.setDwellIndicatorReady(true);
                     this.spawnNote();
                     this.handDwellingTimer = 0;
                     return true;
                 }
-                this.setDwellIndicatorReady(false);
                 return false;
             }
             this.handDwellingTimer = 0;
-            this.setDwellIndicatorReady(false);
+            this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
             return false;
         } else {
             this.handDwellingTimer = 0;
-            this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(3));
-            this.setDwellIndicatorReady(false);
+            this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
             return false;
         }
     }
@@ -171,7 +132,7 @@ export class NoteController extends BaseScriptComponent {
             rotation: this.getSpawnRotation(spawnPosition)
         });
 
-        this.sendUserViewToBackend();
+        this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
     }
 
@@ -192,13 +153,6 @@ export class NoteController extends BaseScriptComponent {
         this.pictureController.enableCrop();
     }
 
-    private sendUserViewToBackend() {
-        // // Capture camera texture
-        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
-
-        // TODO: send camera texture and note ID to backend
-    }
-
     private addCroppedImage(image: Texture) {
         if (this.notes.length === 0) {
             print("[NoteController] No spawned notes found for cropped image.");
@@ -207,16 +161,6 @@ export class NoteController extends BaseScriptComponent {
 
         const latestNote = this.notes[this.notes.length - 1];
         latestNote.setCroppedImage(image);
-    }
-
-    private activateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = true;
-        this.setDwellIndicatorReady(false);
-    }
-
-    private deactivateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = false;
-        this.setDwellIndicatorReady(false);
     }
 
     private getSpawnRotation(spawnPosition: vec3): quat {
@@ -236,65 +180,4 @@ export class NoteController extends BaseScriptComponent {
         return quat.angleAxis(yawRadians, vec3.up());
     }
 
-    private initializeDwellIndicatorMaterial(): void {
-        this.dwellBaseMeshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
-        if (!this.dwellBaseMeshVisual || !this.dwellBaseMeshVisual.mainMaterial) {
-            print("[NoteController] Dwell indicator mesh/material not found; color feedback disabled.");
-            return;
-        }
-
-        this.dwellIndicatorMaterial = this.dwellBaseMeshVisual.mainMaterial.clone();
-        this.dwellBaseMeshVisual.mainMaterial = this.dwellIndicatorMaterial;
-    }
-
-    private initializeDwellStateVisuals(): void {
-        this.dwellNotReadyStateObject = this.instantiateStatePrefab(
-            this.dwellNotReadyStatePrefab,
-            this.dwellNotReadyStateScale
-        );
-        this.dwellReadyStateObject = this.instantiateStatePrefab(this.dwellReadyStatePrefab, this.dwellReadyStateScale);
-    }
-
-    private instantiateStatePrefab(prefab: ObjectPrefab | undefined, scaleMultiplier: number): SceneObject | undefined {
-        if (!prefab) {
-            return undefined;
-        }
-
-        const stateObject = prefab.instantiate(this.MidasTouchVisual);
-        const stateTransform = stateObject.getTransform();
-        stateTransform.setLocalPosition(vec3.zero());
-        stateTransform.setLocalRotation(quat.quatIdentity());
-        stateTransform.setLocalScale(vec3.one().uniformScale(Math.max(0.01, scaleMultiplier)));
-        stateObject.enabled = false;
-        return stateObject;
-    }
-
-    private setDwellIndicatorReady(isReady: boolean): void {
-        if (this.lastDwellReadyVisualState !== undefined && this.lastDwellReadyVisualState === isReady) {
-            return;
-        }
-        this.lastDwellReadyVisualState = isReady;
-
-        const activeStateObject = isReady ? this.dwellReadyStateObject : this.dwellNotReadyStateObject;
-        const inactiveStateObject = isReady ? this.dwellNotReadyStateObject : this.dwellReadyStateObject;
-
-        if (inactiveStateObject) {
-            inactiveStateObject.enabled = false;
-        }
-        if (activeStateObject) {
-            activeStateObject.enabled = true;
-        }
-
-        const shouldUseColorFallback = !activeStateObject;
-        if (this.dwellBaseMeshVisual) {
-            this.dwellBaseMeshVisual.enabled = shouldUseColorFallback;
-        }
-
-        if (!shouldUseColorFallback || !this.dwellIndicatorMaterial) {
-            return;
-        }
-
-        const pass = this.dwellIndicatorMaterial.mainPass as unknown as {[key: string]: vec4};
-        pass[this.midasTouchColorParameter] = isReady ? this.dwellReadyColor : this.dwellNotReadyColor;
-    }
 }

@@ -1697,8 +1697,9 @@
     {}
   ScriptInputs:
     "":
-      NoteController: !<MappingBased.AssignableType> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
-      buttonActivateNoteCreation: !<MappingBased.AssignableType_1> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
+      uxFeedbackController: !<MappingBased.AssignableType> 648bc0d7-3193-45df-8075-2b9da42f35b7
+      NoteController: !<MappingBased.AssignableType_1> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
+      buttonActivateNoteCreation: !<MappingBased.AssignableType_2> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
       requestMicrophonePermissionOnStart: true
       microphoneAsset: !<reference.AudioTrackAsset> acf855e3-f791-416d-9d81-6fc09fc68d96
       microphoneWarmupDurationSeconds: 0.250000
@@ -2133,6 +2134,7 @@
     []
   Components:
     - !<own> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+    - !<own> 648bc0d7-3193-45df-8075-2b9da42f35b7
 - !<SceneObject/4ca61d1f-7756-4804-bbd6-02101288bea6>
   PrefabRemaps:
     []
@@ -2698,6 +2700,35 @@
     - !<own> b4c9a379-71be-4b27-a113-6b69581413ac
   Components:
     []
+- !<ScriptComponent/648bc0d7-3193-45df-8075-2b9da42f35b7>
+  PrefabRemaps:
+    []
+  Name: UXFeedbackController
+  Enabled: true
+  ScriptAsset: !<reference> a98aa906-8c39-40df-b0a4-b63a23bb0222
+  ScriptInputsDefault:
+    midasTouchVisualMesh: true
+    dwellNotReadyStateScale: true
+    dwellReadyStateScale: true
+    midasTouchColorParameter: true
+    dwellNotReadyColor: true
+    dwellReadyColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
+      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 473fa665-f729-4d41-bc4c-78a9a8f187c2
+      dwellReadyStatePrefab: !<reference.ObjectPrefab> 23ba0068-e57c-4489-aacf-54c7c5ac5450
+      dwellNotReadyStateScale: !<float> 1.000000
+      dwellReadyStateScale: !<float> 1.000000
+      midasTouchColorParameter: baseColor
+      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/65d728e2-cc8c-4296-81a8-8f0c75930420>
   PrefabRemaps:
     []
@@ -4568,12 +4599,6 @@
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
-    midasTouchVisualMesh: true
-    dwellNotReadyStateScale: true
-    dwellReadyStateScale: true
-    midasTouchColorParameter: true
-    dwellNotReadyColor: true
-    dwellReadyColor: true
     noteSpawnYawOffsetDegrees: true
   ScriptTypesDefault:
     {}
@@ -4582,15 +4607,6 @@
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
       HandDwellingTimeThreshold: 1.500000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
-      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
-      midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
-      dwellNotReadyStatePrefab: !<reference.ObjectPrefab> 473fa665-f729-4d41-bc4c-78a9a8f187c2
-      dwellReadyStatePrefab: !<reference.ObjectPrefab> 23ba0068-e57c-4489-aacf-54c7c5ac5450
-      dwellNotReadyStateScale: !<float> 1.000000
-      dwellReadyStateScale: !<float> 1.000000
-      midasTouchColorParameter: baseColor
-      dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
-      dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
     "":
