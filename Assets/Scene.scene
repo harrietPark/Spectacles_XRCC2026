@@ -5,6 +5,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
+    - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
     - !<own> e77e50d7-ddb1-4bcc-8447-b7d071e2355c
     - !<own> 7a9be6c1-01e4-42be-8ec1-57f58f5db1c4
@@ -16,8 +17,9 @@
     - !<own> e8cfcc79-59da-4b3c-ab1a-3a01253562cc
     - !<own> 69f84c06-7bb9-4c13-82da-f293bc9e0800
     - !<own> 5fea7acf-f65c-4cf4-8dea-826df0c50577
+    - !<own> 05f57816-8ad9-4999-86d9-a609911e4de9
+    - !<own> 70f154f4-9955-45f3-b199-862f3959cabd
     - !<own> cf3a6135-553d-4be9-a0fd-a85dd4708bf2
-    - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
@@ -278,6 +280,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 59e0866f-8125-4f7b-bf54-b6aa22d10417
+  Components:
+    []
+- !<SceneObject/05f57816-8ad9-4999-86d9-a609911e4de9>
+  PrefabRemaps:
+    []
+  Name: "------------------- UI, UX -------------------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<ScriptComponent/062e118c-1bf4-4a1e-8e55-e86bd429caf8>
@@ -953,19 +970,22 @@
     []
 - !<SceneObject/17e7c054-137c-4dea-a1b3-53ef49c07247>
   PrefabRemaps:
-    []
-  Name: Midas_Touch_Visual
+    - 17e7c054-137c-4dea-a1b3-53ef49c07247: 9f8776c9-4135-4aaa-51c5-81e6a6a58dab
+    - b1cfffe8-054e-437d-88bc-9bfc7f6685c2: 500a920d-1147-461c-6429-ab22b327ebcb
+    - e78c693d-55ba-48d1-9518-e4339ee3ecc1: a4e53774-e7c4-4ef8-48bd-c1db7e901c92
+  Name: Visual_RightIndexTip
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -20.927311, y: 10.754841, z: 3.287966}
+    Rotation: {x: 5.476802, y: -82.627777, z: -5.225273}
     Scale: {x: 3.000000, y: 3.000000, z: 3.000000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
     - !<own> b1cfffe8-054e-437d-88bc-9bfc7f6685c2
+    - !<own> e78c693d-55ba-48d1-9518-e4339ee3ecc1
 - !<ScriptComponent/19367564-8482-4184-b034-c442d461776a>
   PrefabRemaps:
     []
@@ -1419,15 +1439,15 @@
   Enabled: true
   ScriptAsset: !<reference> 86dfcfb6-f0d1-4b2e-ad75-0c8886813c5a
   ScriptInputsDefault:
-    HandDwellingTimeThreshold: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
-      HandDwellingTimeThreshold: !<float> 1.000000
+      HandDwellingTimeThreshold: 1.500000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
-      MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
+      VisualRightIndexTip: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
   ScriptTypes:
     "":
       {}
@@ -2963,6 +2983,21 @@
     - !<own> 6474f43c-809b-4511-ad1f-99f3b7778128
   Components:
     []
+- !<SceneObject/70f154f4-9955-45f3-b199-862f3959cabd>
+  PrefabRemaps:
+    []
+  Name: UXFeedback
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 17e7c054-137c-4dea-a1b3-53ef49c07247
+  Components:
+    []
 - !<ScriptComponent/71e9e0be-75f7-4932-874f-c422406684ab>
   PrefabRemaps:
     []
@@ -3993,7 +4028,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 17e7c054-137c-4dea-a1b3-53ef49c07247
+    []
   Components:
     []
 - !<ScriptComponent/9e70681c-d894-4394-ba22-f6cad0e8228f>
@@ -4714,8 +4749,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 9d7cff10-e916-4da5-be22-1de7d2752a2c
-  Mesh: !<reference> 89e3db36-d63f-43ce-957b-77db81b0a792
+    - !<reference> fe009e28-322e-4544-95d3-5ed79ee2b9ae
+  Mesh: !<reference> 644b3437-7972-45ff-b275-59b185732bd3
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -6188,6 +6223,22 @@
     []
   Components:
     - !<own> 1e3e8365-1cea-4df0-8dd7-3b60c75d402c
+- !<ScriptComponent/e78c693d-55ba-48d1-9518-e4339ee3ecc1>
+  PrefabRemaps:
+    []
+  Name: BreathingAnimation
+  Enabled: true
+  ScriptAsset: !<reference> fed70c2d-2b52-4f58-aa86-65a868e5518b
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/e8cfcc79-59da-4b3c-ab1a-3a01253562cc>
   PrefabRemaps:
     []

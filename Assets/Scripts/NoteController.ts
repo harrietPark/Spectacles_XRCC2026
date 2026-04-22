@@ -28,8 +28,8 @@ export class NoteController extends BaseScriptComponent {
     private pictureController: PictureController | undefined;
     @ui.group_end
     @ui.separator
-    @ui.group_start("Visual Feedback")
-    @input private MidasTouchVisual: SceneObject;
+    @ui.group_start("Visual & Audio Feedback")
+    @input private VisualRightIndexTip: SceneObject;
     @ui.group_end
 
     // Hand tracking
@@ -46,6 +46,7 @@ export class NoteController extends BaseScriptComponent {
     
     private onAwake() {
         this.deactivateCreationProcess();
+
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
     }
@@ -73,23 +74,24 @@ export class NoteController extends BaseScriptComponent {
     }
 
     public activateCreationProcess() {
-        this.activateNoteAnchoringVisual();
+        this.VisualRightIndexTip.enabled = true;
         this.isNoteAnchoringActive = true;
     }
 
     public deactivateCreationProcess() {
-        this.deactivateNoteAnchoringVisual();
+        this.VisualRightIndexTip.enabled = false;
         this.isNoteAnchoringActive = false;
     }
 
     private tryAnchorNote() : boolean {
         if (this.rightHand.isTracked()) {
             const currHandPosition = this.rightHand.indexTip.position;
+            this.VisualRightIndexTip.getTransform().setWorldPosition(currHandPosition);
+
             const distance = currHandPosition.distance(this.prevHandPosition);
             this.prevHandPosition = currHandPosition;
-            // print("DISTANCE: " + distance);
+            // print("--- DISTANCE: " + distance);
             if (distance < this.handMovementRadiusRange) {
-                this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(5));
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
                     this.handDwellingTimer = 0;
@@ -98,12 +100,13 @@ export class NoteController extends BaseScriptComponent {
             }
         } else {
             this.handDwellingTimer = 0;
-            this.MidasTouchVisual.getTransform().setLocalScale(vec3.one().uniformScale(3));
             return false;
         }
     }
 
     private anchorNote() {
+        this.deactivateCreationProcess();
+
         // Spawn a spatial note
         this.onNoteSpawnedEvent.invoke({
             widgetIndex: 0,
@@ -111,7 +114,6 @@ export class NoteController extends BaseScriptComponent {
             rotation: this.rightHand.indexTip.rotation
         });
 
-        this.deactivateCreationProcess();
         this.enableCrop();
 
         // // Capture camera texture
@@ -143,14 +145,5 @@ export class NoteController extends BaseScriptComponent {
 
         const latestNote = this.notes[this.notes.length - 1];
         latestNote.setCroppedImage(image);
-    }
-
-    private activateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = true;
-
-    }
-
-    private deactivateNoteAnchoringVisual() {
-        this.MidasTouchVisual.enabled = false;
     }
 }

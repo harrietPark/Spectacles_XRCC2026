@@ -24,8 +24,6 @@ export class SceneManager extends BaseScriptComponent {
     @hint("How long to keep the mic open (seconds) before stopping warmup.")
     private microphoneWarmupDurationSeconds: number = 0.25;
     @ui.group_end
-    private handProvider: HandInputData = SIK.HandInputData;
-    private leftHand = this.handProvider.getHand("left");
     private microphoneControl: MicrophoneAudioProvider | undefined;
 
     private static instance;
@@ -50,7 +48,7 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private onStart() {
-        // // left hand menu button press to activate note creation process
+        // left hand menu button press to activate note creation process
         this.buttonActivateNoteCreation.onTriggerUp.add(this.activateNoteCreation.bind(this));
         this.requestMicrophonePermissionEarly();
     }
@@ -58,12 +56,12 @@ export class SceneManager extends BaseScriptComponent {
     private onUpdate() {}
 
     private activateNoteCreation() {
-        print("... Activating note creation process");
+        print("--- Activating note creation process");
         this.NoteController.activateCreationProcess();
     }
 
     private deactivateNoteCreation() {
-        print("... Deactivating note creation process");
+        print("--- Deactivating note creation process");
         this.NoteController.deactivateCreationProcess();
     }
 

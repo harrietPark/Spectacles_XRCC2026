@@ -27,7 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     HandDwellingTimeThreshold: false
-    MidasTouchVisual: false
+    VisualRightIndexTip: false
     areaManager: false
     pictureController: false
   ScriptTypesHidden:
@@ -42,7 +42,7 @@
     - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       HandDwellingTimeThreshold: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      MidasTouchVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      VisualRightIndexTip: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -55,6 +55,6 @@
     - // @input AssignableType_1 pictureController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
-    - '// @ui {"widget":"group_start", "label":"Visual Feedback"}'
-    - // @input SceneObject MidasTouchVisual
+    - '// @ui {"widget":"group_start", "label":"Visual & Audio Feedback"}'
+    - // @input SceneObject VisualRightIndexTip
     - '// @ui {"widget":"group_end"}'
