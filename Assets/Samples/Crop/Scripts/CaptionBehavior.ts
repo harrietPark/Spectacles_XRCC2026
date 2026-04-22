@@ -1,4 +1,4 @@
-import animate, {CancelSet} from "SpectaclesInteractionKit.lspkg/Utils/animate"
+import animate, { CancelSet } from "SpectaclesInteractionKit.lspkg/Utils/animate"
 
 @component
 export class CaptionBehavior extends BaseScriptComponent {
@@ -30,6 +30,19 @@ export class CaptionBehavior extends BaseScriptComponent {
       duration: 1,
       update: (t: number) => {
         this.scaleTrans.setLocalScale(vec3.lerp(vec3.zero(), vec3.one().uniformScale(1.33), t))
+      },
+      ended: null,
+      cancelSet: this.scaleCancel
+    })
+  }
+
+  closeCaption(){
+    if (this.scaleCancel) this.scaleCancel.cancel()
+    animate({
+      easing: "ease-in-back-cubic",
+      duration: 0.25,
+      update: (t: number) => {
+        this.scaleTrans.setLocalScale(vec3.lerp(vec3.one().uniformScale(1.33), vec3.zero(), t))
       },
       ended: null,
       cancelSet: this.scaleCancel

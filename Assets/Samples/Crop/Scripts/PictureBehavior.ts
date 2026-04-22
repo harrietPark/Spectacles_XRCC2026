@@ -9,6 +9,7 @@ import { CropRegion } from "./CropRegion"
 // ============================================================================
 import { SnapCloudCropManager } from "../../../Scripts/snap_cloud_crop_manager"
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import { setTimeout } from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
 // ============================================================================
 
 const BOX_MIN_SIZE = 8 //min size in cm for image capture
@@ -124,6 +125,7 @@ export class PictureBehavior extends BaseScriptComponent {
   }
 
   private processImage() {
+    this.showCropVisual()
     if (this.updateEvent != null) {
       //remove all events
       this.removeEvent(this.updateEvent)
@@ -161,6 +163,8 @@ export class PictureBehavior extends BaseScriptComponent {
             response,  // ChatGPT caption -> filename slug + captures.title
             () => {
               this.loadingObj.enabled = false
+              // Close crop visual after a time delay
+              setTimeout(() => {this.closeCropVisual()}, 2000)
             }
           )
         } else {
@@ -172,6 +176,15 @@ export class PictureBehavior extends BaseScriptComponent {
       this.onImageCapturedEvent.invoke(this.captureRendMesh.mainPass.captureImage);
       // ======================================================================
     }
+  }
+
+  private closeCropVisual() {
+    this.captureRendMesh.getSceneObject().enabled = false
+    this.caption.closeCaption()
+  }
+
+  private showCropVisual() {
+    this.captureRendMesh.getSceneObject().enabled = true
   }
 
   localTopLeft() {

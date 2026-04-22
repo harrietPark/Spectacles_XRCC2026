@@ -18,6 +18,7 @@ const MIN_VALID_SAMPLE_RATE = 8000
 @component
 export class Note extends BaseScriptComponent {
   public readonly onTranscriptionFinal = new Event<string>();
+  public voiceTranscription: string = "";
 
   @input private _textField: Text
   @input
@@ -244,7 +245,7 @@ export class Note extends BaseScriptComponent {
       // Invoke transcription end event if it is final
       if (eventArgs.isFinal) {
         this.onTranscriptionFinal.invoke(eventArgs.text);
-        print("--- Final Transcription: " + eventArgs.text)
+        this.voiceTranscription += eventArgs.text;
       }
     })
     options.onTranscriptionErrorEvent.add((statusCode: AsrModule.AsrStatusCode) => {

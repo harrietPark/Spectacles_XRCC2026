@@ -1268,7 +1268,7 @@
   Enabled: true
   Shape: !<Box>
     FitVisual: false
-    Size: {x: 20.000000, y: 25.000000, z: 12.000000}
+    Size: {x: 25.000000, y: 25.000000, z: 12.000000}
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
