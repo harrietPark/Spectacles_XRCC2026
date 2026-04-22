@@ -2729,8 +2729,9 @@
     midasTouchColorParameter: true
     dwellNotReadyColor: true
     dwellReadyColor: true
-    dwellSignalDebounceSeconds: true
     dwellReadyAfterSeconds: true
+    loadingIndicatorLocalOffset: true
+    loadingIndicatorScale: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2744,8 +2745,13 @@
       midasTouchColorParameter: baseColor
       dwellNotReadyColor: !<Vec4> {x: 1.000000, y: 0.000000, z: 0.000000, w: 1.000000}
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
-      dwellSignalDebounceSeconds: 0.080000
+      dwellSignalDebounceSeconds: 0.150000
       dwellReadyAfterSeconds: 1.500000
+      showLoadingIndicator: true
+      loadingIndicatorPrefab: !<reference.ObjectPrefab> 99eaea18-bf42-4f87-a2a2-bd6c90e027f6
+      loadingIndicatorLocalOffset: !<Vec3> {x: 0.000000, y: -5.000000, z: 0.000000}
+      loadingIndicatorScale: !<float> 1.000000
+      areaManagerForLoadingTracking: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
   ScriptTypes:
     "":
       {}

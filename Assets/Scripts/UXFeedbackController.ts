@@ -1,5 +1,6 @@
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
+import { AreaManager } from "Samples/Spatial_Persistence/SpatialPersistance/AreaManager";
 
 @component
 export class UXFeedbackController extends BaseScriptComponent {
@@ -39,6 +40,25 @@ export class UXFeedbackController extends BaseScriptComponent {
     @hint("Seconds in active dwell before switching from not-ready to ready visual.")
     private dwellReadyAfterSeconds: number = 1.5;
     @ui.group_end
+    @ui.group_start("Post-Ready Loading")
+    @input
+    @hint("Show loading icon while note is being created after dwell is ready.")
+    private showLoadingIndicator: boolean = false;
+    @input
+    @allowUndefined
+    @hint("Optional loading indicator prefab. If empty, tries 3DLoadingIndicator__PLACE_IN_SCENE prefab.")
+    private loadingIndicatorPrefab: ObjectPrefab | undefined;
+    @input
+    @hint("Offset from pin position in local space. Use negative Y to place below.")
+    private loadingIndicatorLocalOffset: vec3 = new vec3(0, -5, 0);
+    @input
+    @hint("Uniform scale multiplier for loading indicator.")
+    private loadingIndicatorScale: number = 1.0;
+    @input
+    @allowUndefined
+    @hint("Assign AreaManager to hide loading indicator when a new note widget is actually created.")
+    private areaManagerForLoadingTracking: AreaManager | undefined;
+    @ui.group_end
 
     // Hand tracking
     private handProvider: HandInputData = SIK.HandInputData
@@ -56,6 +76,11 @@ export class UXFeedbackController extends BaseScriptComponent {
     private pendingDwellSignalActive: boolean = false;
     private dwellSignalChangedAt: number = 0;
     private dwellActivatedAt: number = 0;
+    private loadingIndicatorObject: SceneObject | undefined;
+    private isLoadingIndicatorActive: boolean = false;
+    private latestWidgetCount: number = 0;
+    private waitingForWidgetSpawn: boolean = false;
+    private expectedWidgetCountAfterSpawn: number = 0;
 
     private onAwake() {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -65,11 +90,20 @@ export class UXFeedbackController extends BaseScriptComponent {
     private onStart() {
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
+        this.initializeLoadingIndicator();
         this.setDwellIndicatorReady(false);
         this.isDwellSignalActive = false;
         this.pendingDwellSignalActive = false;
         this.dwellSignalChangedAt = getTime();
         this.dwellActivatedAt = 0;
+
+        this.areaManagerForLoadingTracking?.onWidgetsUpdated.add((widgets) => {
+            this.latestWidgetCount = widgets.length;
+            if (this.waitingForWidgetSpawn && widgets.length >= this.expectedWidgetCountAfterSpawn) {
+                this.waitingForWidgetSpawn = false;
+                this.hideLoadingIndicator();
+            }
+        });
     }
 
     private onUpdate() {
@@ -81,13 +115,18 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     public activateIndexTipHighlight() {
+        this.hideLoadingIndicator();
         this.forceNotReadyVisualState();
         this.MidasTouchVisual.enabled = true;
         this.isIndexTipHighlightActive = true;
     }
 
     public deactivateIndexTipHighlight() {
-        this.MidasTouchVisual.enabled = false;
+        if (this.shouldShowLoadingIndicatorForReadyTransition()) {
+            this.showLoadingIndicatorAtCurrentPin();
+        } else {
+            this.MidasTouchVisual.enabled = false;
+        }
         this.isIndexTipHighlightActive = false;
     }
 
@@ -96,6 +135,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     public deactivateDwellIndicator() {
+        this.hideLoadingIndicator();
         this.requestDwellSignalState(false);
     }
 
@@ -105,6 +145,78 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.dwellActivatedAt = 0;
         this.dwellSignalChangedAt = getTime();
         this.applyDwellIndicatorState(false, true);
+    }
+
+    private initializeLoadingIndicator(): void {
+        if (!this.showLoadingIndicator) {
+            return;
+        }
+
+        let prefab = this.loadingIndicatorPrefab;
+        if (!prefab) {
+            try {
+                prefab = requireAsset(
+                    "3D Loading Indicator.lspkg/3DLoadingIndicator__PLACE_IN_SCENE"
+                ) as ObjectPrefab;
+            } catch (_error) {
+                print("[UXFeedbackController] Could not auto-load default loading indicator prefab.");
+            }
+        }
+
+        if (!prefab) {
+            print("[UXFeedbackController] Loading indicator is enabled but no prefab is assigned.");
+            return;
+        }
+
+        this.loadingIndicatorObject = prefab.instantiate(this.sceneObject);
+        this.loadingIndicatorObject.enabled = false;
+        const loadingTransform = this.loadingIndicatorObject.getTransform();
+        loadingTransform.setLocalRotation(quat.quatIdentity());
+        loadingTransform.setLocalScale(vec3.one().uniformScale(Math.max(0.01, this.loadingIndicatorScale)));
+    }
+
+    private shouldShowLoadingIndicatorForReadyTransition(): boolean {
+        return (
+            this.showLoadingIndicator &&
+            this.loadingIndicatorObject !== undefined &&
+            this.lastDwellReadyVisualState === true
+        );
+    }
+
+    private showLoadingIndicatorAtCurrentPin(): void {
+        if (!this.loadingIndicatorObject) {
+            this.MidasTouchVisual.enabled = false;
+            return;
+        }
+
+        this.MidasTouchVisual.enabled = false;
+        const pinTransform = this.MidasTouchVisual.getTransform();
+        const worldPosition = pinTransform
+            .getWorldPosition()
+            .add(pinTransform.getWorldRotation().multiplyVec3(this.loadingIndicatorLocalOffset));
+
+        const loadingTransform = this.loadingIndicatorObject.getTransform();
+        loadingTransform.setWorldPosition(worldPosition);
+        loadingTransform.setWorldRotation(pinTransform.getWorldRotation());
+        loadingTransform.setWorldScale(vec3.one().uniformScale(Math.max(0.01, this.loadingIndicatorScale)));
+
+        this.loadingIndicatorObject.enabled = true;
+        this.isLoadingIndicatorActive = true;
+        this.waitingForWidgetSpawn = true;
+        this.expectedWidgetCountAfterSpawn = this.latestWidgetCount + 1;
+    }
+
+    private hideLoadingIndicator(): void {
+        if (!this.isLoadingIndicatorActive && !this.loadingIndicatorObject?.enabled) {
+            return;
+        }
+
+        this.isLoadingIndicatorActive = false;
+        this.waitingForWidgetSpawn = false;
+        this.expectedWidgetCountAfterSpawn = this.latestWidgetCount;
+        if (this.loadingIndicatorObject) {
+            this.loadingIndicatorObject.enabled = false;
+        }
     }
     private requestDwellSignalState(isActive: boolean): void {
         if (this.pendingDwellSignalActive === isActive) {
@@ -147,7 +259,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     private initializeDwellIndicatorMaterial(): void {
         this.dwellBaseMeshVisual = this.midasTouchVisualMesh ?? this.MidasTouchVisual.getComponent("Component.RenderMeshVisual");
         if (!this.dwellBaseMeshVisual || !this.dwellBaseMeshVisual.mainMaterial) {
-            print("[NoteController] Dwell indicator mesh/material not found; color feedback disabled.");
+            print("[UXFeedbackController] Dwell indicator mesh/material not found; color feedback disabled.");
             return;
         }
 

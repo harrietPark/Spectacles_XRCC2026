@@ -1,0 +1,61 @@
+- !<ObjectPrefab/99eaea18-bf42-4f87-a2a2-bd6c90e027f6>
+  PackagePath: ""
+  objects:
+    - !<own> 6679e2dd-c26d-4de0-964d-e911d4d0f81c
+  LazyLoading: false
+  RetainAssets: true
+- !<RenderMeshVisual/448ea0ba-e27c-44fc-8d69-e0f8279f4627>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 77c827db-e121-4be5-9baa-f80df700b5ee
+  Mesh: !<reference> fb12c483-7c2d-49a2-a33b-a91a728feb93
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ScriptComponent/5da83248-9afe-4267-ae4f-1255df90fee9>
+  PrefabRemaps:
+    []
+  Name: 3DLoadingIndicator
+  Enabled: true
+  ScriptAsset: !<reference> b39b9553-9bc9-4953-af6e-a3694ed8cdf6
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      loadingMesh: !<reference.MaterialMeshVisual> 448ea0ba-e27c-44fc-8d69-e0f8279f4627
+      startValue: 0.600000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/6679e2dd-c26d-4de0-964d-e911d4d0f81c>
+  PrefabRemaps:
+    - 448ea0ba-e27c-44fc-8d69-e0f8279f4627: 448ea0ba-e27c-44fc-7296-1f07d860b9d8
+    - 5da83248-9afe-4267-ae4f-1255df90fee9: 5da83248-9afe-4267-51b0-edaa206f0116
+    - 6679e2dd-c26d-4de0-964d-e911d4d0f81c: 6679e2dd-c26d-4de0-69b2-16ee2b2f07e3
+  Name: LoadingIndicator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 180.000000}
+    Scale: {x: 20.000000, y: 20.000000, z: 20.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 448ea0ba-e27c-44fc-8d69-e0f8279f4627
+    - !<own> 5da83248-9afe-4267-ae4f-1255df90fee9
