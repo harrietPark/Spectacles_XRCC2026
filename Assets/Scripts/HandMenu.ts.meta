@@ -1,0 +1,64 @@
+- !<AssetImportMetadata/ee239746-ce4d-4b3d-aa72-77930c7f7233>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 51c51f5d-2ad5-46e4-9fea-ac0e9993d320
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 51c51f5d-2ad5-46e4-9fea-ac0e9993d320
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> b2b04335-ba25-430f-82e7-cc1d18aca55f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b2b04335-ba25-430f-82e7-cc1d18aca55f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: e5737db5-8358-4fa6-b35f-66af40f4c0d8
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    distanceToHandOnXAxis: false
+    distanceToHandOnZAxis: false
+    maxAngleToCamera: false
+    maxNoTrackCount: false
+    menuType: false
+    uiContainer: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - menuType: !<float> 0.000000
+      maxAngleToCamera: !<float> 20.000000
+      maxNoTrackCount: !<float> 10.000000
+      uiContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distanceToHandOnXAxis: !<float> 5.000000
+      distanceToHandOnZAxis: !<float> 1.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float menuType {"widget":"combobox", "values":[{"label":"Palm Menu", "value":0}, {"label":"Back Menu", "value":1}]}'
+    - '// @ui {"widget":"group_start", "label":"Menu Visibility"}'
+    - // @input float maxAngleToCamera = 20
+    - // @input float maxNoTrackCount = 10
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Menu Trasnform"}'
+    - // @input SceneObject uiContainer
+    - // @input float distanceToHandOnXAxis = 5
+    - // @input float distanceToHandOnZAxis = 1
+    - '// @ui {"widget":"group_end"}'

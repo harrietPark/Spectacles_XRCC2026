@@ -1,10 +1,18 @@
 import {HandInputData} from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData"
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { NoteController } from "./NoteController";
+import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
 
 @component
 export class SceneManager extends BaseScriptComponent {
+    @ui.group_start("Controller References")
     @input private NoteController: NoteController;
+    @ui.group_end
+    @ui.group_start("UI References")
+    @input private buttonActivateNoteCreation: RoundButton;
+    @ui.group_end
+    @ui.separator
+    @ui.group_start("Microphone Setup")
     @input
     @hint("If enabled, request microphone permission on lens start.")
     private requestMicrophonePermissionOnStart: boolean = true;
@@ -15,7 +23,7 @@ export class SceneManager extends BaseScriptComponent {
     @input
     @hint("How long to keep the mic open (seconds) before stopping warmup.")
     private microphoneWarmupDurationSeconds: number = 0.25;
-
+    @ui.group_end
     private handProvider: HandInputData = SIK.HandInputData;
     private leftHand = this.handProvider.getHand("left");
     private microphoneControl: MicrophoneAudioProvider | undefined;
@@ -42,8 +50,8 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private onStart() {
-        // left hand pinch down to activate note creation process
-        this.leftHand.onPinchUp.add(this.activateNoteCreation.bind(this));
+        // // left hand menu button press to activate note creation process
+        this.buttonActivateNoteCreation.onTriggerUp.add(this.activateNoteCreation.bind(this));
         this.requestMicrophonePermissionEarly();
     }
 

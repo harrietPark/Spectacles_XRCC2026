@@ -1,0 +1,156 @@
+- !<ObjectPrefab/1bdd825f-d209-4b1d-8e8f-578af5e00699>
+  PackagePath: ""
+  objects:
+    - !<own> f2655d77-6748-4280-acf8-4988aa6d639e
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/41bf5b99-916a-49b9-8b8e-67e175f0521b>
+  PrefabRemaps:
+    []
+  Name: UIContainer
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 7358205b-a48e-4a57-a1f0-fa956fe53550
+  Components:
+    []
+- !<ScriptComponent/5c7b6c58-f4ae-40ec-a13d-c3292dafced8>
+  PrefabRemaps:
+    []
+  Name: HandMenu
+  Enabled: true
+  ScriptAsset: !<reference> 51c51f5d-2ad5-46e4-9fea-ac0e9993d320
+  ScriptInputsDefault:
+    maxNoTrackCount: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      menuType: !<float> 1.000000
+      maxAngleToCamera: !<float> 30.000000
+      maxNoTrackCount: !<float> 10.000000
+      uiContainer: !<reference.SceneObject> 41bf5b99-916a-49b9-8b8e-67e175f0521b
+      distanceToHandOnXAxis: !<float> 3.000000
+      distanceToHandOnZAxis: !<float> 0.000000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/7358205b-a48e-4a57-a1f0-fa956fe53550>
+  PrefabRemaps:
+    []
+  Name: Button_ActivateNoteCreation
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 1.500000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b9d15954-8ba5-4acf-83b9-2802599831cb
+  Components:
+    - !<own> b6fece97-e9fb-45c9-a42b-6996a4b2db83
+- !<ScriptComponent/b6fece97-e9fb-45c9-a42b-6996a4b2db83>
+  PrefabRemaps:
+    []
+  Name: RoundButton
+  Enabled: true
+  ScriptAsset: !<reference> ecf4e352-5db4-4239-8a5e-c4c517a0f03c
+  ScriptInputsDefault:
+    _renderOrder: true
+    _inactive: true
+    _style: true
+    _shadowPositionOffset: true
+    _toggleable: true
+    _defaultToOn: true
+    addCallbacks: true
+    triggerUpCallbacks: true
+    triggerDownCallbacks: true
+    onValueChangeCallbacks: true
+    onFinishedCallbacks: true
+    _width: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      _renderOrder: 0
+      _inactive: false
+      _playAudio: true
+      _style: PrimaryNeutral
+      _hasShadow: true
+      _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
+      _toggleable: false
+      _defaultToOn: false
+      addCallbacks: false
+      triggerUpCallbacks:
+        []
+      triggerDownCallbacks:
+        []
+      onValueChangeCallbacks:
+        []
+      onFinishedCallbacks:
+        []
+      _width: !<float> 4.000000
+  ScriptTypes:
+    "":
+      {}
+- !<SceneObject/b9d15954-8ba5-4acf-83b9-2802599831cb>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.100000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 2.000000, y: 2.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> c116fc32-54d4-4b4a-84a1-d913e2feed1f
+- !<Image/c116fc32-54d4-4b4a-84a1-d913e2feed1f>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 41fccaf3-1125-43ef-8252-695e2f7d4774
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/f2655d77-6748-4280-acf8-4988aa6d639e>
+  PrefabRemaps:
+    - 41bf5b99-916a-49b9-8b8e-67e175f0521b: 41bf5b99-916a-49b9-7471-981e8a0fade4
+    - 5c7b6c58-f4ae-40ec-a13d-c3292dafced8: 5c7b6c58-f4ae-40ec-5ec2-3cd6d2503127
+    - 7358205b-a48e-4a57-a1f0-fa956fe53550: 7358205b-a48e-4a57-5e0f-056a901acaaf
+    - b6fece97-e9fb-45c9-a42b-6996a4b2db83: b6fece97-e9fb-45c9-5bd4-96695b4d247c
+    - b9d15954-8ba5-4acf-83b9-2802599831cb: b9d15954-8ba5-4acf-7c46-d7fda667ce34
+    - c116fc32-54d4-4b4a-84a1-d913e2feed1f: c116fc32-54d4-4b4a-7b5e-26ec1d0112e0
+    - f2655d77-6748-4280-acf8-4988aa6d639e: f2655d77-6748-4280-5307-b67755929c61
+  Name: LeftHandMenu
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 41bf5b99-916a-49b9-8b8e-67e175f0521b
+  Components:
+    - !<own> 5c7b6c58-f4ae-40ec-a13d-c3292dafced8
