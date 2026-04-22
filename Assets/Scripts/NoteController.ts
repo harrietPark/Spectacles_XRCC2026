@@ -112,7 +112,7 @@ export class NoteController extends BaseScriptComponent {
     private onUpdate() {
         if (this.isNoteAnchoringActive) {
             if (this.tryAnchorNote()) {
-                this.anchorNote();
+                this.spawnNote();
             }
         }
     }
@@ -143,6 +143,7 @@ export class NoteController extends BaseScriptComponent {
                 this.handDwellingTimer += getDeltaTime();
                 if (this.handDwellingTimer >= this.HandDwellingTimeThreshold) {
                     this.setDwellIndicatorReady(true);
+                    this.spawnNote();
                     this.handDwellingTimer = 0;
                     return true;
                 }
@@ -160,7 +161,8 @@ export class NoteController extends BaseScriptComponent {
         }
     }
 
-    private anchorNote() {
+    private spawnNote() {
+        print("--- Spawning note");
         const spawnPosition = this.rightHand.indexTip.position;
         // Spawn a spatial note
         this.onNoteSpawnedEvent.invoke({

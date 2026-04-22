@@ -4568,7 +4568,6 @@
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
-    HandDwellingTimeThreshold: true
     midasTouchVisualMesh: true
     dwellNotReadyStateScale: true
     dwellReadyStateScale: true
@@ -4581,7 +4580,7 @@
   ScriptInputs:
     "":
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
-      HandDwellingTimeThreshold: !<float> 3.000000
+      HandDwellingTimeThreshold: 1.500000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
       MidasTouchVisual: !<reference.SceneObject> 17e7c054-137c-4dea-a1b3-53ef49c07247
       midasTouchVisualMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
