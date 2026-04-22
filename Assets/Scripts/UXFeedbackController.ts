@@ -88,6 +88,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     private onStart() {
+        this.deactivateIndexTipHighlight();
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
         this.initializeLoadingIndicator();
