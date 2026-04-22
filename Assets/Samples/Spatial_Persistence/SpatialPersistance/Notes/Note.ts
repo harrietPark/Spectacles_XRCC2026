@@ -12,6 +12,7 @@ type AudioFrameData = {
 
 const DEFAULT_SAMPLE_RATE = 44100
 const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000
+const MIN_VALID_SAMPLE_RATE = 8000
 
 @component
 export class Note extends BaseScriptComponent {
@@ -72,10 +73,12 @@ export class Note extends BaseScriptComponent {
   private numberOfSamples = 0
   private recordingDuration = 0
   private currentPlaybackTime = 0
+  private playbackSafetyTimeout = 0
   private isRecording = false
   private isPlayingBack = false
   private asrModule: AsrModule | undefined
   private isAsrRunning = false
+  private effectiveSampleRate = DEFAULT_SAMPLE_RATE
 
   onAwake() {
     this.createEvent("OnStartEvent").bind(this.onStart.bind(this))
@@ -174,14 +177,15 @@ export class Note extends BaseScriptComponent {
     }
 
     this.microphoneControl = this.microphoneAsset.control as MicrophoneAudioProvider
-    this.microphoneControl.sampleRate = this.sampleRate
+    this.effectiveSampleRate = this.resolveSampleRate()
+    this.microphoneControl.sampleRate = this.effectiveSampleRate
 
     this.audioComponent = this.sceneObject.createComponent("AudioComponent")
     this.audioComponent.audioTrack = this.audioOutputAsset
     this.audioComponent.playbackMode = Audio.PlaybackMode.LowLatency
 
     this.audioOutputProvider = this.audioOutputAsset.control as AudioOutputProvider
-    this.audioOutputProvider.sampleRate = this.sampleRate
+    this.audioOutputProvider.sampleRate = this.effectiveSampleRate
 
     this.recordAudioUpdateEvent = this.createEvent("UpdateEvent")
     this.recordAudioUpdateEvent.bind(() => this.onRecordAudio())
@@ -272,14 +276,14 @@ export class Note extends BaseScriptComponent {
 
     const frameData = new Float32Array(rawFrame.subarray(0, audioFrameShape.x))
     this.numberOfSamples += audioFrameShape.x
-    this.recordingDuration = this.numberOfSamples / this.sampleRate
+    this.recordingDuration = this.numberOfSamples / this.effectiveSampleRate
 
     this.recordedAudioFrames.push({
       audioFrame: frameData,
       audioFrameShape: audioFrameShape
     })
 
-    this.updateVoiceStatusText(`Recording ${this.recordingDuration.toFixed(1)}s`)
+    this.updateVoiceStatusText(`Recording ${this.formatSeconds(this.recordingDuration)}s`)
   }
 
   private onPlaybackAudio(): void {
@@ -294,10 +298,10 @@ export class Note extends BaseScriptComponent {
     this.currentPlaybackTime = Math.min(this.currentPlaybackTime, this.recordingDuration)
 
     this.updateVoiceStatusText(
-      `Playback ${this.currentPlaybackTime.toFixed(1)}s / ${this.recordingDuration.toFixed(1)}s`
+      `Playback ${this.formatSeconds(this.currentPlaybackTime)}s / ${this.formatSeconds(this.recordingDuration)}s`
     )
 
-    if (this.currentPlaybackTime >= this.recordingDuration) {
+    if (this.currentPlaybackTime >= this.recordingDuration || this.currentPlaybackTime >= this.playbackSafetyTimeout) {
       this.stopPlayback("Playback complete")
     }
   }
@@ -316,7 +320,7 @@ export class Note extends BaseScriptComponent {
       }
 
       if (this.recordingDuration > 0) {
-        this.updateVoiceStatusText(`Recorded ${this.recordingDuration.toFixed(1)}s`)
+        this.updateVoiceStatusText(`Recorded ${this.formatSeconds(this.recordingDuration)}s`)
       }
       return
     }
@@ -354,6 +358,7 @@ export class Note extends BaseScriptComponent {
 
     if (this.isRecording) {
       this.recordMicrophoneAudio(false)
+      this.updateVoiceStatusText("Recording stopped, starting playback")
     }
 
     if (this.recordedAudioFrames.length === 0) {
@@ -361,9 +366,19 @@ export class Note extends BaseScriptComponent {
       return
     }
 
+    if (!isFinite(this.recordingDuration) || this.recordingDuration <= 0) {
+      this.recordingDuration = this.numberOfSamples / this.effectiveSampleRate
+    }
+    if (!isFinite(this.recordingDuration) || this.recordingDuration <= 0) {
+      this.updateVoiceStatusText("Playback unavailable: invalid recording")
+      return
+    }
+
     this.currentPlaybackTime = 0
+    this.playbackSafetyTimeout = Math.max(this.recordingDuration + 0.5, 0.5)
+    ;(this.audioOutputProvider as unknown as {clearAudioFrames?: () => void}).clearAudioFrames?.()
     this.audioComponent.stop(false)
-    this.audioComponent.play(-1)
+    this.audioComponent.play(1)
     this.isPlayingBack = true
 
     for (let i = 0; i < this.recordedAudioFrames.length; i++) {
@@ -378,14 +393,16 @@ export class Note extends BaseScriptComponent {
     }
 
     this.updateVoiceStatusText(
-      `Playback ${this.currentPlaybackTime.toFixed(1)}s / ${this.recordingDuration.toFixed(1)}s`
+      `Playback ${this.formatSeconds(this.currentPlaybackTime)}s / ${this.formatSeconds(this.recordingDuration)}s`
     )
   }
 
   private stopPlayback(statusMessage: string): void {
     this.audioComponent?.stop(false)
+    ;(this.audioOutputProvider as unknown as {clearAudioFrames?: () => void}).clearAudioFrames?.()
     this.isPlayingBack = false
     this.currentPlaybackTime = 0
+    this.playbackSafetyTimeout = 0
 
     if (this.playbackAudioUpdateEvent) {
       this.playbackAudioUpdateEvent.enabled = false
@@ -400,6 +417,24 @@ export class Note extends BaseScriptComponent {
     }
 
     this.voiceStatusText.text = message
+  }
+
+  private resolveSampleRate(): number {
+    if (isFinite(this.sampleRate) && this.sampleRate >= MIN_VALID_SAMPLE_RATE) {
+      return this.sampleRate
+    }
+
+    print(
+      `[Note] Invalid sampleRate (${this.sampleRate}) on ${this.sceneObject.name}. Falling back to ${DEFAULT_SAMPLE_RATE}.`
+    )
+    return DEFAULT_SAMPLE_RATE
+  }
+
+  private formatSeconds(value: number): string {
+    if (!isFinite(value) || value < 0) {
+      return "0.0"
+    }
+    return value.toFixed(1)
   }
 
   public setCroppedImage(image: Texture) {
