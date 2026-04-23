@@ -31,11 +31,7 @@ export class NotesController extends BaseScriptComponent {
     @input
     @allowUndefined
     private pictureController: PictureController | undefined;
-    private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule;
     @ui.group_end
-    // @ui.separator
-    // @ui.group_start("Speech To Text")
-    // @ui.group_end
     @ui.separator
     @ui.group_start("Spawn Rotation")
     @input
@@ -165,6 +161,7 @@ export class NotesController extends BaseScriptComponent {
                 this.sceneManager.sendCompleteNoteDataToBackend(noteData);
             });
         }
+        this.notes = updatedNotes;
     }
 
     private enableCrop() {

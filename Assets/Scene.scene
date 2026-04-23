@@ -6063,17 +6063,17 @@
   ScriptAsset: !<reference> f1e82177-232d-4375-b444-f11e2b43a7ea
   ScriptInputsDefault:
     pinsTableName: true
-    noteScanIntervalSeconds: true
     processPinFunctionName: true
     autoInvokeProcessPin: true
+    noteScanIntervalSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       pinsTableName: pins
-      noteScanIntervalSeconds: !<float> 1.000000
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
+      noteScanIntervalSeconds: !<float> 1.000000
   ScriptTypes:
     "":
       {}
