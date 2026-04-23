@@ -255,7 +255,7 @@ export class Note extends BaseScriptComponent {
       if (transcript === "") {
         return
       }
-
+      print("--- transcription update: " + transcript);
       this._textField.text = transcript
 
       // Invoke transcription end event if it is final
