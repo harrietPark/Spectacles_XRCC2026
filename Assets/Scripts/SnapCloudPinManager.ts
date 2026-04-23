@@ -1,40 +1,38 @@
 import {SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
 import {Note} from "../Samples/Spatial_Persistence/SpatialPersistance/Notes/Note"
+import {INoteData} from "./INoteData"
 import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
 
 /**
  * SnapCloudPinManager
  * -------------------
- * Writes customer voice notes to Supabase `pins`.
+ * Writes completed voice notes to Supabase `pins` and triggers the
+ * `process-pin` edge function (AI summary + product recommendation).
  *
- * This script DOES NOT own any shared backend state -- it reads client,
+ * Primary entry point:
+ *   Scene-scanning — subscribes directly to each Note's `onNoteCompleted`
+ *   event, bypassing NotesController. This is the most reliable path.
+ *
+ * Fallback entry point:
+ *   SceneManager.sendCompleteNoteDataToBackend(noteData)
+ *     → SnapCloudPinManager.getInstance()?.saveNoteToBackend(noteData)
+ *   `inflightByNoteId` prevents double-writes if both paths fire.
+ *
+ * This script DOES NOT own shared backend state — it reads client,
  * session_id, and customer_id from `SnapCloudSessionManager.getInstance()`.
- * Add ONE `SnapCloudSessionManager` to the scene root (with supabaseProject
- * wired) before this script needs to write.
+ * Add ONE `SnapCloudSessionManager` to the scene root with `supabaseProject`
+ * wired before this script needs to write.
  *
- * Behavior:
- *   - Scans the scene for `Note` components and subscribes to each one's
- *     `onRecordingFinalized` event (a minimal additive event on Note.ts).
- *   - On the FIRST recording for a given note: INSERT a row into `pins`
- *     with (id, session_id, customer_id, anchor_id, spatial_position,
- *     transcribe_text, created_at, updated_at).
- *   - On EVERY subsequent recording for the same note: UPDATE only
- *     (transcribe_text, updated_at).
- *   - After each write, fire-and-forget-invoke the `process-pin` edge
- *     function, which generates summary_text + sentiment and writes one
- *     row into pin_recommendations. Disable with `autoInvokeProcessPin`.
- *
- * No spatial_position updates on move. No session/customer writes.
+ * Pin lifecycle:
+ *   - First call for a noteId  → INSERT row into `pins`.
+ *   - Subsequent calls for the same noteId → UPDATE (transcribe_text, updated_at).
+ *   - After every write → fire-and-forget `process-pin` edge function.
  */
 @component
 export class SnapCloudPinManager extends BaseScriptComponent {
   @input
   @hint("Supabase table name for pins.")
   private pinsTableName: string = "pins"
-
-  @input
-  @hint("How often (seconds) to re-scan the scene for new Note components.")
-  private noteScanIntervalSeconds: number = 1.0
 
   @input
   @hint("Name of the Supabase edge function to invoke after each pin write.")
@@ -44,15 +42,41 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   @hint("If true, invoke process-pin automatically after every INSERT/UPDATE.")
   private autoInvokeProcessPin: boolean = true
 
-  private scanTimer: number = 0
+  @input
+  @hint("How often (seconds) to re-scan the scene for new Note components.")
+  private noteScanIntervalSeconds: number = 1.0
+
+  private static instanceRef: SnapCloudPinManager | null = null
+
+  // noteId (note.createdAt.getUTCSeconds()) → Supabase pin UUID
+  private pinIdByNoteId: Map<number, string> = new Map()
+  // noteIds currently being written (prevents double-write on rapid re-record)
+  private inflightByNoteId: Set<number> = new Set()
+
   private knownNotes: Set<Note> = new Set()
-  private pinIdByNote: Map<Note, string> = new Map()
-  private inflightByNote: Set<Note> = new Set()
+  private scanTimer: number = 0
 
   onAwake() {
+    if (SnapCloudPinManager.instanceRef) {
+      print("[SnapCloudPinManager] Another instance detected; this one stays idle.")
+      return
+    }
+    SnapCloudPinManager.instanceRef = this
     this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this))
     print("[SnapCloudPinManager] Ready.")
   }
+
+  onDestroy() {
+    if (SnapCloudPinManager.instanceRef === this) {
+      SnapCloudPinManager.instanceRef = null
+    }
+  }
+
+  static getInstance(): SnapCloudPinManager | null {
+    return SnapCloudPinManager.instanceRef
+  }
+
+  // ---------------------------------------------------------- scene scanning
 
   private onUpdate(): void {
     this.scanTimer -= getDeltaTime()
@@ -60,8 +84,6 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     this.scanTimer = this.noteScanIntervalSeconds
     this.scanForNotes()
   }
-
-  // ------------------------------------------------------------ scene scanning
 
   private scanForNotes(): void {
     const rootCount = global.scene.getRootObjectsCount()
@@ -71,7 +93,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   }
 
   private walk(obj: SceneObject): void {
-    const note = obj.getComponent(Note.getTypeName()) as Note | undefined
+    const note = obj.getComponent(Note.getTypeName()) as Note | null
     if (note && !this.knownNotes.has(note)) {
       this.attachToNote(note)
     }
@@ -83,18 +105,37 @@ export class SnapCloudPinManager extends BaseScriptComponent {
 
   private attachToNote(note: Note): void {
     this.knownNotes.add(note)
-    // TODO: Re-enable once Note.ts exposes an `onRecordingFinalized` event.
-    // note.onRecordingFinalized.add((transcript: string) => {
-    //   this.handleRecordingFinalized(note, transcript)
-    // })
-    print(`[SnapCloudPinManager] Subscribed to Note on ${note.getSceneObject().name}`)
+    note.onNoteCompleted.add((noteData: INoteData) => {
+      this.saveNoteToBackend(noteData)
+    })
+    print(`[SnapCloudPinManager] Subscribed to Note on "${note.getSceneObject().name}"`)
+  }
+
+  /**
+   * Called by scene-scan (primary) or SceneManager (fallback).
+   * Fire-and-forget wrapper — errors are logged but do not throw.
+   */
+  public saveNoteToBackend(noteData: INoteData): void {
+    this.saveNoteAsync(noteData)
   }
 
   // -------------------------------------------------------------- pin writes
 
-  private async handleRecordingFinalized(note: Note, transcript: string): Promise<void> {
-    if (this.inflightByNote.has(note)) return
-    this.inflightByNote.add(note)
+  private async saveNoteAsync(noteData: INoteData): Promise<void> {
+    const noteId = noteData.noteId
+    const transcript = (noteData.voiceTranscription || "").trim()
+
+    if (transcript === "") {
+      print("[SnapCloudPinManager] Empty transcript; skipping pin write.")
+      return
+    }
+
+    if (this.inflightByNoteId.has(noteId)) {
+      print(`[SnapCloudPinManager] Write already in flight for noteId=${noteId}; skipping.`)
+      return
+    }
+    this.inflightByNoteId.add(noteId)
+
     try {
       const sm = SnapCloudSessionManager.getInstance()
       if (!sm) {
@@ -112,16 +153,15 @@ export class SnapCloudPinManager extends BaseScriptComponent {
         return
       }
       if (!sm.isReady()) {
-        print("[SnapCloudPinManager] SessionManager not ready yet (customer/session upsert still in flight); skipping.")
+        print("[SnapCloudPinManager] SessionManager not ready yet (bootstrap in flight); skipping.")
         return
       }
       const customerId = sm.getCustomerId()
 
-      const worldPos = note.getSceneObject().getTransform().getWorldPosition()
-      const spatialPosition = {x: worldPos.x, y: worldPos.y, z: worldPos.z}
+      const existingPinId = this.pinIdByNoteId.get(noteId)
 
-      const existingPinId = this.pinIdByNote.get(note)
       if (!existingPinId) {
+        // First finalized recording for this note → INSERT
         const pinId = SnapCloudPinManager.generateUuidV4()
         const now = new Date().toISOString()
         const row = {
@@ -129,7 +169,6 @@ export class SnapCloudPinManager extends BaseScriptComponent {
           session_id: sessionId,
           customer_id: customerId,
           anchor_id: pinId,
-          spatial_position: spatialPosition,
           transcribe_text: transcript,
           created_at: now,
           updated_at: now
@@ -139,35 +178,29 @@ export class SnapCloudPinManager extends BaseScriptComponent {
           print(`[SnapCloudPinManager] pin INSERT failed: ${JSON.stringify(error)}`)
           return
         }
-        this.pinIdByNote.set(note, pinId)
-        print(`[SnapCloudPinManager] pin INSERT ok (id=${pinId}, transcript="${transcript}")`)
+        this.pinIdByNoteId.set(noteId, pinId)
+        print(`[SnapCloudPinManager] pin INSERT ok (id=${pinId}, noteId=${noteId})`)
         this.invokeProcessPin(client, pinId)
       } else {
+        // Re-recording the same note → UPDATE transcript only
         const {error} = await client
           .from(this.pinsTableName)
-          .update({
-            transcribe_text: transcript,
-            updated_at: new Date().toISOString()
-          })
+          .update({transcribe_text: transcript, updated_at: new Date().toISOString()})
           .eq("id", existingPinId)
         if (error) {
           print(`[SnapCloudPinManager] pin UPDATE failed (${existingPinId}): ${JSON.stringify(error)}`)
           return
         }
-        print(`[SnapCloudPinManager] pin UPDATE ok (id=${existingPinId}, transcript="${transcript}")`)
+        print(`[SnapCloudPinManager] pin UPDATE ok (id=${existingPinId}, noteId=${noteId})`)
         this.invokeProcessPin(client, existingPinId)
       }
     } finally {
-      this.inflightByNote.delete(note)
+      this.inflightByNoteId.delete(noteId)
     }
   }
 
   // ----------------------------------------------- process-pin edge function
 
-  /**
-   * Fire-and-forget call to the `process-pin` edge function. Failures are
-   * logged but do not block the user (the row is already saved in pins).
-   */
   private invokeProcessPin(client: SupabaseClient, pinId: string): void {
     if (!this.autoInvokeProcessPin) return
     if (!this.processPinFunctionName) return

@@ -27,7 +27,6 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     autoInvokeProcessPin: false
-    noteScanIntervalSeconds: false
     pinsTableName: false
     processPinFunctionName: false
   ScriptTypesHidden:
@@ -40,7 +39,6 @@
     []
   DefaultScriptInputs:
     - pinsTableName: pins
-      noteScanIntervalSeconds: !<float> 1.000000
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
   ScriptTypes:
@@ -48,6 +46,5 @@
       {}
   InputLines:
     - '// @input string pinsTableName = "pins" {"hint":"Supabase table name for pins."}'
-    - '// @input float noteScanIntervalSeconds = 1 {"hint":"How often (seconds) to re-scan the scene for new Note components."}'
     - '// @input string processPinFunctionName = "process-pin" {"hint":"Name of the Supabase edge function to invoke after each pin write."}'
     - '// @input bool autoInvokeProcessPin = true {"hint":"If true, invoke process-pin automatically after every INSERT/UPDATE."}'
