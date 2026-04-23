@@ -21,7 +21,6 @@
     - !<own> 165c74cd-2b24-444a-84a2-99b057d59cbc
     - !<own> cf3a6135-553d-4be9-a0fd-a85dd4708bf2
     - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
-    - !<own> 9b32240c-3d22-44c5-a3ca-7103f0a79e66
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
     - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
@@ -3592,31 +3591,6 @@
     []
   Components:
     []
-- !<ScriptComponent/89b1f62c-2f58-4b41-891c-7b4e6c1ffa96>
-  PrefabRemaps:
-    []
-  Name: SnapCloudCaptureManager
-  Enabled: true
-  ScriptAsset: !<reference> 67432e7b-6b3b-47b5-bea5-9f166d002aa2
-  ScriptInputsDefault:
-    cameraTextureOverride: true
-    saveToCloud: true
-    storageBucket: true
-    cloudFolderPrefix: true
-    filenameSlug: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      saveToCloud: true
-      storageBucket: specs-captures
-      cloudFolderPrefix: captures
-      filenameSlug: view
-      captureDelaySeconds: !<float> 2.000000
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/8a183e24-bc4c-41b6-9d21-63dbdafb91fe>
   PrefabRemaps:
     []
@@ -4123,21 +4097,6 @@
     []
   Components:
     []
-- !<SceneObject/9b32240c-3d22-44c5-a3ca-7103f0a79e66>
-  PrefabRemaps:
-    []
-  Name: SnapCloudCaptureManager
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 89b1f62c-2f58-4b41-891c-7b4e6c1ffa96
 - !<SceneObject/9d1fd12b-4de8-4060-9559-485ec7790114>
   PrefabRemaps:
     []
@@ -6066,6 +6025,12 @@
     processPinFunctionName: true
     autoInvokeProcessPin: true
     noteScanIntervalSeconds: true
+    saveCaptureToCloud: true
+    captureStorageBucket: true
+    captureCloudFolderPrefix: true
+    captureFilenameSlug: true
+    cameraTextureOverride: true
+    pendingImageFreshnessSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -6074,6 +6039,13 @@
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
       noteScanIntervalSeconds: !<float> 1.000000
+      saveCaptureToCloud: true
+      captureStorageBucket: specs-captures
+      captureCloudFolderPrefix: captures
+      captureFilenameSlug: view
+      captureDelaySeconds: !<float> 2.000000
+      cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      pendingImageFreshnessSeconds: !<float> 10.000000
   ScriptTypes:
     "":
       {}
