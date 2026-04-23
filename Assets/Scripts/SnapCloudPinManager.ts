@@ -106,22 +106,27 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   private attachToNote(note: Note): void {
     this.knownNotes.add(note)
     note.onNoteCompleted.add((noteData: INoteData) => {
-      this.saveNoteToBackend(noteData)
+      const worldPos = note.getSceneObject().getTransform().getWorldPosition()
+      const spatialPosition = {x: worldPos.x, y: worldPos.y, z: worldPos.z}
+      this.saveNoteAsync(noteData, spatialPosition)
     })
     print(`[SnapCloudPinManager] Subscribed to Note on "${note.getSceneObject().name}"`)
   }
 
   /**
-   * Called by scene-scan (primary) or SceneManager (fallback).
+   * Called by SceneManager (fallback path — no spatial position available).
    * Fire-and-forget wrapper — errors are logged but do not throw.
    */
   public saveNoteToBackend(noteData: INoteData): void {
-    this.saveNoteAsync(noteData)
+    this.saveNoteAsync(noteData, undefined)
   }
 
   // -------------------------------------------------------------- pin writes
 
-  private async saveNoteAsync(noteData: INoteData): Promise<void> {
+  private async saveNoteAsync(
+    noteData: INoteData,
+    spatialPosition: {x: number; y: number; z: number} | undefined
+  ): Promise<void> {
     const noteId = noteData.noteId
     const transcript = (noteData.voiceTranscription || "").trim()
 
@@ -164,7 +169,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
         // First finalized recording for this note → INSERT
         const pinId = SnapCloudPinManager.generateUuidV4()
         const now = new Date().toISOString()
-        const row = {
+        const row: Record<string, unknown> = {
           id: pinId,
           session_id: sessionId,
           customer_id: customerId,
@@ -172,6 +177,9 @@ export class SnapCloudPinManager extends BaseScriptComponent {
           transcribe_text: transcript,
           created_at: now,
           updated_at: now
+        }
+        if (spatialPosition) {
+          row["spatial_position"] = spatialPosition
         }
         const {error} = await client.from(this.pinsTableName).insert([row])
         if (error) {
