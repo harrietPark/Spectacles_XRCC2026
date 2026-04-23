@@ -1,4 +1,4 @@
-import {SIK} from "SpectaclesInteractionKit.lspkg/SIK"
+import { SIK } from "SpectaclesInteractionKit.lspkg/SIK"
 import { PictureBehavior } from "./PictureBehavior"
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 
@@ -6,6 +6,9 @@ import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 export class PictureController extends BaseScriptComponent {
   private onCropEndEvent = new Event<Texture>();
   public readonly onCropEnd: PublicApi<Texture> = this.onCropEndEvent.publicApi();
+
+  private onCropAISummarisedEvent = new Event<string>();
+  public readonly onCropAISummarised: PublicApi<string> = this.onCropAISummarisedEvent.publicApi();
 
   @input scannerPrefab: ObjectPrefab
 
@@ -80,16 +83,14 @@ export class PictureController extends BaseScriptComponent {
 
   createScanner() {
     if (!this.isCropEnabled) return;
-    
+
     const scanner = this.scannerPrefab.instantiate(this.getSceneObject())
     const scannerController = scanner.getComponent(PictureBehavior.getTypeName());
-    scannerController.onImageCaptured.add(this.sendCroppedImage.bind(this));
+    scannerController.onImageCaptured.add((image) => { this.onCropEndEvent.invoke(image) });
+    scannerController.onImageAISummarised.add((summary) => { this.onCropAISummarisedEvent.invoke(summary) });
 
     this.disableCrop();
   }
 
-  private sendCroppedImage(image: Texture) {
-    this.onCropEndEvent.invoke(image);
-  }
 
 }

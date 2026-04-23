@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/86340d32-c3ef-419a-ab18-e197a6a206bb>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 67432e7b-6b3b-47b5-bea5-9f166d002aa2
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 67432e7b-6b3b-47b5-bea5-9f166d002aa2
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 50935834-7e53-46f4-8e99-d817ee756683
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/50935834-7e53-46f4-8e99-d817ee756683>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: cfa46288-c8a9-49cc-9df8-48498352eef9
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cameraTextureOverride: false
+    captureDelaySeconds: false
+    cloudFolderPrefix: false
+    filenameSlug: false
+    saveToCloud: false
+    storageBucket: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      saveToCloud: true
+      storageBucket: specs-captures
+      cloudFolderPrefix: captures
+      filenameSlug: view
+      captureDelaySeconds: 0.750000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Texture cameraTextureOverride {"hint":"Optional override Texture. Leave empty; script owns its own camera subscription."}'
+    - '// @input bool saveToCloud = true {"hint":"Master switch for uploading quiet captures to Snap Cloud storage."}'
+    - '// @input string storageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket configured in Snap Cloud."}'
+    - '// @input string cloudFolderPrefix = "captures" {"hint":"Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg"}'
+    - '// @input string filenameSlug = "view" {"hint":"Filename slug used for quiet captures. Final file: slug_<timestamp>.jpg"}'
+    - "// @input float captureDelaySeconds = 0.75 {\"hint\":\"Seconds to wait after captureAndUpload() before grabbing the frame. Lets the user's hand clear the shot.\"}"

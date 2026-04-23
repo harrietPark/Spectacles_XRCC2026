@@ -61,7 +61,7 @@
     - '// @input string storageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket configured in the Snap Cloud dashboard."}'
     - '// @input string cloudFolderPrefix = "captures" {"hint":"Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg"}'
     - '// @input bool syncCapturesTable = true {"hint":"Also insert a row into the captures table for each upload"}'
-    - '// @input string capturesTableName = "captures" {"hint":"Table name used when syncCapturesTable is true"}'
+    - '// @input string capturesTableName = "crops" {"hint":"Table name used when syncCapturesTable is true"}'
     - '// @input Component.RenderMeshVisual captureRendMesh {"hint":"Bridge: RenderMeshVisual whose mainPass.captureImage holds the cropped texture."}'
     - '// @input SceneObject loadingIndicator {"hint":"Bridge: SceneObject whose enabled state goes true when a capture is ready."}'
     - '// @input string bridgeCaption = "capture" {"hint":"Bridge: optional caption/title to attach to uploads from this bridge."}'

@@ -10,7 +10,7 @@ import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
 
 @component
-export class NoteController extends BaseScriptComponent {
+export class NotesController extends BaseScriptComponent {
     private onUserViewCapturedEvent = new Event<Texture>();
     public readonly onUserViewCaptured: PublicApi<Texture> =
         this.onUserViewCapturedEvent.publicApi();
@@ -24,7 +24,8 @@ export class NoteController extends BaseScriptComponent {
     private areaManager: AreaManager | undefined;
     @ui.group_start("Note Anchoring Setup")
     @input
-    private fingerDwellingTimeThreshold: number = 1.5; // in seconds
+    private fingerDwellingTimeThreshold: number = 2; // in seconds
+    @input private fingerDwellRadius: number = 1; // in cm
     @ui.group_end
     @ui.group_start("Crop to Photo")
     @input
@@ -48,7 +49,6 @@ export class NoteController extends BaseScriptComponent {
     private worldCameraTransform = WorldCameraFinderProvider.getInstance().getTransform();
     private fingerDwellTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
-    private fingerDwellRadius: number = 0.1; // in meters
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
@@ -68,6 +68,7 @@ export class NoteController extends BaseScriptComponent {
     private onStart() {
         if (this.pictureController) {
             this.pictureController.onCropEnd.add(this.addCroppedImage.bind(this));
+            this.pictureController.onCropAISummarised.add(this.addCropAISummary.bind(this));
         } else {
             print("[NoteController] pictureController is not assigned; crop flow is disabled.");
         }
@@ -132,7 +133,7 @@ export class NoteController extends BaseScriptComponent {
     }
 
     private spawnNote() {
-        this.sceneManager.uxFeedbackController.deactivateIndexTipHighlight();
+        this.deactivateCreationProcess();
 
         const spawnPosition = this.rightHand.indexTip.position;
         // Spawn a spatial note
@@ -144,15 +145,25 @@ export class NoteController extends BaseScriptComponent {
 
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
+
+        print("--- Spawned a note")
     }
 
     private updateNotes(widgets: Widget[]) {
-        this.notes = [];
-        for (let i = 0; i < widgets.length; i++) {
-            const note = widgets[i].getSceneObject().getComponent(Note.getTypeName());
-            if (note) {
-                this.notes.push(note);
-            }
+        const updatedNotes = widgets.map((widget) => widget.getSceneObject().getComponent(Note.getTypeName()));
+
+        const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
+        for (const note of addedNotes) {
+            note.onNoteCompleted.add((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
+        }
+
+        const removedNotes = this.notes.filter((note) => !updatedNotes.includes(note));
+        for (const note of removedNotes) {
+            note.onNoteCompleted.remove((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
         }
     }
 
@@ -171,6 +182,16 @@ export class NoteController extends BaseScriptComponent {
 
         const latestNote = this.notes[this.notes.length - 1];
         latestNote.setCroppedImage(image);
+    }
+
+    private addCropAISummary(summary: string) {
+        if (this.notes.length === 0) {
+            print("[NoteController] No spawned notes found for cropped image summary.");
+            return;
+        }
+
+        const latestNote = this.notes[this.notes.length - 1];
+        latestNote.setCroppedImageAISummary(summary);
     }
 
     private getSpawnRotation(spawnPosition: vec3): quat {

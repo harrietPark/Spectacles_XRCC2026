@@ -1,6 +1,14 @@
-import { NoteController } from "./NoteController";
+// ======================================================================
+// [SnapCloudCapture] Added: quiet camera capture uploader. Used below in
+// sendProductViewToBackend() to push a single frame to the
+// `specs-captures/captures/<session_id>/` folder on note-spawn.
+// ======================================================================
+import { SnapCloudCaptureManager } from "./SnapCloudCaptureManager";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
 import { SoundEffectsController } from "./SoundEffectsController";
+// import { UXFeedbackController } from "./UXFeedbackController";
+import { NotesController } from "./NotesController";
+import { INoteData } from "./INoteData";
 
 type UXFeedbackControllerApi = {
     activateIndexTipHighlight: () => void;
@@ -20,7 +28,7 @@ export class SceneManager extends BaseScriptComponent {
     @allowUndefined
     @hint("Optional centralized sound effects controller.")
     private soundEffectsController: SoundEffectsController | undefined;
-    @input private NoteController: NoteController;
+    @input private NoteController: NotesController;
     @ui.group_end
     @ui.group_start("UI References")
     @input private buttonActivateNoteCreation: RoundButton;
@@ -94,20 +102,27 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     public sendProductViewToBackend() {
-        // // Capture camera texture
-        // this.onUserViewCapturedEvent.invoke(this.PictureController.captureImage);
+        const cap = SnapCloudCaptureManager.getInstance();
+        if (!cap) {
+            print("[SceneManager] SnapCloudCaptureManager not in scene; capture skipped.");
+            return;
+        }
+        cap.captureAndUpload((url) => {
+            print(`[SceneManager] product view uploaded -> ${url || "(failed)"}`);
+        });
+    }
 
-        // TODO: send camera texture and note ID to backend
+    public sendCompleteNoteDataToBackend(noteData: INoteData) {
+        // TODO: send note data to backend
+        print("--- sending complete note data to backend: \n" + JSON.stringify(noteData));
     }
 
     private activateNoteCreation() {
         this.soundEffectsController?.playActivateDwell();
-        print("--- Activating note creation process");
         this.NoteController.activateCreationProcess();
     }
 
     private deactivateNoteCreation() {
-        print("--- Deactivating note creation process");
         this.NoteController.deactivateCreationProcess();
     }
 

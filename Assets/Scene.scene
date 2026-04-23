@@ -3,7 +3,6 @@
   objects:
     - !<own> 00000000-0000-0065-0000-000000000064
     - !<own> 0005641c-028d-459a-0000-000000014b4d
-    - !<own> ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
     - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
     - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
@@ -22,6 +21,7 @@
     - !<own> 165c74cd-2b24-444a-84a2-99b057d59cbc
     - !<own> cf3a6135-553d-4be9-a0fd-a85dd4708bf2
     - !<own> 8984b67f-2f44-4b17-8fa3-8ff9b2085e42
+    - !<own> 9b32240c-3d22-44c5-a3ca-7103f0a79e66
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
     - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
@@ -1359,6 +1359,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/27a289fc-1e93-48f4-b24f-51a2cd80b18e>
+  PrefabRemaps:
+    []
+  Name: LoadingGif
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.100000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 13.299999, y: 10.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 6d70b4ce-f2e5-4feb-9126-178fc04b3e66
 - !<RenderMeshVisual/27b6a2cd-9ba1-452f-95df-122532f27712>
   PrefabRemaps:
     []
@@ -2006,7 +2021,6 @@
         - !<reference> 91afcf2c-6d9f-4b66-bc0a-f8eb4d552939
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
-      textInputManager: !<MappingBased.AssignableType_6> e92c9815-b474-4f37-9ceb-1cffeac1afb1
   ScriptTypes:
     "":
       {}
@@ -2179,7 +2193,9 @@
     []
 - !<SceneObject/4be171e2-d1f6-4b93-9876-1edec0ef6cb0>
   PrefabRemaps:
-    []
+    - 398d0c72-50da-4a11-89a4-7241c0cb7cfc: 1b8a3182-e53d-4927-4ecf-590d4803f079
+    - 4be171e2-d1f6-4b93-9876-1edec0ef6cb0: 4f7526f3-e5f7-4e54-549d-efbf714df514
+    - 648bc0d7-3193-45df-8075-2b9da42f35b7: 5328916e-ba84-465f-41a0-17b68625e58f
   Name: SceneManager
   Enabled: true
   Layers: 1
@@ -2668,8 +2684,9 @@
     - !<own> 6c4d1304-b69f-4baf-ad18-0860e5e699e8
 - !<SceneObject/5fea7acf-f65c-4cf4-8dea-826df0c50577>
   PrefabRemaps:
-    []
-  Name: NoteController
+    - 5fea7acf-f65c-4cf4-8dea-826df0c50577: 8e2ecd1d-8911-464b-4fb7-26ceb795434a
+    - ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70: c7cd25ee-3a99-4411-5e0a-8a04baaf1c69
+  Name: NotesController
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -3009,6 +3026,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/6d70b4ce-f2e5-4feb-9126-178fc04b3e66>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 1
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> d76ccc63-e031-494f-8237-a2577c0e92ba
+  Mesh: !<reference> 019dc018-cc9c-41d3-81d6-ee2c333b3ed1
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ScriptComponent/701fbb04-a4f3-4636-b95a-4051b851b122>
   PrefabRemaps:
     []
@@ -3556,6 +3593,31 @@
     []
   Components:
     []
+- !<ScriptComponent/89b1f62c-2f58-4b41-891c-7b4e6c1ffa96>
+  PrefabRemaps:
+    []
+  Name: SnapCloudCaptureManager
+  Enabled: true
+  ScriptAsset: !<reference> 67432e7b-6b3b-47b5-bea5-9f166d002aa2
+  ScriptInputsDefault:
+    cameraTextureOverride: true
+    saveToCloud: true
+    storageBucket: true
+    cloudFolderPrefix: true
+    filenameSlug: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      saveToCloud: true
+      storageBucket: specs-captures
+      cloudFolderPrefix: captures
+      filenameSlug: view
+      captureDelaySeconds: !<float> 2.000000
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/8a183e24-bc4c-41b6-9d21-63dbdafb91fe>
   PrefabRemaps:
     []
@@ -3798,11 +3860,8 @@
   ScriptInputsDefault:
     saveToCloud: true
     storageBucket: true
-    cloudFolderPrefix: true
-    capturesTableName: true
     captureRendMesh: true
     loadingIndicator: true
-    bridgeCaption: true
     autoHideLoading: true
   ScriptTypesDefault:
     {}
@@ -3810,12 +3869,12 @@
     "":
       saveToCloud: true
       storageBucket: specs-captures
-      cloudFolderPrefix: captures
+      cloudFolderPrefix: crops
       syncCapturesTable: true
-      capturesTableName: captures
+      capturesTableName: crops
       captureRendMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       loadingIndicator: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      bridgeCaption: capture
+      bridgeCaption: crops
       autoHideLoading: true
   ScriptTypes:
     "":
@@ -4065,6 +4124,21 @@
     []
   Components:
     []
+- !<SceneObject/9b32240c-3d22-44c5-a3ca-7103f0a79e66>
+  PrefabRemaps:
+    []
+  Name: SnapCloudCaptureManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 89b1f62c-2f58-4b41-891c-7b4e6c1ffa96
 - !<SceneObject/9d1fd12b-4de8-4060-9559-485ec7790114>
   PrefabRemaps:
     []
@@ -4662,7 +4736,7 @@
 - !<ScriptComponent/ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70>
   PrefabRemaps:
     []
-  Name: NoteController
+  Name: NotesController
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
@@ -4672,7 +4746,8 @@
   ScriptInputs:
     "":
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
-      fingerDwellingTimeThreshold: 1.500000
+      fingerDwellingTimeThreshold: !<float> 2.000000
+      fingerDwellRadius: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
       noteSpawnYawOffsetDegrees: !<float> 180.000000
   ScriptTypes:
@@ -4751,6 +4826,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> 27a289fc-1e93-48f4-b24f-51a2cd80b18e
     - !<own> 5fe652d3-3bdb-4e76-8c06-fd7323d8a2bd
     - !<own> 88aac8c0-3e72-4074-a822-df2a16b84a6c
     - !<own> df45ce2a-5e69-41ad-8acc-d219b68a2937
@@ -5747,21 +5823,6 @@
     - !<own> e73dda55-e5c2-4d14-9710-257466ec1523
   Components:
     []
-- !<SceneObject/ce71c17d-6d7f-44da-bdb0-f67bebe9fcd3>
-  PrefabRemaps:
-    []
-  Name: TextInputManager
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> e92c9815-b474-4f37-9ceb-1cffeac1afb1
 - !<SceneObject/ceb8b752-125a-4234-8bf2-c96f9464702c>
   PrefabRemaps:
     []
@@ -6413,22 +6474,6 @@
     - !<own> b03ae636-873b-4d0a-ab3e-710a0c6bbaf9
   Components:
     - !<own> d04c1bfe-0946-4345-9d03-a7da70283e8c
-- !<ScriptComponent/e92c9815-b474-4f37-9ceb-1cffeac1afb1>
-  PrefabRemaps:
-    []
-  Name: TextInputManager
-  Enabled: true
-  ScriptAsset: !<reference> 5de60c08-3a73-47d2-b1e3-233637e425fb
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/ea6bcc6e-5fc1-4a45-bade-7f26df777aa1>
   PrefabRemaps:
     - 3573bafa-9cff-406e-9c61-3a96c3581d6c: 189c5ad4-6aeb-4d06-772f-c175e3c4623b

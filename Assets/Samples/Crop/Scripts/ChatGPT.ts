@@ -7,24 +7,34 @@ export class ChatGPT extends BaseScriptComponent {
 
   onAwake() {}
 
-  makeImageRequest(imageTex: Texture, callback) {
+  makeImageRequest(
+    imageTex: Texture,
+    callback: (response: string) => void,
+    onError?: (reason: string) => void
+  ) {
     print("Making image request...")
     Base64.encodeTextureAsync(
       imageTex,
       (base64String) => {
         print("Image encode Success!")
         const textQuery = "Identify in as much detail what object is in the image but only use a maxiumum of 5 words"
-        this.sendGPTChat(textQuery, base64String, callback)
+        this.sendGPTChat(textQuery, base64String, callback, onError)
       },
       () => {
         print("Image encoding failed!")
+        onError?.("image_encode_failed")
       },
       this.ImageQuality,
       this.ImageEncoding
     )
   }
 
-  async sendGPTChat(request: string, image64: string, callback: (response: string) => void) {
+  async sendGPTChat(
+    request: string,
+    image64: string,
+    callback: (response: string) => void,
+    onError?: (reason: string) => void
+  ) {
     OpenAI.chatCompletions({
       model: "gpt-4o",
       messages: [
@@ -45,12 +55,19 @@ export class ChatGPT extends BaseScriptComponent {
     })
       .then((response) => {
         if (response.choices && response.choices.length > 0) {
-          callback(response.choices[0].message.content)
-          print("Response from OpenAI: " + response.choices[0].message.content)
+          const content = response.choices[0].message.content
+          if (content != null && content.length > 0) {
+            callback(content)
+            print("Response from OpenAI: " + content)
+            return
+          }
         }
+        print("OpenAI returned no usable message content")
+        onError?.("no_response")
       })
       .catch((error) => {
         print("Error in OpenAI request: " + error)
+        onError?.(String(error))
       })
   }
 }
