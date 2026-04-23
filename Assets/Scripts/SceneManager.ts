@@ -1,9 +1,12 @@
 // ======================================================================
-// [SnapCloudCapture] Added: quiet camera capture uploader. Used below in
-// sendProductViewToBackend() to push a single frame to the
-// `specs-captures/captures/<session_id>/` folder on note-spawn.
+// [SnapCloudCapture] Changed: quiet camera capture is now owned by
+// SnapCloudPinManager so the resulting image_url can be folded straight
+// into the `pins` row it inserts on note completion. SnapCloudCaptureManager
+// still exists as a file for fallback but its component should be disabled
+// in the scene; leaving the import behind would just bind to a null
+// singleton.
 // ======================================================================
-import { SnapCloudCaptureManager } from "./SnapCloudCaptureManager";
+import { SnapCloudPinManager } from "./SnapCloudPinManager";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
 import { SoundEffectsController } from "./SoundEffectsController";
 // import { UXFeedbackController } from "./UXFeedbackController";
@@ -101,15 +104,21 @@ export class SceneManager extends BaseScriptComponent {
         return this.noopUxFeedbackController;
     }
 
+    // ======================================================================
+    // [SnapCloudCapture] Changed: delegate the quiet capture to
+    // SnapCloudPinManager. It snapshots the camera, uploads the JPEG to
+    // `specs-captures/captures/<session_id>/...`, and stashes the
+    // resulting public URL so that when the matching Note is discovered
+    // by SnapCloudPinManager's scene scan, it can be folded into the
+    // eventual pins-row INSERT as `image_url`. No DB writes happen here.
+    // ======================================================================
     public sendProductViewToBackend() {
-        const cap = SnapCloudCaptureManager.getInstance();
-        if (!cap) {
-            print("[SceneManager] SnapCloudCaptureManager not in scene; capture skipped.");
+        const pm = SnapCloudPinManager.getInstance();
+        if (!pm) {
+            print("[SceneManager] SnapCloudPinManager not in scene; capture skipped.");
             return;
         }
-        cap.captureAndUpload((url) => {
-            print(`[SceneManager] product view uploaded -> ${url || "(failed)"}`);
-        });
+        pm.captureForNextNote();
     }
 
     public sendCompleteNoteDataToBackend(noteData: INoteData) {

@@ -27,9 +27,16 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     autoInvokeProcessPin: false
+    cameraTextureOverride: false
+    captureCloudFolderPrefix: false
+    captureDelaySeconds: false
+    captureFilenameSlug: false
+    captureStorageBucket: false
     noteScanIntervalSeconds: false
+    pendingImageFreshnessSeconds: false
     pinsTableName: false
     processPinFunctionName: false
+    saveCaptureToCloud: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -43,6 +50,13 @@
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
       noteScanIntervalSeconds: !<float> 1.000000
+      saveCaptureToCloud: true
+      captureStorageBucket: specs-captures
+      captureCloudFolderPrefix: captures
+      captureFilenameSlug: view
+      captureDelaySeconds: 0.750000
+      cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      pendingImageFreshnessSeconds: !<float> 10.000000
   ScriptTypes:
     -
       {}
@@ -51,3 +65,10 @@
     - '// @input string processPinFunctionName = "process-pin" {"hint":"Name of the Supabase edge function to invoke after each pin write."}'
     - '// @input bool autoInvokeProcessPin = true {"hint":"If true, invoke process-pin automatically after every INSERT/UPDATE."}'
     - '// @input float noteScanIntervalSeconds = 1 {"hint":"How often (seconds) to re-scan the scene for new Note components."}'
+    - '// @input bool saveCaptureToCloud = true {"hint":"Master switch for uploading quiet captures to Snap Cloud storage."}'
+    - '// @input string captureStorageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket in Snap Cloud."}'
+    - '// @input string captureCloudFolderPrefix = "captures" {"hint":"Folder prefix within the bucket. Final path: prefix/sessionId/slug_timestamp.jpg"}'
+    - '// @input string captureFilenameSlug = "view" {"hint":"Filename slug for quiet captures. Final file: slug_<timestamp>.jpg"}'
+    - '// @input float captureDelaySeconds = 0.75 {"hint":"Seconds to wait after captureForNextNote() before grabbing the frame."}'
+    - '// @input Asset.Texture cameraTextureOverride {"hint":"Optional camera Texture override. Leave empty; script owns its own camera subscription."}'
+    - '// @input float pendingImageFreshnessSeconds = 10 {"hint":"How long (seconds) a pending captured image_url stays claimable by the next discovered Note."}'
