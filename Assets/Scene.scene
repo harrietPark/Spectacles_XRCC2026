@@ -554,22 +554,22 @@
   Enabled: true
   ScriptAsset: !<reference> b990fc1c-bd0f-4bb6-83b6-bcb7d608f951
   ScriptInputsDefault:
-    activateDwellSfx: true
     activateDwellSfxVolume: true
-    dwellReadySfx: true
     dwellReadySfxVolume: true
-    noteSpawnedSfx: true
     noteSpawnedSfxVolume: true
+    dwellCancelledSfxVolume: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      activateDwellSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      activateDwellSfx: !<reference.AudioTrackAsset> de73be74-1411-45d2-a01c-3eaa983c7c35
       activateDwellSfxVolume: !<float> 1.000000
-      dwellReadySfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      dwellReadySfx: !<reference.AudioTrackAsset> 271f211c-1a9e-4d04-ae0e-96a4ac37a049
       dwellReadySfxVolume: !<float> 1.000000
-      noteSpawnedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      noteSpawnedSfx: !<reference.AudioTrackAsset> fcd6ee7a-6102-4b9b-a4bf-4fc49a8d78f6
       noteSpawnedSfxVolume: !<float> 1.000000
+      dwellCancelledSfx: !<reference.AudioTrackAsset> de554749-aaa5-40c3-893b-cc93d7ec68cb
+      dwellCancelledSfxVolume: !<float> 1.000000
   ScriptTypes:
     "":
       {}
