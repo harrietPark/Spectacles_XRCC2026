@@ -27,6 +27,8 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     areaManager: false
+    debugSpawnDistanceFromCamera: false
+    debugSpawnRunsCaptureAndCrop: false
     fingerDwellRadius: false
     fingerDwellingTimeThreshold: false
     noteSpawnYawOffsetDegrees: false
@@ -45,6 +47,8 @@
       fingerDwellRadius: !<float> 2.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       noteSpawnYawOffsetDegrees: !<float> 180.000000
+      debugSpawnDistanceFromCamera: !<float> 40.000000
+      debugSpawnRunsCaptureAndCrop: false
   ScriptTypes:
     -
       {}
@@ -60,4 +64,8 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Spawn Rotation"}'
     - '// @input float noteSpawnYawOffsetDegrees = 180 {"hint":"Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"group_start", "label":"Editor Debug Spawn"}'
+    - '// @input float debugSpawnDistanceFromCamera = 40 {"hint":"Spawn distance in front of camera for editor debug note placement."}'
+    - '// @input bool debugSpawnRunsCaptureAndCrop {"hint":"Enable capture/crop flow when using debug spawn in editor."}'
     - '// @ui {"widget":"group_end"}'

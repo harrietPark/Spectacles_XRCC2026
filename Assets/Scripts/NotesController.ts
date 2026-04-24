@@ -38,6 +38,14 @@ export class NotesController extends BaseScriptComponent {
     @hint("Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes.")
     private noteSpawnYawOffsetDegrees: number = 180;
     @ui.group_end
+    @ui.group_start("Editor Debug Spawn")
+    @input
+    @hint("Spawn distance in front of camera for editor debug note placement.")
+    private debugSpawnDistanceFromCamera: number = 40;
+    @input
+    @hint("Enable capture/crop flow when using debug spawn in editor.")
+    private debugSpawnRunsCaptureAndCrop: boolean = false;
+    @ui.group_end
 
     // Hand tracking
     private handProvider: HandInputData = SIK.HandInputData;
@@ -143,12 +151,45 @@ export class NotesController extends BaseScriptComponent {
             widgetIndex: 0,
             position: spawnPosition,
             rotation: this.getSpawnRotation(spawnPosition),
+            fromDwell: true,
         });
 
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
 
         print("--- Spawned a note")
+    }
+
+    public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {
+        if (!global.deviceInfoSystem.isEditor()) {
+            return;
+        }
+
+        this.deactivateCreationProcess();
+
+        let spawnPosition: vec3;
+        if (spawnPositionOverride) {
+            spawnPosition = spawnPositionOverride;
+        } else {
+            const distance = Math.max(10, this.debugSpawnDistanceFromCamera);
+            const cameraPosition = this.worldCameraTransform.getWorldPosition();
+            spawnPosition = cameraPosition.add(this.worldCameraTransform.forward.uniformScale(distance));
+        }
+
+        this.onNoteSpawnedEvent.invoke({
+            widgetIndex: 0,
+            position: spawnPosition,
+            rotation: this.getSpawnRotation(spawnPosition),
+            fromDwell: true,
+            fromDebugSpawn: true,
+        });
+
+        if (this.debugSpawnRunsCaptureAndCrop) {
+            this.sceneManager.sendProductViewToBackend();
+            this.enableCrop();
+        }
+
+        print("--- Spawned debug note in editor");
     }
 
     private updateNotes(widgets: Widget[]) {

@@ -18,6 +18,14 @@ const MIN_VALID_SAMPLE_RATE = 8000
 
 @component
 export class Note extends BaseScriptComponent {
+  private static readonly SPAWN_POP_DURATION_SECONDS = 0.22
+  private static readonly SPAWN_POP_START_SCALE_MULTIPLIER = 0.2
+  private static readonly SPAWN_ROTATE_BOUNCE_DURATION_SECONDS = 0.75
+  private static readonly SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES = 18.0
+  private static readonly SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8
+  private static readonly SPAWN_ROTATE_BOUNCE_DAMPING = 2.8
+  private static readonly SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0)
+
   private readonly onTranscriptionFinalEvent = new Event<void>();
   public readonly onTranscriptionFinal: PublicApi<void> = this.onTranscriptionFinalEvent.publicApi();
 
@@ -93,6 +101,14 @@ export class Note extends BaseScriptComponent {
   private voiceTranscription: string = "";
   private croppedImageTexture?: Texture;
   private croppedImageAISummary?: string;
+  private isSpawnPopAnimationActive = false
+  private spawnPopAnimationStartedAt = 0
+  private spawnPopBaseScale = vec3.one()
+  private isSpawnRotateBounceActive = false
+  private spawnRotateBounceStartedAt = 0
+  private spawnRotateBounceBaseRotation = quat.quatIdentity()
+  private spawnRotateBounceBasePosition = vec3.zero()
+  private spawnRotateBounceAnchorTarget = vec3.zero()
 
   private mergeFinalAndPartial(finalizedRaw: string, partialRaw: string): string {
     const finalized = (finalizedRaw || "").trim()
@@ -217,6 +233,9 @@ export class Note extends BaseScriptComponent {
   }
 
   private onUpdate() {
+    this.updateSpawnPopAnimation()
+    this.updateSpawnRotateBounceAnimation()
+
     const shouldShowButtons = getTime() - this.timeToShowButtonsAfterHover < this.lastHoveredTime
     this._editToggle.getSceneObject().enabled = shouldShowButtons
     if (this.deleteButton) {
@@ -589,6 +608,99 @@ export class Note extends BaseScriptComponent {
 
   public set editToggle(editToggle: ToggleButton) {
     this._editToggle = editToggle
+  }
+
+  public playSpawnPopAnimation(): void {
+    const transform = this.sceneObject.getTransform()
+    this.spawnPopBaseScale = transform.getLocalScale()
+    this.spawnRotateBounceBasePosition = transform.getLocalPosition()
+    this.spawnRotateBounceBaseRotation = transform.getLocalRotation()
+    this.spawnRotateBounceAnchorTarget = this.spawnRotateBounceBasePosition.add(
+      this.spawnRotateBounceBaseRotation.multiplyVec3(Note.SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
+    )
+    this.spawnPopAnimationStartedAt = getTime()
+    this.spawnRotateBounceStartedAt = this.spawnPopAnimationStartedAt
+    this.isSpawnPopAnimationActive = true
+    this.isSpawnRotateBounceActive = true
+
+    transform.setLocalScale(
+      this.multiplyScale(
+        this.spawnPopBaseScale,
+        Note.SPAWN_POP_START_SCALE_MULTIPLIER
+      )
+    )
+  }
+
+  private updateSpawnPopAnimation(): void {
+    if (!this.isSpawnPopAnimationActive) {
+      return
+    }
+
+    const elapsed = getTime() - this.spawnPopAnimationStartedAt
+    const duration = Note.SPAWN_POP_DURATION_SECONDS
+    const normalized = Math.max(0, Math.min(1, elapsed / duration))
+    const eased = this.easeInOutCubic(normalized)
+    const scaleMultiplier = this.lerp(Note.SPAWN_POP_START_SCALE_MULTIPLIER, 1, eased)
+
+    this.sceneObject
+      .getTransform()
+      .setLocalScale(this.multiplyScale(this.spawnPopBaseScale, scaleMultiplier))
+
+    if (normalized >= 1) {
+      this.isSpawnPopAnimationActive = false
+      this.sceneObject.getTransform().setLocalScale(this.spawnPopBaseScale)
+    }
+  }
+
+  private updateSpawnRotateBounceAnimation(): void {
+    if (!this.isSpawnRotateBounceActive) {
+      return
+    }
+
+    const elapsed = getTime() - this.spawnRotateBounceStartedAt
+    const duration = Note.SPAWN_ROTATE_BOUNCE_DURATION_SECONDS
+    const normalized = Math.max(0, Math.min(1, elapsed / duration))
+
+    const decay = Math.exp(-Note.SPAWN_ROTATE_BOUNCE_DAMPING * normalized)
+    const oscillation = Math.sin(elapsed * Note.SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ * Math.PI * 2)
+    const angleDegrees = Note.SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES * decay * oscillation
+    const swingRotation = quat.angleAxis(angleDegrees * (Math.PI / 180), vec3.forward())
+    const currentRotation = this.spawnRotateBounceBaseRotation.multiply(swingRotation)
+    const pivotWorldFromCurrent = currentRotation.multiplyVec3(Note.SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
+    const correctedPosition = this.spawnRotateBounceAnchorTarget.sub(pivotWorldFromCurrent)
+
+    this.sceneObject
+      .getTransform()
+      .setLocalRotation(currentRotation)
+    this.sceneObject
+      .getTransform()
+      .setLocalPosition(correctedPosition)
+
+    if (normalized >= 1) {
+      this.isSpawnRotateBounceActive = false
+      this.sceneObject.getTransform().setLocalRotation(this.spawnRotateBounceBaseRotation)
+      this.sceneObject.getTransform().setLocalPosition(this.spawnRotateBounceBasePosition)
+    }
+  }
+
+  private multiplyScale(baseScale: vec3, multiplier: number): vec3 {
+    return new vec3(
+      baseScale.x * multiplier,
+      baseScale.y * multiplier,
+      baseScale.z * multiplier
+    )
+  }
+
+  private lerp(start: number, end: number, t: number): number {
+    return start + (end - start) * t
+  }
+
+  private easeInOutCubic(t: number): number {
+    if (t < 0.5) {
+      return 4 * t * t * t
+    }
+    const p = -2 * t + 2
+    return 1 - (p * p * p) / 2
   }
 
   private addEditOutline(): void {

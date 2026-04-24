@@ -1,4 +1,5 @@
 import {CancelToken, setTimeout} from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingUtils"
+import animate, {CancelSet} from "SpectaclesInteractionKit.lspkg/Utils/animate"
 import {RecoverState, RecoverWidgetButton} from "./MenuUI/RecoverWidgetButton"
 
 import {Anchor} from "Spatial Anchors.lspkg/Anchor"
@@ -22,6 +23,9 @@ import { NotesController } from "Scripts/NotesController"
 const CAMERA_GAZE_OFFSET_FACTOR = 60
 
 const LOCALIZATION_TIMEOUT_MS = 15000
+const DEBUG_SPAWN_POP_DELAY_SECONDS = 2.0
+const DEBUG_FALLBACK_POP_DURATION_SECONDS = 0.45
+const DEBUG_FALLBACK_POP_START_SCALE_MULTIPLIER = 0.25
 
 const WIDGET_PARENT_MESH_VISUAL_INDEX = 0
 
@@ -216,7 +220,14 @@ export class AreaManager extends BaseScriptComponent {
     this.lockWidgetButton.sceneObject.getParent().getParent().enabled = enabled
   }
 
-  private spawnWidget(prefabIndex: number, widgetIndex: number, localPosition: vec3, localRotation: quat): SceneObject {
+  private spawnWidget(
+    prefabIndex: number,
+    widgetIndex: number,
+    localPosition: vec3,
+    localRotation: quat,
+    shouldPlaySpawnPopAnimation: boolean = false,
+    shouldDelaySpawnPopAnimation: boolean = false
+  ): SceneObject {
     // Change to use mesh array instead?
     const objectPrefab = this.widgetPrefabs[prefabIndex]
 
@@ -252,8 +263,50 @@ export class AreaManager extends BaseScriptComponent {
     })
 
     const noteComponent = widgetObject.getComponent(Note.getTypeName())
+    if (noteComponent && shouldPlaySpawnPopAnimation) {
+      if (shouldDelaySpawnPopAnimation) {
+        // Debug-only delay so preview users can clearly see the pop start.
+        this.log("Debug spawn: delaying pop animation start for visibility.")
+        setTimeout(() => {
+          this.log("Debug spawn: starting pop animation.")
+          noteComponent.playSpawnPopAnimation()
+        }, DEBUG_SPAWN_POP_DELAY_SECONDS)
+      } else {
+        this.log("Dwell spawn: starting pop animation immediately.")
+        noteComponent.playSpawnPopAnimation()
+      }
+    } else if (shouldPlaySpawnPopAnimation) {
+      this.log("Spawn pop requested, but Note component was not found on spawned prefab.")
+      this.playFallbackSpawnAnimation(widgetObject, shouldDelaySpawnPopAnimation)
+    }
 
     return widgetObject
+  }
+
+  private playFallbackSpawnAnimation(widgetObject: SceneObject, withDelay: boolean): void {
+    const trigger = () => {
+      const transform = widgetObject.getTransform()
+      const endScale = transform.getLocalScale()
+      const startScale = endScale.uniformScale(DEBUG_FALLBACK_POP_START_SCALE_MULTIPLIER)
+      transform.setLocalScale(startScale)
+
+      animate({
+        easing: "ease-out-elastic",
+        duration: DEBUG_FALLBACK_POP_DURATION_SECONDS,
+        update: (t) => {
+          transform.setLocalScale(vec3.lerp(startScale, endScale, t))
+        },
+        ended: null,
+        cancelSet: new CancelSet()
+      })
+    }
+
+    if (withDelay) {
+      setTimeout(trigger, DEBUG_SPAWN_POP_DELAY_SECONDS)
+      return
+    }
+
+    trigger()
   }
 
   // Create a note instance in front of the user.
@@ -264,7 +317,9 @@ export class AreaManager extends BaseScriptComponent {
         event.widgetIndex,
         this.widgets.length,
         invertedWorldTransform.multiplyPoint(event.position),
-        this.widgetParent.getTransform().getWorldRotation().invert().multiply(event.rotation)
+        this.widgetParent.getTransform().getWorldRotation().invert().multiply(event.rotation),
+        event.fromDwell === true,
+        event.fromDebugSpawn === true
       )
 
       this.toggleOffAllVoiceNotes()

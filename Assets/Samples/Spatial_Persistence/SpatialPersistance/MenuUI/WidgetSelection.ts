@@ -8,6 +8,8 @@ export type WidgetSelectionEvent = {
   widgetIndex: number
   position: vec3
   rotation: quat
+  fromDwell?: boolean
+  fromDebugSpawn?: boolean
 }
 
 @component

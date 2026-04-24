@@ -42,6 +42,8 @@
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
     noteSpawnYawOffsetDegrees: true
+    debugSpawnDistanceFromCamera: true
+    debugSpawnRunsCaptureAndCrop: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -51,6 +53,8 @@
       fingerDwellRadius: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
       noteSpawnYawOffsetDegrees: !<float> 180.000000
+      debugSpawnDistanceFromCamera: !<float> 40.000000
+      debugSpawnRunsCaptureAndCrop: false
   ScriptTypes:
     "":
       {}

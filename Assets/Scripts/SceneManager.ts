@@ -9,9 +9,8 @@
 import { SnapCloudPinManager } from "./SnapCloudPinManager";
 import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/RoundButton";
 import { SoundEffectsController } from "./SoundEffectsController";
-// import { UXFeedbackController } from "./UXFeedbackController";
-import { NotesController } from "./NotesController";
 import { INoteData } from "./INoteData";
+import { NotesController } from "./NotesController";
 
 type UXFeedbackControllerApi = {
     activateIndexTipHighlight: () => void;
@@ -34,7 +33,10 @@ export class SceneManager extends BaseScriptComponent {
     @input private NoteController: NotesController;
     @ui.group_end
     @ui.group_start("UI References")
-    @input private buttonActivateNoteCreation: RoundButton;
+    @input
+    @allowUndefined
+    @hint("Optional debug button for Lens Studio editor to spawn a note immediately.")
+    private buttonDebugSpawnNote: RoundButton | undefined;
     @ui.group_end
     @ui.separator
     @ui.group_start("Microphone Setup")
@@ -71,8 +73,14 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private onStart() {
-        // left hand menu button press to activate note creation process
-        this.buttonActivateNoteCreation.onTriggerUp.add(this.activateNoteCreation.bind(this));
+        this.buttonDebugSpawnNote?.onTriggerUp.add(() => {
+            const buttonTransform = this.buttonDebugSpawnNote.getSceneObject().getTransform();
+            const buttonPosition = buttonTransform.getWorldPosition();
+            const spawnPosition = buttonPosition
+                .add(buttonTransform.forward.uniformScale(8))
+                .add(vec3.up().uniformScale(2));
+            this.NoteController.spawnDebugNoteInEditor(spawnPosition);
+        });
         this.requestMicrophonePermissionEarly();
     }
 
@@ -140,15 +148,6 @@ export class SceneManager extends BaseScriptComponent {
 
     public playCropCapturedFeedback(): void {
         this.soundEffectsController?.playCropCaptured();
-    }
-
-    private activateNoteCreation() {
-        this.soundEffectsController?.playActivateDwell();
-        this.NoteController.activateCreationProcess();
-    }
-
-    private deactivateNoteCreation() {
-        this.NoteController.deactivateCreationProcess();
     }
 
     private requestMicrophonePermissionEarly(): void {
