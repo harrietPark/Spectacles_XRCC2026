@@ -234,7 +234,7 @@ export class Note extends BaseScriptComponent {
 
     if (this.deleteButton && this.deleteButton.onButtonPinched) {
       this.deleteButton.onButtonPinched.add(() => {
-        this.recordMicrophoneAudio(false)
+        this.stopAllVoiceActivity()
         if (this.widget) {
           this.widget.delete()
         } else {
@@ -590,6 +590,27 @@ export class Note extends BaseScriptComponent {
     }
 
     this.updateVoiceStatusText(statusMessage)
+    this.updatePlaybackButtonVisualState()
+  }
+
+  private stopAllVoiceActivity(): void {
+    if (this.isRecording) {
+      this.recordMicrophoneAudio(false)
+    }
+    if (this.isPlayingBack) {
+      this.stopPlayback("Playback stopped")
+      return
+    }
+
+    // Ensure any queued audio is still flushed even if state desynced.
+    this.audioComponent?.stop(false)
+    ;(this.audioOutputProvider as unknown as {clearAudioFrames?: () => void}).clearAudioFrames?.()
+    if (this.playbackAudioUpdateEvent) {
+      this.playbackAudioUpdateEvent.enabled = false
+    }
+    this.isPlayingBack = false
+    this.currentPlaybackTime = 0
+    this.playbackSafetyTimeout = 0
     this.updatePlaybackButtonVisualState()
   }
 
