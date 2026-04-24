@@ -127,6 +127,35 @@ export class Note extends BaseScriptComponent {
     return `${finalized} ${partial}`
   }
 
+  /**
+   * Final segments may repeat the whole phrase so far (cumulative) or share a
+   * word boundary with what we already stored; avoid duplicating in voiceTranscription.
+   */
+  private appendFinalChunkToTranscript(currentRaw: string, finalChunkRaw: string): string {
+    const c = (currentRaw || "").trim()
+    const t = (finalChunkRaw || "").trim()
+    if (t.length === 0) {
+      return c
+    }
+    if (c.length === 0) {
+      return t
+    }
+    if (t === c) {
+      return c
+    }
+    if (t.length >= c.length && t.startsWith(c) && (t.length === c.length || t.charAt(c.length) === " ")) {
+      return t
+    }
+    const maxOverlap = Math.min(c.length, t.length)
+    for (let k = maxOverlap; k > 0; k--) {
+      if (c.slice(c.length - k) === t.slice(0, k)) {
+        const suffix = t.slice(k).trim()
+        return suffix.length > 0 ? `${c} ${suffix}`.trim() : c
+      }
+    }
+    return `${c} ${t}`.trim()
+  }
+
   onAwake() {
     this.createEvent("OnStartEvent").bind(this.onStart.bind(this))
     this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this))
@@ -283,27 +312,39 @@ export class Note extends BaseScriptComponent {
     options.silenceUntilTerminationMs = ASR_SILENCE_UNTIL_TERMINATION_MS
     // options.mode = AsrModule.AsrMode.HighAccuracy
     options.mode = AsrModule.AsrMode.HighSpeed
+    
     options.onTranscriptionUpdateEvent.add((eventArgs: AsrModule.TranscriptionUpdateEvent) => {
       const transcript = eventArgs.text ? eventArgs.text.trim() : ""
       if (transcript === "") {
         return
       }
-      print("--- transcription update: " + transcript);
-      this._textField.text = this.mergeFinalAndPartial(this.voiceTranscription, transcript)
 
-      // Invoke transcription end event if it is final
       if (eventArgs.isFinal) {
+        // Final chunk — commit to voiceTranscription (the source of truth)
         print("--- transcription final: " + eventArgs.text);
-        const toAppend = transcript
-        const current = (this.voiceTranscription || "").trim()
-        this.voiceTranscription = current.length > 0 ? `${current} ${toAppend}` : toAppend
-        this._textField.text = this.voiceTranscription
+        this.voiceTranscription = this.appendFinalChunkToTranscript(this.voiceTranscription, transcript)
+        this._textField.text = (this.voiceTranscription || "").trim()
         this.onTranscriptionFinalEvent.invoke();
-
-        // TODO: send complete note data when user looks away from the note
         this.sendCompleteNoteData();
+      } else {
+        // Partial chunk — show live preview.
+        const committed = (this.voiceTranscription || "").trim()
+
+        if (committed.length === 0) {
+          // No finalized text yet — partial IS the preview
+          this._textField.text = transcript
+        } else if (transcript.startsWith(committed)) {
+          // Cumulative partial that extends committed — show it as-is
+          this._textField.text = transcript
+        } else {
+          // Partial doesn't extend committed (ASR restarted a new phrase after final).
+          // Ignore this partial in the UI — keep showing the committed text.
+          // If the new phrase becomes final, it'll be appended via appendFinalChunkToTranscript.
+          this._textField.text = committed
+        }
       }
     })
+
     options.onTranscriptionErrorEvent.add((statusCode: AsrModule.AsrStatusCode) => {
       this.updateVoiceStatusText(`Speech-to-text error: ${statusCode}`)
     })
