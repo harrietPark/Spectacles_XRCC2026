@@ -177,6 +177,7 @@
       outlineWeight: 0.200000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> b3f41aba-cdf0-4052-8666-27d9f85e7f04
+        - !<reference> f3a98faa-ddf1-4d55-94bb-7c9425883dc4
   ScriptTypes:
     "":
       {}
