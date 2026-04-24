@@ -28,10 +28,16 @@
   ScriptInputsHidden:
     activateDwellSfx: false
     activateDwellSfxVolume: false
+    cropCapturedSfx: false
+    cropCapturedSfxVolume: false
     dwellCancelledSfx: false
     dwellCancelledSfxVolume: false
     dwellReadySfx: false
     dwellReadySfxVolume: false
+    loadingDoneSfx: false
+    loadingDoneSfxVolume: false
+    loadingStartSfx: false
+    loadingStartSfxVolume: false
     noteSpawnedSfx: false
     noteSpawnedSfxVolume: false
   ScriptTypesHidden:
@@ -51,6 +57,12 @@
       noteSpawnedSfxVolume: !<float> 1.000000
       dwellCancelledSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       dwellCancelledSfxVolume: !<float> 1.000000
+      loadingStartSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      loadingStartSfxVolume: !<float> 1.000000
+      loadingDoneSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      loadingDoneSfxVolume: !<float> 1.000000
+      cropCapturedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      cropCapturedSfxVolume: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -64,4 +76,10 @@
     - '// @input float noteSpawnedSfxVolume = 1 {"hint":"Volume for note-spawned sound effect."}'
     - '// @input Asset.AudioTrackAsset dwellCancelledSfx {"hint":"Optional sound when dwell is cancelled before reaching ready/spawn state."}'
     - '// @input float dwellCancelledSfxVolume = 1 {"hint":"Volume for dwell-cancelled sound effect."}'
+    - '// @input Asset.AudioTrackAsset loadingStartSfx {"hint":"Optional sound when loading indicator appears after dwell release."}'
+    - '// @input float loadingStartSfxVolume = 1 {"hint":"Volume for loading-start sound effect."}'
+    - '// @input Asset.AudioTrackAsset loadingDoneSfx {"hint":"Optional sound when loading indicator completes/hides."}'
+    - '// @input float loadingDoneSfxVolume = 1 {"hint":"Volume for loading-done sound effect."}'
+    - '// @input Asset.AudioTrackAsset cropCapturedSfx {"hint":"Optional sound when a crop capture is received and applied to note."}'
+    - '// @input float cropCapturedSfxVolume = 1 {"hint":"Volume for crop-captured sound effect."}'
     - '// @ui {"widget":"group_end"}'

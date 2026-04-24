@@ -185,6 +185,7 @@ export class NotesController extends BaseScriptComponent {
 
         const latestNote = this.notes[this.notes.length - 1];
         latestNote.setCroppedImage(image);
+        this.sceneManager.playCropCapturedFeedback();
     }
 
     private addCropAISummary(summary: string) {

@@ -50,7 +50,27 @@
       png: Performance Compression
     Overrides:
       {}
-- !<RenderMeshVisual/3a9cbc1e-660c-4a66-494d-8305fa9d8197>
+- !<SceneObject/2525130a-e328-4ee7-437f-426fd02312ca>
+  PrefabRemaps:
+    []
+  Name: Pin_Smooth_Push_Pin_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -161.565048, y: 90.000000, z: 108.434952}
+    Scale: {x: 0.010000, y: 0.010000, z: 0.010000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> adf0bf81-fbcc-4b1c-4090-1a6b5b510bf4
+- !<ObjectPrefabAssetData/8c537690-0c40-4e21-a912-15b5a98b23d8>
+  Prototype: !<ObjectOwner/979fb112-6e96-498b-8561-534c0c7730ae>
+    PackagePath: ""
+    objects:
+      - !<own> bb2b065d-c32a-4ed7-7df3-3c4e2b74f888
+- !<RenderMeshVisual/adf0bf81-fbcc-4b1c-4090-1a6b5b510bf4>
   PrefabRemaps:
     []
   Name: Pin_Smooth_Push_Pin_0
@@ -70,7 +90,7 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/4522cd9e-0a69-476b-5788-6b8f3e877534>
+- !<SceneObject/bb2b065d-c32a-4ed7-7df3-3c4e2b74f888>
   PrefabRemaps:
     []
   Name: push_pin_1
@@ -82,40 +102,10 @@
     Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 77e3cdef-7726-4227-78c9-fddcfad22009
+    - !<own> d3b69366-7cb4-4935-770e-42dbb2621340
   Components:
     []
-- !<SceneObject/50aa6dfb-ece2-4b0e-5508-b97b237e875c>
-  PrefabRemaps:
-    []
-  Name: Scene
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 55b60a8f-01f6-4446-76fe-1981d05f67e0
-  Components:
-    []
-- !<SceneObject/55b60a8f-01f6-4446-76fe-1981d05f67e0>
-  PrefabRemaps:
-    []
-  Name: Pin_Smooth_Push_Pin_0
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: -161.565048, y: 90.000000, z: 108.434952}
-    Scale: {x: 0.010000, y: 0.010000, z: 0.010000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 3a9cbc1e-660c-4a66-494d-8305fa9d8197
-- !<SceneObject/77e3cdef-7726-4227-78c9-fddcfad22009>
+- !<SceneObject/d3b69366-7cb4-4935-770e-42dbb2621340>
   PrefabRemaps:
     []
   Name: Scenes
@@ -127,11 +117,21 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 50aa6dfb-ece2-4b0e-5508-b97b237e875c
+    - !<own> fde064aa-3b46-425d-6eeb-5ee39bb7458a
   Components:
     []
-- !<ObjectPrefabAssetData/8c537690-0c40-4e21-a912-15b5a98b23d8>
-  Prototype: !<ObjectOwner/979fb112-6e96-498b-8561-534c0c7730ae>
-    PackagePath: ""
-    objects:
-      - !<own> 4522cd9e-0a69-476b-5788-6b8f3e877534
+- !<SceneObject/fde064aa-3b46-425d-6eeb-5ee39bb7458a>
+  PrefabRemaps:
+    []
+  Name: Scene
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2525130a-e328-4ee7-437f-426fd02312ca
+  Components:
+    []

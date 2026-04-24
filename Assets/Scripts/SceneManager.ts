@@ -130,6 +130,18 @@ export class SceneManager extends BaseScriptComponent {
         this.soundEffectsController?.playDwellCancelled();
     }
 
+    public playLoadingStartFeedback(): void {
+        this.soundEffectsController?.playLoadingStart();
+    }
+
+    public playLoadingDoneFeedback(): void {
+        this.soundEffectsController?.playLoadingDone();
+    }
+
+    public playCropCapturedFeedback(): void {
+        this.soundEffectsController?.playCropCaptured();
+    }
+
     private activateNoteCreation() {
         this.soundEffectsController?.playActivateDwell();
         this.NoteController.activateCreationProcess();

@@ -29,12 +29,36 @@ export class SoundEffectsController extends BaseScriptComponent {
     @input
     @hint("Volume for dwell-cancelled sound effect.")
     private dwellCancelledSfxVolume: number = 1.0;
+    @input
+    @allowUndefined
+    @hint("Optional sound when loading indicator appears after dwell release.")
+    private loadingStartSfx: AudioTrackAsset | undefined;
+    @input
+    @hint("Volume for loading-start sound effect.")
+    private loadingStartSfxVolume: number = 1.0;
+    @input
+    @allowUndefined
+    @hint("Optional sound when loading indicator completes/hides.")
+    private loadingDoneSfx: AudioTrackAsset | undefined;
+    @input
+    @hint("Volume for loading-done sound effect.")
+    private loadingDoneSfxVolume: number = 1.0;
+    @input
+    @allowUndefined
+    @hint("Optional sound when a crop capture is received and applied to note.")
+    private cropCapturedSfx: AudioTrackAsset | undefined;
+    @input
+    @hint("Volume for crop-captured sound effect.")
+    private cropCapturedSfxVolume: number = 1.0;
     @ui.group_end
 
     private activateDwellPlayer: AudioComponent | undefined;
     private dwellReadyPlayer: AudioComponent | undefined;
     private noteSpawnedPlayer: AudioComponent | undefined;
     private dwellCancelledPlayer: AudioComponent | undefined;
+    private loadingStartPlayer: AudioComponent | undefined;
+    private loadingDonePlayer: AudioComponent | undefined;
+    private cropCapturedPlayer: AudioComponent | undefined;
 
     private onAwake(): void {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -45,6 +69,9 @@ export class SoundEffectsController extends BaseScriptComponent {
         this.dwellReadyPlayer = this.createPlayer(this.dwellReadySfx, this.dwellReadySfxVolume);
         this.noteSpawnedPlayer = this.createPlayer(this.noteSpawnedSfx, this.noteSpawnedSfxVolume);
         this.dwellCancelledPlayer = this.createPlayer(this.dwellCancelledSfx, this.dwellCancelledSfxVolume);
+        this.loadingStartPlayer = this.createPlayer(this.loadingStartSfx, this.loadingStartSfxVolume);
+        this.loadingDonePlayer = this.createPlayer(this.loadingDoneSfx, this.loadingDoneSfxVolume);
+        this.cropCapturedPlayer = this.createPlayer(this.cropCapturedSfx, this.cropCapturedSfxVolume);
     }
 
     public playActivateDwell(): void {
@@ -61,6 +88,18 @@ export class SoundEffectsController extends BaseScriptComponent {
 
     public playDwellCancelled(): void {
         this.playOneShot(this.dwellCancelledPlayer);
+    }
+
+    public playLoadingStart(): void {
+        this.playOneShot(this.loadingStartPlayer);
+    }
+
+    public playLoadingDone(): void {
+        this.playOneShot(this.loadingDonePlayer);
+    }
+
+    public playCropCaptured(): void {
+        this.playOneShot(this.cropCapturedPlayer);
     }
 
     private createPlayer(track: AudioTrackAsset | undefined, volume: number): AudioComponent | undefined {

@@ -558,6 +558,12 @@
     dwellReadySfxVolume: true
     noteSpawnedSfxVolume: true
     dwellCancelledSfxVolume: true
+    loadingStartSfx: true
+    loadingStartSfxVolume: true
+    loadingDoneSfx: true
+    loadingDoneSfxVolume: true
+    cropCapturedSfx: true
+    cropCapturedSfxVolume: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -570,6 +576,12 @@
       noteSpawnedSfxVolume: !<float> 1.000000
       dwellCancelledSfx: !<reference.AudioTrackAsset> de554749-aaa5-40c3-893b-cc93d7ec68cb
       dwellCancelledSfxVolume: !<float> 1.000000
+      loadingStartSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      loadingStartSfxVolume: !<float> 1.000000
+      loadingDoneSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      loadingDoneSfxVolume: !<float> 1.000000
+      cropCapturedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      cropCapturedSfxVolume: !<float> 1.000000
   ScriptTypes:
     "":
       {}

@@ -1,6 +1,7 @@
 import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInputData/HandInputData";
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { AreaManager } from "Samples/Spatial_Persistence/SpatialPersistance/AreaManager";
+import { SceneManager } from "./SceneManager";
 
 @component
 export class UXFeedbackController extends BaseScriptComponent {
@@ -81,6 +82,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     private latestWidgetCount: number = 0;
     private waitingForWidgetSpawn: boolean = false;
     private expectedWidgetCountAfterSpawn: number = 0;
+    private sceneManager: SceneManager | undefined;
 
     private onAwake() {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -88,6 +90,11 @@ export class UXFeedbackController extends BaseScriptComponent {
     }
 
     private onStart() {
+        try {
+            this.sceneManager = SceneManager.getInstance();
+        } catch (_error) {
+            this.sceneManager = undefined;
+        }
         this.deactivateIndexTipHighlight();
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
@@ -205,6 +212,7 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.isLoadingIndicatorActive = true;
         this.waitingForWidgetSpawn = true;
         this.expectedWidgetCountAfterSpawn = this.latestWidgetCount + 1;
+        this.sceneManager?.playLoadingStartFeedback();
     }
 
     private hideLoadingIndicator(): void {
@@ -212,11 +220,15 @@ export class UXFeedbackController extends BaseScriptComponent {
             return;
         }
 
+        const wasActive = this.isLoadingIndicatorActive || this.loadingIndicatorObject?.enabled === true;
         this.isLoadingIndicatorActive = false;
         this.waitingForWidgetSpawn = false;
         this.expectedWidgetCountAfterSpawn = this.latestWidgetCount;
         if (this.loadingIndicatorObject) {
             this.loadingIndicatorObject.enabled = false;
+        }
+        if (wasActive) {
+            this.sceneManager?.playLoadingDoneFeedback();
         }
     }
     private requestDwellSignalState(isActive: boolean): void {
