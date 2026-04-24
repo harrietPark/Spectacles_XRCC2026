@@ -22,11 +22,19 @@ export class SoundEffectsController extends BaseScriptComponent {
     @input
     @hint("Volume for note-spawned sound effect.")
     private noteSpawnedSfxVolume: number = 1.0;
+    @input
+    @allowUndefined
+    @hint("Optional sound when dwell is cancelled before reaching ready/spawn state.")
+    private dwellCancelledSfx: AudioTrackAsset | undefined;
+    @input
+    @hint("Volume for dwell-cancelled sound effect.")
+    private dwellCancelledSfxVolume: number = 1.0;
     @ui.group_end
 
     private activateDwellPlayer: AudioComponent | undefined;
     private dwellReadyPlayer: AudioComponent | undefined;
     private noteSpawnedPlayer: AudioComponent | undefined;
+    private dwellCancelledPlayer: AudioComponent | undefined;
 
     private onAwake(): void {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -36,6 +44,7 @@ export class SoundEffectsController extends BaseScriptComponent {
         this.activateDwellPlayer = this.createPlayer(this.activateDwellSfx, this.activateDwellSfxVolume);
         this.dwellReadyPlayer = this.createPlayer(this.dwellReadySfx, this.dwellReadySfxVolume);
         this.noteSpawnedPlayer = this.createPlayer(this.noteSpawnedSfx, this.noteSpawnedSfxVolume);
+        this.dwellCancelledPlayer = this.createPlayer(this.dwellCancelledSfx, this.dwellCancelledSfxVolume);
     }
 
     public playActivateDwell(): void {
@@ -48,6 +57,10 @@ export class SoundEffectsController extends BaseScriptComponent {
 
     public playNoteSpawned(): void {
         this.playOneShot(this.noteSpawnedPlayer);
+    }
+
+    public playDwellCancelled(): void {
+        this.playOneShot(this.dwellCancelledPlayer);
     }
 
     private createPlayer(track: AudioTrackAsset | undefined, volume: number): AudioComponent | undefined {

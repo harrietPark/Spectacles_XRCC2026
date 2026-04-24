@@ -28,6 +28,8 @@
   ScriptInputsHidden:
     activateDwellSfx: false
     activateDwellSfxVolume: false
+    dwellCancelledSfx: false
+    dwellCancelledSfxVolume: false
     dwellReadySfx: false
     dwellReadySfxVolume: false
     noteSpawnedSfx: false
@@ -47,6 +49,8 @@
       dwellReadySfxVolume: !<float> 1.000000
       noteSpawnedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       noteSpawnedSfxVolume: !<float> 1.000000
+      dwellCancelledSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      dwellCancelledSfxVolume: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -58,4 +62,6 @@
     - '// @input float dwellReadySfxVolume = 1 {"hint":"Volume for dwell-ready sound effect."}'
     - '// @input Asset.AudioTrackAsset noteSpawnedSfx {"hint":"Optional sound when note spawn is confirmed."}'
     - '// @input float noteSpawnedSfxVolume = 1 {"hint":"Volume for note-spawned sound effect."}'
+    - '// @input Asset.AudioTrackAsset dwellCancelledSfx {"hint":"Optional sound when dwell is cancelled before reaching ready/spawn state."}'
+    - '// @input float dwellCancelledSfxVolume = 1 {"hint":"Volume for dwell-cancelled sound effect."}'
     - '// @ui {"widget":"group_end"}'

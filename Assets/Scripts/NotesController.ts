@@ -99,6 +99,9 @@ export class NotesController extends BaseScriptComponent {
 
     private tryAnchorNote(): boolean {
         const uxFeedbackController = this.sceneManager.uxFeedbackController;
+        const shouldPlayDwellCancelledSfx = (): boolean => {
+            return this.wasFingerDwellIndicatorActive && this.fingerDwellTimer > 0 && this.fingerDwellTimer < this.fingerDwellingTimeThreshold;
+        };
         const resetDwellState = () => {
             this.fingerDwellTimer = 0;
             this.wasFingerDwellIndicatorActive = false;
@@ -124,6 +127,9 @@ export class NotesController extends BaseScriptComponent {
             }
         }
 
+        if (shouldPlayDwellCancelledSfx()) {
+            this.sceneManager.playDwellCancelledFeedback();
+        }
         resetDwellState();
         return false;
     }
