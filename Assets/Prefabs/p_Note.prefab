@@ -1418,6 +1418,9 @@
       noteMesh: !<reference.RenderMeshVisual> b51ef35f-6e69-442c-9c66-7df788774a4d
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
       recordButton: !<MappingBased.AssignableType_3> 902e26a5-4ac7-44e5-9ff9-f5795f2002d0
+      microphoneButtonMesh: !<reference.RenderMeshVisual> ce09753a-b46a-4471-aba8-7b79e6043776
+      microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
+      microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
       playbackButton: !<MappingBased.AssignableType_4> 26d89421-7868-4043-ac31-7b3590db9dcd
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
       audioOutputAsset: !<reference.AudioTrackAsset> c6a15f33-e393-45b8-a87d-3814027f7713
@@ -1531,7 +1534,7 @@
   ShadowDensity: 1.000000
   Materials:
     - !<reference> abf84591-4290-48b0-940b-dc390c17f4b6
-  Mesh: !<reference> df269609-d3af-47ed-a5fb-15699f9b3e90
+  Mesh: !<reference> 52db7bb8-4981-415d-9c66-b3400aff8508
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -1706,8 +1709,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
-  Mesh: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
+    - !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
+  Mesh: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false

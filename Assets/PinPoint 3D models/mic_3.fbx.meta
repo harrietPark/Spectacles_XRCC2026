@@ -1,0 +1,110 @@
+- !<AssetImportMetadata/a5134269-4b63-4dcb-808f-51dca29e2e34>
+  ImportedAssetIds:
+    .hidden/Material.001: !<reference> 84826b35-f76d-4ee4-8963-8649b4bfa122
+    .hidden/white: !<reference> b4aca125-7c59-4367-bf11-58660b2bd1c5
+    34bdc6b9055eebed: !<reference> 17a5fee9-aa9a-4668-94eb-9fad9c6ade5a
+    7a0dd5cd69df73fa: !<reference> 5fff8791-b7c7-41c7-abdf-4e735476fc16
+    Materials/Material.001: !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> a8bf9ad7-8a17-49d3-be2c-a38bad7a050e
+    Meshes/Mesh1.0: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
+    Scene: !<reference> ebb67cbe-6005-4db3-afaa-f88df2037832
+    Textures/Baked_BaseColor: !<reference> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
+    Textures/normal: !<reference> 8664781b-a752-439b-9990-90079fdc271e
+    f67b8335867a4b89: !<reference> 89602c81-7a91-4c23-8ad7-e683f1736c94
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> ebb67cbe-6005-4db3-afaa-f88df2037832
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 8e0ba511-a1ed-4712-bb98-f67855bce466
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      png: Performance Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<SceneObject/17a5fee9-aa9a-4668-6b14-6052639521a5>
+  PrefabRemaps:
+    []
+  Name: Mesh1.0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 89602c81-7a91-4c23-7528-197c0e8c936b
+- !<SceneObject/5fff8791-b7c7-41c7-5420-b18cab8903e9>
+  PrefabRemaps:
+    []
+  Name: mic_3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 17a5fee9-aa9a-4668-6b14-6052639521a5
+  Components:
+    []
+- !<RenderMeshVisual/89602c81-7a91-4c23-7528-197c0e8c936b>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
+  Mesh: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ObjectPrefabAssetData/8e0ba511-a1ed-4712-bb98-f67855bce466>
+  Prototype: !<ObjectOwner/e6a85383-61ea-4418-92de-f5e57f1567bd>
+    PackagePath: ""
+    objects:
+      - !<own> 5fff8791-b7c7-41c7-5420-b18cab8903e9

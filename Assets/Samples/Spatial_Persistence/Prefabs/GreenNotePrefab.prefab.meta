@@ -907,6 +907,9 @@
   ScriptInputsDefault:
     _croppedImage: true
     recordButton: true
+    microphoneButtonMesh: true
+    microphoneButtonRecordingTexture: true
+    microphoneButtonIdleTexture: true
     playbackButton: true
     microphoneAsset: true
     audioOutputAsset: true
@@ -924,6 +927,9 @@
       noteMesh: !<reference.RenderMeshVisual> 7c6435de-0557-4ec2-7051-f6ca9961c23b
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
       recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      microphoneButtonMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      microphoneButtonRecordingTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      microphoneButtonIdleTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000

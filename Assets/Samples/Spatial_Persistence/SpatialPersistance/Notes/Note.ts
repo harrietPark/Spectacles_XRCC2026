@@ -49,6 +49,18 @@ export class Note extends BaseScriptComponent {
   @allowUndefined
   @hint("Optional button used to start/stop voice recording")
   private recordButton: PinchButton | undefined
+  @input
+  @allowUndefined
+  @hint("Optional mesh visual whose texture changes while recording.")
+  private microphoneButtonMesh: RenderMeshVisual | undefined
+  @input
+  @allowUndefined
+  @hint("Texture used for microphone button while recording.")
+  private microphoneButtonRecordingTexture: Texture | undefined
+  @input
+  @allowUndefined
+  @hint("Optional idle texture to restore when recording stops. If empty, captures current texture on start.")
+  private microphoneButtonIdleTexture: Texture | undefined
 
   @input
   @allowUndefined
@@ -109,6 +121,17 @@ export class Note extends BaseScriptComponent {
   private spawnRotateBounceBaseRotation = quat.quatIdentity()
   private spawnRotateBounceBasePosition = vec3.zero()
   private spawnRotateBounceAnchorTarget = vec3.zero()
+  private microphoneButtonMaterial: Material | undefined
+  private resolvedMicrophoneButtonIdleTexture: Texture | undefined
+  private microphoneButtonShowsRecordingTexture = false
+  private readonly microphoneTexturePropertyCandidates = [
+    "baseTex",
+    "baseTexture",
+    "baseColorTex",
+    "mainTex",
+    "diffuseTex",
+    "albedoTex",
+  ]
 
   private mergeFinalAndPartial(finalizedRaw: string, partialRaw: string): string {
     const finalized = (finalizedRaw || "").trim()
@@ -191,6 +214,8 @@ export class Note extends BaseScriptComponent {
     this.meshMaterial = this.noteMesh.mainMaterial.clone()
     this.noteMesh.mainMaterial = this.meshMaterial
 
+    this.initializeMicrophoneButtonVisual()
+
     if (this._croppedImage && this._croppedImage.mainMaterial) {
       this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
       this._croppedImage.getSceneObject().enabled = false
@@ -253,6 +278,9 @@ export class Note extends BaseScriptComponent {
     if (this.voiceStatusText) {
       this.voiceStatusText.getSceneObject().enabled = shouldShowButtons
     }
+
+    // Some UI components may re-apply materials every frame; enforce icon state.
+    this.updateMicrophoneButtonVisualState()
   }
 
   public sendCompleteNoteData() {
@@ -297,7 +325,11 @@ export class Note extends BaseScriptComponent {
     this.playbackAudioUpdateEvent.enabled = false
 
     this.recordButton?.onButtonPinched.add(() => {
-      this.recordMicrophoneAudio(!this.isRecording)
+      const shouldRecord = !this.isRecording
+      // Keep mic icon feedback responsive even if recording startup fails.
+      this.microphoneButtonShowsRecordingTexture = shouldRecord
+      this.updateMicrophoneButtonVisualState()
+      this.recordMicrophoneAudio(shouldRecord)
     })
 
     this.playbackButton?.onButtonPinched.add(() => {
@@ -449,6 +481,8 @@ export class Note extends BaseScriptComponent {
       if (this.recordingDuration > 0) {
         this.updateVoiceStatusText(`Recorded ${this.formatSeconds(this.recordingDuration)}s`)
       }
+      this.microphoneButtonShowsRecordingTexture = false
+      this.updateMicrophoneButtonVisualState()
       return
     }
 
@@ -473,6 +507,8 @@ export class Note extends BaseScriptComponent {
     }
 
     this.updateVoiceStatusText("Recording started")
+    this.microphoneButtonShowsRecordingTexture = true
+    this.updateMicrophoneButtonVisualState()
   }
 
   private playbackRecordedAudio(): void {
@@ -546,6 +582,115 @@ export class Note extends BaseScriptComponent {
     }
 
     this.voiceStatusText.text = message
+  }
+
+  private initializeMicrophoneButtonVisual(): void {
+    if (!this.microphoneButtonMesh || !this.microphoneButtonMesh.mainMaterial) {
+      return
+    }
+
+    this.microphoneButtonMaterial = this.microphoneButtonMesh.mainMaterial.clone()
+    this.microphoneButtonMesh.mainMaterial = this.microphoneButtonMaterial
+
+    this.resolvedMicrophoneButtonIdleTexture =
+      this.microphoneButtonIdleTexture || this.getMicrophoneButtonTextureFromPass()
+
+    this.updateMicrophoneButtonVisualState()
+  }
+
+  private updateMicrophoneButtonVisualState(): void {
+    if (!this.microphoneButtonMesh) {
+      return
+    }
+
+    const targetTexture = this.microphoneButtonShowsRecordingTexture
+      ? this.microphoneButtonRecordingTexture || this.resolvedMicrophoneButtonIdleTexture
+      : this.resolvedMicrophoneButtonIdleTexture
+
+    if (targetTexture) {
+      this.applyMicrophoneButtonTextureToMesh(targetTexture)
+    }
+  }
+
+  private getMicrophoneButtonTextureFromPass(): Texture | undefined {
+    if (!this.microphoneButtonMaterial) {
+      return undefined
+    }
+
+    const pass = this.microphoneButtonMaterial.mainPass as unknown as {[key: string]: Texture | undefined}
+    for (let i = 0; i < this.microphoneTexturePropertyCandidates.length; i++) {
+      const propertyName = this.microphoneTexturePropertyCandidates[i]
+      const texture = pass[propertyName]
+      if (texture) {
+        return texture
+      }
+    }
+    return undefined
+  }
+
+  private setMicrophoneButtonTextureOnPass(texture: Texture): void {
+    if (!this.microphoneButtonMaterial) {
+      return
+    }
+
+    const pass = this.microphoneButtonMaterial.mainPass as unknown as {[key: string]: Texture | undefined}
+    let updatedAnyProperty = false
+
+    for (let i = 0; i < this.microphoneTexturePropertyCandidates.length; i++) {
+      const propertyName = this.microphoneTexturePropertyCandidates[i]
+      if (pass[propertyName] !== undefined) {
+        pass[propertyName] = texture
+        updatedAnyProperty = true
+      }
+    }
+
+    // Fallback for dynamic material passes where texture fields are not enumerable.
+    if (!updatedAnyProperty) {
+      pass.baseTex = texture
+      pass.baseTexture = texture
+    }
+  }
+
+  private applyMicrophoneButtonTextureToMesh(texture: Texture): void {
+    if (!this.microphoneButtonMesh) {
+      return
+    }
+
+    // Keep using the cloned material if available.
+    this.setMicrophoneButtonTextureOnPass(texture)
+
+    // Also patch all current materials on the mesh because UI/Button scripts
+    // can swap materials at runtime and override the cloned reference.
+    const matCount = this.microphoneButtonMesh.getMaterialsCount()
+    for (let i = 0; i < matCount; i++) {
+      const mat = this.microphoneButtonMesh.getMaterial(i)
+      if (!mat) {
+        continue
+      }
+      this.setTextureOnMaterialPass(mat, texture)
+    }
+
+    if (this.microphoneButtonMesh.mainMaterial) {
+      this.setTextureOnMaterialPass(this.microphoneButtonMesh.mainMaterial, texture)
+    }
+  }
+
+  private setTextureOnMaterialPass(material: Material, texture: Texture): void {
+    const pass = material.mainPass as unknown as {[key: string]: Texture | undefined}
+    let updatedAnyProperty = false
+
+    for (let i = 0; i < this.microphoneTexturePropertyCandidates.length; i++) {
+      const propertyName = this.microphoneTexturePropertyCandidates[i]
+      if (pass[propertyName] !== undefined) {
+        pass[propertyName] = texture
+        updatedAnyProperty = true
+      }
+    }
+
+    if (!updatedAnyProperty) {
+      pass.baseTex = texture
+      pass.baseTexture = texture
+    }
   }
 
   private resolveSampleRate(): number {

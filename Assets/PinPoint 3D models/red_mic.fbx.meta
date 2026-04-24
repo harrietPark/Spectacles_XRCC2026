@@ -1,0 +1,110 @@
+- !<AssetImportMetadata/9d672b75-c8bc-48dd-a5ad-d59e47dcc3e9>
+  ImportedAssetIds:
+    .hidden/Material.001: !<reference> fc567ee8-a70d-47ff-9aa5-5685348bac83
+    .hidden/white: !<reference> 22aa6f1a-a87d-49e1-80f9-4b13b24e75ec
+    573610c9cf6b6922: !<reference> 17088fca-34c1-4eb3-9ba0-55d20fd40260
+    7a0dd5cd69df73fa: !<reference> 6c531d65-6dc0-4700-9f6c-8d45c363526c
+    Materials/Material.001: !<reference> ddd26437-fb3e-4b8a-a36a-888d57294e84
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> df00087e-e164-4438-9b66-dbed21662e5f
+    Meshes/Mesh_0: !<reference> 9820cb1e-8229-4fc6-9118-ce3f4acfde7a
+    Scene: !<reference> 47d3cdd4-c54b-48b1-bc50-4b806f2d3ff6
+    Textures/Image_0: !<reference> b0a098b7-110f-404b-9ed4-2b09918c3843
+    Textures/normal: !<reference> b2ad1e46-af18-47b5-8833-8fa134666760
+    a5dd961b4db1c70e: !<reference> 78ddf1fa-6155-45dc-8f68-0e64cf40950b
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> 47d3cdd4-c54b-48b1-bc50-4b806f2d3ff6
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 40ee09ac-88cb-4dc8-a335-b1816242f0d9
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      jpg: Performance Compression
+      png: Performance Compression
+    Overrides:
+      {}
+- !<RenderMeshVisual/17088fca-34c1-4eb3-645f-aa2df02bfd9f>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ddd26437-fb3e-4b8a-a36a-888d57294e84
+  Mesh: !<reference> 9820cb1e-8229-4fc6-9118-ce3f4acfde7a
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ObjectPrefabAssetData/40ee09ac-88cb-4dc8-a335-b1816242f0d9>
+  Prototype: !<ObjectOwner/2c56abd1-11b8-4dba-b07f-9430af038ef5>
+    PackagePath: ""
+    objects:
+      - !<own> 6c531d65-6dc0-4700-6093-72ba3c9cad93
+- !<SceneObject/6c531d65-6dc0-4700-6093-72ba3c9cad93>
+  PrefabRemaps:
+    []
+  Name: red_mic
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 78ddf1fa-6155-45dc-7097-f19b30bf6af4
+  Components:
+    []
+- !<SceneObject/78ddf1fa-6155-45dc-7097-f19b30bf6af4>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 17088fca-34c1-4eb3-645f-aa2df02bfd9f

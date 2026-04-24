@@ -33,6 +33,9 @@
     deleteButton: false
     editOutlineMaterial: false
     microphoneAsset: false
+    microphoneButtonIdleTexture: false
+    microphoneButtonMesh: false
+    microphoneButtonRecordingTexture: false
     noteInteractable: false
     noteMesh: false
     playbackButton: false
@@ -56,6 +59,9 @@
       noteMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       editOutlineMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      microphoneButtonMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      microphoneButtonRecordingTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      microphoneButtonIdleTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
@@ -73,6 +79,9 @@
     - // @input Component.RenderMeshVisual noteMesh
     - '// @input Asset.Material editOutlineMaterial {"hint":"Outline material that appears when the note is being edited"}'
     - '// @input AssignableType_3 recordButton {"hint":"Optional button used to start/stop voice recording"}'
+    - '// @input Component.RenderMeshVisual microphoneButtonMesh {"hint":"Optional mesh visual whose texture changes while recording."}'
+    - '// @input Asset.Texture microphoneButtonRecordingTexture {"hint":"Texture used for microphone button while recording."}'
+    - '// @input Asset.Texture microphoneButtonIdleTexture {"hint":"Optional idle texture to restore when recording stops. If empty, captures current texture on start."}'
     - '// @input AssignableType_4 playbackButton {"hint":"Optional button used to playback the recorded voice note"}'
     - '// @input Asset.AudioTrackAsset microphoneAsset {"hint":"Audio From Microphone track asset"}'
     - '// @input Asset.AudioTrackAsset audioOutputAsset {"hint":"Audio Output track asset used for playback"}'
