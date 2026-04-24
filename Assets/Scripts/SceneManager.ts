@@ -126,6 +126,10 @@ export class SceneManager extends BaseScriptComponent {
         print("--- sending complete note data to backend: \n" + JSON.stringify(noteData));
     }
 
+    public playDwellCancelledFeedback(): void {
+        this.soundEffectsController?.playDwellCancelled();
+    }
+
     private activateNoteCreation() {
         this.soundEffectsController?.playActivateDwell();
         this.NoteController.activateCreationProcess();
