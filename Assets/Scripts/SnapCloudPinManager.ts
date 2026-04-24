@@ -201,7 +201,11 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       // claimPendingPinIdIfFresh returns undefined and saveNoteAsync
       // falls through to its original full-INSERT path.
       // ================================================================
-      const preAllocatedPinId = this.claimPendingPinIdIfFresh(note)
+      // Only claim a pending capture-time pinId if this note doesn't already
+      // have an associated pin row (e.g. re-record should UPDATE, not create
+      // a new capture-time orphan row).
+      const noteId = noteData.noteId
+      const preAllocatedPinId = this.pinIdByNoteId.has(noteId) ? undefined : this.claimPendingPinIdIfFresh(note)
       this.saveNoteAsync(noteData, spatialPosition, preAllocatedPinId)
     })
     print(`[SnapCloudPinManager] Subscribed to Note on "${note.getSceneObject().name}"`)

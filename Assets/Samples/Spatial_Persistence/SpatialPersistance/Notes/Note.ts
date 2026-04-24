@@ -94,6 +94,39 @@ export class Note extends BaseScriptComponent {
   private croppedImageTexture?: Texture;
   private croppedImageAISummary?: string;
 
+  private mergeFinalAndPartial(finalizedRaw: string, partialRaw: string): string {
+    const finalized = (finalizedRaw || "").trim()
+    const partial = (partialRaw || "").trim()
+    if (finalized.length === 0) {
+      return partial
+    }
+    if (partial.length === 0) {
+      return finalized
+    }
+
+    // Many ASR implementations return partial text that is cumulative and may already
+    // include previously-finalized words. Avoid double-rendering in the UI.
+    const finalizedWithSpace = `${finalized} `
+    if (partial.startsWith(finalizedWithSpace)) {
+      return partial
+    }
+    if (partial === finalized) {
+      return finalized
+    }
+
+    // If there's overlap between the end of finalized and the start of partial,
+    // only append the non-overlapping suffix.
+    const maxOverlap = Math.min(finalized.length, partial.length)
+    for (let k = maxOverlap; k > 0; k--) {
+      if (finalized.slice(finalized.length - k) === partial.slice(0, k)) {
+        const suffix = partial.slice(k).trim()
+        return suffix.length > 0 ? `${finalized} ${suffix}` : finalized
+      }
+    }
+
+    return `${finalized} ${partial}`
+  }
+
   onAwake() {
     this.createEvent("OnStartEvent").bind(this.onStart.bind(this))
     this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this))
@@ -256,12 +289,15 @@ export class Note extends BaseScriptComponent {
         return
       }
       print("--- transcription update: " + transcript);
-      this._textField.text = transcript
+      this._textField.text = this.mergeFinalAndPartial(this.voiceTranscription, transcript)
 
       // Invoke transcription end event if it is final
       if (eventArgs.isFinal) {
         print("--- transcription final: " + eventArgs.text);
-        this.voiceTranscription += eventArgs.text;
+        const toAppend = transcript
+        const current = (this.voiceTranscription || "").trim()
+        this.voiceTranscription = current.length > 0 ? `${current} ${toAppend}` : toAppend
+        this._textField.text = this.voiceTranscription
         this.onTranscriptionFinalEvent.invoke();
 
         // TODO: send complete note data when user looks away from the note
@@ -360,6 +396,8 @@ export class Note extends BaseScriptComponent {
     this.numberOfSamples = 0
     this.recordingDuration = 0
     this.currentPlaybackTime = 0
+    this.voiceTranscription = ""
+    this._textField.text = ""
     this.isPlayingBack = false
     this.audioComponent?.stop(false)
     this.microphoneControl.start()
