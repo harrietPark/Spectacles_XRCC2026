@@ -39,6 +39,8 @@
     noteInteractable: false
     noteMesh: false
     playbackButton: false
+    playbackButtonIdleVisual: false
+    playbackButtonStopVisual: false
     recordButton: false
     sampleRate: false
     voiceStatusText: false
@@ -63,6 +65,8 @@
       microphoneButtonRecordingTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       microphoneButtonIdleTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      playbackButtonIdleVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      playbackButtonStopVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
@@ -83,6 +87,8 @@
     - '// @input Asset.Texture microphoneButtonRecordingTexture {"hint":"Texture used for microphone button while recording."}'
     - '// @input Asset.Texture microphoneButtonIdleTexture {"hint":"Optional idle texture to restore when recording stops. If empty, captures current texture on start."}'
     - '// @input AssignableType_4 playbackButton {"hint":"Optional button used to playback the recorded voice note"}'
+    - '// @input Component.RenderMeshVisual playbackButtonIdleVisual {"hint":"Optional playback icon visual for idle state (arrow)."}'
+    - '// @input Component.RenderMeshVisual playbackButtonStopVisual {"hint":"Optional playback icon visual for active state (stop)."}'
     - '// @input Asset.AudioTrackAsset microphoneAsset {"hint":"Audio From Microphone track asset"}'
     - '// @input Asset.AudioTrackAsset audioOutputAsset {"hint":"Audio Output track asset used for playback"}'
     - '// @input Component.Text voiceStatusText {"hint":"Optional text component used to show record/playback status"}'

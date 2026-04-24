@@ -188,16 +188,14 @@
   ScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
   ScriptInputsDefault:
     targetOutlineMaterial: true
-    hoveringColor: true
-    activatingColor: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
-      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
-      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      outlineWeight: 0.250000
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
+      outlineWeight: 0.200000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> d57f8703-1771-497e-ae0a-ddf42162058f
   ScriptTypes:
@@ -423,6 +421,7 @@
     - 79d97226-c4b3-467f-a933-815dbec83278: 79d97226-c4b3-467f-56cc-7ea24137cd87
     - 79ea8dec-9f33-46cc-af09-900a4d39fda5: 79ea8dec-9f33-46cc-50f6-6ff5b2c6025a
     - 7a95efe0-36a9-4a9f-8aad-4960dc321504: 7a95efe0-36a9-4a9f-7552-b69f23cdeafb
+    - 817b1e3a-b8b1-458c-af7b-b695380388c4: 53a029ca-2fe4-4991-a81b-074d083a48e9
     - 81954fd3-0830-4ee8-a1d8-ba0b5756789e: 81954fd3-0830-4ee8-5e27-45f4a8a98761
     - 83a4e25e-7d01-40e3-a37f-80bf4667e177: 83a4e25e-7d01-40e3-5c80-7f40b9981e88
     - 83d39a2b-79c7-43fe-b4ec-2ee74247883c: 83d39a2b-79c7-43fe-4b13-d118bdb877c3
@@ -468,6 +467,7 @@
     - ec560c9b-1efc-41c9-9a51-3e59a914f559: ec560c9b-1efc-41c9-65ae-c1a656eb0aa6
     - eca991bb-ff8c-4cf9-a775-d65c7e952155: eca991bb-ff8c-4cf9-588a-29a3816adeaa
     - efcece3d-1979-4c96-9c33-92df90877b7a: efcece3d-1979-4c96-63cc-6d206f788485
+    - f3a98faa-ddf1-4d55-94bb-7c9425883dc4: 95660ce6-71b2-4488-8547-f20db745c9f9
     - faf8508c-ffed-445d-99ba-e0fa525e7c67: faf8508c-ffed-445d-6645-1f05ada18398
     - fe3042df-08ce-4719-8306-5357ff6a861a: fe3042df-08ce-4719-7cf9-aca8009579e5
     - ff78f092-ad80-42e7-8e8c-45f704d62156: ff78f092-ad80-42e7-7173-ba08fb29dea9
@@ -625,6 +625,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 83d39a2b-79c7-43fe-b4ec-2ee74247883c
+    - !<own> 817b1e3a-b8b1-458c-af7b-b695380388c4
   Components:
     - !<own> 4b089801-db79-47f8-8233-205afc44ca04
     - !<own> 4d4e220f-ce0a-4e4c-9570-c87d6b07dbb8
@@ -865,7 +866,7 @@
   Enabled: true
   Shape: !<Sphere>
     FitVisual: false
-    Radius: 2.000000
+    Radius: 3.000000
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1108,6 +1109,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/817b1e3a-b8b1-458c-af7b-b695380388c4>
+  PrefabRemaps:
+    []
+  Name: Mesh - Stop
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 180.000000}
+    Scale: {x: 0.025000, y: 0.025000, z: 0.025000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f3a98faa-ddf1-4d55-94bb-7c9425883dc4
 - !<ScriptComponent/81954fd3-0830-4ee8-a1d8-ba0b5756789e>
   PrefabRemaps:
     []
@@ -1405,7 +1421,8 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    playbackButtonIdleVisual: true
+    playbackButtonStopVisual: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1422,6 +1439,8 @@
       microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
       microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
       playbackButton: !<MappingBased.AssignableType_4> 26d89421-7868-4043-ac31-7b3590db9dcd
+      playbackButtonIdleVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      playbackButtonStopVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
       audioOutputAsset: !<reference.AudioTrackAsset> c6a15f33-e393-45b8-a87d-3814027f7713
       voiceStatusText: !<reference.Text> e8bd0871-6e0c-43d8-a7b9-ee05b012111b
@@ -1671,8 +1690,8 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1792,14 +1811,13 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 2996cbc6-e21f-472f-b086-15ac488b4b24
-  Mesh: !<reference> a8f84003-7f52-450e-a937-81d5631175f2
+    - !<reference> 19b9e2de-9fa2-49b8-9343-d0b2b9097823
+  Mesh: !<reference> 64fe953e-8c35-4832-91ac-a55e177673a4
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
-    Pinch: 0.000000
-    Z depth: 0.000000
+    {}
 - !<RenderMeshVisual/d6612cec-6e5b-4d4e-9894-2662675fa1c2>
   PrefabRemaps:
     []
@@ -2107,6 +2125,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/f3a98faa-ddf1-4d55-94bb-7c9425883dc4>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> abf84591-4290-48b0-940b-dc390c17f4b6
+  Mesh: !<reference> ff211ed1-ee84-4de9-b5b1-e62ea9aa0811
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<ScriptComponent/faf8508c-ffed-445d-99ba-e0fa525e7c67>
   PrefabRemaps:
     []

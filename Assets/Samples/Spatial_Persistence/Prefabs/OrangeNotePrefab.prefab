@@ -889,6 +889,8 @@
     microphoneButtonRecordingTexture: true
     microphoneButtonIdleTexture: true
     playbackButton: true
+    playbackButtonIdleVisual: true
+    playbackButtonStopVisual: true
     microphoneAsset: true
     audioOutputAsset: true
     voiceStatusText: true
@@ -909,6 +911,8 @@
       microphoneButtonRecordingTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       microphoneButtonIdleTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      playbackButtonIdleVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      playbackButtonStopVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000

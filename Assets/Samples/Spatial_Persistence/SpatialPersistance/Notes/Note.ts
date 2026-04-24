@@ -66,6 +66,14 @@ export class Note extends BaseScriptComponent {
   @allowUndefined
   @hint("Optional button used to playback the recorded voice note")
   private playbackButton: PinchButton | undefined
+  @input
+  @allowUndefined
+  @hint("Optional playback icon visual for idle state (arrow).")
+  private playbackButtonIdleVisual: RenderMeshVisual | undefined
+  @input
+  @allowUndefined
+  @hint("Optional playback icon visual for active state (stop).")
+  private playbackButtonStopVisual: RenderMeshVisual | undefined
 
   @input
   @allowUndefined
@@ -215,6 +223,7 @@ export class Note extends BaseScriptComponent {
     this.noteMesh.mainMaterial = this.meshMaterial
 
     this.initializeMicrophoneButtonVisual()
+    this.initializePlaybackButtonVisual()
 
     if (this._croppedImage && this._croppedImage.mainMaterial) {
       this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone()
@@ -333,6 +342,8 @@ export class Note extends BaseScriptComponent {
     })
 
     this.playbackButton?.onButtonPinched.add(() => {
+      // Immediate visual feedback on tap; reverted if playback cannot start.
+      this.setPlaybackButtonVisualState(!this.isPlayingBack)
       this.playbackRecordedAudio()
     })
 
@@ -493,6 +504,7 @@ export class Note extends BaseScriptComponent {
     this.voiceTranscription = ""
     this._textField.text = ""
     this.isPlayingBack = false
+    this.updatePlaybackButtonVisualState()
     this.audioComponent?.stop(false)
     this.microphoneControl.start()
     this.startSpeechToText()
@@ -513,6 +525,7 @@ export class Note extends BaseScriptComponent {
 
   private playbackRecordedAudio(): void {
     if (!this.audioOutputProvider || !this.audioComponent) {
+      this.setPlaybackButtonVisualState(false)
       return
     }
 
@@ -528,6 +541,7 @@ export class Note extends BaseScriptComponent {
 
     if (this.recordedAudioFrames.length === 0) {
       this.updateVoiceStatusText("No recording yet")
+      this.setPlaybackButtonVisualState(false)
       return
     }
 
@@ -536,6 +550,7 @@ export class Note extends BaseScriptComponent {
     }
     if (!isFinite(this.recordingDuration) || this.recordingDuration <= 0) {
       this.updateVoiceStatusText("Playback unavailable: invalid recording")
+      this.setPlaybackButtonVisualState(false)
       return
     }
 
@@ -545,6 +560,7 @@ export class Note extends BaseScriptComponent {
     this.audioComponent.stop(false)
     this.audioComponent.play(1)
     this.isPlayingBack = true
+    this.updatePlaybackButtonVisualState()
 
     for (let i = 0; i < this.recordedAudioFrames.length; i++) {
       this.audioOutputProvider.enqueueAudioFrame(
@@ -574,6 +590,7 @@ export class Note extends BaseScriptComponent {
     }
 
     this.updateVoiceStatusText(statusMessage)
+    this.updatePlaybackButtonVisualState()
   }
 
   private updateVoiceStatusText(message: string): void {
@@ -596,6 +613,31 @@ export class Note extends BaseScriptComponent {
       this.microphoneButtonIdleTexture || this.getMicrophoneButtonTextureFromPass()
 
     this.updateMicrophoneButtonVisualState()
+  }
+
+  private initializePlaybackButtonVisual(): void {
+    if (!this.playbackButtonIdleVisual && !this.playbackButtonStopVisual) {
+      return
+    }
+
+    this.updatePlaybackButtonVisualState()
+  }
+
+  private updatePlaybackButtonVisualState(): void {
+    this.setPlaybackButtonVisualState(this.isPlayingBack)
+  }
+
+  private setPlaybackButtonVisualState(showStop: boolean): void {
+    if (!this.playbackButtonIdleVisual && !this.playbackButtonStopVisual) {
+      return
+    }
+
+    if (this.playbackButtonIdleVisual) {
+      this.playbackButtonIdleVisual.getSceneObject().enabled = !showStop
+    }
+    if (this.playbackButtonStopVisual) {
+      this.playbackButtonStopVisual.getSceneObject().enabled = showStop
+    }
   }
 
   private updateMicrophoneButtonVisualState(): void {

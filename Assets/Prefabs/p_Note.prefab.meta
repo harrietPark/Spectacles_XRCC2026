@@ -198,16 +198,14 @@
   ScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
   ScriptInputsDefault:
     targetOutlineMaterial: true
-    hoveringColor: true
-    activatingColor: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
-      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
-      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-      outlineWeight: 0.250000
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
+      outlineWeight: 0.200000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> d57f8703-1771-497e-51f5-220bde9dfa70
   ScriptTypes:
@@ -548,6 +546,7 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 83d39a2b-79c7-43fe-4b13-d118bdb877c3
+    - !<own> 53a029ca-2fe4-4991-a81b-074d083a48e9
   Components:
     - !<own> 4b089801-db79-47f8-7dcc-dfa503bb35fb
     - !<own> 4d4e220f-ce0a-4e4c-6a8f-378294f82447
@@ -701,6 +700,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/53a029ca-2fe4-4991-a81b-074d083a48e9>
+  PrefabRemaps:
+    []
+  Name: Mesh - Stop
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 180.000000}
+    Scale: {x: 0.025000, y: 0.025000, z: 0.025000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 95660ce6-71b2-4488-8547-f20db745c9f9
 - !<ScriptComponent/5c1c0dd8-8272-4e84-6f19-ffdedb092b23>
   PrefabRemaps:
     []
@@ -788,7 +802,7 @@
   Enabled: true
   Shape: !<Sphere>
     FitVisual: false
-    Radius: 2.000000
+    Radius: 3.000000
   Matter: !<reference> 00000000-0000-0000-0000-000000000000
   Filter: !<reference> 00000000-0000-0000-0000-000000000000
   OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1224,6 +1238,26 @@
   ScriptTypes:
     "":
       {}
+- !<RenderMeshVisual/95660ce6-71b2-4488-8547-f20db745c9f9>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> abf84591-4290-48b0-940b-dc390c17f4b6
+  Mesh: !<reference> ff211ed1-ee84-4de9-b5b1-e62ea9aa0811
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<RenderMeshVisual/9721b78c-c7c7-4498-4ae7-20647dd3e451>
   PrefabRemaps:
     []
@@ -1328,7 +1362,8 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    playbackButtonIdleVisual: true
+    playbackButtonStopVisual: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1345,6 +1380,8 @@
       microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
       microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
       playbackButton: !<MappingBased.AssignableType_4> 26d89421-7868-4043-53ce-84ca6f246232
+      playbackButtonIdleVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
+      playbackButtonStopVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
       audioOutputAsset: !<reference.AudioTrackAsset> c6a15f33-e393-45b8-a87d-3814027f7713
       voiceStatusText: !<reference.Text> e8bd0871-6e0c-43d8-5846-11fa4fedeee4
@@ -1594,8 +1631,8 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     []
@@ -1715,14 +1752,13 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 2996cbc6-e21f-472f-b086-15ac488b4b24
-  Mesh: !<reference> a8f84003-7f52-450e-a937-81d5631175f2
+    - !<reference> 19b9e2de-9fa2-49b8-9343-d0b2b9097823
+  Mesh: !<reference> 64fe953e-8c35-4832-91ac-a55e177673a4
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
-    Pinch: 0.000000
-    Z depth: 0.000000
+    {}
 - !<RenderMeshVisual/d6612cec-6e5b-4d4e-676b-d99d98a05e3d>
   PrefabRemaps:
     []
