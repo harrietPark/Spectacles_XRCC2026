@@ -11,20 +11,23 @@ type AudioFrameData = {
   audioFrameShape: vec3
 }
 
+// SST constants
 const DEFAULT_SAMPLE_RATE = 44100
-// const ASR_SILENCE_UNTIL_TERMINATION_MS = 10000 // in milliseconds
 const ASR_SILENCE_UNTIL_TERMINATION_MS = 1000 // in milliseconds
 const MIN_VALID_SAMPLE_RATE = 8000
+const ASR_MODE = AsrModule.AsrMode.HighSpeed
+
+// Spawn animation constants
+const SPAWN_POP_DURATION_SECONDS = 0.22
+const SPAWN_POP_START_SCALE_MULTIPLIER = 0.2
+const SPAWN_ROTATE_BOUNCE_DURATION_SECONDS = 0.75
+const SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES = 18.0
+const SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8
+const SPAWN_ROTATE_BOUNCE_DAMPING = 2.8
+const SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0)
 
 @component
 export class Note extends BaseScriptComponent {
-  private static readonly SPAWN_POP_DURATION_SECONDS = 0.22
-  private static readonly SPAWN_POP_START_SCALE_MULTIPLIER = 0.2
-  private static readonly SPAWN_ROTATE_BOUNCE_DURATION_SECONDS = 0.75
-  private static readonly SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES = 18.0
-  private static readonly SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8
-  private static readonly SPAWN_ROTATE_BOUNCE_DAMPING = 2.8
-  private static readonly SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0)
 
   private readonly onTranscriptionFinalEvent = new Event<void>();
   public readonly onTranscriptionFinal: PublicApi<void> = this.onTranscriptionFinalEvent.publicApi();
@@ -372,8 +375,7 @@ export class Note extends BaseScriptComponent {
 
     const options = AsrModule.AsrTranscriptionOptions.create()
     options.silenceUntilTerminationMs = ASR_SILENCE_UNTIL_TERMINATION_MS
-    // options.mode = AsrModule.AsrMode.HighAccuracy
-    options.mode = AsrModule.AsrMode.HighSpeed
+    options.mode = ASR_MODE
     
     options.onTranscriptionUpdateEvent.add((eventArgs: AsrModule.TranscriptionUpdateEvent) => {
       const transcript = eventArgs.text ? eventArgs.text.trim() : ""
@@ -824,7 +826,7 @@ export class Note extends BaseScriptComponent {
     this.spawnRotateBounceBasePosition = transform.getLocalPosition()
     this.spawnRotateBounceBaseRotation = transform.getLocalRotation()
     this.spawnRotateBounceAnchorTarget = this.spawnRotateBounceBasePosition.add(
-      this.spawnRotateBounceBaseRotation.multiplyVec3(Note.SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
+      this.spawnRotateBounceBaseRotation.multiplyVec3(SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
     )
     this.spawnPopAnimationStartedAt = getTime()
     this.spawnRotateBounceStartedAt = this.spawnPopAnimationStartedAt
@@ -834,7 +836,7 @@ export class Note extends BaseScriptComponent {
     transform.setLocalScale(
       this.multiplyScale(
         this.spawnPopBaseScale,
-        Note.SPAWN_POP_START_SCALE_MULTIPLIER
+        SPAWN_POP_START_SCALE_MULTIPLIER
       )
     )
   }
@@ -845,10 +847,10 @@ export class Note extends BaseScriptComponent {
     }
 
     const elapsed = getTime() - this.spawnPopAnimationStartedAt
-    const duration = Note.SPAWN_POP_DURATION_SECONDS
+    const duration = SPAWN_POP_DURATION_SECONDS
     const normalized = Math.max(0, Math.min(1, elapsed / duration))
     const eased = this.easeInOutCubic(normalized)
-    const scaleMultiplier = this.lerp(Note.SPAWN_POP_START_SCALE_MULTIPLIER, 1, eased)
+    const scaleMultiplier = this.lerp(SPAWN_POP_START_SCALE_MULTIPLIER, 1, eased)
 
     this.sceneObject
       .getTransform()
@@ -866,15 +868,15 @@ export class Note extends BaseScriptComponent {
     }
 
     const elapsed = getTime() - this.spawnRotateBounceStartedAt
-    const duration = Note.SPAWN_ROTATE_BOUNCE_DURATION_SECONDS
+    const duration = SPAWN_ROTATE_BOUNCE_DURATION_SECONDS
     const normalized = Math.max(0, Math.min(1, elapsed / duration))
 
-    const decay = Math.exp(-Note.SPAWN_ROTATE_BOUNCE_DAMPING * normalized)
-    const oscillation = Math.sin(elapsed * Note.SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ * Math.PI * 2)
-    const angleDegrees = Note.SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES * decay * oscillation
+    const decay = Math.exp(-SPAWN_ROTATE_BOUNCE_DAMPING * normalized)
+    const oscillation = Math.sin(elapsed * SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ * Math.PI * 2)
+    const angleDegrees = SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES * decay * oscillation
     const swingRotation = quat.angleAxis(angleDegrees * (Math.PI / 180), vec3.forward())
     const currentRotation = this.spawnRotateBounceBaseRotation.multiply(swingRotation)
-    const pivotWorldFromCurrent = currentRotation.multiplyVec3(Note.SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
+    const pivotWorldFromCurrent = currentRotation.multiplyVec3(SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL)
     const correctedPosition = this.spawnRotateBounceAnchorTarget.sub(pivotWorldFromCurrent)
 
     this.sceneObject

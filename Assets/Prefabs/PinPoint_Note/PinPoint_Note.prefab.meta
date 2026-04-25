@@ -713,7 +713,7 @@
   PrefabRemaps:
     []
   Name: Mesh - Stop
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -831,6 +831,7 @@
       disabledColor: !<Vec4> {x: 0.739773, y: 0.175616, z: 0.109773, w: 1.000000}
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> eb2a0844-a8a6-4477-44b5-6cd90194301f
+        - !<reference> c5f6c0a4-7339-4015-a180-c66a25de633e
   ScriptTypes:
     "":
       {}
@@ -1575,7 +1576,6 @@
     maximumScaleFactor: true
     enableTranslation: true
     enableRotation: true
-    enableScale: true
     showStretchZProperties: true
     zStretchFactorMin: true
     zStretchFactorMax: true
@@ -1600,7 +1600,7 @@
       maximumScaleFactor: !<float> 20.000000
       enableTranslation: true
       enableRotation: true
-      enableScale: true
+      enableScale: false
       enableStretchZ: false
       showStretchZProperties: false
       zStretchFactorMin: !<float> 1.000000
