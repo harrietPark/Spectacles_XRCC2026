@@ -8,7 +8,7 @@ import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
-import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
+// import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
 
 @component
 export class NotesController extends BaseScriptComponent {
@@ -68,7 +68,7 @@ export class NotesController extends BaseScriptComponent {
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
 
-    private fovConeEMA: ExponentialMovingAverage;
+    // private fovConeEMA: ExponentialMovingAverage;
 
     private onAwake() {
         this.deactivateCreationProcess();
@@ -98,13 +98,8 @@ export class NotesController extends BaseScriptComponent {
         fovCollider.overlapFilter = notesFilter;
         fovCollider.onOverlapEnter.add((OverlapEnterEventArgs) => this.updateNotesInFOV(OverlapEnterEventArgs));
         fovCollider.onOverlapExit.add((OverlapExitEventArgs) => this.updateNotesInFOV(OverlapExitEventArgs));
-        // fovCollider.onOverlapStay.add((OverlapStayEventArgs) =>
-        //     this.updateNotesInFOV(OverlapStayEventArgs),
-        // );
 
-        this.fovConeEMA = new ExponentialMovingAverage(0.5);
-
-        // const camera = global.deviceInfoSystem.getTrackingCameraForId(CameraModule.CameraId.Left_Color);
+        // this.fovConeEMA = new ExponentialMovingAverage(0.5);
     }
 
     private onUpdate() {

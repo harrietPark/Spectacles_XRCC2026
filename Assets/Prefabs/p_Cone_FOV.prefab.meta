@@ -32,7 +32,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: true
+  ShowCollider: false
 - !<ObjectPrefabAssetData/88cc16fb-cb42-4219-8a73-cd662bfab8a7>
   Prototype: !<ObjectOwner/80476681-bfb7-4842-ab99-12d7336197b6>
     PackagePath: ""
@@ -58,7 +58,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center

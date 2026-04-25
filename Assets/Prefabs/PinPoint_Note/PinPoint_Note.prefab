@@ -1414,7 +1414,7 @@
     []
   Name: BluePin
   Enabled: true
-  Layers: 1
+  Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: -0.166781, y: 8.156715, z: 1.328418}
     Rotation: {x: -0.000000, y: 11.318353, z: 0.000010}
@@ -1893,7 +1893,7 @@
     []
   Name: RedPin
   Enabled: false
-  Layers: 1
+  Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: -0.107846, y: 8.158035, z: 1.616416}
     Rotation: {x: -180.000000, y: 0.000000, z: -180.000000}
@@ -1951,7 +1951,7 @@
     []
   Name: NoteObjects
   Enabled: true
-  Layers: 1
+  Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: -180.000000, y: 0.000000, z: -180.000000}

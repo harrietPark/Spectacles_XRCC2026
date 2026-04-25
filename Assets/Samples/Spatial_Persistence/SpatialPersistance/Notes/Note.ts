@@ -327,12 +327,10 @@ export class Note extends BaseScriptComponent {
 
     public pushToBackground() {
         this.visibilityToggle.hide();
-        print("--- Pushing note to background");
     }
 
     public pullToForeground() {
         this.visibilityToggle.show();
-        print("--- Pulling note to foreground");
     }
 
     private setupVoiceNoteControls(): void {

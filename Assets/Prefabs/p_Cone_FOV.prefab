@@ -22,7 +22,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: true
+  ShowCollider: false
 - !<SceneObject/bf8502a6-889a-4f8d-98a7-1d486635c352>
   PrefabRemaps:
     - 12286a94-1ebc-4f41-8e4f-647f7eb6d736: 12286a94-1ebc-4f41-71b0-9b80814928c9
@@ -45,7 +45,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
