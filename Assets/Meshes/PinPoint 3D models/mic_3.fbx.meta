@@ -53,22 +53,7 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<SceneObject/311d99a8-960d-462e-48c8-84f633bbf8ec>
-  PrefabRemaps:
-    []
-  Name: mic_3
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 8430aca7-6740-4243-60ed-eae03f01c362
-  Components:
-    []
-- !<SceneObject/8430aca7-6740-4243-60ed-eae03f01c362>
+- !<SceneObject/17a5fee9-aa9a-4668-6b14-6052639521a5>
   PrefabRemaps:
     []
   Name: Mesh1.0
@@ -82,13 +67,23 @@
   Children:
     []
   Components:
-    - !<own> 9ea4e5d5-6a4d-433e-5bb9-2ce7d29f45b8
-- !<ObjectPrefabAssetData/8e0ba511-a1ed-4712-bb98-f67855bce466>
-  Prototype: !<ObjectOwner/e6a85383-61ea-4418-92de-f5e57f1567bd>
-    PackagePath: ""
-    objects:
-      - !<own> 311d99a8-960d-462e-48c8-84f633bbf8ec
-- !<RenderMeshVisual/9ea4e5d5-6a4d-433e-5bb9-2ce7d29f45b8>
+    - !<own> 89602c81-7a91-4c23-7528-197c0e8c936b
+- !<SceneObject/5fff8791-b7c7-41c7-5420-b18cab8903e9>
+  PrefabRemaps:
+    []
+  Name: mic_3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 17a5fee9-aa9a-4668-6b14-6052639521a5
+  Components:
+    []
+- !<RenderMeshVisual/89602c81-7a91-4c23-7528-197c0e8c936b>
   PrefabRemaps:
     []
   Name: component_0
@@ -108,3 +103,8 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ObjectPrefabAssetData/8e0ba511-a1ed-4712-bb98-f67855bce466>
+  Prototype: !<ObjectOwner/e6a85383-61ea-4418-92de-f5e57f1567bd>
+    PackagePath: ""
+    objects:
+      - !<own> 5fff8791-b7c7-41c7-5420-b18cab8903e9

@@ -72,7 +72,8 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       return
     }
 
-    const height = 3 * (areaNames.length - 1) + 6 + 6 + 4
+    // Reserve one extra row for the session button shown near the bottom of MainMenu.
+    const height = 3 * (areaNames.length - 1) + 6 + 6 + 4 + 3
     this.container.innerSize = new vec2(this.container.innerSize.x, height)
 
     this.selectionEnabled = true
@@ -158,7 +159,8 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       }
     })
 
-    yOffset -= 3
+    // Add extra spacing below "New Area" so the session button has its own row.
+    yOffset -= 6
 
     clearAllDataButton.getTransform().setLocalPosition(new vec3(0, yOffset, 0))
 
