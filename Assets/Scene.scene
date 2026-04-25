@@ -4343,14 +4343,14 @@
     "":
       autoShowHide: false
       innerSize: !<Vec2> {x: 14.000000, y: 15.000000}
-      border: !<float> 4.000000
+      border: !<float> 0.000000
       constantPadding: !<Vec2> {x: 0.000000, y: 0.000000}
       allowScaling: false
       autoScaleContent: false
       relativeZ: false
       isContentInteractable: false
       allowTranslation: false
-      cutOut: false
+      cutOut: true
       minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
       maximumSize: !<Vec2> {x: 300.000000, y: 300.000000}
       useBillboarding: true

@@ -5,9 +5,11 @@ import {AreaSelectionButton} from "./AreaSelectionButton"
 
 export const NEW_AREA_NAME = "New Area"
 const BUTTON_VERTICAL_SPACING = 3
-const MENU_PADDING_Y = 2
+const MENU_TOP_PADDING_Y = 2
+const MENU_BOTTOM_PADDING_Y = 0.5
 const NEW_AREA_Y = 1.5
-const CLEAR_ALL_DATA_Y = -7.5
+const CLEAR_ALL_DATA_Y = -4.5
+const MENU_WIDTH_REDUCTION = 3
 
 export type AreaSelectEvent = {
   areaName: string
@@ -43,6 +45,7 @@ export class AreaSelectionMenu extends BaseScriptComponent {
   readonly onAreaClear: PublicApi<AreaClearEvent> = this.onAreaClearEvent.publicApi()
 
   private container: ContainerFrame | undefined
+  private baseContainerWidth: number = 0
 
   onAwake() {
     this.container = this.findContainerFrame()
@@ -55,6 +58,7 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
     this.areaSelectionButtonPrefab = requireAsset("Prefabs/AreaSelectionButtonPrefab") as ObjectPrefab
     this.areaDeleteButtonPrefab = requireAsset("Prefabs/AreaDeleteButtonPrefab") as ObjectPrefab
+    this.baseContainerWidth = this.container.innerSize.x
 
     this.capsuleButtonMesh = requireAsset(
       "SpectaclesInteractionKit.lspkg/Assets/Meshes/ButtonCapsuleMesh"
@@ -78,8 +82,9 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
     const existingAreaNames = [...areaNames]
     const highestAreaY = NEW_AREA_Y + existingAreaNames.length * BUTTON_VERTICAL_SPACING
-    const height = highestAreaY - CLEAR_ALL_DATA_Y + MENU_PADDING_Y * 2
-    this.container.innerSize = new vec2(this.container.innerSize.x, height)
+    const height = highestAreaY - CLEAR_ALL_DATA_Y + MENU_TOP_PADDING_Y + MENU_BOTTOM_PADDING_Y
+    const menuWidth = Math.max(1, this.baseContainerWidth - MENU_WIDTH_REDUCTION)
+    this.container.innerSize = new vec2(menuWidth, height)
 
     this.selectionEnabled = true
 
