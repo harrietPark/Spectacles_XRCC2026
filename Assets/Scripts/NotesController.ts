@@ -8,6 +8,7 @@ import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
+import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
 
 @component
 export class NotesController extends BaseScriptComponent {
@@ -34,7 +35,7 @@ export class NotesController extends BaseScriptComponent {
     @ui.group_end
     @ui.separator
     @ui.group_start("Note Visual Settings")
-    @input private fovCollider: ColliderComponent;
+    @input private fovCone: SceneObject;
     @ui.group_end
     @ui.group_start("Spawn Rotation")
     @input
@@ -67,6 +68,7 @@ export class NotesController extends BaseScriptComponent {
     // Stateful objects
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
+    private fovConeEMA: ExponentialMovingAverage;
 
     private onAwake() {
         this.deactivateCreationProcess();
@@ -91,12 +93,15 @@ export class NotesController extends BaseScriptComponent {
             );
         }
 
+
+        const fovCollider = this.fovCone.getComponent("Physics.ColliderComponent")
         // Setup FOV collider to only detect overlap with Notes
         const notesFilter = Physics.Filter.create();
         notesFilter.onlyLayers = LayerSet.fromNumber(1);
-        this.fovCollider.overlapFilter = notesFilter;
-        this.fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
+        fovCollider.overlapFilter = notesFilter;
+        fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
 
+        this.fovConeEMA = new ExponentialMovingAverage(0.5);
     }
 
     private onUpdate() {
@@ -105,6 +110,7 @@ export class NotesController extends BaseScriptComponent {
                 this.spawnNote();
             }
         }
+
     }
 
     public activateCreationProcess() {
@@ -147,6 +153,7 @@ export class NotesController extends BaseScriptComponent {
         const currNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
         const addedNotesObjInFOV = currNotesObjInFOV.filter((obj) => !this.prevNotesObjInFOV.includes(obj));
         const removedNotesObjInFOV = this.prevNotesObjInFOV.filter((obj) => !currNotesObjInFOV.includes(obj));
+        print("--- add in FOV: " + addedNotesObjInFOV.length + " | removed: " + removedNotesObjInFOV.length);
         for (const note of addedNotesObjInFOV) {
             note.getComponent(Note.getTypeName())?.pullToForeground();
         }

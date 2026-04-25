@@ -27,11 +27,11 @@ const SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8;
 const SPAWN_ROTATE_BOUNCE_DAMPING = 2.8;
 const SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0);
 
-enum NoteStatus {
-  background, // minimised, muted
-  foregroundIdle, // maximised, ready to be edited
-  foregroundActive, // maximised, is being edited
-}
+// enum NoteStatus {
+//   background, // minimised, muted
+//   foregroundIdle, // maximised, ready to be edited
+//   foregroundActive, // maximised, is being edited
+// }
 
 @component
 export class Note extends BaseScriptComponent {
@@ -327,10 +327,12 @@ export class Note extends BaseScriptComponent {
 
     public pushToBackground() {
         this.visibilityToggle.hide();
+        print("--- Pushing note to background");
     }
 
     public pullToForeground() {
         this.visibilityToggle.show();
+        print("--- Pulling note to foreground");
     }
 
     private setupVoiceNoteControls(): void {
