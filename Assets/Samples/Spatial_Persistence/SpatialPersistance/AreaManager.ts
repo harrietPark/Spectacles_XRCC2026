@@ -430,11 +430,7 @@ export class AreaManager extends BaseScriptComponent {
 
     this.toggleMenuButton.setFollowTarget(
       this.areaSelectionMenu.sceneObject.getParent().getTransform(),
-      new vec3(
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.x,
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.y + areaNames.length * 1.3,
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.z
-      ),
+      TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION,
       quat.quatIdentity()
     )
   }

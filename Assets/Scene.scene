@@ -4261,11 +4261,9 @@
   Enabled: true
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
-    border: true
     constantPadding: true
     relativeZ: true
     isContentInteractable: true
-    cutOut: true
     minimumSize: true
     maximumSize: true
     useSnapping: true
