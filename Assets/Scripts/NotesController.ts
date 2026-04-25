@@ -13,12 +13,10 @@ import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage
 @component
 export class NotesController extends BaseScriptComponent {
     private onUserViewCapturedEvent = new Event<Texture>();
-    public readonly onUserViewCaptured: PublicApi<Texture> =
-        this.onUserViewCapturedEvent.publicApi();
+    public readonly onUserViewCaptured: PublicApi<Texture> = this.onUserViewCapturedEvent.publicApi();
 
     private onNoteSpawnedEvent = new Event<WidgetSelectionEvent>();
-    public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> =
-        this.onNoteSpawnedEvent.publicApi();
+    public readonly onNoteSpawned: PublicApi<WidgetSelectionEvent> = this.onNoteSpawnedEvent.publicApi();
 
     @input
     @allowUndefined
@@ -35,7 +33,8 @@ export class NotesController extends BaseScriptComponent {
     @ui.group_end
     @ui.separator
     @ui.group_start("Note Visual Settings")
-    @input private fovCone: SceneObject;
+    @input
+    private fovCone: SceneObject;
     @ui.group_end
     @ui.group_start("Spawn Rotation")
     @input
@@ -68,6 +67,7 @@ export class NotesController extends BaseScriptComponent {
     // Stateful objects
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
+
     private fovConeEMA: ExponentialMovingAverage;
 
     private onAwake() {
@@ -88,20 +88,23 @@ export class NotesController extends BaseScriptComponent {
         if (this.areaManager) {
             this.areaManager.onWidgetsUpdated.add(this.updateNotes.bind(this));
         } else {
-            print(
-                "[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.",
-            );
+            print("[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.");
         }
 
-
-        const fovCollider = this.fovCone.getComponent("Physics.ColliderComponent")
+        const fovCollider = this.fovCone.getComponent("Physics.ColliderComponent");
         // Setup FOV collider to only detect overlap with Notes
         const notesFilter = Physics.Filter.create();
         notesFilter.onlyLayers = LayerSet.fromNumber(1);
         fovCollider.overlapFilter = notesFilter;
-        fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
+        fovCollider.onOverlapEnter.add((OverlapEnterEventArgs) => this.updateNotesInFOV(OverlapEnterEventArgs));
+        fovCollider.onOverlapExit.add((OverlapExitEventArgs) => this.updateNotesInFOV(OverlapExitEventArgs));
+        // fovCollider.onOverlapStay.add((OverlapStayEventArgs) =>
+        //     this.updateNotesInFOV(OverlapStayEventArgs),
+        // );
 
         this.fovConeEMA = new ExponentialMovingAverage(0.5);
+
+        // const camera = global.deviceInfoSystem.getTrackingCameraForId(CameraModule.CameraId.Left_Color);
     }
 
     private onUpdate() {
@@ -110,7 +113,6 @@ export class NotesController extends BaseScriptComponent {
                 this.spawnNote();
             }
         }
-
     }
 
     public activateCreationProcess() {
@@ -125,9 +127,7 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private updateNotes(widgets: Widget[]) {
-        const updatedNotes = widgets.map((widget) =>
-            widget.getSceneObject().getComponent(Note.getTypeName()),
-        );
+        const updatedNotes = widgets.map((widget) => widget.getSceneObject().getComponent(Note.getTypeName()));
 
         const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
         for (const note of addedNotes) {
@@ -145,15 +145,17 @@ export class NotesController extends BaseScriptComponent {
         this.notes = updatedNotes;
     }
 
-    private updateNotesInFOV(overlap: OverlapStayEventArgs) {
+    private updateNotesInFOV(overlap: OverlapEnterEventArgs | OverlapExitEventArgs) {
+        // print("--- " + overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject().name).join(", "))
+        const currNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+
         if (this.prevNotesObjInFOV.length == 0) {
-            this.prevNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
+            this.prevNotesObjInFOV = currNotesObjInFOV;
             return;
         }
-        const currNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
+
         const addedNotesObjInFOV = currNotesObjInFOV.filter((obj) => !this.prevNotesObjInFOV.includes(obj));
         const removedNotesObjInFOV = this.prevNotesObjInFOV.filter((obj) => !currNotesObjInFOV.includes(obj));
-        print("--- add in FOV: " + addedNotesObjInFOV.length + " | removed: " + removedNotesObjInFOV.length);
         for (const note of addedNotesObjInFOV) {
             note.getComponent(Note.getTypeName())?.pullToForeground();
         }
@@ -235,9 +237,7 @@ export class NotesController extends BaseScriptComponent {
         } else {
             const distance = Math.max(10, this.debugSpawnDistanceFromCamera);
             const cameraPosition = this.worldCameraTransform.getWorldPosition();
-            spawnPosition = cameraPosition.add(
-                this.worldCameraTransform.forward.uniformScale(distance),
-            );
+            spawnPosition = cameraPosition.add(this.worldCameraTransform.forward.uniformScale(distance));
         }
 
         this.onNoteSpawnedEvent.invoke({

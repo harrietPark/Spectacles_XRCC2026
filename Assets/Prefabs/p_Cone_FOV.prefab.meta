@@ -58,7 +58,7 @@
   PrefabRemaps:
     []
   Name: Render Mesh Visual
-  Enabled: false
+  Enabled: true
   RenderOrder: 0
   StretchMode: Stretch
   VerticalAlignment: Center
