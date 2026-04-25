@@ -28,7 +28,11 @@
     - !<own> 20e0f5b7-fddb-4d4f-b4da-6fefcf6463bf
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
-      []
+      - |
+        id: 1
+        name: Notes
+        color: 0
+
     HasOrtho: true
   RenderOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
   RenderPreviewOutput: !<reference> 923415f5-4245-4675-ade1-6d69d6d23e71
@@ -1559,7 +1563,7 @@
     []
   Name: LeftHandMeshPin
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
@@ -1707,7 +1711,7 @@
     - ff54fe60-1f38-4bb6-995b-2fffb2645e8a: 7472767b-95d3-4db6-6deb-847c32dde18f
   Name: PinPoint_Note
   Enabled: false
-  Layers: 1
+  Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -2164,7 +2168,7 @@
     []
   Name: RightHandPinMesh
   Enabled: false
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
