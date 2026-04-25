@@ -25,6 +25,7 @@ const SPAWN_ROTATE_BOUNCE_MAX_ANGLE_DEGREES = 18.0;
 const SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8;
 const SPAWN_ROTATE_BOUNCE_DAMPING = 2.8;
 const SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0);
+const NOTE_BASE_OPACITY = 0.65;
 
 enum NoteStatus {
   background, // minimised, muted
@@ -234,8 +235,8 @@ export class Note extends BaseScriptComponent {
             return;
         }
 
-        this.meshMaterial = this.noteMesh.mainMaterial.clone();
-        this.noteMesh.mainMaterial = this.meshMaterial;
+        this.applyOpacityToVisualHierarchy(this.sceneObject, NOTE_BASE_OPACITY);
+        this.meshMaterial = this.noteMesh.mainMaterial;
 
         this.initializeMicrophoneButtonVisual();
         this.initializePlaybackButtonVisual();
@@ -281,6 +282,67 @@ export class Note extends BaseScriptComponent {
 
         this.setupVoiceNoteControls();
         this.createdAt = new Date(Date.now());
+    }
+
+    private applyNoteOpacity(material: Material, targetOpacity: number): void {
+        const pass = material.mainPass as unknown as { [key: string]: unknown };
+        const clampedOpacity = Math.max(0, Math.min(1, targetOpacity));
+        const colorPropertyCandidates = ["baseColor", "color", "tintColor"];
+
+        for (let i = 0; i < colorPropertyCandidates.length; i++) {
+            const property = colorPropertyCandidates[i];
+            const current = pass[property] as vec4 | undefined;
+            if (!current) {
+                continue;
+            }
+
+            pass[property] = new vec4(current.x, current.y, current.z, clampedOpacity);
+            return;
+        }
+    }
+
+    private applyOpacityToVisualHierarchy(root: SceneObject, targetOpacity: number): void {
+        const stack: SceneObject[] = [root];
+        while (stack.length > 0) {
+            const current = stack.pop();
+            if (!current) {
+                continue;
+            }
+
+            const meshVisual = current.getComponent(
+                "Component.RenderMeshVisual",
+            ) as RenderMeshVisual | null;
+            if (meshVisual) {
+                this.applyOpacityToRenderMeshVisual(meshVisual, targetOpacity);
+            }
+
+            const childCount = current.getChildrenCount();
+            for (let i = 0; i < childCount; i++) {
+                stack.push(current.getChild(i));
+            }
+        }
+    }
+
+    private applyOpacityToRenderMeshVisual(
+        meshVisual: RenderMeshVisual,
+        targetOpacity: number,
+    ): void {
+        const currentMaterials = meshVisual.materials;
+        if (!currentMaterials || currentMaterials.length === 0) {
+            if (meshVisual.mainMaterial) {
+                const clonedMainMaterial = meshVisual.mainMaterial.clone();
+                this.applyNoteOpacity(clonedMainMaterial, targetOpacity);
+                meshVisual.mainMaterial = clonedMainMaterial;
+            }
+            return;
+        }
+
+        const transparentMaterials = currentMaterials.map((material) => {
+            const clonedMaterial = material.clone();
+            this.applyNoteOpacity(clonedMaterial, targetOpacity);
+            return clonedMaterial;
+        });
+        meshVisual.materials = transparentMaterials;
     }
 
     private onUpdate() {
