@@ -33,6 +33,7 @@ export class SceneManager extends BaseScriptComponent {
     @input private NoteController: NotesController;
     @ui.group_end
     @ui.group_start("UI References")
+    @input private buttonActivateNoteCreation: RoundButton;
     @input
     @allowUndefined
     @hint("Optional debug button for Lens Studio editor to spawn a note immediately.")
@@ -73,6 +74,9 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     private onStart() {
+        this.buttonActivateNoteCreation?.onTriggerUp.add(() => {
+            this.NoteController.activateCreationProcess();
+        });
         this.buttonDebugSpawnNote?.onTriggerUp.add(() => {
             const buttonTransform = this.buttonDebugSpawnNote.getSceneObject().getTransform();
             const buttonPosition = buttonTransform.getWorldPosition();

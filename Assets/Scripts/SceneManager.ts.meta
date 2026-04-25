@@ -27,6 +27,7 @@
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     NoteController: false
+    buttonActivateNoteCreation: false
     buttonDebugSpawnNote: false
     microphoneAsset: false
     microphoneWarmupDurationSeconds: false
@@ -45,7 +46,8 @@
     - uxFeedbackControllerComponent: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       soundEffectsController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       NoteController: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
-      buttonDebugSpawnNote: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      buttonActivateNoteCreation: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      buttonDebugSpawnNote: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
       requestMicrophonePermissionOnStart: true
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       microphoneWarmupDurationSeconds: 0.250000
@@ -59,7 +61,8 @@
     - // @input AssignableType_2 NoteController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"UI References"}'
-    - '// @input AssignableType_3 buttonDebugSpawnNote {"hint":"Optional debug button for Lens Studio editor to spawn a note immediately."}'
+    - // @input AssignableType_3 buttonActivateNoteCreation
+    - '// @input AssignableType_4 buttonDebugSpawnNote {"hint":"Optional debug button for Lens Studio editor to spawn a note immediately."}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Microphone Setup"}'

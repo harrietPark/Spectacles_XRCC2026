@@ -53,12 +53,7 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<ObjectPrefabAssetData/144b2840-ba6e-4f5c-a4bc-c321d9f7c183>
-  Prototype: !<ObjectOwner/6a55b84b-9e11-4aff-b716-9f2dc064b004>
-    PackagePath: ""
-    objects:
-      - !<own> 51535f15-8ae5-41f2-6213-af7c00722dc9
-- !<SceneObject/51535f15-8ae5-41f2-6213-af7c00722dc9>
+- !<SceneObject/02242338-3de2-4a20-6475-ac20364de463>
   PrefabRemaps:
     []
   Name: play_button_2
@@ -70,10 +65,15 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> f5c99f88-10d4-4d58-5113-7615b2d34606
+    - !<own> ad479cb8-b180-489e-64e3-325901d241cc
   Components:
     []
-- !<RenderMeshVisual/b42df7d7-189c-44b4-5ea8-fd4c810a2f96>
+- !<ObjectPrefabAssetData/144b2840-ba6e-4f5c-a4bc-c321d9f7c183>
+  Prototype: !<ObjectOwner/6a55b84b-9e11-4aff-b716-9f2dc064b004>
+    PackagePath: ""
+    objects:
+      - !<own> 02242338-3de2-4a20-6475-ac20364de463
+- !<RenderMeshVisual/8732e5c3-249a-4a30-491e-88a1ef68f422>
   PrefabRemaps:
     []
   Name: component_0
@@ -93,7 +93,7 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/f5c99f88-10d4-4d58-5113-7615b2d34606>
+- !<SceneObject/ad479cb8-b180-489e-64e3-325901d241cc>
   PrefabRemaps:
     []
   Name: Mesh1.0
@@ -107,4 +107,4 @@
   Children:
     []
   Components:
-    - !<own> b42df7d7-189c-44b4-5ea8-fd4c810a2f96
+    - !<own> 8732e5c3-249a-4a30-491e-88a1ef68f422

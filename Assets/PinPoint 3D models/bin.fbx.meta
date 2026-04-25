@@ -53,27 +53,7 @@
       png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/3a0035a3-14f3-4809-6ea5-1160296e1dbc>
-  PrefabRemaps:
-    []
-  Name: bin
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 6a50a790-c95a-4ad9-474a-21abc9a2cf49
-  Components:
-    []
-- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
-  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
-    PackagePath: ""
-    objects:
-      - !<own> 3a0035a3-14f3-4809-6ea5-1160296e1dbc
-- !<SceneObject/6a50a790-c95a-4ad9-474a-21abc9a2cf49>
+- !<SceneObject/54212446-b19f-4ef7-5bdf-f1b2bb3ba08a>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -87,8 +67,28 @@
   Children:
     []
   Components:
-    - !<own> fef9a809-2ac7-44b0-4417-33086663eadb
-- !<RenderMeshVisual/fef9a809-2ac7-44b0-4417-33086663eadb>
+    - !<own> ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d
+- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
+  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
+    PackagePath: ""
+    objects:
+      - !<own> b36ef3b5-345a-4bea-5730-00d49b1764c6
+- !<SceneObject/b36ef3b5-345a-4bea-5730-00d49b1764c6>
+  PrefabRemaps:
+    []
+  Name: bin
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 54212446-b19f-4ef7-5bdf-f1b2bb3ba08a
+  Components:
+    []
+- !<RenderMeshVisual/ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d>
   PrefabRemaps:
     []
   Name: component_0
