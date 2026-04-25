@@ -970,11 +970,12 @@
       noteInteractable: !<MappingBased.AssignableType_2> 3dc0432b-bab6-4a91-b624-250f834bc308
       noteMesh: !<reference.RenderMeshVisual> 01b3fb08-b873-4b9e-ab64-039172e78a00
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
-      recordButton: !<MappingBased.AssignableType_3> 37e636d4-30f4-43ac-8890-09471358639c
+      visibilityToggle: !<MappingBased.AssignableType_3> a8a208b7-2fc9-4acd-b3c4-c02cdf077ebe
+      recordButton: !<MappingBased.AssignableType_4> 37e636d4-30f4-43ac-8890-09471358639c
       microphoneButtonMesh: !<reference.RenderMeshVisual> a087c37e-57cd-4847-8d71-c245fabe4601
       microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
       microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
-      playbackButton: !<MappingBased.AssignableType_4> 5a6674ca-471b-4a0b-a38c-7e8edd2974b1
+      playbackButton: !<MappingBased.AssignableType_5> 5a6674ca-471b-4a0b-a38c-7e8edd2974b1
       playbackButtonIdleVisual: !<reference.RenderMeshVisual> eb2a0844-a8a6-4477-bb4a-9326fe6bcfe0
       playbackButtonStopVisual: !<reference.RenderMeshVisual> 6370fefb-8eba-4241-b8af-b50965f9240e
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2

@@ -591,6 +591,7 @@
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
     _croppedImage: true
+    visibilityToggle: true
     recordButton: true
     microphoneButtonMesh: true
     microphoneButtonRecordingTexture: true
@@ -613,11 +614,12 @@
       noteInteractable: !<MappingBased.AssignableType_2> 3204a4f1-800c-4f47-8032-3cb7e6ad859f
       noteMesh: !<reference.RenderMeshVisual> 4039f798-8fc4-4b5a-a6a9-c7a13771b82d
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
-      recordButton: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      visibilityToggle: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      recordButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
       microphoneButtonMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneButtonRecordingTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       microphoneButtonIdleTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      playbackButton: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      playbackButton: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
       playbackButtonIdleVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       playbackButtonStopVisual: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
       microphoneAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000

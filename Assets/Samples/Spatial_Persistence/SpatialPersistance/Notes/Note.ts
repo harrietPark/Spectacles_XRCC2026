@@ -5,6 +5,7 @@ import { ToggleButton } from "SpectaclesInteractionKit.lspkg/Components/UI/Toggl
 import { Widget } from "../Widget";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { INoteData } from "Scripts/INoteData";
+import { PinPointNoteSimpleVisibilityToggle } from "Scripts/PinPointNoteSimpleVisibilityToggle";
 
 type AudioFrameData = {
     audioFrame: Float32Array;
@@ -41,6 +42,7 @@ export class Note extends BaseScriptComponent {
     private readonly onNoteCompletedEvent = new Event<INoteData>();
     public readonly onNoteCompleted: PublicApi<INoteData> = this.onNoteCompletedEvent.publicApi();
 
+    // UI/Visual setup
     @input private _textField: Text;
     @input
     @allowUndefined
@@ -53,7 +55,9 @@ export class Note extends BaseScriptComponent {
     @input
     @hint("Outline material that appears when the note is being edited")
     private editOutlineMaterial: Material;
+    @input private visibilityToggle: PinPointNoteSimpleVisibilityToggle;
 
+    // Voice recording setup
     @input
     @allowUndefined
     @hint("Optional button used to start/stop voice recording")
@@ -322,11 +326,11 @@ export class Note extends BaseScriptComponent {
     }
 
     public pushToBackground() {
-        print("--- Pushing note to background");
+        this.visibilityToggle.hide();
     }
 
     public pullToForeground() {
-        print("--- Pulling note to foreground");
+        this.visibilityToggle.show();
     }
 
     private setupVoiceNoteControls(): void {

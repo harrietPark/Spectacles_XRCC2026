@@ -1363,7 +1363,7 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    visibilityToggle: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -1375,11 +1375,12 @@
       noteInteractable: !<MappingBased.AssignableType_2> e831c984-ef76-43f6-5984-bb98b2fb1b5e
       noteMesh: !<reference.RenderMeshVisual> b51ef35f-6e69-442c-6399-82087788b5b2
       editOutlineMaterial: !<reference.Material> adc3126f-3f6d-41e1-983a-7e4dfe1ef269
-      recordButton: !<MappingBased.AssignableType_3> 902e26a5-4ac7-44e5-6006-0a86a0dffd2f
+      visibilityToggle: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      recordButton: !<MappingBased.AssignableType_4> 902e26a5-4ac7-44e5-6006-0a86a0dffd2f
       microphoneButtonMesh: !<reference.RenderMeshVisual> ce09753a-b46a-4471-5457-848619fbc889
       microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
       microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
-      playbackButton: !<MappingBased.AssignableType_4> 26d89421-7868-4043-53ce-84ca6f246232
+      playbackButton: !<MappingBased.AssignableType_5> 26d89421-7868-4043-53ce-84ca6f246232
       playbackButtonIdleVisual: !<reference.RenderMeshVisual> b3f41aba-cdf0-4052-7999-d82607a180fb
       playbackButtonStopVisual: !<reference.RenderMeshVisual> 95660ce6-71b2-4488-8547-f20db745c9f9
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
