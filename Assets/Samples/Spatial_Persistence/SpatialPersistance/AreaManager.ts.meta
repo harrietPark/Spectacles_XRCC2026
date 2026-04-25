@@ -28,6 +28,7 @@
   ScriptInputsHidden:
     areaPromptButton: false
     areaSelectionMenu: false
+    enableInstructionUI: false
     instructionText: false
     lockWidgetButton: false
     noteController: false
@@ -56,6 +57,7 @@
         []
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      enableInstructionUI: false
   ScriptTypes:
     -
       {}
@@ -70,3 +72,4 @@
     - "// @input Asset.ObjectPrefab[] widgetPrefabs"
     - '// @input float spawnedWidgetScaleMultiplier = 1 {"hint":"Default scale multiplier applied when spawning widgets/notes."}'
     - // @input Component.Text instructionText
+    - '// @input bool enableInstructionUI {"hint":"Enable/disable the instruction overlay panel."}'

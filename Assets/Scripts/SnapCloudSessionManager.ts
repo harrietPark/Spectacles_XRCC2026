@@ -61,6 +61,9 @@ export class SnapCloudSessionManager extends BaseScriptComponent {
   private client: SupabaseClient | null = null
   private sessionId: string = ""
   private ready: boolean = false
+  private stoppingSession: boolean = false
+  private startingSession: boolean = false
+  private sessionStopped: boolean = false
 
   static getInstance(): SnapCloudSessionManager | null {
     return SnapCloudSessionManager.instanceRef
@@ -115,6 +118,63 @@ export class SnapCloudSessionManager extends BaseScriptComponent {
 
   isReady(): boolean {
     return this.ready
+  }
+
+  async stopActiveSession(): Promise<boolean> {
+    if (this.sessionStopped) {
+      return true
+    }
+    if (this.stoppingSession) {
+      return false
+    }
+    if (!this.client || !this.sessionId) {
+      print("[SessionManager] stopActiveSession skipped: client/sessionId unavailable.")
+      return false
+    }
+
+    this.stoppingSession = true
+    try {
+      const updatePayload = {
+        status: "stopped",
+        updated_at: new Date().toISOString()
+      }
+
+      const result = await this.client.from(this.sessionsTableName).update(updatePayload).eq("id", this.sessionId)
+      if (result.error) {
+        print(`[SessionManager] sessions UPDATE(stop) failed: ${JSON.stringify(result.error)}`)
+        return false
+      }
+
+      this.ready = false
+      this.sessionStopped = true
+      print(`[SessionManager] sessions UPDATE(stop) ok (id=${this.sessionId}).`)
+      return true
+    } finally {
+      this.stoppingSession = false
+    }
+  }
+
+  async startNewSession(): Promise<boolean> {
+    if (this.ready) {
+      return true
+    }
+    if (this.startingSession) {
+      return false
+    }
+    if (!this.client) {
+      print("[SessionManager] startNewSession skipped: client unavailable.")
+      return false
+    }
+
+    this.startingSession = true
+    try {
+      this.sessionId = `session_${Date.now()}`
+      this.sessionStopped = false
+      await this.bootstrap()
+      return this.ready
+    } finally {
+      this.startingSession = false
+    }
   }
 
   /**

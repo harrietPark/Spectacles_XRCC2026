@@ -1365,7 +1365,7 @@
   PrefabRemaps:
     []
   Name: Image
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.100000}
@@ -2092,6 +2092,7 @@
   ScriptAsset: !<reference> db6e3391-b235-4fce-8965-b9d5fa785088
   ScriptInputsDefault:
     spawnedWidgetScaleMultiplier: true
+    enableInstructionUI: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2108,6 +2109,7 @@
         - !<reference> ee27b61d-5e96-4b8b-9511-45b7a045cc5b
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
+      enableInstructionUI: false
   ScriptTypes:
     "":
       {}
@@ -3757,6 +3759,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> c020d544-ca20-4476-af17-a1bbdd1a78a9
     - !<own> d5f9906c-4121-42fc-9bb3-8f309ae5bf44
   Components:
     - !<own> 9e70681c-d894-4394-ba22-f6cad0e8228f
@@ -5028,7 +5031,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Snapping Off
+  Text: Start Session
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -5615,7 +5618,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 5.587588, y: -4.417355, z: 2.000000}
+    Position: {x: 0.000000, y: -1.500000, z: 2.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -6044,7 +6047,6 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> ea6bcc6e-5fc1-4a45-bade-7f26df777aa1
-    - !<own> c020d544-ca20-4476-af17-a1bbdd1a78a9
     - !<own> 645173f5-be87-45aa-b908-04e6800085bd
   Components:
     - !<own> 275c4ffb-2f9b-47c1-8f50-ea88c9424686
@@ -6939,7 +6941,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Snapping On
+  Text: Stop Session
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -7168,7 +7170,7 @@
   PrefabRemaps:
     []
   Name: Image
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Fit
   VerticalAlignment: Center

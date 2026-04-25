@@ -53,27 +53,7 @@
       png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/22782191-e5b6-42cd-7f48-0435fd060991>
-  PrefabRemaps:
-    []
-  Name: red_mic
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> f206dbaf-c386-4b94-4a79-6051e549f84f
-  Components:
-    []
-- !<ObjectPrefabAssetData/40ee09ac-88cb-4dc8-a335-b1816242f0d9>
-  Prototype: !<ObjectOwner/2c56abd1-11b8-4dba-b07f-9430af038ef5>
-    PackagePath: ""
-    objects:
-      - !<own> 22782191-e5b6-42cd-7f48-0435fd060991
-- !<RenderMeshVisual/794f8f98-46a0-4d15-459c-c6ec72be7afd>
+- !<RenderMeshVisual/17088fca-34c1-4eb3-645f-aa2df02bfd9f>
   PrefabRemaps:
     []
   Name: component_0
@@ -93,7 +73,27 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/f206dbaf-c386-4b94-4a79-6051e549f84f>
+- !<ObjectPrefabAssetData/40ee09ac-88cb-4dc8-a335-b1816242f0d9>
+  Prototype: !<ObjectOwner/2c56abd1-11b8-4dba-b07f-9430af038ef5>
+    PackagePath: ""
+    objects:
+      - !<own> 6c531d65-6dc0-4700-6093-72ba3c9cad93
+- !<SceneObject/6c531d65-6dc0-4700-6093-72ba3c9cad93>
+  PrefabRemaps:
+    []
+  Name: red_mic
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 78ddf1fa-6155-45dc-7097-f19b30bf6af4
+  Components:
+    []
+- !<SceneObject/78ddf1fa-6155-45dc-7097-f19b30bf6af4>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -107,4 +107,4 @@
   Children:
     []
   Components:
-    - !<own> 794f8f98-46a0-4d15-459c-c6ec72be7afd
+    - !<own> 17088fca-34c1-4eb3-645f-aa2df02bfd9f
