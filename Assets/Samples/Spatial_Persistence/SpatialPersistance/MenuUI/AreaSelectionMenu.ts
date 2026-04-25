@@ -147,11 +147,6 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       })
     })
 
-    const newAreaMaterial = newAreaPrefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
-    // TODO: Finalize color.
-    newAreaMaterial.mainPass.baseColor = new vec4(158 / 255, 142 / 255, 0 / 255, 1)
-    newAreaPrefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = newAreaMaterial
-
     // Add an extra AreaSelectionButton to clear all previously serialized areas, then re-prompt for area selection.
     const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
     const clearAllDataButton = prefab.getComponent(AreaSelectionButton.getTypeName())
@@ -170,9 +165,6 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
     clearAllDataButton.getTransform().setLocalPosition(new vec3(0, CLEAR_ALL_DATA_Y, 0))
 
-    const material = prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
-    material.mainPass.baseColor = new vec4(168 / 255, 34 / 255, 34 / 255, 1)
-    prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = material
   }
 
   public close() {
