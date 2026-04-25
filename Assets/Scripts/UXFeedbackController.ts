@@ -164,7 +164,7 @@ export class UXFeedbackController extends BaseScriptComponent {
         if (!prefab) {
             try {
                 prefab = requireAsset(
-                    "3D Loading Indicator.lspkg/3DLoadingIndicator__PLACE_IN_SCENE"
+                    "Samples/3D Loading Indicator.lspkg/3DLoadingIndicator__PLACE_IN_SCENE"
                 ) as ObjectPrefab;
             } catch (_error) {
                 print("[UXFeedbackController] Could not auto-load default loading indicator prefab.");

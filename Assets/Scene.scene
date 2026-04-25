@@ -26,6 +26,7 @@
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
     - !<own> f75da0dc-7173-4056-a1bf-81d831fc685a
     - !<own> 20e0f5b7-fddb-4d4f-b4da-6fefcf6463bf
+    - !<own> 38468af6-14c8-4113-a47d-dc96628709ca
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -1710,10 +1711,10 @@
     - f987cd6b-39e0-489e-9c19-d0d5ce2c4885: ecd68cab-a14d-4539-4c2b-2356907f92d0
     - ff54fe60-1f38-4bb6-995b-2fffb2645e8a: 7472767b-95d3-4db6-6deb-847c32dde18f
   Name: PinPoint_Note
-  Enabled: false
+  Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: -13.417053, y: 0.000000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2462,6 +2463,24 @@
     []
   Components:
     - !<own> fae35cc7-76b2-4711-8123-afb3eb6f5422
+- !<SceneObject/38468af6-14c8-4113-a47d-dc96628709ca>
+  PrefabRemaps:
+    - 38468af6-14c8-4113-a47d-dc96628709ca: bf8502a6-889a-4f8d-6758-e2b799ca3cad
+    - c79aea95-ea13-4206-9719-fa6336fc14d6: f3415b03-3955-4f1c-6448-e1584e208ebd
+    - d045624f-af7d-4c25-8855-2cc01ca9795c: 12286a94-1ebc-4f41-71b0-9b80814928c9
+  Name: Cone_FOV
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 17.945671, y: 0.000000, z: 5.827581}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 20.000000, y: 40.000000, z: 20.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> c79aea95-ea13-4206-9719-fa6336fc14d6
+    - !<own> d045624f-af7d-4c25-8855-2cc01ca9795c
 - !<RenderMeshVisual/38f26722-c361-42be-a7dc-ce49a044f62d>
   PrefabRemaps:
     []
@@ -7605,6 +7624,26 @@
     []
   Components:
     []
+- !<RenderMeshVisual/c79aea95-ea13-4206-9719-fa6336fc14d6>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: false
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+  Mesh: !<reference> b01e5bc9-a847-4717-bd38-342798cf0bea
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/c83b50a4-cad3-4509-8cb5-a2e92a5bd2fb>
   PrefabRemaps:
     []
@@ -7871,7 +7910,7 @@
     - c10118a2-fb04-4cf8-a7ad-742fe1401df4: f3415b03-3955-4f1c-6448-e1584e208ebd
     - cea23a22-63a2-4d6f-b282-0d0a6d46398e: bf8502a6-889a-4f8d-6758-e2b799ca3cad
   Name: Cone_FOV
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -20.000000}
@@ -7946,6 +7985,25 @@
     []
   Components:
     - !<own> e5ed91b2-205c-403c-b67d-687ed5ee0cbe
+- !<ColliderComponent/d045624f-af7d-4c25-8855-2cc01ca9795c>
+  PrefabRemaps:
+    []
+  Name: Physics Collider
+  Enabled: true
+  Shape: !<Cone>
+    Axis: Y
+    Length: 18.000000
+    Radius: 6.000000
+  Matter: !<reference> 00000000-0000-0000-0000-000000000000
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: false
+  ShowCollider: true
 - !<ScriptComponent/d04c1bfe-0946-4345-9d03-a7da70283e8c>
   PrefabRemaps:
     []
@@ -9436,7 +9494,7 @@
   RotationTension: 30.000000
   ForceCompound: false
   Intangible: false
-  ShowCollider: false
+  ShowCollider: true
 - !<ScriptComponent/ff833cc2-d19c-49e1-b021-f44ac7abc141>
   PrefabRemaps:
     []

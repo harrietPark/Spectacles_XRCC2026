@@ -1,4 +1,4 @@
-import {Billboard} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Billboard/Billboard"
+// import {Billboard} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Billboard/Billboard"
 import {Interactable} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable"
 import {easingFunctions} from "SpectaclesInteractionKit.lspkg/Utils/animate"
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
@@ -30,7 +30,7 @@ export class Widget extends BaseScriptComponent {
 
   private snapToWorld: SnapToWorld
 
-  private billboard: Billboard
+  // private billboard: Billboard
 
   private onDeleteEvent: Event<number> = new Event<number>()
   readonly onDelete: PublicApi<number> = this.onDeleteEvent.publicApi()
@@ -45,11 +45,11 @@ export class Widget extends BaseScriptComponent {
   private onStart() {
     this.snapToWorld = SnapToWorld.getInstance()
     this.interactable = this.sceneObject.getComponent(Interactable.getTypeName())
-    this.billboard = this.sceneObject.getComponent(Billboard.getTypeName())
+    // this.billboard = this.sceneObject.getComponent(Billboard.getTypeName())
     this.interactable.onDragStart.add((eventData) => {
       if (eventData.propagationPhase === "Target") {
         this.snapToWorld.startManipulating(eventData)
-        this.billboard.enabled = true
+        // this.billboard.enabled = true
       }
     })
     this.interactable.onDragUpdate.add((eventData) => {
@@ -84,7 +84,7 @@ export class Widget extends BaseScriptComponent {
         }
 
         this.snapToWorld.endManipulating(eventData)
-        this.billboard.enabled = false
+        // this.billboard.enabled = false
       }
     })
 

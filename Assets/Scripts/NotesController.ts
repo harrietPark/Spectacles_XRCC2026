@@ -92,10 +92,12 @@ export class NotesController extends BaseScriptComponent {
         }
 
         // Setup FOV collider to only detect overlap with Notes
-        const notesFilter = Physics.Filter.create();
-        notesFilter.onlyLayers = LayerSet.fromNumber(2);
-        this.fovCollider.overlapFilter = notesFilter;
+        // const notesFilter = Physics.Filter.create();
+        // notesFilter.onlyLayers = LayerSet.fromNumber(2);
+        // this.fovCollider.overlapFilter = notesFilter;
+        this.fovCollider.onOverlapEnter.add(()=>{print("--- Overlap Enter")});
         this.fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
+
     }
 
     private onUpdate() {
