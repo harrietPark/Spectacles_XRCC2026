@@ -3141,8 +3141,6 @@
   ScriptInputsDefault:
     toggledOffMaterial: true
     toggledOffSelectMaterial: true
-    toggledOnMaterial: true
-    toggledOnSelectMaterial: true
     disabledMaterial: true
   ScriptTypesDefault:
     {}
@@ -3150,8 +3148,8 @@
     "":
       toggledOffMaterial: !<reference.Material> 5e6e1132-90fd-4c58-86f9-eb992e6747f5
       toggledOffSelectMaterial: !<reference.Material> 5e532a08-3935-4d6f-823a-ad221030c784
-      toggledOnMaterial: !<reference.Material> ba34ce5b-0385-4307-a803-f77fb63d057b
-      toggledOnSelectMaterial: !<reference.Material> 101caa1c-1088-43ed-a87c-0093b8f7e8b1
+      toggledOnMaterial: !<reference.Material> 998f3793-b7aa-4036-8018-144311479b9b
+      toggledOnSelectMaterial: !<reference.Material> 998f3793-b7aa-4036-8018-144311479b9b
       disabledMaterial: !<reference.Material> aacbe4a8-55c5-457a-9a89-7ecf366ca72a
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> 38f26722-c361-42be-a7dc-ce49a044f62d
@@ -6951,7 +6949,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 0.274510, y: 0.274510, z: 0.274510, w: 1.000000}
+    Color: {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
