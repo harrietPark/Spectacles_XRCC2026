@@ -1507,30 +1507,6 @@
     []
   Components:
     - !<own> ecd68cab-a14d-4539-b3d4-dca96f806d2f
-- !<ScriptComponent/c549f613-e5c3-4a88-b1b2-97f03e747ab2>
-  PrefabRemaps:
-    []
-  Name: Billboard
-  Enabled: false
-  ScriptAsset: !<reference> 74eafc23-e98b-4073-ab18-82ca532994e3
-  ScriptInputsDefault:
-    _yAxisEnabled: true
-    _axisBufferDegrees: true
-    _axisEasing: true
-    duration: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      _xAxisEnabled: true
-      _yAxisEnabled: true
-      _zAxisEnabled: true
-      _axisBufferDegrees: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
-      _axisEasing: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
-      duration: 0.033000
-  ScriptTypes:
-    "":
-      {}
 - !<ScriptComponent/c76691a2-4d23-412b-a71d-77486d7877e8>
   PrefabRemaps:
     []
@@ -2118,7 +2094,6 @@
     - be3674a5-fa79-4fa4-b313-4aea35d598d4: be3674a5-fa79-4fa4-4cec-b515ca2a672b
     - c0e19227-c3a4-49cd-9428-6d04f693d8f7: c0e19227-c3a4-49cd-6bd7-92fb096c2708
     - c32b87a1-218f-49b4-b847-4e3df2a840a5: c32b87a1-218f-49b4-47b8-b1c20d57bf5a
-    - c549f613-e5c3-4a88-b1b2-97f03e747ab2: c549f613-e5c3-4a88-4e4d-680fc18b854d
     - c76691a2-4d23-412b-a71d-77486d7877e8: c76691a2-4d23-412b-58e2-88b792878817
     - c980cdff-01f2-46ec-ab3d-79639de787e6: c980cdff-01f2-46ec-54c2-869c62187819
     - cf4aa42a-1f3e-44f5-b48e-85165abadf85: cf4aa42a-1f3e-44f5-4b71-7ae9a545207a
@@ -2164,7 +2139,6 @@
     - !<own> 54d56036-596a-4817-a67f-177a0c87d29b
     - !<own> c0e19227-c3a4-49cd-9428-6d04f693d8f7
     - !<own> e6002d37-feee-45ae-a75a-e46961a79695
-    - !<own> c549f613-e5c3-4a88-b1b2-97f03e747ab2
     - !<own> a8a208b7-2fc9-4acd-b3c4-c02cdf077ebe
 - !<ScriptComponent/f77d9514-9634-4d27-a7a4-1ab4bf6a195e>
   PrefabRemaps:

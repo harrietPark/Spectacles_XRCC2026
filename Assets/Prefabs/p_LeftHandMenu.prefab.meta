@@ -42,7 +42,7 @@
   ScriptInputs:
     "":
       menuType: !<float> 1.000000
-      maxAngleToCamera: !<float> 30.000000
+      maxAngleToCamera: !<float> 45.000000
       maxNoTrackCount: !<float> 10.000000
       uiContainer: !<reference.SceneObject> 41bf5b99-916a-49b9-7471-981e8a0fade4
       distanceToHandOnXAxis: !<float> 3.000000
@@ -62,7 +62,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 1.500000}
+    Position: {x: 1.000000, y: -2.000000, z: 3.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false

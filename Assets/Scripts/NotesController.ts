@@ -108,7 +108,11 @@ export class NotesController extends BaseScriptComponent {
     private tryAnchorNote(): boolean {
         const uxFeedbackController = this.sceneManager.uxFeedbackController;
         const shouldPlayDwellCancelledSfx = (): boolean => {
-            return this.wasFingerDwellIndicatorActive && this.fingerDwellTimer > 0 && this.fingerDwellTimer < this.fingerDwellingTimeThreshold;
+            return (
+                this.wasFingerDwellIndicatorActive &&
+                this.fingerDwellTimer > 0 &&
+                this.fingerDwellTimer < this.fingerDwellingTimeThreshold
+            );
         };
         const resetDwellState = () => {
             this.fingerDwellTimer = 0;
@@ -157,7 +161,7 @@ export class NotesController extends BaseScriptComponent {
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
 
-        print("--- Spawned a note")
+        print("--- Spawned a note");
     }
 
     public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {
@@ -173,7 +177,9 @@ export class NotesController extends BaseScriptComponent {
         } else {
             const distance = Math.max(10, this.debugSpawnDistanceFromCamera);
             const cameraPosition = this.worldCameraTransform.getWorldPosition();
-            spawnPosition = cameraPosition.add(this.worldCameraTransform.forward.uniformScale(distance));
+            spawnPosition = cameraPosition.add(
+                this.worldCameraTransform.forward.uniformScale(distance),
+            );
         }
 
         this.onNoteSpawnedEvent.invoke({
@@ -193,7 +199,9 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private updateNotes(widgets: Widget[]) {
-        const updatedNotes = widgets.map((widget) => widget.getSceneObject().getComponent(Note.getTypeName()));
+        const updatedNotes = widgets.map((widget) =>
+            widget.getSceneObject().getComponent(Note.getTypeName()),
+        );
 
         const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
         for (const note of addedNotes) {

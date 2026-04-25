@@ -1,0 +1,63 @@
+- !<ObjectPrefab/042e149a-98fb-49a1-832a-d95000e41209>
+  PackagePath: ""
+  objects:
+    - !<own> bf8502a6-889a-4f8d-98a7-1d486635c352
+  LazyLoading: false
+  RetainAssets: true
+- !<ColliderComponent/12286a94-1ebc-4f41-8e4f-647f7eb6d736>
+  PrefabRemaps:
+    []
+  Name: Physics Collider
+  Enabled: true
+  Shape: !<Cone>
+    Axis: Y
+    Length: 18.000000
+    Radius: 6.000000
+  Matter: !<reference> 00000000-0000-0000-0000-000000000000
+  Filter: !<reference> 00000000-0000-0000-0000-000000000000
+  OverlapFilter: !<reference> 00000000-0000-0000-0000-000000000000
+  WorldSettings: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableSmoothing: false
+  PositionTension: 30.000000
+  RotationTension: 30.000000
+  ForceCompound: false
+  Intangible: false
+  ShowCollider: true
+- !<SceneObject/bf8502a6-889a-4f8d-98a7-1d486635c352>
+  PrefabRemaps:
+    - 12286a94-1ebc-4f41-8e4f-647f7eb6d736: 12286a94-1ebc-4f41-71b0-9b80814928c9
+    - bf8502a6-889a-4f8d-98a7-1d486635c352: bf8502a6-889a-4f8d-6758-e2b799ca3cad
+    - f3415b03-3955-4f1c-9bb7-1ea7b1df7142: f3415b03-3955-4f1c-6448-e1584e208ebd
+  Name: Cone_FOV
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -20.000000}
+    Rotation: {x: 90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 20.000000, y: 40.000000, z: 20.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> f3415b03-3955-4f1c-9bb7-1ea7b1df7142
+    - !<own> 12286a94-1ebc-4f41-8e4f-647f7eb6d736
+- !<RenderMeshVisual/f3415b03-3955-4f1c-9bb7-1ea7b1df7142>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: false
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 39c41230-4848-4655-99be-2f7445ed42b5
+  Mesh: !<reference> b01e5bc9-a847-4717-bd38-342798cf0bea
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
