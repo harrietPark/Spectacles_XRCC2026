@@ -55,7 +55,10 @@ export class Note extends BaseScriptComponent {
     @input
     @hint("Outline material that appears when the note is being edited")
     private editOutlineMaterial: Material;
-    @input private visibilityToggle: PinPointNoteSimpleVisibilityToggle;
+    @input
+    @allowUndefined
+    @hint("Optional: wire PinPointNoteSimpleVisibilityToggle to hide/show note when backgrounded.")
+    private visibilityToggle: PinPointNoteSimpleVisibilityToggle | undefined;
 
     // Voice recording setup
     @input
@@ -132,6 +135,9 @@ export class Note extends BaseScriptComponent {
     private effectiveSampleRate = DEFAULT_SAMPLE_RATE;
 
     // Note's states
+    private static nextNoteDataId = 1
+    /** Sturdy key for `INoteData.noteId` / SnapCloudPinManager (must differ per instance). */
+    private noteDataId = 0
     private createdAt: Date;
     private voiceTranscription: string = "";
     private croppedImageTexture?: Texture;
@@ -285,6 +291,7 @@ export class Note extends BaseScriptComponent {
 
         this.setupVoiceNoteControls();
         this.createdAt = new Date(Date.now());
+        this.noteDataId = Note.nextNoteDataId++
     }
 
     private onUpdate() {
@@ -316,7 +323,7 @@ export class Note extends BaseScriptComponent {
 
     public sendCompleteNoteData() {
         const noteData: INoteData = {
-            noteId: this.createdAt.getUTCSeconds(),
+            noteId: this.noteDataId,
             createdAt: this.createdAt,
             voiceTranscription: this.voiceTranscription,
             croppedImageTexture: this.croppedImageTexture,
@@ -326,11 +333,11 @@ export class Note extends BaseScriptComponent {
     }
 
     public pushToBackground() {
-        this.visibilityToggle.hide();
+        this.visibilityToggle?.hide();
     }
 
     public pullToForeground() {
-        this.visibilityToggle.show();
+        this.visibilityToggle?.show();
     }
 
     private setupVoiceNoteControls(): void {

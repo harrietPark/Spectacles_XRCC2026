@@ -17,9 +17,9 @@ export class SnapToWorldInit extends BaseScriptComponent {
     this.snapToWorld.isOn = false
 
     this.createEvent("OnStartEvent").bind(() => {
-      // Session is created as active on launch, so default button state should be "Stop Session".
-      this.snappingToggle.isToggledOn = true
-      this.snappingToggle.onStateChanged.add((isOn) => this.handleStopSessionTriggered(isOn))
+      // Off = no session in DB (show "Start Session" in the toggle UI). On = live session (show "End Session").
+      this.snappingToggle.isToggledOn = false
+      this.snappingToggle.onStateChanged.add((isOn) => this.handleSessionToggleChanged(isOn))
     })
 
     this.createEvent("UpdateEvent").bind(() => {
@@ -27,7 +27,7 @@ export class SnapToWorldInit extends BaseScriptComponent {
     })
   }
 
-  private async handleStopSessionTriggered(isToggledOn: boolean) {
+  private async handleSessionToggleChanged(isToggledOn: boolean) {
     if (this.stopRequested) {
       return
     }
@@ -40,13 +40,18 @@ export class SnapToWorldInit extends BaseScriptComponent {
         return
       }
 
-      const shouldStopSession = isToggledOn === true
-      if (shouldStopSession) {
-        const stopped = await sessionManager.stopActiveSession()
-        print(`[SnapToWorldInit] Stop Session requested. success=${stopped}`)
-      } else {
+      if (isToggledOn) {
         const started = await sessionManager.startNewSession()
         print(`[SnapToWorldInit] Start Session requested. success=${started}`)
+      } else {
+        if (!sessionManager.getSessionId()) {
+          print(
+            "[SnapToWorldInit] End Session ignored: no session id yet (initial toggle fire or use Start first)."
+          )
+          return
+        }
+        const stopped = await sessionManager.stopActiveSession()
+        print(`[SnapToWorldInit] End Session requested. success=${stopped}`)
       }
     } finally {
       // Keep button interactive for the next stop/start cycle.

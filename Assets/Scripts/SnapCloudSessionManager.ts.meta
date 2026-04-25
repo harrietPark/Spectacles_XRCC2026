@@ -33,6 +33,7 @@
     employeeId: false
     sessionsTableName: false
     supabaseProject: false
+    visitSummaryFunctionName: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -49,6 +50,7 @@
       customerEmail: demo@pinpoint.local
       customersTableName: customers
       sessionsTableName: sessions
+      visitSummaryFunctionName: summaries-table
   ScriptTypes:
     -
       {}
@@ -60,3 +62,4 @@
     - '// @input string customerEmail = "demo@pinpoint.local" {"hint":"Email written when auto-creating the dummy customer row."}'
     - '// @input string customersTableName = "customers" {"hint":"Supabase table name for customers."}'
     - '// @input string sessionsTableName = "sessions" {"hint":"Supabase table name for sessions."}'
+    - '// @input string visitSummaryFunctionName = "summaries-table" {"hint":"Edge function name (maps to {project url}/functions/v1/{slug}, e.g. summaries-table). Empty = skip invoke."}'
