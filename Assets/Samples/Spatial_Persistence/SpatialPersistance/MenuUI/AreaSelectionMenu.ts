@@ -6,9 +6,9 @@ import {AreaSelectionButton} from "./AreaSelectionButton"
 export const NEW_AREA_NAME = "New Area"
 const BUTTON_VERTICAL_SPACING = 3
 const MENU_TOP_PADDING_Y = 2
-const MENU_BOTTOM_PADDING_Y = 0.5
-const NEW_AREA_Y = 1.5
-const CLEAR_ALL_DATA_Y = -4.5
+const MENU_BOTTOM_PADDING_Y = 2.0
+const NEW_AREA_Y = 3.0
+const CLEAR_ALL_DATA_Y = -3.0
 const MENU_WIDTH_REDUCTION = 3
 
 export type AreaSelectEvent = {
