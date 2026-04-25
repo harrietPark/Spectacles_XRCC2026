@@ -4,6 +4,10 @@ import {AreaDeleteButton} from "./AreaDeleteButton"
 import {AreaSelectionButton} from "./AreaSelectionButton"
 
 export const NEW_AREA_NAME = "New Area"
+const BUTTON_VERTICAL_SPACING = 3
+const MENU_PADDING_Y = 2
+const NEW_AREA_Y = 1.5
+const CLEAR_ALL_DATA_Y = -7.5
 
 export type AreaSelectEvent = {
   areaName: string
@@ -72,27 +76,22 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       return
     }
 
-    // Reserve one extra row for the session button shown near the bottom of MainMenu.
-    const height = 3 * (areaNames.length - 1) + 6 + 6 + 4 + 3
+    const existingAreaNames = [...areaNames]
+    const highestAreaY = NEW_AREA_Y + existingAreaNames.length * BUTTON_VERTICAL_SPACING
+    const height = highestAreaY - CLEAR_ALL_DATA_Y + MENU_PADDING_Y * 2
     this.container.innerSize = new vec2(this.container.innerSize.x, height)
 
     this.selectionEnabled = true
 
-    areaNames.push(NEW_AREA_NAME)
-
-    let yOffset = height / 2 - 2
-    for (const areaName of areaNames) {
+    let yOffset = highestAreaY
+    for (const areaName of existingAreaNames) {
       const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
 
       const areaSelectionButton = prefab.getComponent(AreaSelectionButton.getTypeName())
 
-      if (areaName === NEW_AREA_NAME) {
-        yOffset -= 3
-      }
-
       areaSelectionButton.getTransform().setLocalPosition(new vec3(0, yOffset, 0))
 
-      yOffset -= 3
+      yOffset -= BUTTON_VERTICAL_SPACING
 
       areaSelectionButton.text = areaName
 
@@ -101,47 +100,52 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
         // Add an extra AreaSelectionButton for new areas.
         // TODO: Add text input to area creation.
-        if (areaName === NEW_AREA_NAME) {
-          this.onAreaSelectEvent.invoke({
-            areaName: this.findNextAreaName(areaNames),
-            isNew: true
-          })
-        } else {
-          this.onAreaSelectEvent.invoke({areaName: areaName, isNew: false})
-        }
+        this.onAreaSelectEvent.invoke({areaName: areaName, isNew: false})
       })
 
       const material = prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
 
-      if (areaName === NEW_AREA_NAME) {
-        // TODO: Finalize color.
-        material.mainPass.baseColor = new vec4(158 / 255, 142 / 255, 0 / 255, 1)
-      } else {
-        const deleteButtonObject = this.areaDeleteButtonPrefab.instantiate(this.sceneObject)
-        deleteButtonObject.getTransform().setLocalPosition(new vec3(-7, yOffset + 3, 0))
-        const deleteButton = deleteButtonObject.getComponent(AreaDeleteButton.getTypeName())
-        deleteButton.initialize(this.capsuleButtonMesh, areaSelectionButton.buttonMesh)
+      const deleteButtonObject = this.areaDeleteButtonPrefab.instantiate(this.sceneObject)
+      deleteButtonObject.getTransform().setLocalPosition(new vec3(-7, yOffset + BUTTON_VERTICAL_SPACING, 0))
+      const deleteButton = deleteButtonObject.getComponent(AreaDeleteButton.getTypeName())
+      deleteButton.initialize(this.capsuleButtonMesh, areaSelectionButton.buttonMesh)
 
-        let isConfirmed = false
-        deleteButton.onSelect.add(() => {
-          if (isConfirmed) {
-            this.onAreaDeleteEvent.invoke({
-              areaName: areaName,
-              isConfirmed: isConfirmed
-            })
-          } else {
-            this.onAreaDeleteEvent.invoke({
-              areaName: areaName,
-              isConfirmed: isConfirmed
-            })
-            isConfirmed = true
-            deleteButton.setIsConfirming()
-          }
-        })
-      }
+      let isConfirmed = false
+      deleteButton.onSelect.add(() => {
+        if (isConfirmed) {
+          this.onAreaDeleteEvent.invoke({
+            areaName: areaName,
+            isConfirmed: isConfirmed
+          })
+        } else {
+          this.onAreaDeleteEvent.invoke({
+            areaName: areaName,
+            isConfirmed: isConfirmed
+          })
+          isConfirmed = true
+          deleteButton.setIsConfirming()
+        }
+      })
 
       prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = material
     }
+
+    const newAreaPrefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
+    const newAreaButton = newAreaPrefab.getComponent(AreaSelectionButton.getTypeName())
+    newAreaButton.getTransform().setLocalPosition(new vec3(0, NEW_AREA_Y, 0))
+    newAreaButton.text = NEW_AREA_NAME
+    newAreaButton.onSelect.add(() => {
+      this.selectionEnabled = false
+      this.onAreaSelectEvent.invoke({
+        areaName: this.findNextAreaName(existingAreaNames),
+        isNew: true
+      })
+    })
+
+    const newAreaMaterial = newAreaPrefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
+    // TODO: Finalize color.
+    newAreaMaterial.mainPass.baseColor = new vec4(158 / 255, 142 / 255, 0 / 255, 1)
+    newAreaPrefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = newAreaMaterial
 
     // Add an extra AreaSelectionButton to clear all previously serialized areas, then re-prompt for area selection.
     const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
@@ -159,10 +163,7 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       }
     })
 
-    // Add extra spacing below "New Area" so the session button has its own row.
-    yOffset -= 6
-
-    clearAllDataButton.getTransform().setLocalPosition(new vec3(0, yOffset, 0))
+    clearAllDataButton.getTransform().setLocalPosition(new vec3(0, CLEAR_ALL_DATA_Y, 0))
 
     const material = prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
     material.mainPass.baseColor = new vec4(168 / 255, 34 / 255, 34 / 255, 1)
