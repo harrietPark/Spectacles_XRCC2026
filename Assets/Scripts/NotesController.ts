@@ -92,10 +92,9 @@ export class NotesController extends BaseScriptComponent {
         }
 
         // Setup FOV collider to only detect overlap with Notes
-        // const notesFilter = Physics.Filter.create();
-        // notesFilter.onlyLayers = LayerSet.fromNumber(2);
-        // this.fovCollider.overlapFilter = notesFilter;
-        this.fovCollider.onOverlapEnter.add(()=>{print("--- Overlap Enter")});
+        const notesFilter = Physics.Filter.create();
+        notesFilter.onlyLayers = LayerSet.fromNumber(1);
+        this.fovCollider.overlapFilter = notesFilter;
         this.fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
 
     }
@@ -141,16 +140,13 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private updateNotesInFOV(overlap: OverlapStayEventArgs) {
-        print("--- Updating notes in FOV");
         if (this.prevNotesObjInFOV.length == 0) {
             this.prevNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
             return;
         }
         const currNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
         const addedNotesObjInFOV = currNotesObjInFOV.filter((obj) => !this.prevNotesObjInFOV.includes(obj));
-        print("--- Added notes in FOV: " + addedNotesObjInFOV.length);
         const removedNotesObjInFOV = this.prevNotesObjInFOV.filter((obj) => !currNotesObjInFOV.includes(obj));
-        print("--- Removed notes in FOV: " + removedNotesObjInFOV.length);
         for (const note of addedNotesObjInFOV) {
             note.getComponent(Note.getTypeName())?.pullToForeground();
         }
