@@ -31,6 +31,7 @@
     debugSpawnRunsCaptureAndCrop: false
     fingerDwellRadius: false
     fingerDwellingTimeThreshold: false
+    fovCollider: false
     noteSpawnYawOffsetDegrees: false
     pictureController: false
   ScriptTypesHidden:
@@ -46,6 +47,7 @@
       fingerDwellingTimeThreshold: !<float> 3.000000
       fingerDwellRadius: !<float> 2.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      fovCollider: !<reference.ColliderComponent> 00000000-0000-0000-0000-000000000000
       noteSpawnYawOffsetDegrees: !<float> 180.000000
       debugSpawnDistanceFromCamera: !<float> 40.000000
       debugSpawnRunsCaptureAndCrop: false
@@ -54,7 +56,7 @@
       {}
   InputLines:
     - // @input AssignableType areaManager
-    - '// @ui {"widget":"group_start", "label":"Note Anchoring Setup"}'
+    - '// @ui {"widget":"group_start", "label":"Note Spawning Settings"}'
     - // @input float fingerDwellingTimeThreshold = 2
     - // @input float fingerDwellRadius = 1
     - '// @ui {"widget":"group_end"}'
@@ -62,6 +64,9 @@
     - // @input AssignableType_1 pictureController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Note Visual Settings"}'
+    - // @input Component.ColliderComponent fovCollider
+    - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Spawn Rotation"}'
     - '// @input float noteSpawnYawOffsetDegrees = 180 {"hint":"Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes."}'
     - '// @ui {"widget":"group_end"}'

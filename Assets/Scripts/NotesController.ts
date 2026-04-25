@@ -22,7 +22,7 @@ export class NotesController extends BaseScriptComponent {
     @input
     @allowUndefined
     private areaManager: AreaManager | undefined;
-    @ui.group_start("Note Anchoring Setup")
+    @ui.group_start("Note Spawning Settings")
     @input
     private fingerDwellingTimeThreshold: number = 2; // in seconds
     @input private fingerDwellRadius: number = 1; // in cm
@@ -33,6 +33,9 @@ export class NotesController extends BaseScriptComponent {
     private pictureController: PictureController | undefined;
     @ui.group_end
     @ui.separator
+    @ui.group_start("Note Visual Settings")
+    @input private fovCollider: ColliderComponent;
+    @ui.group_end
     @ui.group_start("Spawn Rotation")
     @input
     @hint("Additional yaw offset so note front faces the user. 180 fixes back-facing note meshes.")
@@ -53,6 +56,9 @@ export class NotesController extends BaseScriptComponent {
     private worldCameraTransform = WorldCameraFinderProvider.getInstance().getTransform();
     private fingerDwellTimer: number = 0;
     private prevHandPosition: vec3 = vec3.zero();
+
+    // User looks away and notes minimised
+    private prevNotesObjInFOV: SceneObject[] = [];
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
@@ -84,6 +90,12 @@ export class NotesController extends BaseScriptComponent {
                 "[NoteController] areaManager is not assigned; crop-to-latest-note sync is disabled.",
             );
         }
+
+        // Setup FOV collider to only detect overlap with Notes
+        const notesFilter = Physics.Filter.create();
+        notesFilter.onlyLayers = LayerSet.fromNumber(2);
+        this.fovCollider.overlapFilter = notesFilter;
+        this.fovCollider.onOverlapStay.add((OverlapStayEventArgs) => this.updateNotesInFOV(OverlapStayEventArgs))
     }
 
     private onUpdate() {
@@ -103,6 +115,47 @@ export class NotesController extends BaseScriptComponent {
         this.sceneManager.uxFeedbackController.deactivateIndexTipHighlight();
         this.sceneManager.uxFeedbackController.deactivateDwellIndicator();
         this.isNoteAnchoringActive = false;
+    }
+
+    private updateNotes(widgets: Widget[]) {
+        const updatedNotes = widgets.map((widget) =>
+            widget.getSceneObject().getComponent(Note.getTypeName()),
+        );
+
+        const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
+        for (const note of addedNotes) {
+            note.onNoteCompleted.add((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
+        }
+
+        const removedNotes = this.notes.filter((note) => !updatedNotes.includes(note));
+        for (const note of removedNotes) {
+            note.onNoteCompleted.remove((noteData) => {
+                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
+            });
+        }
+        this.notes = updatedNotes;
+    }
+
+    private updateNotesInFOV(overlap: OverlapStayEventArgs) {
+        print("--- Updating notes in FOV");
+        if (this.prevNotesObjInFOV.length == 0) {
+            this.prevNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
+            return;
+        }
+        const currNotesObjInFOV = overlap.currentOverlaps.map((overlap)=> overlap.collider.getSceneObject());
+        const addedNotesObjInFOV = currNotesObjInFOV.filter((obj) => !this.prevNotesObjInFOV.includes(obj));
+        print("--- Added notes in FOV: " + addedNotesObjInFOV.length);
+        const removedNotesObjInFOV = this.prevNotesObjInFOV.filter((obj) => !currNotesObjInFOV.includes(obj));
+        print("--- Removed notes in FOV: " + removedNotesObjInFOV.length);
+        for (const note of addedNotesObjInFOV) {
+            note.getComponent(Note.getTypeName())?.pullToForeground();
+        }
+        for (const note of removedNotesObjInFOV) {
+            note.getComponent(Note.getTypeName())?.pushToBackground();
+        }
+        this.prevNotesObjInFOV = currNotesObjInFOV;
     }
 
     private tryAnchorNote(): boolean {
@@ -196,27 +249,6 @@ export class NotesController extends BaseScriptComponent {
         }
 
         print("--- Spawned debug note in editor");
-    }
-
-    private updateNotes(widgets: Widget[]) {
-        const updatedNotes = widgets.map((widget) =>
-            widget.getSceneObject().getComponent(Note.getTypeName()),
-        );
-
-        const addedNotes = updatedNotes.filter((note) => !this.notes.includes(note));
-        for (const note of addedNotes) {
-            note.onNoteCompleted.add((noteData) => {
-                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
-            });
-        }
-
-        const removedNotes = this.notes.filter((note) => !updatedNotes.includes(note));
-        for (const note of removedNotes) {
-            note.onNoteCompleted.remove((noteData) => {
-                this.sceneManager.sendCompleteNoteDataToBackend(noteData);
-            });
-        }
-        this.notes = updatedNotes;
     }
 
     private enableCrop() {

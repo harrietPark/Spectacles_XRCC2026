@@ -52,6 +52,7 @@
       fingerDwellingTimeThreshold: !<float> 1.000000
       fingerDwellRadius: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      fovCollider: !<reference.ColliderComponent> 5cb45c1b-2494-4457-89cb-a4da57660c4b
       noteSpawnYawOffsetDegrees: !<float> 180.000000
       debugSpawnDistanceFromCamera: !<float> 40.000000
       debugSpawnRunsCaptureAndCrop: false

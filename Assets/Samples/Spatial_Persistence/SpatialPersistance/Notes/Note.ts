@@ -321,6 +321,14 @@ export class Note extends BaseScriptComponent {
         this.onNoteCompletedEvent.invoke(noteData);
     }
 
+    public pushToBackground() {
+        print("--- Pushing note to background");
+    }
+
+    public pullToForeground() {
+        print("--- Pulling note to foreground");
+    }
+
     private setupVoiceNoteControls(): void {
         if (!this.recordButton && !this.playbackButton) {
             return;
