@@ -24,6 +24,7 @@
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
     - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
+    - !<own> 7ba1f101-6ec2-40ad-92b0-869b2c563bca
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -2823,6 +2824,22 @@
     []
   Components:
     []
+- !<ScriptComponent/629cbac0-8806-4b29-8d96-4ce937a08d84>
+  PrefabRemaps:
+    []
+  Name: SnapCloudARSpawnManager
+  Enabled: true
+  ScriptAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/63e52055-056a-4fdb-aa8d-8e21a73445d7>
   PrefabRemaps:
     []
@@ -3490,6 +3507,21 @@
     []
   Components:
     - !<own> 48bba20c-c647-437a-a0ad-7f856429d087
+- !<SceneObject/7ba1f101-6ec2-40ad-92b0-869b2c563bca>
+  PrefabRemaps:
+    []
+  Name: SnapCloudARSpawnManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 629cbac0-8806-4b29-8d96-4ce937a08d84
 - !<SceneObject/7ce82029-ae11-42b7-9d76-68feceb2729e>
   PrefabRemaps:
     []
