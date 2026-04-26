@@ -26,6 +26,7 @@ const LOCALIZATION_TIMEOUT_MS = 15000
 const DEBUG_SPAWN_POP_DELAY_SECONDS = 2.0
 const DEBUG_FALLBACK_POP_DURATION_SECONDS = 0.45
 const DEBUG_FALLBACK_POP_START_SCALE_MULTIPLIER = 0.25
+const SPAWN_SAVE_AFTER_POP_SECONDS = 0.8
 
 const WIDGET_PARENT_MESH_VISUAL_INDEX = 0
 
@@ -329,8 +330,16 @@ export class AreaManager extends BaseScriptComponent {
       )
 
       this.toggleOffAllVoiceNotes()
-
-      this.saveWidgets()
+      // Save after spawn-pop animation, otherwise we can serialize the temporary
+      // "shrunk" scale and restore tiny notes when revisiting an area.
+      if (event.fromDwell === true) {
+        const extraDebugDelay = event.fromDebugSpawn === true ? DEBUG_SPAWN_POP_DELAY_SECONDS : 0
+        setTimeout(() => {
+          this.saveWidgets()
+        }, extraDebugDelay + SPAWN_SAVE_AFTER_POP_SECONDS)
+      } else {
+        this.saveWidgets()
+      }
     }
   }
 
@@ -388,7 +397,24 @@ export class AreaManager extends BaseScriptComponent {
       )
 
       const widget = widgetObject.getComponent(Widget.getTypeName())
-      widget.transform.setLocalScale(widgetMats[i].column2)
+      const serializedScale = widgetMats[i].column2
+      const minimumScale = 0.05
+      const hasValidSerializedScale =
+        isFinite(serializedScale.x) &&
+        isFinite(serializedScale.y) &&
+        isFinite(serializedScale.z) &&
+        Math.abs(serializedScale.x) > 0 &&
+        Math.abs(serializedScale.y) > 0 &&
+        Math.abs(serializedScale.z) > 0
+      const fallbackScale = vec3.one().uniformScale(Math.max(minimumScale, this.spawnedWidgetScaleMultiplier))
+      const restoredScale = hasValidSerializedScale
+        ? new vec3(
+            Math.max(minimumScale, Math.abs(serializedScale.x)),
+            Math.max(minimumScale, Math.abs(serializedScale.y)),
+            Math.max(minimumScale, Math.abs(serializedScale.z))
+          )
+        : fallbackScale
+      widget.transform.setLocalScale(restoredScale)
       widget.text = widgetTexts[i]
     }
   }
