@@ -82,19 +82,22 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
 
   private static readonly TAG = "[SnapCloudARSpawnManager]"
   private static readonly SUPPORTED_EXTENSIONS: {[name: string]: boolean} = {
-    KHR_materials_unlit: true,
-    KHR_texture_transform: true,
+    KHR_texture_transform: true
+  }
+  private static readonly BLOCKED_EXTENSIONS: {[name: string]: boolean} = {
+    KHR_draco_mesh_compression: true,
+    KHR_mesh_quantization: true,
     KHR_materials_pbrSpecularGlossiness: true,
-    KHR_materials_emissive_strength: true,
-    KHR_materials_ior: true,
     KHR_materials_specular: true,
+    KHR_materials_ior: true,
     KHR_materials_clearcoat: true,
     KHR_materials_sheen: true,
     KHR_materials_transmission: true,
     KHR_materials_volume: true,
+    KHR_materials_emissive_strength: true,
     KHR_materials_variants: true,
-    KHR_lights_punctual: true,
-    KHR_mesh_quantization: true
+    KHR_materials_unlit: true,
+    KHR_lights_punctual: true
   }
 
   private internetModule: InternetModule = require("LensStudio:InternetModule") as InternetModule
@@ -287,7 +290,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
 
   // ----------------------------------------------------------- GLB preflight
 
-  private async preflightGlbUrl(modelUrl: string): Promise<{ok: true} | {ok: false; reason: string}> {
+  private async preflightGlbUrl(modelUrl: string): Promise<{ok: boolean; reason?: string}> {
     this.debugLog("preflight: fetching GLB header for inspection")
     let resp: Response
     try {
@@ -329,6 +332,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       return {ok: false, reason: `Could not parse GLB JSON chunk: ${this.describeError(e)}`}
     }
 
+    const used: string[] = meta.extensionsUsed || []
     const required: string[] = meta.extensionsRequired || []
     for (let i = 0; i < required.length; i++) {
       if (!SnapCloudARSpawnManager.SUPPORTED_EXTENSIONS[required[i]]) {
@@ -338,6 +342,17 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
             `GLB requires unsupported extension "${required[i]}". ` +
             `Lens Studio cannot instantiate this file. ` +
             `(extensionsRequired=${JSON.stringify(required)})`
+        }
+      }
+    }
+    for (let i = 0; i < used.length; i++) {
+      if (SnapCloudARSpawnManager.BLOCKED_EXTENSIONS[used[i]]) {
+        return {
+          ok: false,
+          reason:
+            `GLB still uses Lens-unsafe extension "${used[i]}". ` +
+            `Converter must strip it before Spectacles can instantiate safely. ` +
+            `(extensionsUsed=${JSON.stringify(used)})`
         }
       }
     }
@@ -380,7 +395,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
 
       if (this.preflightGlb) {
         this.preflightGlbUrl(modelUrl).then((verdict) => {
-          if (!verdict.ok) return reject(verdict.reason)
+          if (!verdict.ok) return reject(verdict.reason || "GLB preflight rejected the file.")
           this.debugLog("preflight: GLB looks compatible; proceeding to native load")
           startNativeLoad()
         })

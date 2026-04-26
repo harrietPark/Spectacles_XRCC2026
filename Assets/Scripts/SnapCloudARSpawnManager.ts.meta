@@ -26,7 +26,18 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    cameraObject: false
+    debugLogs: false
+    faceCamera: false
+    fixedHeightOffset: false
+    followDistance: false
+    lockToCameraHeight: false
+    pollIntervalSeconds: false
+    preflightGlb: false
+    replacePreviousSpawn: false
+    tableName: false
+    useAsyncInstantiate: false
+    useGltfSettings: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +47,31 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      followDistance: !<float> 50.000000
+      lockToCameraHeight: true
+      fixedHeightOffset: !<float> 0.000000
+      faceCamera: true
+      replacePreviousSpawn: true
+      useAsyncInstantiate: false
+      useGltfSettings: false
+      preflightGlb: true
+      pollIntervalSeconds: 1.500000
+      tableName: ar_spawn_requests
+      debugLogs: true
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject the spawned model should follow."}'
+    - '// @input float followDistance = 50 {"hint":"Centimetres in front of the camera (50 = 0.5 m)."}'
+    - "// @input bool lockToCameraHeight = true {\"hint\":\"Match the camera's current Y so the model rises/falls with the user.\"}"
+    - '// @input float fixedHeightOffset {"hint":"Centimetres added to the locked height (e.g. -10 to sit 10 cm below eye level)."}'
+    - '// @input bool faceCamera = true {"hint":"Yaw the model so its forward axis points at the camera each frame."}'
+    - '// @input bool replacePreviousSpawn = true {"hint":"Destroy the previously spawned model before loading a new one."}'
+    - '// @input bool useAsyncInstantiate {"hint":"Use async GLB instantiation. Leave off if Lens Studio crashes during instantiate progress."}'
+    - '// @input bool useGltfSettings {"hint":"Use GltfSettings during instantiate. Leave off and let the script apply a manual 100x scale instead."}'
+    - '// @input bool preflightGlb = true {"hint":"Download the GLB header and reject incompatible required extensions before instantiating. Defense-in-depth in case a non-converted URL leaks into the table."}'
+    - '// @input float pollIntervalSeconds = 1.5 {"hint":"How often (seconds) to poll the table for pending requests."}'
+    - '// @input string tableName = "ar_spawn_requests" {"hint":"Supabase table name for AR spawn requests."}'
+    - '// @input bool debugLogs = true {"hint":"Enable verbose per-step logs. Errors and final outcomes always log."}'
