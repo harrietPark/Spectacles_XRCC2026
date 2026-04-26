@@ -1,20 +1,20 @@
-- !<AssetImportMetadata/2d37728b-e371-4293-80fb-a689ad7bc892>
+- !<AssetImportMetadata/bcba89cb-ce4e-47d5-937e-ab8e8a101b56>
   ImportedAssetIds:
-    TypeScriptAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+    TypeScriptAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
   ImporterName: TypeScriptAssetImporter
-  PrimaryAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+  PrimaryAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
   PackageType: NotAPackage
   LegacyPackagePolicy: ~
   ExtraData:
     {}
   AssetDataMap:
-    TypeScriptAsset: !<own> 40bc16b1-d323-4ca6-b7d7-9df285bca72b
+    TypeScriptAsset: !<own> 798556a2-934d-4948-9c8f-6283d1d988f6
   DependentFiles:
     []
   ImporterSettings: !<AssetImporterSettings>
     {}
   CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
-- !<TypeScriptAssetData/40bc16b1-d323-4ca6-b7d7-9df285bca72b>
+- !<TypeScriptAssetData/798556a2-934d-4948-9c8f-6283d1d988f6>
   SvgIcon: ""
   SetupScript:
     code: ""
@@ -22,22 +22,20 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: e7ba6e3f-01cc-4afe-84b0-2c6c028bef25
+  ComponentUid: 45434aa4-46d3-49ce-bb8a-26dc803c1ccc
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
     cameraObject: false
     debugLogs: false
     faceCamera: false
-    fixedHeightOffset: false
-    followDistance: false
-    lockToCameraHeight: false
+    heightOffset: false
+    hideOnStart: false
+    ignoreEditorPreview: false
     pollIntervalSeconds: false
-    preflightGlb: false
-    replacePreviousSpawn: false
+    spawnDistance: false
     tableName: false
-    useAsyncInstantiate: false
-    useGltfSettings: false
+    targetModel: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -47,31 +45,27 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      followDistance: !<float> 50.000000
-      lockToCameraHeight: true
-      fixedHeightOffset: !<float> 0.000000
+    - targetModel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      spawnDistance: !<float> 50.000000
+      heightOffset: !<float> 0.000000
       faceCamera: true
-      replacePreviousSpawn: true
-      useAsyncInstantiate: false
-      useGltfSettings: false
-      preflightGlb: true
-      pollIntervalSeconds: 1.500000
+      hideOnStart: true
+      ignoreEditorPreview: true
+      pollIntervalSeconds: !<float> 1.000000
       tableName: ar_spawn_requests
       debugLogs: true
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject the spawned model should follow."}'
-    - '// @input float followDistance = 50 {"hint":"Centimetres in front of the camera (50 = 0.5 m)."}'
-    - "// @input bool lockToCameraHeight = true {\"hint\":\"Match the camera's current Y so the model rises/falls with the user.\"}"
-    - '// @input float fixedHeightOffset {"hint":"Centimetres added to the locked height (e.g. -10 to sit 10 cm below eye level)."}'
-    - '// @input bool faceCamera = true {"hint":"Yaw the model so its forward axis points at the camera each frame."}'
-    - '// @input bool replacePreviousSpawn = true {"hint":"Destroy the previously spawned model before loading a new one."}'
-    - '// @input bool useAsyncInstantiate {"hint":"Use async GLB instantiation. Leave off if Lens Studio crashes during instantiate progress."}'
-    - '// @input bool useGltfSettings {"hint":"Use GltfSettings during instantiate. Leave off and let the script apply a manual 100x scale instead."}'
-    - '// @input bool preflightGlb = true {"hint":"Download the GLB header and reject incompatible required extensions before instantiating. Defense-in-depth in case a non-converted URL leaks into the table."}'
-    - '// @input float pollIntervalSeconds = 1.5 {"hint":"How often (seconds) to poll the table for pending requests."}'
+    - '// @input SceneObject targetModel {"hint":"Pre-placed 3D model root to show when a spawn request arrives."}'
+    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject used to place the target model in front of the user."}'
+    - '// @input float spawnDistance = 50 {"hint":"Centimetres in front of the camera (50 = 0.5 m)."}'
+    - '// @input float heightOffset {"hint":"Centimetres added to camera height when placing the model."}'
+    - '// @input bool faceCamera = true {"hint":"Rotate the model so it faces the camera."}'
+    - '// @input bool hideOnStart = true {"hint":"Hide targetModel on start."}'
+    - '// @input bool ignoreEditorPreview = true {"hint":"If true, Lens Studio Preview will not claim web spawn requests. Leave on when testing on Spectacles."}'
+    - '// @input float pollIntervalSeconds = 1 {"hint":"How often (seconds) to poll ar_spawn_requests."}'
     - '// @input string tableName = "ar_spawn_requests" {"hint":"Supabase table name for AR spawn requests."}'
-    - '// @input bool debugLogs = true {"hint":"Enable verbose per-step logs. Errors and final outcomes always log."}'
+    - '// @input bool debugLogs = true {"hint":"Enable verbose logs."}'
