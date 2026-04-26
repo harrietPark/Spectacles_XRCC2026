@@ -92,7 +92,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
 
   private static instanceRef: SnapCloudPinManager | null = null
 
-  // noteId (note.createdAt.getUTCSeconds()) → Supabase pin UUID
+  // noteId (per-Note instance, see Note.ts noteDataId) → Supabase pin UUID
   private pinIdByNoteId: Map<number, string> = new Map()
   // noteIds currently being written (prevents double-write on rapid re-record)
   private inflightByNoteId: Set<number> = new Set()

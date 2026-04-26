@@ -4,6 +4,11 @@ import {AreaDeleteButton} from "./AreaDeleteButton"
 import {AreaSelectionButton} from "./AreaSelectionButton"
 
 export const NEW_AREA_NAME = "New Area"
+const BUTTON_VERTICAL_SPACING = 3
+const MENU_TOP_PADDING_Y = 2
+const MENU_BOTTOM_PADDING_Y = 2.0
+const FIRST_AREA_Y = 3.0
+const MENU_WIDTH_REDUCTION = 3
 
 export type AreaSelectEvent = {
   areaName: string
@@ -39,6 +44,7 @@ export class AreaSelectionMenu extends BaseScriptComponent {
   readonly onAreaClear: PublicApi<AreaClearEvent> = this.onAreaClearEvent.publicApi()
 
   private container: ContainerFrame | undefined
+  private baseContainerWidth: number = 0
 
   onAwake() {
     this.container = this.findContainerFrame()
@@ -51,6 +57,7 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
     this.areaSelectionButtonPrefab = requireAsset("Prefabs/AreaSelectionButtonPrefab") as ObjectPrefab
     this.areaDeleteButtonPrefab = requireAsset("Prefabs/AreaDeleteButtonPrefab") as ObjectPrefab
+    this.baseContainerWidth = this.container.innerSize.x
 
     this.capsuleButtonMesh = requireAsset(
       "SpectaclesInteractionKit.lspkg/Assets/Meshes/ButtonCapsuleMesh"
@@ -72,26 +79,27 @@ export class AreaSelectionMenu extends BaseScriptComponent {
       return
     }
 
-    const height = 3 * (areaNames.length - 1) + 6 + 6 + 4
-    this.container.innerSize = new vec2(this.container.innerSize.x, height)
+    const existingAreaNames = [...areaNames]
+    const highestAreaY = FIRST_AREA_Y
+    const lowestAreaY =
+      existingAreaNames.length > 0
+        ? FIRST_AREA_Y - (existingAreaNames.length - 1) * BUTTON_VERTICAL_SPACING
+        : FIRST_AREA_Y
+    const height = highestAreaY - lowestAreaY + MENU_TOP_PADDING_Y + MENU_BOTTOM_PADDING_Y
+    const menuWidth = Math.max(1, this.baseContainerWidth - MENU_WIDTH_REDUCTION)
+    this.container.innerSize = new vec2(menuWidth, height)
 
     this.selectionEnabled = true
 
-    areaNames.push(NEW_AREA_NAME)
-
-    let yOffset = height / 2 - 2
-    for (const areaName of areaNames) {
+    let yOffset = highestAreaY
+    for (const areaName of existingAreaNames) {
       const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
 
       const areaSelectionButton = prefab.getComponent(AreaSelectionButton.getTypeName())
 
-      if (areaName === NEW_AREA_NAME) {
-        yOffset -= 3
-      }
-
       areaSelectionButton.getTransform().setLocalPosition(new vec3(0, yOffset, 0))
 
-      yOffset -= 3
+      yOffset -= BUTTON_VERTICAL_SPACING
 
       areaSelectionButton.text = areaName
 
@@ -100,71 +108,36 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
         // Add an extra AreaSelectionButton for new areas.
         // TODO: Add text input to area creation.
-        if (areaName === NEW_AREA_NAME) {
-          this.onAreaSelectEvent.invoke({
-            areaName: this.findNextAreaName(areaNames),
-            isNew: true
-          })
-        } else {
-          this.onAreaSelectEvent.invoke({areaName: areaName, isNew: false})
-        }
+        this.onAreaSelectEvent.invoke({areaName: areaName, isNew: false})
       })
 
       const material = prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
 
-      if (areaName === NEW_AREA_NAME) {
-        // TODO: Finalize color.
-        material.mainPass.baseColor = new vec4(158 / 255, 142 / 255, 0 / 255, 1)
-      } else {
-        const deleteButtonObject = this.areaDeleteButtonPrefab.instantiate(this.sceneObject)
-        deleteButtonObject.getTransform().setLocalPosition(new vec3(-7, yOffset + 3, 0))
-        const deleteButton = deleteButtonObject.getComponent(AreaDeleteButton.getTypeName())
-        deleteButton.initialize(this.capsuleButtonMesh, areaSelectionButton.buttonMesh)
+      const deleteButtonObject = this.areaDeleteButtonPrefab.instantiate(this.sceneObject)
+      deleteButtonObject.getTransform().setLocalPosition(new vec3(-7, yOffset + BUTTON_VERTICAL_SPACING, 0))
+      const deleteButton = deleteButtonObject.getComponent(AreaDeleteButton.getTypeName())
+      deleteButton.initialize(this.capsuleButtonMesh, areaSelectionButton.buttonMesh)
 
-        let isConfirmed = false
-        deleteButton.onSelect.add(() => {
-          if (isConfirmed) {
-            this.onAreaDeleteEvent.invoke({
-              areaName: areaName,
-              isConfirmed: isConfirmed
-            })
-          } else {
-            this.onAreaDeleteEvent.invoke({
-              areaName: areaName,
-              isConfirmed: isConfirmed
-            })
-            isConfirmed = true
-            deleteButton.setIsConfirming()
-          }
-        })
-      }
+      let isConfirmed = false
+      deleteButton.onSelect.add(() => {
+        if (isConfirmed) {
+          this.onAreaDeleteEvent.invoke({
+            areaName: areaName,
+            isConfirmed: isConfirmed
+          })
+        } else {
+          this.onAreaDeleteEvent.invoke({
+            areaName: areaName,
+            isConfirmed: isConfirmed
+          })
+          isConfirmed = true
+          deleteButton.setIsConfirming()
+        }
+      })
 
       prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = material
     }
 
-    // Add an extra AreaSelectionButton to clear all previously serialized areas, then re-prompt for area selection.
-    const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
-    const clearAllDataButton = prefab.getComponent(AreaSelectionButton.getTypeName())
-
-    clearAllDataButton.text = "Clear All Data"
-
-    clearAllDataButton.onSelect.add(() => {
-      if (clearAllDataButton.text === "Clear All Data") {
-        // TODO: Add text to the central text notification.
-        this.onAreaClearEvent.invoke({isConfirmed: false})
-        clearAllDataButton.text = "Confirm"
-      } else {
-        this.onAreaClearEvent.invoke({isConfirmed: true})
-      }
-    })
-
-    yOffset -= 3
-
-    clearAllDataButton.getTransform().setLocalPosition(new vec3(0, yOffset, 0))
-
-    const material = prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial.clone()
-    material.mainPass.baseColor = new vec4(168 / 255, 34 / 255, 34 / 255, 1)
-    prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = material
   }
 
   public close() {

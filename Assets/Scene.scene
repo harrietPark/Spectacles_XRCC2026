@@ -781,16 +781,14 @@
   ScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
   ScriptInputsDefault:
     targetOutlineMaterial: true
-    hoveringColor: true
-    activatingColor: true
     outlineWeight: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
-      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
-      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
       outlineWeight: -0.250000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> 38f26722-c361-42be-a7dc-ce49a044f62d
@@ -1390,7 +1388,7 @@
   PrefabRemaps:
     []
   Name: Image
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.100000}
@@ -2117,6 +2115,7 @@
   ScriptAsset: !<reference> db6e3391-b235-4fce-8965-b9d5fa785088
   ScriptInputsDefault:
     spawnedWidgetScaleMultiplier: true
+    enableInstructionUI: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2133,6 +2132,7 @@
         - !<reference> ee27b61d-5e96-4b8b-9511-45b7a045cc5b
       spawnedWidgetScaleMultiplier: !<float> 1.000000
       instructionText: !<reference.Text> 14619c21-7839-412a-b2b3-80b82ab2bd9d
+      enableInstructionUI: false
   ScriptTypes:
     "":
       {}
@@ -2515,7 +2515,7 @@
   PrefabRemaps:
     []
   Name: ButtonMesh
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -3184,19 +3184,15 @@
   Enabled: true
   ScriptAsset: !<reference> c43e5f10-7849-461a-b196-daa4e553b147
   ScriptInputsDefault:
-    toggledOffMaterial: true
-    toggledOffSelectMaterial: true
-    toggledOnMaterial: true
-    toggledOnSelectMaterial: true
     disabledMaterial: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      toggledOffMaterial: !<reference.Material> 5e6e1132-90fd-4c58-86f9-eb992e6747f5
-      toggledOffSelectMaterial: !<reference.Material> 5e532a08-3935-4d6f-823a-ad221030c784
-      toggledOnMaterial: !<reference.Material> ba34ce5b-0385-4307-a803-f77fb63d057b
-      toggledOnSelectMaterial: !<reference.Material> 101caa1c-1088-43ed-a87c-0093b8f7e8b1
+      toggledOffMaterial: !<reference.Material> e4ea6be6-5b21-4bd3-aa59-5555c87f6f32
+      toggledOffSelectMaterial: !<reference.Material> e4ea6be6-5b21-4bd3-aa59-5555c87f6f32
+      toggledOnMaterial: !<reference.Material> 998f3793-b7aa-4036-8018-144311479b9b
+      toggledOnSelectMaterial: !<reference.Material> 998f3793-b7aa-4036-8018-144311479b9b
       disabledMaterial: !<reference.Material> aacbe4a8-55c5-457a-9a89-7ecf366ca72a
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> 38f26722-c361-42be-a7dc-ce49a044f62d
@@ -3820,6 +3816,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
+    - !<own> c020d544-ca20-4476-af17-a1bbdd1a78a9
     - !<own> d5f9906c-4121-42fc-9bb3-8f309ae5bf44
   Components:
     - !<own> 9e70681c-d894-4394-ba22-f6cad0e8228f
@@ -4318,14 +4315,12 @@
   PrefabRemaps:
     []
   Name: ContainerFrame
-  Enabled: true
+  Enabled: false
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
-    border: true
     constantPadding: true
     relativeZ: true
     isContentInteractable: true
-    cutOut: true
     minimumSize: true
     maximumSize: true
     useSnapping: true
@@ -4341,14 +4336,14 @@
     "":
       autoShowHide: false
       innerSize: !<Vec2> {x: 14.000000, y: 15.000000}
-      border: !<float> 4.000000
+      border: !<float> 0.000000
       constantPadding: !<Vec2> {x: 0.000000, y: 0.000000}
       allowScaling: false
       autoScaleContent: false
       relativeZ: false
       isContentInteractable: false
       allowTranslation: false
-      cutOut: false
+      cutOut: true
       minimumSize: !<Vec2> {x: 10.000000, y: 10.000000}
       maximumSize: !<Vec2> {x: 300.000000, y: 300.000000}
       useBillboarding: true
@@ -5127,7 +5122,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Snapping Off
+  Text: Start Session
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -5143,7 +5138,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 1.000000, y: 0.984314, z: 0.000000, w: 1.000000}
+    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -5280,16 +5275,14 @@
   ScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
   ScriptInputsDefault:
     targetOutlineMaterial: true
-    hoveringColor: true
-    activatingColor: true
     outlineWeight: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
-      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
-      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
       outlineWeight: -0.250000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> 9f9999e7-fc9c-4f06-b591-e93456a00bbe
@@ -5729,7 +5722,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 5.587588, y: -4.417355, z: 2.000000}
+    Position: {x: 0.000000, y: 0.000000, z: 2.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -6158,7 +6151,6 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> ea6bcc6e-5fc1-4a45-bade-7f26df777aa1
-    - !<own> c020d544-ca20-4476-af17-a1bbdd1a78a9
     - !<own> 645173f5-be87-45aa-b908-04e6800085bd
   Components:
     - !<own> 275c4ffb-2f9b-47c1-8f50-ea88c9424686
@@ -7053,7 +7045,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Snapping On
+  Text: Stop Session
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -7069,7 +7061,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 0.274510, y: 0.274510, z: 0.274510, w: 1.000000}
+    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -7282,7 +7274,7 @@
   PrefabRemaps:
     []
   Name: Image
-  Enabled: true
+  Enabled: false
   RenderOrder: 0
   StretchMode: Fit
   VerticalAlignment: Center

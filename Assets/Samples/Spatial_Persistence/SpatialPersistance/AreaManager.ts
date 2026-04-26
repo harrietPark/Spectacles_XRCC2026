@@ -87,6 +87,10 @@ export class AreaManager extends BaseScriptComponent {
   @input
   private instructionText: Text
 
+  @input
+  @hint("Enable/disable the instruction overlay panel.")
+  private enableInstructionUI: boolean = false
+
   // Current area selected by menu.
   private currentArea: AreaRecord
 
@@ -116,6 +120,7 @@ export class AreaManager extends BaseScriptComponent {
 
   private onStart() {
     this.instructionTextSceneObject = this.instructionText.sceneObject.getParent().getParent()
+    this.instructionTextSceneObject.enabled = this.enableInstructionUI
 
     // NoteController event binding
     this.noteController.onNoteSpawned.add(this.addWidget.bind(this));
@@ -425,11 +430,7 @@ export class AreaManager extends BaseScriptComponent {
 
     this.toggleMenuButton.setFollowTarget(
       this.areaSelectionMenu.sceneObject.getParent().getTransform(),
-      new vec3(
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.x,
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.y + areaNames.length * 1.3,
-        TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION.z
-      ),
+      TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION,
       quat.quatIdentity()
     )
   }
@@ -543,6 +544,11 @@ export class AreaManager extends BaseScriptComponent {
   }
 
   private setInstructionTextContent(text: string | null) {
+    if (!this.enableInstructionUI) {
+      this.instructionTextSceneObject.enabled = false
+      return
+    }
+
     const isNull = text === null
 
     if (isNull) {

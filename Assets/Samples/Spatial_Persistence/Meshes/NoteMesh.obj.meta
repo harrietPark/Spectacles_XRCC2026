@@ -29,37 +29,7 @@
       mesh: None Compression
     Overrides:
       {}
-- !<SceneObject/0ec3d81b-9389-41d9-5357-04ad52adcfb1>
-  PrefabRemaps:
-    []
-  Name: NoteMeshNew
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 4f7bd871-cc30-4aea-7a62-d716d99f86cd
-- !<SceneObject/38cef7f9-89b8-4489-45d5-3df93018c867>
-  PrefabRemaps:
-    []
-  Name: NoteMesh
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 0ec3d81b-9389-41d9-5357-04ad52adcfb1
-  Components:
-    []
-- !<RenderMeshVisual/4f7bd871-cc30-4aea-7a62-d716d99f86cd>
+- !<RenderMeshVisual/2fed1fad-4d39-48ff-575a-9d115fe1de68>
   PrefabRemaps:
     []
   Name: component_0
@@ -79,8 +49,38 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/50837d83-e33f-4d9c-63c1-6687f8cd426a>
+  PrefabRemaps:
+    []
+  Name: NoteMesh
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> c5c1a3e3-a51b-485a-76cc-48e98074f280
+  Components:
+    []
+- !<SceneObject/c5c1a3e3-a51b-485a-76cc-48e98074f280>
+  PrefabRemaps:
+    []
+  Name: NoteMeshNew
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2fed1fad-4d39-48ff-575a-9d115fe1de68
 - !<ObjectPrefabAssetData/fe3874ae-bc1c-40f9-8fdd-cdf10313740d>
   Prototype: !<ObjectOwner/4487e663-54ce-4857-b176-b1c2276da5c8>
     PackagePath: ""
     objects:
-      - !<own> 38cef7f9-89b8-4489-45d5-3df93018c867
+      - !<own> 50837d83-e33f-4d9c-63c1-6687f8cd426a

@@ -127,16 +127,14 @@
   ScriptAsset: !<reference> 657cbbe5-2a9c-4889-93fb-fd72ba8a1d52
   ScriptInputsDefault:
     targetOutlineMaterial: true
-    hoveringColor: true
-    activatingColor: true
     outlineWeight: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetOutlineMaterial: !<reference.Material> 7ac80b6c-979a-4a00-a694-099f296be161
-      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 0.040000, w: 1.000000}
-      activatingColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      hoveringColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      activatingColor: !<Vec4> {x: 0.333333, y: 0.666667, z: 1.000000, w: 1.000000}
       outlineWeight: -0.250000
       meshVisuals: !<reference.RenderMeshVisual[]>
         - !<reference> b746cbc3-ffd7-4f32-77e1-e992dcfd7056

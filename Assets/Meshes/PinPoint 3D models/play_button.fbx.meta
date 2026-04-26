@@ -52,7 +52,7 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<SceneObject/507b8a24-d5b6-4f5b-76de-7d7c5d2c1ead>
+- !<SceneObject/99419b0e-d156-4466-789d-28a63778cc6b>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -66,28 +66,8 @@
   Children:
     []
   Components:
-    - !<own> f0abedf7-2676-4b6d-7d4d-a9c000b172a3
-- !<SceneObject/b7919b63-1a38-454e-74bc-1a38d181dc9b>
-  PrefabRemaps:
-    []
-  Name: play_button
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 507b8a24-d5b6-4f5b-76de-7d7c5d2c1ead
-  Components:
-    []
-- !<ObjectPrefabAssetData/c87ab1ae-776d-4e97-a437-0df669ae8bb3>
-  Prototype: !<ObjectOwner/c9274638-2a0b-404b-8629-c190b88c8f3a>
-    PackagePath: ""
-    objects:
-      - !<own> b7919b63-1a38-454e-74bc-1a38d181dc9b
-- !<RenderMeshVisual/f0abedf7-2676-4b6d-7d4d-a9c000b172a3>
+    - !<own> b6a4cb2b-a7d1-4f28-4fe6-98f7153e52ad
+- !<RenderMeshVisual/b6a4cb2b-a7d1-4f28-4fe6-98f7153e52ad>
   PrefabRemaps:
     []
   Name: component_0
@@ -107,3 +87,23 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ObjectPrefabAssetData/c87ab1ae-776d-4e97-a437-0df669ae8bb3>
+  Prototype: !<ObjectOwner/c9274638-2a0b-404b-8629-c190b88c8f3a>
+    PackagePath: ""
+    objects:
+      - !<own> e8007bd3-e5fa-4934-6905-6eca3664e3a4
+- !<SceneObject/e8007bd3-e5fa-4934-6905-6eca3664e3a4>
+  PrefabRemaps:
+    []
+  Name: play_button
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 99419b0e-d156-4466-789d-28a63778cc6b
+  Components:
+    []
