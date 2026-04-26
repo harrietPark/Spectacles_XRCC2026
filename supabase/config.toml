@@ -1,0 +1,12 @@
+# Snap Cloud / Supabase project config.
+# Run `supabase --profile snap link --project-ref <your-ref>` once to bind
+# this folder to your Snap Cloud project. Most of the rest is left as default
+# because Snap Cloud already manages the API gateway, Auth, and Postgres.
+
+project_id = "spectacles_xrcc2026"
+
+[functions.convert-glb]
+verify_jwt = true
+# The Draco decoder is loaded from npm at first invocation. Bump this if
+# the Lens app starts hitting cold-start timeouts on first conversion.
+import_map = "./functions/convert-glb/deno.json"

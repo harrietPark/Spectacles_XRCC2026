@@ -1,0 +1,68 @@
+- !<AssetImportMetadata/81327b1c-43ed-4134-93a2-d0c00b023332>
+  ImportedAssetIds:
+    JavaScriptAsset: !<reference> b6e05902-c8ac-4acf-8f5d-e7a467dcb429
+  ImporterName: JavaScriptAssetImporter
+  PrimaryAsset: !<reference> b6e05902-c8ac-4acf-8f5d-e7a467dcb429
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    JavaScriptAsset: !<own> 487e8abd-375d-4139-8495-0fb88e31740b
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<ScriptAssetData/487e8abd-375d-4139-8495-0fb88e31740b>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: befddfa8-b624-44d4-b306-67b324f72779
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cameraObject: false
+    debugLogs: false
+    faceCamera: false
+    fixedHeightOffset: false
+    followDistance: false
+    lockToCameraHeight: false
+    pollIntervalSeconds: false
+    preflightGlb: false
+    replacePreviousSpawn: false
+    supabaseAnonKey: false
+    supabaseUrl: false
+    tableName: false
+    useAsyncInstantiate: false
+    useGltfSettings: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      followDistance: 0.500000
+      lockToCameraHeight: true
+      fixedHeightOffset: !<float> 0.000000
+      faceCamera: true
+      replacePreviousSpawn: true
+      useAsyncInstantiate: false
+      useGltfSettings: false
+      preflightGlb: true
+      pollIntervalSeconds: 1.500000
+      supabaseUrl: "https://kcjjdcpcivyeohapnmeu.snapcloud.dev"
+      supabaseAnonKey: ""
+      tableName: ar_spawn_requests
+      debugLogs: true
+  ScriptTypes:
+    -
+      {}

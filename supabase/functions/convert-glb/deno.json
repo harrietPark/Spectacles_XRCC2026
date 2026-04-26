@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@supabase/functions-js/edge-runtime.d.ts": "jsr:@supabase/functions-js/edge-runtime.d.ts",
+    "@supabase/supabase-js": "jsr:@supabase/supabase-js@2",
+    "@gltf-transform/core": "npm:@gltf-transform/core@4.1.1",
+    "@gltf-transform/extensions": "npm:@gltf-transform/extensions@4.1.1",
+    "draco3dgltf": "npm:draco3dgltf@1.5.7"
+  }
+}
