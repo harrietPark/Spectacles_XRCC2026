@@ -7,7 +7,8 @@ export const NEW_AREA_NAME = "New Area"
 const BUTTON_VERTICAL_SPACING = 3
 const MENU_TOP_PADDING_Y = 2
 const MENU_BOTTOM_PADDING_Y = 2.0
-const FIRST_AREA_Y = 3.0
+const NEW_AREA_Y = 3.0
+const CLEAR_ALL_DATA_Y = -3.0
 const MENU_WIDTH_REDUCTION = 3
 
 export type AreaSelectEvent = {
@@ -80,12 +81,8 @@ export class AreaSelectionMenu extends BaseScriptComponent {
     }
 
     const existingAreaNames = [...areaNames]
-    const highestAreaY = FIRST_AREA_Y
-    const lowestAreaY =
-      existingAreaNames.length > 0
-        ? FIRST_AREA_Y - (existingAreaNames.length - 1) * BUTTON_VERTICAL_SPACING
-        : FIRST_AREA_Y
-    const height = highestAreaY - lowestAreaY + MENU_TOP_PADDING_Y + MENU_BOTTOM_PADDING_Y
+    const highestAreaY = NEW_AREA_Y + existingAreaNames.length * BUTTON_VERTICAL_SPACING
+    const height = highestAreaY - CLEAR_ALL_DATA_Y + MENU_TOP_PADDING_Y + MENU_BOTTOM_PADDING_Y
     const menuWidth = Math.max(1, this.baseContainerWidth - MENU_WIDTH_REDUCTION)
     this.container.innerSize = new vec2(menuWidth, height)
 
@@ -137,6 +134,36 @@ export class AreaSelectionMenu extends BaseScriptComponent {
 
       prefab.getChild(0).getComponent("RenderMeshVisual").mainMaterial = material
     }
+
+    const newAreaPrefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
+    const newAreaButton = newAreaPrefab.getComponent(AreaSelectionButton.getTypeName())
+    newAreaButton.getTransform().setLocalPosition(new vec3(0, NEW_AREA_Y, 0))
+    newAreaButton.text = NEW_AREA_NAME
+    newAreaButton.onSelect.add(() => {
+      this.selectionEnabled = false
+      this.onAreaSelectEvent.invoke({
+        areaName: this.findNextAreaName(existingAreaNames),
+        isNew: true
+      })
+    })
+
+    // Add an extra AreaSelectionButton to clear all previously serialized areas, then re-prompt for area selection.
+    const prefab = this.areaSelectionButtonPrefab.instantiate(this.sceneObject)
+    const clearAllDataButton = prefab.getComponent(AreaSelectionButton.getTypeName())
+
+    clearAllDataButton.text = "Clear All Data"
+
+    clearAllDataButton.onSelect.add(() => {
+      if (clearAllDataButton.text === "Clear All Data") {
+        // TODO: Add text to the central text notification.
+        this.onAreaClearEvent.invoke({isConfirmed: false})
+        clearAllDataButton.text = "Confirm"
+      } else {
+        this.onAreaClearEvent.invoke({isConfirmed: true})
+      }
+    })
+
+    clearAllDataButton.getTransform().setLocalPosition(new vec3(0, CLEAR_ALL_DATA_Y, 0))
 
   }
 

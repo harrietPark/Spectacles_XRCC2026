@@ -2967,6 +2967,7 @@
     customerEmail: true
     customersTableName: true
     sessionsTableName: true
+    visitSummaryFunctionName: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -2978,6 +2979,7 @@
       customerEmail: demo@pinpoint.local
       customersTableName: customers
       sessionsTableName: sessions
+      visitSummaryFunctionName: summaries-table
   ScriptTypes:
     "":
       {}
