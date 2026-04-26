@@ -180,9 +180,8 @@ export class AreaSelectionMenu extends BaseScriptComponent {
     if (enabled) {
       this.clearAreaSelectionButtons()
     }
-    this.container.sceneObject.enabled = enabled
-
-    // this.sceneObject.enabled = enabled;
+    // Only toggle this menu object so we don't revive the large container background.
+    this.sceneObject.enabled = enabled
   }
 
   private clearAreaSelectionButtons() {
