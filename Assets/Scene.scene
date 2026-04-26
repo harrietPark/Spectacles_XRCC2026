@@ -7222,7 +7222,7 @@
   PrefabRemaps:
     []
   Name: Image
-  Enabled: false
+  Enabled: true
   RenderOrder: 0
   StretchMode: Fit
   VerticalAlignment: Center
