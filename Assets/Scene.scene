@@ -4316,7 +4316,7 @@
   PrefabRemaps:
     []
   Name: ContainerFrame
-  Enabled: false
+  Enabled: true
   ScriptAsset: !<reference> 94ea82ba-1d42-4617-b71f-c92262f5960b
   ScriptInputsDefault:
     constantPadding: true
