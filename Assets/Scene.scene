@@ -24,6 +24,7 @@
     - !<own> 2a66df0a-94f5-4475-b285-eefbd9fedf21
     - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
+    - !<own> b9577e01-bd98-4c85-a784-f8e64620626c
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -4362,6 +4363,41 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/9f47b62c-41a4-4577-8ea0-24f068f37feb>
+  PrefabRemaps:
+    []
+  Name: SnapCloudARSpawnManager
+  Enabled: true
+  ScriptAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+  ScriptInputsDefault:
+    followDistance: true
+    lockToCameraHeight: true
+    fixedHeightOffset: true
+    faceCamera: true
+    useAsyncInstantiate: true
+    useGltfSettings: true
+    pollIntervalSeconds: true
+    tableName: true
+    debugLogs: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      followDistance: !<float> 50.000000
+      lockToCameraHeight: true
+      fixedHeightOffset: !<float> 0.000000
+      faceCamera: true
+      replacePreviousSpawn: false
+      useAsyncInstantiate: false
+      useGltfSettings: false
+      preflightGlb: false
+      pollIntervalSeconds: 1.500000
+      tableName: ar_spawn_requests
+      debugLogs: true
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/9f9999e7-fc9c-4f06-b591-e93456a00bbe>
   PrefabRemaps:
     []
@@ -5409,6 +5445,21 @@
     - !<own> 0b5de100-7746-49f2-9cc1-9bc0f8c55816
   Components:
     []
+- !<SceneObject/b9577e01-bd98-4c85-a784-f8e64620626c>
+  PrefabRemaps:
+    []
+  Name: SnapCloudARSpawnManager
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9f47b62c-41a4-4577-8ea0-24f068f37feb
 - !<Camera/b9656885-10ad-4d0b-af8c-1a5705ce9bc8>
   PrefabRemaps:
     []
