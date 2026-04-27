@@ -12,6 +12,7 @@
     - !<own> 2c9b5d05-e433-4e01-a69a-971b98bf4887
     - !<own> 1af1a1d4-18c6-441f-a3e1-1b99a00594dd
     - !<own> 9ac3c862-1f07-400c-80d1-2af734e2e267
+    - !<own> 629d3bcf-05a6-4a9f-a97f-3efc75a955d7
     - !<own> 2b0f1f13-048a-4ca6-82c8-2f9bbdcd3ecc
     - !<own> e8cfcc79-59da-4b3c-ab1a-3a01253562cc
     - !<own> 69f84c06-7bb9-4c13-82da-f293bc9e0800
@@ -723,6 +724,29 @@
     index-2: !<reference> a64d55cb-7f31-4546-bdbb-3982726df32e
     thumb-3_end_end_end_end: !<reference> 573c9664-c497-4a6c-9864-db31c65ee5cb
     wrist_to_pinky: !<reference> 4cbaf20e-aff6-4104-9c7f-24938dbf2bd6
+- !<ScriptComponent/0f95ff32-5cfa-410f-b98c-8d7a58f3aab5>
+  PrefabRemaps:
+    []
+  Name: StandaloneCropController
+  Enabled: true
+  ScriptAsset: !<reference> 51fa37a9-124d-49ea-af94-41d1a8fd42db
+  ScriptInputsDefault:
+    autoArmOnStart: true
+    rearmAfterCapture: true
+    rearmDelaySeconds: true
+    debugLogging: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pictureController: !<MappingBased.AssignableType> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      autoArmOnStart: true
+      rearmAfterCapture: true
+      rearmDelaySeconds: 2.500000
+      debugLogging: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/11020ff0-636f-4dc0-844d-b7724a1a3339>
   PrefabRemaps:
     []
@@ -1350,6 +1374,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/2521d465-9bca-4961-bc13-de4df6d280c2>
+  PrefabRemaps:
+    []
+  Name: model
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5a4dadff-b383-4654-91e0-dc4f60852848
 - !<SceneObject/259ba9aa-5239-460b-b45b-375e6bb3c31b>
   PrefabRemaps:
     []
@@ -1599,6 +1638,25 @@
     []
   Components:
     - !<own> 7dd3977d-ba9f-4475-ae72-b53c47ea19bc
+- !<SceneObject/2f18091e-35d0-4548-8424-980d61c8f5d4>
+  PrefabRemaps:
+    - 2521d465-9bca-4961-bc13-de4df6d280c2: 41236ef1-885d-4ece-5db4-956b5771bb92
+    - 2f18091e-35d0-4548-8424-980d61c8f5d4: 123b1b47-c899-4a4d-5778-cf10851789d3
+    - 55a07c87-1106-474e-aa32-fbef0e66a351: 7df97d5f-a31e-4421-50ad-97b03367d9b3
+    - 5a4dadff-b383-4654-91e0-dc4f60852848: 6b7c0447-95ec-487a-4812-bafb9878034a
+    - ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f: 2b8967bb-baeb-4b0d-76ed-68853922ff55
+  Name: stool
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 95.000000, y: 95.000000, z: 95.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 55a07c87-1106-474e-aa32-fbef0e66a351
+  Components:
+    []
 - !<ScreenTransform/30d42003-c1cf-4ad1-b32c-f326c3b98001>
   PrefabRemaps:
     []
@@ -2432,6 +2490,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/55a07c87-1106-474e-aa32-fbef0e66a351>
+  PrefabRemaps:
+    []
+  Name: Scenes
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f
+  Components:
+    []
 - !<RenderMeshVisual/55fc5f3b-9b71-4368-97c0-36cac32e831e>
   PrefabRemaps:
     []
@@ -2538,6 +2611,26 @@
     - !<own> 084e3f71-71b2-4385-b2a3-ebc8ea038ac8
   Components:
     []
+- !<RenderMeshVisual/5a4dadff-b383-4654-91e0-dc4f60852848>
+  PrefabRemaps:
+    []
+  Name: model
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> bf88cb0f-9b55-4e6b-9546-6a659657ecef
+  Mesh: !<reference> 908f5a1f-264a-4029-8f9e-3f403e0f9c51
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/5a5ac87e-ef31-4fce-be9d-4093dfe5c002>
   PrefabRemaps:
     []
@@ -2821,6 +2914,21 @@
     []
   Components:
     []
+- !<SceneObject/629d3bcf-05a6-4a9f-a97f-3efc75a955d7>
+  PrefabRemaps:
+    []
+  Name: StandaloneCropController
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0f95ff32-5cfa-410f-b98c-8d7a58f3aab5
 - !<SceneObject/63e52055-056a-4fdb-aa8d-8e21a73445d7>
   PrefabRemaps:
     []
@@ -4368,14 +4476,11 @@
     []
   Name: SnapCloudARSpawnManager
   Enabled: true
-  ScriptAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+  ScriptAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
   ScriptInputsDefault:
-    followDistance: true
-    lockToCameraHeight: true
-    fixedHeightOffset: true
     faceCamera: true
-    useAsyncInstantiate: true
-    useGltfSettings: true
+    hideOnStart: true
+    ignoreEditorPreview: true
     pollIntervalSeconds: true
     tableName: true
     debugLogs: true
@@ -4383,16 +4488,14 @@
     {}
   ScriptInputs:
     "":
+      targetModel: !<reference.SceneObject> 2f18091e-35d0-4548-8424-980d61c8f5d4
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      followDistance: !<float> 50.000000
-      lockToCameraHeight: true
-      fixedHeightOffset: !<float> 0.000000
+      spawnDistance: !<float> -80.000000
+      heightOffset: !<float> -128.000000
       faceCamera: true
-      replacePreviousSpawn: false
-      useAsyncInstantiate: false
-      useGltfSettings: false
-      preflightGlb: false
-      pollIntervalSeconds: 1.500000
+      hideOnStart: true
+      ignoreEditorPreview: true
+      pollIntervalSeconds: !<float> 1.000000
       tableName: ar_spawn_requests
       debugLogs: true
   ScriptTypes:
@@ -4914,6 +5017,7 @@
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
+    pictureController: true
     noteSpawnYawOffsetDegrees: true
     debugSpawnDistanceFromCamera: true
     debugSpawnRunsCaptureAndCrop: true
@@ -4924,7 +5028,7 @@
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
       fingerDwellingTimeThreshold: !<float> 1.000000
       fingerDwellRadius: !<float> 1.000000
-      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       fovCone: !<reference.SceneObject> 779d7bdf-a689-482b-b2fb-c074fa82ebce
       noteSpawnYawOffsetDegrees: !<float> 180.000000
       debugSpawnDistanceFromCamera: !<float> 40.000000
@@ -5457,7 +5561,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 2f18091e-35d0-4548-8424-980d61c8f5d4
   Components:
     - !<own> 9f47b62c-41a4-4577-8ea0-24f068f37feb
 - !<Camera/b9656885-10ad-4d0b-af8c-1a5705ce9bc8>
@@ -5926,6 +6030,21 @@
     - !<own> 163f3e25-08c4-464b-8bc2-6b9cc91c75f9
   Components:
     []
+- !<SceneObject/ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f>
+  PrefabRemaps:
+    []
+  Name: Scene
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2521d465-9bca-4961-bc13-de4df6d280c2
+  Components:
+    []
 - !<ScriptComponent/caebe164-0fd7-4964-bc6e-06d128bd9098>
   PrefabRemaps:
     []
@@ -6319,7 +6438,7 @@
       captureStorageBucket: specs-captures
       captureCloudFolderPrefix: captures
       captureFilenameSlug: view
-      captureDelaySeconds: !<float> 2.000000
+      captureDelaySeconds: !<float> 1.000000
       cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       pendingImageFreshnessSeconds: !<float> 10.000000
   ScriptTypes:
