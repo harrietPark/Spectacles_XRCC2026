@@ -1,0 +1,60 @@
+- !<ObjectPrefab/5f04fdae-6824-434a-bba3-777a9ee54791>
+  PackagePath: ""
+  objects:
+    - !<own> 7c75ce34-4870-4b13-bd87-489258472e7c
+  LazyLoading: false
+  RetainAssets: true
+- !<ScriptComponent/1827e5e8-671e-4519-831c-c5541701eb19>
+  PrefabRemaps:
+    []
+  Name: BreathingAnimation
+  Enabled: true
+  ScriptAsset: !<reference> fed70c2d-2b52-4f58-aa86-65a868e5518b
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
+- !<RenderMeshVisual/3cc2d2b2-7fd1-49ef-b479-536d173c16af>
+  PrefabRemaps:
+    []
+  Name: Render Mesh Visual
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> b2fb067c-5c43-4e8a-9a9d-101098aa8a72
+  Mesh: !<reference> f3cc8afc-cb20-4193-bb1a-39f896f0cd9a
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/7c75ce34-4870-4b13-bd87-489258472e7c>
+  PrefabRemaps:
+    - 1827e5e8-671e-4519-831c-c5541701eb19: 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
+    - 3cc2d2b2-7fd1-49ef-b479-536d173c16af: 3cc2d2b2-7fd1-49ef-4b86-ac92e8c3e950
+    - 7c75ce34-4870-4b13-bd87-489258472e7c: 7c75ce34-4870-4b13-4278-b76da7b8d183
+  Name: Preset_Note
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -13.336129}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 3cc2d2b2-7fd1-49ef-b479-536d173c16af
+    - !<own> 1827e5e8-671e-4519-831c-c5541701eb19

@@ -1,24 +1,24 @@
-- !<AssetImportMetadata/1599e0f8-9dfd-4a60-ae7d-6cdb2802eaa5>
+- !<AssetImportMetadata/b33b3dae-7c5d-404d-8ea5-edd897267f4d>
   ImportedAssetIds:
-    .hidden/Material.001: !<reference> bde29387-2204-49b4-99b4-13b8cc2f51bc
-    .hidden/white: !<reference> f6bc0d9d-6dca-49c6-9a30-4a2b56149032
-    39a1cba68f7f563f: !<reference> 5d250b51-ec2b-49bf-a3e9-93170b88ad71
-    66780cf3a4dcb2b8: !<reference> a74edec6-69a9-4c93-bfa8-091272304309
-    Materials/Material.001: !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
-    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 6d7b130f-a2a6-4eef-80e3-3af3b3a0b1d2
-    Meshes/Mesh1.0: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
-    Scene: !<reference> 2872d28b-d3aa-461e-8718-9e6a36a89d06
-    Textures/Baked_BaseColor: !<reference> 3c590a06-3566-4079-bba1-4944852be6e6
-    Textures/normal: !<reference> 617f1d7d-2b5a-422a-be73-1247dba875b8
-    e2904e62e1bc5917: !<reference> 2185a1c7-f2bc-44cc-9d41-05b410a06a7e
+    .hidden/Material.001: !<reference> 2e8fd532-97c7-4aa1-bd80-6f387117f9b3
+    .hidden/white: !<reference> 341d7b50-49c0-4bc3-a56b-5522dc234fbb
+    573610c9cf6b6922: !<reference> d276dd5e-3141-41b2-bd59-7e649f9f0af9
+    7a0dd5cd69df73fa: !<reference> 9f534ccb-0115-4a90-aa01-558c3ad262f8
+    Materials/Material.001: !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 61ccd27a-99d0-48d9-9e18-8adbf40b5b8f
+    Meshes/Mesh_0: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
+    Scene: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
+    Textures/Image_0: !<reference> 74a1b44e-1a7c-4710-ac9b-d91e552df95e
+    Textures/Image_2: !<reference> 31b13b2f-a231-4126-ad54-8ca9b9450e43
+    a5dd961b4db1c70e: !<reference> 478b6001-453f-4627-97c9-3fade42b6363
   ImporterName: FbxImporter
-  PrimaryAsset: !<reference> 2872d28b-d3aa-461e-8718-9e6a36a89d06
+  PrimaryAsset: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
   PackageType: LegacyPackage
   LegacyPackagePolicy: CanBeUnpackedTransparent
   ExtraData:
     {}
   AssetDataMap:
-    Scene: !<own> cce5632f-bbce-419f-b523-b97c1fbf1130
+    Scene: !<own> 868d9729-5942-4a1e-a7ca-40646867dc3f
   DependentFiles:
     []
   ImporterSettings: !<FbxImporterSettings>
@@ -49,11 +49,10 @@
           Mipmap: false
     ExtensionMappings:
       mesh: None Compression
-      png: Performance Compression
       jpg: Performance Compression
     Overrides:
       {}
-- !<RenderMeshVisual/0b042826-1419-45f3-6a41-b4d3cbc091d4>
+- !<RenderMeshVisual/58336786-834f-4fcd-48e8-ad2161f05a5d>
   PrefabRemaps:
     []
   Name: component_0
@@ -66,17 +65,37 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 8c1fad41-1b65-4663-b303-4e35f688a28f
-  Mesh: !<reference> af8f44e5-3040-41e1-8cdd-74be49743d12
+    - !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
+  Mesh: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/12a1da6a-6446-4f54-6aa4-ae5ce1fe338c>
+- !<ObjectPrefabAssetData/868d9729-5942-4a1e-a7ca-40646867dc3f>
+  Prototype: !<ObjectOwner/c5faf900-5f35-4c94-9830-3a3b158d1a05>
+    PackagePath: ""
+    objects:
+      - !<own> b40a7776-0276-483c-5817-2271153e805f
+- !<SceneObject/b40a7776-0276-483c-5817-2271153e805f>
   PrefabRemaps:
     []
-  Name: Mesh1.0
+  Name: red_pin
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> b5d78d2a-6e02-4d66-6633-d20b4785cdde
+  Components:
+    []
+- !<SceneObject/b5d78d2a-6e02-4d66-6633-d20b4785cdde>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -87,24 +106,4 @@
   Children:
     []
   Components:
-    - !<own> 0b042826-1419-45f3-6a41-b4d3cbc091d4
-- !<SceneObject/6010ca84-2338-4be2-7900-057635be6b69>
-  PrefabRemaps:
-    []
-  Name: microphone_2
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> 12a1da6a-6446-4f54-6aa4-ae5ce1fe338c
-  Components:
-    []
-- !<ObjectPrefabAssetData/cce5632f-bbce-419f-b523-b97c1fbf1130>
-  Prototype: !<ObjectOwner/4d91b6a8-a1b3-400d-91cd-1a1eec6910db>
-    PackagePath: ""
-    objects:
-      - !<own> 6010ca84-2338-4be2-7900-057635be6b69
+    - !<own> 58336786-834f-4fcd-48e8-ad2161f05a5d

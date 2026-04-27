@@ -1,24 +1,24 @@
-- !<AssetImportMetadata/b33b3dae-7c5d-404d-8ea5-edd897267f4d>
+- !<AssetImportMetadata/71875a39-2995-45a0-a63e-a881b7445b13>
   ImportedAssetIds:
-    .hidden/Material.001: !<reference> 2e8fd532-97c7-4aa1-bd80-6f387117f9b3
-    .hidden/white: !<reference> 341d7b50-49c0-4bc3-a56b-5522dc234fbb
-    573610c9cf6b6922: !<reference> d276dd5e-3141-41b2-bd59-7e649f9f0af9
-    7a0dd5cd69df73fa: !<reference> 9f534ccb-0115-4a90-aa01-558c3ad262f8
-    Materials/Material.001: !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
-    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 61ccd27a-99d0-48d9-9e18-8adbf40b5b8f
-    Meshes/Mesh_0: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
-    Scene: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
-    Textures/Image_0: !<reference> 74a1b44e-1a7c-4710-ac9b-d91e552df95e
-    Textures/Image_2: !<reference> 31b13b2f-a231-4126-ad54-8ca9b9450e43
-    a5dd961b4db1c70e: !<reference> 478b6001-453f-4627-97c9-3fade42b6363
+    .hidden/Material.001: !<reference> 29718bd1-0bfd-4cb7-813b-19ced4969f8e
+    .hidden/white: !<reference> c33f3177-12b8-496a-885f-6dbe95920184
+    573610c9cf6b6922: !<reference> fef9a809-2ac7-44b0-bbe8-ccf7999c1524
+    7a0dd5cd69df73fa: !<reference> 3a0035a3-14f3-4809-915a-ee9fd691e243
+    Materials/Material.001: !<reference> 74732ed0-21b2-491a-ba80-3b9baa16575b
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 3be3e0e1-772c-49ed-9c5c-e6b681d983b8
+    Meshes/Mesh_0: !<reference> 72242116-175a-49e7-b0fb-3df70c273ded
+    Scene: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
+    Textures/Image_0: !<reference> 09e4ff91-e8ac-4eff-8da6-6e7eba42b638
+    Textures/normal: !<reference> 1d5f05f4-fbf3-4ba5-a0e4-eff6e4e1f640
+    a5dd961b4db1c70e: !<reference> 6a50a790-c95a-4ad9-b8b5-de54365d30b6
   ImporterName: FbxImporter
-  PrimaryAsset: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
+  PrimaryAsset: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
   PackageType: LegacyPackage
   LegacyPackagePolicy: CanBeUnpackedTransparent
   ExtraData:
     {}
   AssetDataMap:
-    Scene: !<own> 868d9729-5942-4a1e-a7ca-40646867dc3f
+    Scene: !<own> 5b4829b3-0e34-498f-9264-b5ca33235942
   DependentFiles:
     []
   ImporterSettings: !<FbxImporterSettings>
@@ -50,9 +50,10 @@
     ExtensionMappings:
       mesh: None Compression
       jpg: Performance Compression
+      png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/478b6001-453f-4627-6836-c0521bd49c9c>
+- !<SceneObject/54212446-b19f-4ef7-5bdf-f1b2bb3ba08a>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -66,16 +67,16 @@
   Children:
     []
   Components:
-    - !<own> d276dd5e-3141-41b2-42a6-819b6060f506
-- !<ObjectPrefabAssetData/868d9729-5942-4a1e-a7ca-40646867dc3f>
-  Prototype: !<ObjectOwner/c5faf900-5f35-4c94-9830-3a3b158d1a05>
+    - !<own> ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d
+- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
+  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
     PackagePath: ""
     objects:
-      - !<own> 9f534ccb-0115-4a90-55fe-aa73c52d9d07
-- !<SceneObject/9f534ccb-0115-4a90-55fe-aa73c52d9d07>
+      - !<own> b36ef3b5-345a-4bea-5730-00d49b1764c6
+- !<SceneObject/b36ef3b5-345a-4bea-5730-00d49b1764c6>
   PrefabRemaps:
     []
-  Name: red_pin
+  Name: bin
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -84,10 +85,10 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 478b6001-453f-4627-6836-c0521bd49c9c
+    - !<own> 54212446-b19f-4ef7-5bdf-f1b2bb3ba08a
   Components:
     []
-- !<RenderMeshVisual/d276dd5e-3141-41b2-42a6-819b6060f506>
+- !<RenderMeshVisual/ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d>
   PrefabRemaps:
     []
   Name: component_0
@@ -100,8 +101,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
-  Mesh: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
+    - !<reference> 74732ed0-21b2-491a-ba80-3b9baa16575b
+  Mesh: !<reference> 72242116-175a-49e7-b0fb-3df70c273ded
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false

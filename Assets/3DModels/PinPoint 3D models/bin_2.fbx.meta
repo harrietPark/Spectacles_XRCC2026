@@ -1,24 +1,24 @@
-- !<AssetImportMetadata/7537eaee-fd4e-4aa9-a51e-e876e05f3315>
+- !<AssetImportMetadata/755276f2-61a1-403e-870c-d744d7f27a57>
   ImportedAssetIds:
-    .hidden/Material.001: !<reference> 91f954fb-0f94-493a-b0dc-abe939b3c937
-    .hidden/white: !<reference> d5153e9b-3e4e-4fc7-88b4-5d099a61a638
-    573610c9cf6b6922: !<reference> 625af339-71b3-41e5-8652-1db7bbf4b01d
-    7a0dd5cd69df73fa: !<reference> e076ea20-0fb5-450a-a5a5-8eb445705f93
-    Materials/Material.001: !<reference> 7dcfb3a3-e5ee-4ecc-afc9-01d477e4bf1f
-    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 70e29ad8-1e72-4090-856f-7e3b8d47c41e
-    Meshes/Mesh_0: !<reference> 7e14f761-1bc8-4247-bd82-638324828e9b
-    Scene: !<reference> 4266dbbc-4516-4064-8412-f75bd5a617c4
-    Textures/Image_0: !<reference> 59f36d0e-dc4c-421a-ba00-f5125ef85a31
-    Textures/Image_2: !<reference> 6278515c-f0bb-467e-9f71-1ce8109c69e9
-    a5dd961b4db1c70e: !<reference> 1f2ddbe4-616c-4bd4-b36a-e226d334cbb0
+    .hidden/Material.001: !<reference> 80e34031-38b9-4e0c-8023-7c98c70b3c55
+    .hidden/white: !<reference> 65bc782a-7e6f-4b21-a951-2f6ea27c23dc
+    34bdc6b9055eebed: !<reference> 3625c9ef-d143-4dfe-95e7-1b10e191ffd4
+    7a0dd5cd69df73fa: !<reference> a7c49137-1b63-4bb8-903c-cf57b1fab66a
+    Materials/Material.001: !<reference> 19b9e2de-9fa2-49b8-9343-d0b2b9097823
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> fa61f3b6-b467-4d8c-9af9-e68d2b04ead8
+    Meshes/Mesh1.0: !<reference> 64fe953e-8c35-4832-91ac-a55e177673a4
+    Scene: !<reference> 655ca860-9671-4dad-9f5a-09d44649f19e
+    Textures/Baked_BaseColor: !<reference> 822f0ccd-5dc0-4d4f-aa68-5ea60bba5776
+    Textures/normal: !<reference> bf92b136-599e-425a-b78a-85fbc2eb34f6
+    f67b8335867a4b89: !<reference> 16a509cf-ac22-4fc9-8553-c955e2f7c021
   ImporterName: FbxImporter
-  PrimaryAsset: !<reference> 4266dbbc-4516-4064-8412-f75bd5a617c4
+  PrimaryAsset: !<reference> 655ca860-9671-4dad-9f5a-09d44649f19e
   PackageType: LegacyPackage
   LegacyPackagePolicy: CanBeUnpackedTransparent
   ExtraData:
     {}
   AssetDataMap:
-    Scene: !<own> 02c6e9e2-98d2-48d9-8894-776a8fa9a684
+    Scene: !<own> 987ba2f6-3a81-4913-8c0b-9e1c3f4f9846
   DependentFiles:
     []
   ImporterSettings: !<FbxImporterSettings>
@@ -49,18 +49,14 @@
           Mipmap: false
     ExtensionMappings:
       mesh: None Compression
+      png: Performance Compression
       jpg: Performance Compression
     Overrides:
       {}
-- !<ObjectPrefabAssetData/02c6e9e2-98d2-48d9-8894-776a8fa9a684>
-  Prototype: !<ObjectOwner/f1730742-4a65-4a9f-92c0-3e308215da82>
-    PackagePath: ""
-    objects:
-      - !<own> e076ea20-0fb5-450a-5a5a-714bba8fa06c
-- !<SceneObject/1f2ddbe4-616c-4bd4-4c95-1dd92ccb344f>
+- !<SceneObject/62a35f3b-1e7d-4167-75a9-9befdebfba41>
   PrefabRemaps:
     []
-  Name: Mesh_0
+  Name: Mesh1.0
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -71,8 +67,8 @@
   Children:
     []
   Components:
-    - !<own> 625af339-71b3-41e5-79ad-e248440b4fe2
-- !<RenderMeshVisual/625af339-71b3-41e5-79ad-e248440b4fe2>
+    - !<own> 63ad5a30-4150-4bd2-5026-a405895e6aa9
+- !<RenderMeshVisual/63ad5a30-4150-4bd2-5026-a405895e6aa9>
   PrefabRemaps:
     []
   Name: component_0
@@ -85,17 +81,17 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 7dcfb3a3-e5ee-4ecc-afc9-01d477e4bf1f
-  Mesh: !<reference> 7e14f761-1bc8-4247-bd82-638324828e9b
+    - !<reference> 19b9e2de-9fa2-49b8-9343-d0b2b9097823
+  Mesh: !<reference> 64fe953e-8c35-4832-91ac-a55e177673a4
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/e076ea20-0fb5-450a-5a5a-714bba8fa06c>
+- !<SceneObject/77ecf369-d44f-4b24-4c65-d5bfc42a575e>
   PrefabRemaps:
     []
-  Name: green_pin
+  Name: bin_2
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -104,6 +100,11 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 1f2ddbe4-616c-4bd4-4c95-1dd92ccb344f
+    - !<own> 62a35f3b-1e7d-4167-75a9-9befdebfba41
   Components:
     []
+- !<ObjectPrefabAssetData/987ba2f6-3a81-4913-8c0b-9e1c3f4f9846>
+  Prototype: !<ObjectOwner/99e0a470-c18b-403f-9365-47c55b34b312>
+    PackagePath: ""
+    objects:
+      - !<own> 77ecf369-d44f-4b24-4c65-d5bfc42a575e
