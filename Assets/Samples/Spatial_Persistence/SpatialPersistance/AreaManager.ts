@@ -104,6 +104,7 @@ export class AreaManager extends BaseScriptComponent {
   // Unsubscribe and cancel tokens for recovery callbacks (disable when finding anchor properly).
   private onAreaAnchorFoundUnsubscribe: unsubscribe
   private areaAnchorFailureCancelToken: CancelToken
+  private isRestoringWidgets: boolean = false
 
   // All serialization handled here.
   private serializationManager: SerializationManager = SerializationManager.getInstance()
@@ -232,6 +233,7 @@ export class AreaManager extends BaseScriptComponent {
     widgetIndex: number,
     localPosition: vec3,
     localRotation: quat,
+    localScale: vec3 | null = null,
     shouldPlaySpawnPopAnimation: boolean = false,
     shouldDelaySpawnPopAnimation: boolean = false
   ): SceneObject {
@@ -245,8 +247,16 @@ export class AreaManager extends BaseScriptComponent {
 
     // Place the widget in front of gaze.
     const safeScaleMultiplier = Math.max(0.05, this.spawnedWidgetScaleMultiplier)
+    const scaleToApply =
+      localScale !== null
+        ? new vec3(
+            Math.max(0.05, Math.abs(localScale.x)),
+            Math.max(0.05, Math.abs(localScale.y)),
+            Math.max(0.05, Math.abs(localScale.z))
+          )
+        : vec3.one().uniformScale(safeScaleMultiplier)
     transform.setLocalTransform(
-      mat4.compose(localPosition, localRotation, vec3.one().uniformScale(safeScaleMultiplier))
+      mat4.compose(localPosition, localRotation, scaleToApply)
     )
 
     const widget = widgetObject.getComponent(Widget.getTypeName())
@@ -256,6 +266,9 @@ export class AreaManager extends BaseScriptComponent {
       this.deleteWidget(widget)
     })
     widget.onUpdateContent.add(() => {
+      if (this.isRestoringWidgets) {
+        return
+      }
       this.saveWidgets()
     })
     // this.widgets.push(widget)
@@ -266,6 +279,9 @@ export class AreaManager extends BaseScriptComponent {
     )
 
     manipulationComponent.onManipulationEnd.add(() => {
+      if (this.isRestoringWidgets) {
+        return
+      }
       this.saveWidgets()
     })
 
@@ -325,6 +341,7 @@ export class AreaManager extends BaseScriptComponent {
         this.widgets.length,
         invertedWorldTransform.multiplyPoint(event.position),
         this.widgetParent.getTransform().getWorldRotation().invert().multiply(event.rotation),
+        null,
         event.fromDwell === true,
         event.fromDebugSpawn === true
       )
@@ -388,34 +405,40 @@ export class AreaManager extends BaseScriptComponent {
 
     const numWidgets = widgetMats.length
 
-    for (let i = 0; i < numWidgets; i++) {
-      const widgetObject = this.spawnWidget(
-        widgetMeshIndices[i],
-        i,
-        widgetMats[i].column0,
-        quat.fromEulerVec(widgetMats[i].column1)
-      )
+    this.isRestoringWidgets = true
+    try {
+      for (let i = 0; i < numWidgets; i++) {
+        const serializedScale = widgetMats[i].column2
+        const minimumScale = 0.05
+        const hasValidSerializedScale =
+          isFinite(serializedScale.x) &&
+          isFinite(serializedScale.y) &&
+          isFinite(serializedScale.z) &&
+          Math.abs(serializedScale.x) > 0 &&
+          Math.abs(serializedScale.y) > 0 &&
+          Math.abs(serializedScale.z) > 0
+        const fallbackScale = vec3.one().uniformScale(Math.max(minimumScale, this.spawnedWidgetScaleMultiplier))
+        const restoredScale = hasValidSerializedScale
+          ? new vec3(
+              Math.max(minimumScale, Math.abs(serializedScale.x)),
+              Math.max(minimumScale, Math.abs(serializedScale.y)),
+              Math.max(minimumScale, Math.abs(serializedScale.z))
+            )
+          : fallbackScale
 
-      const widget = widgetObject.getComponent(Widget.getTypeName())
-      const serializedScale = widgetMats[i].column2
-      const minimumScale = 0.05
-      const hasValidSerializedScale =
-        isFinite(serializedScale.x) &&
-        isFinite(serializedScale.y) &&
-        isFinite(serializedScale.z) &&
-        Math.abs(serializedScale.x) > 0 &&
-        Math.abs(serializedScale.y) > 0 &&
-        Math.abs(serializedScale.z) > 0
-      const fallbackScale = vec3.one().uniformScale(Math.max(minimumScale, this.spawnedWidgetScaleMultiplier))
-      const restoredScale = hasValidSerializedScale
-        ? new vec3(
-            Math.max(minimumScale, Math.abs(serializedScale.x)),
-            Math.max(minimumScale, Math.abs(serializedScale.y)),
-            Math.max(minimumScale, Math.abs(serializedScale.z))
-          )
-        : fallbackScale
-      widget.transform.setLocalScale(restoredScale)
-      widget.text = widgetTexts[i]
+        const widgetObject = this.spawnWidget(
+          widgetMeshIndices[i],
+          i,
+          widgetMats[i].column0,
+          quat.fromEulerVec(widgetMats[i].column1),
+          restoredScale
+        )
+
+        const widget = widgetObject.getComponent(Widget.getTypeName())
+        widget.text = widgetTexts[i]
+      }
+    } finally {
+      this.isRestoringWidgets = false
     }
   }
 
