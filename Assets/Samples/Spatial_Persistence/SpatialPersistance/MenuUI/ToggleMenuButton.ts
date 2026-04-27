@@ -24,21 +24,31 @@ export class ToggleMenuButton extends BaseScriptComponent {
   }
 
   onStart() {
+    if (!this.toggleButton || !this.interactable) {
+      print(
+        `[ToggleMenuButton] Missing required components on '${this.sceneObject.name}'. ` +
+          "Expected ToggleButton and Interactable."
+      )
+      return
+    }
+
     this.onStateChanged = this.toggleButton.onStateChanged
     this.toggleButton.onStateChanged.add(this.handleStateChanged.bind(this))
 
-    this.visuals = [
-      this.sceneObject.getChild(0).getComponent("Component.RenderMeshVisual"),
-      this.sceneObject.getChild(1).getComponent("Component.RenderMeshVisual")
-    ]
+    this.visuals = []
+    const childCount = this.sceneObject.getChildrenCount()
+    for (let i = 0; i < childCount; i++) {
+      const visual = this.sceneObject.getChild(i).getComponent("Component.RenderMeshVisual")
+      if (visual) {
+        this.visuals.push(visual)
+      }
+    }
 
     this.interactable.onHoverEnter.add(() => {
-      this.visuals[0].mainMaterial.mainPass.hovered = 1
-      this.visuals[1].mainMaterial.mainPass.hovered = 1
+      this.setHoveredState(1)
     })
     this.interactable.onHoverExit.add(() => {
-      this.visuals[0].mainMaterial.mainPass.hovered = 0
-      this.visuals[1].mainMaterial.mainPass.hovered = 0
+      this.setHoveredState(0)
     })
 
     this.transformFollower = this.sceneObject.getComponent(TransformFollower.getTypeName())
@@ -57,6 +67,18 @@ export class ToggleMenuButton extends BaseScriptComponent {
   }
 
   public setFollowTarget(followTarget: Transform, translationOffset: vec3, rotationOffset: quat) {
+    if (!this.transformFollower) {
+      return
+    }
     this.transformFollower.setTarget(followTarget, translationOffset, rotationOffset)
+  }
+
+  private setHoveredState(value: number) {
+    for (let i = 0; i < this.visuals.length; i++) {
+      const material = this.visuals[i].mainMaterial as any
+      if (material && material.mainPass) {
+        material.mainPass.hovered = value
+      }
+    }
   }
 }

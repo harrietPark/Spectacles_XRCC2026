@@ -84,7 +84,7 @@
     - // @input AssignableType_2 noteInteractable
     - // @input Component.RenderMeshVisual noteMesh
     - '// @input Asset.Material editOutlineMaterial {"hint":"Outline material that appears when the note is being edited"}'
-    - '// @input AssignableType_3 visibilityToggle {"hint":"Optional: wire PinPointNoteSimpleVisibilityToggle to hide/show note when backgrounded."}'
+    - // @input AssignableType_3 visibilityToggle
     - '// @input AssignableType_4 recordButton {"hint":"Optional button used to start/stop voice recording"}'
     - '// @input Component.RenderMeshVisual microphoneButtonMesh {"hint":"Optional mesh visual whose texture changes while recording."}'
     - '// @input Asset.Texture microphoneButtonRecordingTexture {"hint":"Texture used for microphone button while recording."}'

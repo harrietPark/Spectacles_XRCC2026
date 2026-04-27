@@ -31,6 +31,7 @@ const WIDGET_PARENT_MESH_VISUAL_INDEX = 0
 
 const TOGGLE_MENU_BUTTON_AREA_SELECTION_POSITION = new vec3(8.7, 7, -1)
 const TOGGLE_MENU_BUTTON_WIDGET_SELECTION_POSITION = new vec3(11.641, 10.6958, -1)
+const SNAPPING_TOGGLE_OBJECT_NAME = "SnappingToggle"
 
 // Instruction strings
 const LOCALIZATION_STRING = "Look and move around to help recognize the area."
@@ -427,6 +428,7 @@ export class AreaManager extends BaseScriptComponent {
     // Won't actually be a relevant issue once we add text input for area selection.
     areaNames.sort()
     this.areaSelectionMenu.promptAreaSelection(areaNames)
+    this.setSecondPopupSessionToggleVisible(true)
 
     this.toggleMenuButton.setFollowTarget(
       this.areaSelectionMenu.sceneObject.getParent().getTransform(),
@@ -453,6 +455,26 @@ export class AreaManager extends BaseScriptComponent {
     })
 
     this.toggleMenuButton.sceneObject.enabled = false
+  }
+
+  private setSecondPopupSessionToggleVisible(visible: boolean): void {
+    if (!this.areaSelectionMenu || !this.areaSelectionMenu.sceneObject) {
+      return
+    }
+
+    const parent = this.areaSelectionMenu.sceneObject.getParent()
+    if (!parent) {
+      return
+    }
+
+    const childCount = parent.getChildrenCount()
+    for (let i = 0; i < childCount; i++) {
+      const child = parent.getChild(i)
+      if (child.name === SNAPPING_TOGGLE_OBJECT_NAME) {
+        child.enabled = visible
+        return
+      }
+    }
   }
 
   private createAndFollowAnchor(isNew: boolean) {

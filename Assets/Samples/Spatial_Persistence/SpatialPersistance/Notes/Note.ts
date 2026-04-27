@@ -126,6 +126,8 @@ export class Note extends BaseScriptComponent {
     private currentPlaybackTime = 0;
     private playbackSafetyTimeout = 0;
     private isRecording = false;
+    private recordingStartedAt = 0;
+    private didRetryMicAfterEmptyFrames = false;
     private isPlayingBack = false;
     private asrModule: AsrModule | undefined;
     private isAsrRunning = false;
@@ -473,6 +475,18 @@ export class Note extends BaseScriptComponent {
         const audioFrameShape = this.microphoneControl.getAudioFrame(rawFrame);
 
         if (audioFrameShape.x === 0) {
+            if (
+                this.isRecording &&
+                !this.didRetryMicAfterEmptyFrames &&
+                getTime() - this.recordingStartedAt > 1.0
+            ) {
+                // Some runtimes occasionally start recording without delivering frames.
+                // Retry the microphone stream once to recover without user restart.
+                this.didRetryMicAfterEmptyFrames = true;
+                this.updateVoiceStatusText("Mic active, retrying...");
+                this.microphoneControl.stop();
+                this.microphoneControl.start();
+            }
             return;
         }
 
@@ -541,6 +555,8 @@ export class Note extends BaseScriptComponent {
         this.voiceTranscription = "";
         this._textField.text = "";
         this.isPlayingBack = false;
+        this.recordingStartedAt = getTime();
+        this.didRetryMicAfterEmptyFrames = false;
         this.updatePlaybackButtonVisualState();
         this.audioComponent?.stop(false);
         this.microphoneControl.start();

@@ -1,0 +1,71 @@
+- !<AssetImportMetadata/bcba89cb-ce4e-47d5-937e-ab8e8a101b56>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 798556a2-934d-4948-9c8f-6283d1d988f6
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/798556a2-934d-4948-9c8f-6283d1d988f6>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 45434aa4-46d3-49ce-bb8a-26dc803c1ccc
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cameraObject: false
+    debugLogs: false
+    faceCamera: false
+    heightOffset: false
+    hideOnStart: false
+    ignoreEditorPreview: false
+    pollIntervalSeconds: false
+    spawnDistance: false
+    tableName: false
+    targetModel: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - targetModel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      spawnDistance: !<float> 50.000000
+      heightOffset: !<float> 0.000000
+      faceCamera: true
+      hideOnStart: true
+      ignoreEditorPreview: true
+      pollIntervalSeconds: !<float> 1.000000
+      tableName: ar_spawn_requests
+      debugLogs: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject targetModel {"hint":"Pre-placed 3D model root to show when a spawn request arrives."}'
+    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject used to place the target model in front of the user."}'
+    - '// @input float spawnDistance = 50 {"hint":"Centimetres in front of the camera (50 = 0.5 m)."}'
+    - '// @input float heightOffset {"hint":"Centimetres added to camera height when placing the model."}'
+    - '// @input bool faceCamera = true {"hint":"Rotate the model so it faces the camera."}'
+    - '// @input bool hideOnStart = true {"hint":"Hide targetModel on start."}'
+    - '// @input bool ignoreEditorPreview = true {"hint":"If true, Lens Studio Preview will not claim web spawn requests. Leave on when testing on Spectacles."}'
+    - '// @input float pollIntervalSeconds = 1 {"hint":"How often (seconds) to poll ar_spawn_requests."}'
+    - '// @input string tableName = "ar_spawn_requests" {"hint":"Supabase table name for AR spawn requests."}'
+    - '// @input bool debugLogs = true {"hint":"Enable verbose logs."}'
