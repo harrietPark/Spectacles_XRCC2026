@@ -12,6 +12,7 @@
     - !<own> 2c9b5d05-e433-4e01-a69a-971b98bf4887
     - !<own> 1af1a1d4-18c6-441f-a3e1-1b99a00594dd
     - !<own> 9ac3c862-1f07-400c-80d1-2af734e2e267
+    - !<own> 629d3bcf-05a6-4a9f-a97f-3efc75a955d7
     - !<own> 2b0f1f13-048a-4ca6-82c8-2f9bbdcd3ecc
     - !<own> e8cfcc79-59da-4b3c-ab1a-3a01253562cc
     - !<own> 69f84c06-7bb9-4c13-82da-f293bc9e0800
@@ -723,6 +724,29 @@
     index-2: !<reference> a64d55cb-7f31-4546-bdbb-3982726df32e
     thumb-3_end_end_end_end: !<reference> 573c9664-c497-4a6c-9864-db31c65ee5cb
     wrist_to_pinky: !<reference> 4cbaf20e-aff6-4104-9c7f-24938dbf2bd6
+- !<ScriptComponent/0f95ff32-5cfa-410f-b98c-8d7a58f3aab5>
+  PrefabRemaps:
+    []
+  Name: StandaloneCropController
+  Enabled: true
+  ScriptAsset: !<reference> 51fa37a9-124d-49ea-af94-41d1a8fd42db
+  ScriptInputsDefault:
+    autoArmOnStart: true
+    rearmAfterCapture: true
+    rearmDelaySeconds: true
+    debugLogging: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pictureController: !<MappingBased.AssignableType> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      autoArmOnStart: true
+      rearmAfterCapture: true
+      rearmDelaySeconds: 2.500000
+      debugLogging: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/11020ff0-636f-4dc0-844d-b7724a1a3339>
   PrefabRemaps:
     []
@@ -2890,6 +2914,21 @@
     []
   Components:
     []
+- !<SceneObject/629d3bcf-05a6-4a9f-a97f-3efc75a955d7>
+  PrefabRemaps:
+    []
+  Name: StandaloneCropController
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 0f95ff32-5cfa-410f-b98c-8d7a58f3aab5
 - !<SceneObject/63e52055-056a-4fdb-aa8d-8e21a73445d7>
   PrefabRemaps:
     []
@@ -4978,6 +5017,7 @@
   Enabled: true
   ScriptAsset: !<reference> 4b12b6bf-da84-46cb-a91a-54acf87aeb4b
   ScriptInputsDefault:
+    pictureController: true
     noteSpawnYawOffsetDegrees: true
     debugSpawnDistanceFromCamera: true
     debugSpawnRunsCaptureAndCrop: true
@@ -4988,7 +5028,7 @@
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
       fingerDwellingTimeThreshold: !<float> 1.000000
       fingerDwellRadius: !<float> 1.000000
-      pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c
+      pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       fovCone: !<reference.SceneObject> 779d7bdf-a689-482b-b2fb-c074fa82ebce
       noteSpawnYawOffsetDegrees: !<float> 180.000000
       debugSpawnDistanceFromCamera: !<float> 40.000000

@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/6f85b709-f7cf-40d2-8dd7-92b5f044f669>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 51fa37a9-124d-49ea-af94-41d1a8fd42db
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 51fa37a9-124d-49ea-af94-41d1a8fd42db
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> c4b96d01-dd23-4872-aab6-cce4973d5937
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/c4b96d01-dd23-4872-aab6-cce4973d5937>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 5c0367f0-8b54-4868-83cd-db61e5e3ef9c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoArmOnStart: false
+    debugLogging: false
+    pictureController: false
+    rearmAfterCapture: false
+    rearmDelaySeconds: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - pictureController: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      autoArmOnStart: true
+      rearmAfterCapture: true
+      rearmDelaySeconds: 2.500000
+      debugLogging: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType pictureController {"hint":"PictureController instance that owns the two-hand pinch detection and Scanner prefab spawn."}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Behaviour"}'
+    - '// @input bool autoArmOnStart = true {"hint":"Arm crop automatically when the lens starts so the user can trigger it at any time."}'
+    - '// @input bool rearmAfterCapture = true {"hint":"Re-arm crop automatically after each successful capture so the user can crop repeatedly."}'
+    - '// @input float rearmDelaySeconds = 2.5 {"hint":"Delay (in seconds) before re-arming after a capture. Lets the ChatGPT request and Snap Cloud upload finish before another crop is taken.", "widget":"slider", "min":0, "max":10, "step":0.5}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Debug"}'
+    - '// @input bool debugLogging = true {"hint":"Print verbose logs (arm / disarm / capture) to help debug timing."}'
+    - '// @ui {"widget":"group_end"}'
