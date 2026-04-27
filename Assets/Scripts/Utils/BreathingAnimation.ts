@@ -23,7 +23,7 @@ export class BreathingAnimation extends BaseScriptComponent {
         this.startAnimation();
     }
 
-    private refreshAnimation() {
+    public refreshAnimation() {
         this.maxScale = new vec3(
             this.baseScale.x * (1 + this.scaleDifference),
             this.baseScale.y * (1 + this.scaleDifference),

@@ -26,7 +26,10 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    backgroundDurationMs: false
+    backgroundScaleDifference: false
+    foregroundDurationMs: false
+    foregroundScaleDifference: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +39,17 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - foregroundScaleDifference: 0.100000
+      foregroundDurationMs: !<float> 1000.000000
+      backgroundScaleDifference: 0.050000
+      backgroundDurationMs: !<float> 2000.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @ui {"widget":"group_start", "label":"Visual Settings"}'
+    - // @input float foregroundScaleDifference = 0.1
+    - // @input float foregroundDurationMs = 1000
+    - // @input float backgroundScaleDifference = 0.05
+    - // @input float backgroundDurationMs = 2000
+    - '// @ui {"widget":"group_end"}'

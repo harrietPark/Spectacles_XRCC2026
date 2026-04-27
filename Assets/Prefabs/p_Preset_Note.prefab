@@ -35,14 +35,13 @@
   Enabled: true
   ScriptAsset: !<reference> fed70c2d-2b52-4f58-aa86-65a868e5518b
   ScriptInputsDefault:
-    scaleDifference: true
-    durationMs: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      scaleDifference: 0.100000
-      durationMs: !<float> 1000.000000
+      scaleDifference: 0.050000
+      durationMs: !<float> 2000.000000
   ScriptTypes:
     "":
       {}
@@ -127,12 +126,18 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    {}
+    foregroundScaleDifference: true
+    foregroundDurationMs: true
+    backgroundScaleDifference: true
+    backgroundDurationMs: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      {}
+      foregroundScaleDifference: 0.100000
+      foregroundDurationMs: !<float> 1000.000000
+      backgroundScaleDifference: 0.050000
+      backgroundDurationMs: !<float> 2000.000000
   ScriptTypes:
     "":
       {}
