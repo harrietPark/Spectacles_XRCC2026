@@ -1350,6 +1350,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/2521d465-9bca-4961-bc13-de4df6d280c2>
+  PrefabRemaps:
+    []
+  Name: model
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 5a4dadff-b383-4654-91e0-dc4f60852848
 - !<SceneObject/259ba9aa-5239-460b-b45b-375e6bb3c31b>
   PrefabRemaps:
     []
@@ -1599,6 +1614,25 @@
     []
   Components:
     - !<own> 7dd3977d-ba9f-4475-ae72-b53c47ea19bc
+- !<SceneObject/2f18091e-35d0-4548-8424-980d61c8f5d4>
+  PrefabRemaps:
+    - 2521d465-9bca-4961-bc13-de4df6d280c2: 41236ef1-885d-4ece-5db4-956b5771bb92
+    - 2f18091e-35d0-4548-8424-980d61c8f5d4: 123b1b47-c899-4a4d-5778-cf10851789d3
+    - 55a07c87-1106-474e-aa32-fbef0e66a351: 7df97d5f-a31e-4421-50ad-97b03367d9b3
+    - 5a4dadff-b383-4654-91e0-dc4f60852848: 6b7c0447-95ec-487a-4812-bafb9878034a
+    - ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f: 2b8967bb-baeb-4b0d-76ed-68853922ff55
+  Name: stool
+  Enabled: false
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 95.000000, y: 95.000000, z: 95.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 55a07c87-1106-474e-aa32-fbef0e66a351
+  Components:
+    []
 - !<ScreenTransform/30d42003-c1cf-4ad1-b32c-f326c3b98001>
   PrefabRemaps:
     []
@@ -2432,6 +2466,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/55a07c87-1106-474e-aa32-fbef0e66a351>
+  PrefabRemaps:
+    []
+  Name: Scenes
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f
+  Components:
+    []
 - !<RenderMeshVisual/55fc5f3b-9b71-4368-97c0-36cac32e831e>
   PrefabRemaps:
     []
@@ -2538,6 +2587,26 @@
     - !<own> 084e3f71-71b2-4385-b2a3-ebc8ea038ac8
   Components:
     []
+- !<RenderMeshVisual/5a4dadff-b383-4654-91e0-dc4f60852848>
+  PrefabRemaps:
+    []
+  Name: model
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> bf88cb0f-9b55-4e6b-9546-6a659657ecef
+  Mesh: !<reference> 908f5a1f-264a-4029-8f9e-3f403e0f9c51
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
 - !<SceneObject/5a5ac87e-ef31-4fce-be9d-4093dfe5c002>
   PrefabRemaps:
     []
@@ -4368,14 +4437,11 @@
     []
   Name: SnapCloudARSpawnManager
   Enabled: true
-  ScriptAsset: !<reference> 227ae6bd-a678-48d9-97d3-f1acd7c0eefb
+  ScriptAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
   ScriptInputsDefault:
-    followDistance: true
-    lockToCameraHeight: true
-    fixedHeightOffset: true
     faceCamera: true
-    useAsyncInstantiate: true
-    useGltfSettings: true
+    hideOnStart: true
+    ignoreEditorPreview: true
     pollIntervalSeconds: true
     tableName: true
     debugLogs: true
@@ -4383,16 +4449,14 @@
     {}
   ScriptInputs:
     "":
+      targetModel: !<reference.SceneObject> 2f18091e-35d0-4548-8424-980d61c8f5d4
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      followDistance: !<float> 50.000000
-      lockToCameraHeight: true
-      fixedHeightOffset: !<float> 0.000000
+      spawnDistance: !<float> -80.000000
+      heightOffset: !<float> -128.000000
       faceCamera: true
-      replacePreviousSpawn: false
-      useAsyncInstantiate: false
-      useGltfSettings: false
-      preflightGlb: false
-      pollIntervalSeconds: 1.500000
+      hideOnStart: true
+      ignoreEditorPreview: true
+      pollIntervalSeconds: !<float> 1.000000
       tableName: ar_spawn_requests
       debugLogs: true
   ScriptTypes:
@@ -5457,7 +5521,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    []
+    - !<own> 2f18091e-35d0-4548-8424-980d61c8f5d4
   Components:
     - !<own> 9f47b62c-41a4-4577-8ea0-24f068f37feb
 - !<Camera/b9656885-10ad-4d0b-af8c-1a5705ce9bc8>
@@ -5924,6 +5988,21 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 163f3e25-08c4-464b-8bc2-6b9cc91c75f9
+  Components:
+    []
+- !<SceneObject/ca4277a5-3e3a-4f58-bc7d-072e6ad31d3f>
+  PrefabRemaps:
+    []
+  Name: Scene
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2521d465-9bca-4961-bc13-de4df6d280c2
   Components:
     []
 - !<ScriptComponent/caebe164-0fd7-4964-bc6e-06d128bd9098>
