@@ -135,12 +135,12 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Title text
+  Text: Temporary Visit
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 7
+  FontSize: 4
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -7.500000
@@ -225,7 +225,26 @@
     - !<own> 5533268b-03f2-44ad-8df6-17391790b83f
     - !<own> 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - !<own> 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
-    - !<own> d002d660-6de4-4dea-a472-612d7432be77
+    - !<own> a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
+- !<Image/7cc87ed2-ac56-493e-9e3c-ef916d1537f2>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 7dfabde7-8cd6-4ed2-b273-3a5cd4aa514f
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<ScriptComponent/9529fbca-6c76-4acc-ba64-477fe731cbc2>
   PrefabRemaps:
     []
@@ -234,6 +253,7 @@
   ScriptAsset: !<reference> 74eafc23-e98b-4073-ab18-82ca532994e3
   ScriptInputsDefault:
     _yAxisEnabled: true
+    _zAxisEnabled: true
     _axisBufferDegrees: true
     _axisEasing: true
     duration: true
@@ -243,10 +263,31 @@
     "":
       _xAxisEnabled: true
       _yAxisEnabled: true
-      _zAxisEnabled: true
+      _zAxisEnabled: false
       _axisBufferDegrees: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
       _axisEasing: !<Vec3> {x: 1.000000, y: 1.000000, z: 1.000000}
       duration: 0.033000
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/a77a85bc-8fb7-4e87-b9b7-aeccf51013ba>
+  PrefabRemaps:
+    []
+  Name: PresetNote
+  Enabled: true
+  ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
+  ScriptInputsDefault:
+    foregroundDurationMs: true
+    backgroundScaleDifference: true
+    backgroundDurationMs: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      foregroundScaleDifference: 0.150000
+      foregroundDurationMs: !<float> 1000.000000
+      backgroundScaleDifference: 0.050000
+      backgroundDurationMs: !<float> 2000.000000
   ScriptTypes:
     "":
       {}
@@ -262,36 +303,14 @@
   Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -0.150000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 0.400000, y: 0.400000, z: 0.400000}
     HasSegmentScaleCompensation: false
   Children:
     []
   Components:
-    []
-- !<ScriptComponent/d002d660-6de4-4dea-a472-612d7432be77>
-  PrefabRemaps:
-    []
-  Name: PresetNote
-  Enabled: true
-  ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
-  ScriptInputsDefault:
-    foregroundScaleDifference: true
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      foregroundScaleDifference: 0.100000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
-  ScriptTypes:
-    "":
-      {}
+    - !<own> 7cc87ed2-ac56-493e-9e3c-ef916d1537f2
 - !<SceneObject/e4ccc0bb-ad2c-4f82-b248-90507c49f64a>
   PrefabRemaps:
     []
@@ -299,7 +318,7 @@
   Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.100000, z: 0.000000}
+    Position: {x: 0.000000, y: 0.200000, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false

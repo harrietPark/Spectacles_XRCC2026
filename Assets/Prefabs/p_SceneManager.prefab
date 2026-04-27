@@ -19,7 +19,7 @@
     "":
       uxFeedbackControllerComponent: !<MappingBased.AssignableType> bc125d43-b68c-4c5f-a235-5d41fd4100de
       soundEffectsController: !<MappingBased.AssignableType_1> 0d92aebe-0c3f-4576-8d44-db94604d5a7d
-      NoteController: !<MappingBased.AssignableType_2> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
+      NotesController: !<MappingBased.AssignableType_2> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
       buttonActivateNoteCreation: !<MappingBased.AssignableType_3> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
       buttonDebugSpawnNote: !<MappingBased.AssignableType_4> 0de7612b-d631-43ff-958d-efb071145a9d
       requestMicrophonePermissionOnStart: true

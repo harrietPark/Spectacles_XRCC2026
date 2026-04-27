@@ -22,6 +22,7 @@ export class NotesController extends BaseScriptComponent {
     @input
     @allowUndefined
     private areaManager: AreaManager | undefined;
+    @input private presetNotes: SceneObject;
     @ui.group_start("Note Spawning Settings")
     @input
     private fingerDwellingTimeThreshold: number = 2; // in seconds
@@ -244,8 +245,6 @@ export class NotesController extends BaseScriptComponent {
 
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
-
-        print("--- Spawned a note");
     }
 
     public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {

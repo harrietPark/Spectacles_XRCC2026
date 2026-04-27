@@ -26,7 +26,7 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    NoteController: false
+    NotesController: false
     buttonActivateNoteCreation: false
     buttonDebugSpawnNote: false
     microphoneAsset: false
@@ -45,7 +45,7 @@
   DefaultScriptInputs:
     - uxFeedbackControllerComponent: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       soundEffectsController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
-      NoteController: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      NotesController: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
       buttonActivateNoteCreation: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
       buttonDebugSpawnNote: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
       requestMicrophonePermissionOnStart: true
@@ -58,7 +58,7 @@
     - '// @ui {"widget":"group_start", "label":"Controller References"}'
     - '// @input AssignableType uxFeedbackControllerComponent {"hint":"Assign UXFeedbackController component. Uses safe no-op fallback if missing or still compiling."}'
     - '// @input AssignableType_1 soundEffectsController {"hint":"Optional centralized sound effects controller."}'
-    - // @input AssignableType_2 NoteController
+    - // @input AssignableType_2 NotesController
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"UI References"}'
     - // @input AssignableType_3 buttonActivateNoteCreation
