@@ -26,7 +26,8 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    durationMs: false
+    scaleDifference: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +37,11 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - scaleDifference: 0.100000
+      durationMs: !<float> 1000.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - // @input float scaleDifference = 0.1
+    - // @input float durationMs = 1000

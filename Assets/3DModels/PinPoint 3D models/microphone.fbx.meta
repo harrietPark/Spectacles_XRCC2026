@@ -1,24 +1,24 @@
-- !<AssetImportMetadata/71875a39-2995-45a0-a63e-a881b7445b13>
+- !<AssetImportMetadata/96fbb738-0153-420a-924f-c0be78dc0895>
   ImportedAssetIds:
-    .hidden/Material.001: !<reference> 29718bd1-0bfd-4cb7-813b-19ced4969f8e
-    .hidden/white: !<reference> c33f3177-12b8-496a-885f-6dbe95920184
-    573610c9cf6b6922: !<reference> fef9a809-2ac7-44b0-bbe8-ccf7999c1524
-    7a0dd5cd69df73fa: !<reference> 3a0035a3-14f3-4809-915a-ee9fd691e243
-    Materials/Material.001: !<reference> 74732ed0-21b2-491a-ba80-3b9baa16575b
-    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 3be3e0e1-772c-49ed-9c5c-e6b681d983b8
-    Meshes/Mesh_0: !<reference> 72242116-175a-49e7-b0fb-3df70c273ded
-    Scene: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
-    Textures/Image_0: !<reference> 09e4ff91-e8ac-4eff-8da6-6e7eba42b638
-    Textures/normal: !<reference> 1d5f05f4-fbf3-4ba5-a0e4-eff6e4e1f640
-    a5dd961b4db1c70e: !<reference> 6a50a790-c95a-4ad9-b8b5-de54365d30b6
+    .hidden/Material.001: !<reference> 981610b8-6318-499b-8d93-4ae7625db1a4
+    .hidden/white: !<reference> d4e9e402-48aa-48cf-b65e-ef86ed963bb3
+    573610c9cf6b6922: !<reference> 793d7dc0-4bb3-4a77-8016-006dbc3ead0d
+    7a0dd5cd69df73fa: !<reference> 52333de5-d891-49f6-a070-690c01a450ee
+    Materials/Material.001: !<reference> d80b6e2b-fa5b-46f8-b59f-ecdae6bd778b
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 7c739d25-d10a-46b9-a2f0-cd3e28d624e3
+    Meshes/Mesh_0: !<reference> a653faa2-75df-4a34-88d0-0c5c29556b68
+    Scene: !<reference> 071c4587-0e33-4489-9a93-481cc518e329
+    Textures/Image_0: !<reference> 5d5eac8c-ba7a-4b60-ad32-63df97798bde
+    Textures/normal: !<reference> 4e3fa598-0ba2-4b99-921a-91ec269d1ebe
+    a5dd961b4db1c70e: !<reference> 6f9d2ad1-eb37-41e3-9218-b49d5c18ea95
   ImporterName: FbxImporter
-  PrimaryAsset: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
+  PrimaryAsset: !<reference> 071c4587-0e33-4489-9a93-481cc518e329
   PackageType: LegacyPackage
   LegacyPackagePolicy: CanBeUnpackedTransparent
   ExtraData:
     {}
   AssetDataMap:
-    Scene: !<own> 5b4829b3-0e34-498f-9264-b5ca33235942
+    Scene: !<own> 38435817-cb6e-4175-94be-3cc1e8447eef
   DependentFiles:
     []
   ImporterSettings: !<FbxImporterSettings>
@@ -53,10 +53,30 @@
       png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/3a0035a3-14f3-4809-6ea5-1160296e1dbc>
+- !<RenderMeshVisual/0bfc3e9d-8673-4746-512a-1eec34e12ccd>
   PrefabRemaps:
     []
-  Name: bin
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> d80b6e2b-fa5b-46f8-b59f-ecdae6bd778b
+  Mesh: !<reference> a653faa2-75df-4a34-88d0-0c5c29556b68
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/34f60c8a-a98a-46c6-4aab-7bbfee5eab30>
+  PrefabRemaps:
+    []
+  Name: microphone
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -65,15 +85,15 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 6a50a790-c95a-4ad9-474a-21abc9a2cf49
+    - !<own> 89ba33d4-3bb9-414c-413a-bbd0fbf0d52e
   Components:
     []
-- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
-  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
+- !<ObjectPrefabAssetData/38435817-cb6e-4175-94be-3cc1e8447eef>
+  Prototype: !<ObjectOwner/6226d33a-cf26-4723-98cf-66cf7e99a711>
     PackagePath: ""
     objects:
-      - !<own> 3a0035a3-14f3-4809-6ea5-1160296e1dbc
-- !<SceneObject/6a50a790-c95a-4ad9-474a-21abc9a2cf49>
+      - !<own> 34f60c8a-a98a-46c6-4aab-7bbfee5eab30
+- !<SceneObject/89ba33d4-3bb9-414c-413a-bbd0fbf0d52e>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -87,24 +107,4 @@
   Children:
     []
   Components:
-    - !<own> fef9a809-2ac7-44b0-4417-33086663eadb
-- !<RenderMeshVisual/fef9a809-2ac7-44b0-4417-33086663eadb>
-  PrefabRemaps:
-    []
-  Name: component_0
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> 74732ed0-21b2-491a-ba80-3b9baa16575b
-  Mesh: !<reference> 72242116-175a-49e7-b0fb-3df70c273ded
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
+    - !<own> 0bfc3e9d-8673-4746-512a-1eec34e12ccd

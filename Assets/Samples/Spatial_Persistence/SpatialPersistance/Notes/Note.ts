@@ -414,7 +414,6 @@ export class Note extends BaseScriptComponent {
 
             if (eventArgs.isFinal) {
                 // Final chunk — commit to voiceTranscription (the source of truth)
-                print("--- transcription final: " + eventArgs.text);
                 this.voiceTranscription = this.appendFinalChunkToTranscript(
                     this.voiceTranscription,
                     transcript,

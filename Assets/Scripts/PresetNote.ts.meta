@@ -1,0 +1,55 @@
+- !<AssetImportMetadata/6a434ac3-d065-4cd4-b096-a056db9d57c8>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 48e65649-5c49-4ef6-a9fb-e5c402f14e3a
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/48e65649-5c49-4ef6-a9fb-e5c402f14e3a>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: d59d7d9b-0a1b-4ab0-a51a-5e0f09bcdf76
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    backgroundDurationMs: false
+    backgroundScaleDifference: false
+    foregroundDurationMs: false
+    foregroundScaleDifference: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - foregroundScaleDifference: 0.100000
+      foregroundDurationMs: !<float> 1000.000000
+      backgroundScaleDifference: 0.050000
+      backgroundDurationMs: !<float> 2000.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"group_start", "label":"Visual Settings"}'
+    - // @input float foregroundScaleDifference = 0.1
+    - // @input float foregroundDurationMs = 1000
+    - // @input float backgroundScaleDifference = 0.05
+    - // @input float backgroundDurationMs = 2000
+    - '// @ui {"widget":"group_end"}'
