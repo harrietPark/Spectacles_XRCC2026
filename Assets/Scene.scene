@@ -4490,7 +4490,7 @@
       targetModel: !<reference.SceneObject> 2f18091e-35d0-4548-8424-980d61c8f5d4
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       spawnDistance: !<float> -80.000000
-      heightOffset: !<float> -128.000000
+      heightOffset: !<float> -135.000000
       faceCamera: true
       hideOnStart: true
       ignoreEditorPreview: true
@@ -6437,7 +6437,7 @@
       captureStorageBucket: specs-captures
       captureCloudFolderPrefix: captures
       captureFilenameSlug: view
-      captureDelaySeconds: !<float> 1.000000
+      captureDelaySeconds: !<float> 3.000000
       cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       pendingImageFreshnessSeconds: !<float> 10.000000
   ScriptTypes:
