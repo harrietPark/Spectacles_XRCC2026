@@ -336,6 +336,8 @@ export class AreaManager extends BaseScriptComponent {
 
   // Serialize the local transform of the notes relative to the parent SceneObject w/ AnchorComponent.
   private saveWidgets() {
+    this.removeInvalidWidgets()
+
     const widgetMats: mat3[] = []
     const widgetTexts: string[] = []
     const widgetMeshIndices: number[] = []
@@ -362,6 +364,33 @@ export class AreaManager extends BaseScriptComponent {
     }
 
     this.serializationManager.saveNotes(this.currentArea.name, widgetMats, widgetTexts, widgetMeshIndices)
+  }
+
+  /**
+   * Remove stale widget references (e.g. already-destroyed scene objects) so
+   * follow-up operations like save/delete do not crash.
+   */
+  private removeInvalidWidgets(): void {
+    const validWidgets: Widget[] = []
+
+    for (const widget of this.widgets) {
+      if (isNull(widget)) {
+        continue
+      }
+
+      const sceneObject = widget.getSceneObject()
+      const transform = widget.transform
+
+      if (isNull(sceneObject) || isNull(transform)) {
+        continue
+      }
+
+      validWidgets.push(widget)
+    }
+
+    if (validWidgets.length !== this.widgets.length) {
+      this.widgets = validWidgets
+    }
   }
 
   private restoreWidgets() {
@@ -395,8 +424,13 @@ export class AreaManager extends BaseScriptComponent {
 
   private clearWidgets() {
     if (this.areaAnchor !== undefined) {
+      this.removeInvalidWidgets()
+
       for (const widget of this.widgets) {
-        widget.sceneObject.destroy()
+        const sceneObject = widget.getSceneObject()
+        if (!isNull(sceneObject)) {
+          sceneObject.destroy()
+        }
       }
 
       this.widgets = []
@@ -590,6 +624,8 @@ export class AreaManager extends BaseScriptComponent {
   }
 
   private toggleOffAllVoiceNotes(indexToExclude: number = -1): void {
+    this.removeInvalidWidgets()
+
     for (let index = 0; index < this.widgets.length; index++) {
       if (indexToExclude === index) {
         continue
@@ -610,6 +646,8 @@ export class AreaManager extends BaseScriptComponent {
    * @param index - index of the widget that was assigned when it is spawned
    */
   public deleteWidget(widget: Widget) {
+    this.removeInvalidWidgets()
+
     const widgetIndex = this.widgets.indexOf(widget)
     if (widgetIndex >= 0) {
       this.widgets.splice(widgetIndex, 1)
