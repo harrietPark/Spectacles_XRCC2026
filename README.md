@@ -56,7 +56,7 @@ It uses the same Snap Cloud project as this Lens archive. Open it in any browser
 2. When prompted, grant **microphone** and **camera** access (mic required for voice; camera when framing/cropping is used).
 3. Select **New Area**, then **Start Session**. Start the session **before** creating pins so cloud sync attaches to an active session.
 
-<img src="./README-ref/newAreaStartButton.png" alt="New Area and Start Session controls" width="800" />
+<img src="README-ref/newAreaStartButton.png" alt="New Area and Start Session controls" width="480" />
 
 4. The pin menu sits on the **back of your left hand**. The collapse button (top-right) hides the menu when you do not need it.
 5. Tap a pin from the menu, then touch a surface or point at something to place it.
@@ -64,7 +64,7 @@ It uses the same Snap Cloud project as this Lens archive. Open it in any browser
 7. Open the companion web portal — [https://sylvanerd.github.io/PinPoint_Web/](https://sylvanerd.github.io/PinPoint_Web/) (**Step 4**) — and confirm the pin with image, transcript, AI tags, and matched recommendations.
 8. When finished, choose **End Session** and refresh the portal if visit summaries appear after session end.
 
-<img src="./README-ref/endButton.png" alt="End Session control" width="800" />
+<img src="README-ref/endButton.png" alt="End Session control" width="480" />
 
 ---
 
