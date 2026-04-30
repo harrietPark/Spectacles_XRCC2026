@@ -64,10 +64,6 @@ Dashboard: [https://sylvanerd.github.io/PinPoint_Web/](https://sylvanerd.github.
 
 Open it in any browser to see pins update in near real time.
 
-<p align="center">
-  <img src="README-ref/step4.png" alt="PinPoint companion web portal (dashboard)" width="480" />
-</p>
-
 ### Step 5: Try the full flow
 
 1. Put on Spectacles and open PinPoint.
@@ -79,6 +75,10 @@ Open it in any browser to see pins update in near real time.
 </p>
 
 4. The pin menu sits on the **back of your left hand**. The collapse button (top-right) hides the menu when you do not need it.
+
+<p align="center">
+  <img src="README-ref/step4.png" alt="PinPoint companion web portal (dashboard)" width="480" />
+</p>
 
 5. Tap a pin from the menu, then touch a surface or point at something to place it.
 
