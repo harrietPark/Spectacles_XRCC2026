@@ -128,6 +128,17 @@ Salespeople can push product suggestions from the dashboard directly into the cu
 
 Profiles persist across visits and staff turnover via Snap Cloud. Returning customers' full spatial history loads instantly, and salespeople wearing Spectacles can walk the floor to see notes pinned exactly where the customer left them.
 
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif3.gif" alt="Cross-session memory — persistent profile" width="380" />
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif4.gif" alt="Cross-session memory — pins at prior locations" width="380" />
+    </td>
+  </tr>
+</table>
+
 ### 6. Session Recap & Catalog Intelligence
 
 Every visit ends with a full recap: stats, saved images, AI summary, and one-tap email to the customer. For the business, every session feeds catalog intelligence and intent data for smarter product decisions.
