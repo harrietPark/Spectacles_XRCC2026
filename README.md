@@ -45,7 +45,7 @@ Every visit ends with a full recap: stats, saved images, AI summary, and one-tap
 
 ## 4. User Journey
 
-<img src="./README-ref/UserJourney.png" alt="User Journey" width="500" />
+<img src="./README-ref/UserJourney.png" alt="User Journey" width="800" />
 
 ---
 
