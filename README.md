@@ -122,13 +122,32 @@ Customers look at a product through Spectacles, spawn a spatial note by touching
 
 Each brief is processed in realtime by Snap Cloud edge functions. Voice notes are transcribed, the target product is detected via Gemini-based object detection, and intent is extracted: style, color, material, function, budget. Results are matched against the company's product catalog (temporarily using IKEA's API) to surface alternatives. The aggregated profile builds as the customer browses.
 
+<p align="center">
+  <img src="README-ref/gif7.gif" alt="AI preference extraction and catalog matching" width="380" />
+</p>
+
 ### 3. Companion Web Portal (Salesperson Dashboard)
 
 A live web dashboard renders each pin as a card with image thumbnail, transcript, AI tags, summary, and pre-matched product recommendations.
 
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif8.gif" alt="Companion web portal — live pins" width="380" />
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif10.gif" alt="Companion web portal — dashboard detail" width="380" />
+    </td>
+  </tr>
+</table>
+
 ### 4. Live AR Recommendations (Two-Way Channel)
 
 Salespeople can push product suggestions from the dashboard directly into the customer's Spectacles view in real time. The dashboard becomes a two-way channel, not a passive feed.
+
+<p align="center">
+  <img src="README-ref/gif9.gif" alt="Live AR recommendations from dashboard to Spectacles" width="380" />
+</p>
 
 ### 5. Cross-Session Memory
 
