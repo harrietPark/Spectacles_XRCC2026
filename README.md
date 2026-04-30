@@ -104,10 +104,10 @@ Customers look at a product through Spectacles, spawn a spatial note by touching
 <table>
   <tr>
     <td align="center" valign="top" width="50%">
-      <img src="README-ref/git1.gif" alt="Pin and speak preview" width="380" />
+      <img src="README-ref/gif1.gif" alt="Pin and speak preview" width="380" />
     </td>
     <td align="center" valign="top" width="50%">
-      <img src="README-ref/git2.gif" alt="Crop preview" width="380" />
+      <img src="README-ref/gif2.gif" alt="Crop preview" width="380" />
     </td>
   </tr>
 </table>
