@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="README-ref/icon.png" alt="PinPoint logo" width="72" />
+</p>
+
 # PinPoint
 
 **Pin it. Say it. Sell it.**
@@ -8,12 +12,22 @@ PinPoint is a multi-platform spatial briefing system for showroom retail, built 
 
 ## Table of contents
 
-- [Setup](#setup)
 - [Problem](#problem)
 - [Solution](#solution)
+- [Setup](#setup)
 - [Features](#features)
 - [User journey](#user-journey)
 - [Architecture](#architecture)
+
+---
+
+## Problem
+
+Showroom shoppers build strong spatial preferences, but **intent lives in space** while **conversation is verbal**—so most of what they notice never reaches the salesperson intact. Engagement mid-floor forces rediscovery from scratch; handovers and returns lose the original spatial context.
+
+## Solution
+
+**PinPoint:** customers wear Spectacles, pin reactions to products with voice (and crops), Snap Cloud extracts structure and catalog fit, staff see everything live on the web—turning cold “How can I help?” into consultation with context.
 
 ---
 
@@ -50,6 +64,10 @@ Dashboard: [https://sylvanerd.github.io/PinPoint_Web/](https://sylvanerd.github.
 
 Open it in any browser to see pins update in near real time.
 
+<p align="center">
+  <img src="README-ref/step4.png" alt="PinPoint companion web portal (dashboard)" width="480" />
+</p>
+
 ### Step 5: Try the full flow
 
 1. Put on Spectacles and open PinPoint.
@@ -61,9 +79,7 @@ Open it in any browser to see pins update in near real time.
 </p>
 
 4. The pin menu sits on the **back of your left hand**. The collapse button (top-right) hides the menu when you do not need it.
-<p align="center">
-  <img src="README-ref/step4.png" alt="PinPoint companion web portal (dashboard)" width="480" />
-</p>
+
 5. Tap a pin from the menu, then touch a surface or point at something to place it.
 
 <p align="center">
@@ -82,16 +98,6 @@ Open it in any browser to see pins update in near real time.
 <p align="center">
   <img src="README-ref/endButton.png" alt="End Session control" width="480" />
 </p>
-
----
-
-## Problem
-
-Showroom shoppers build strong spatial preferences, but **intent lives in space** while **conversation is verbal**—so most of what they notice never reaches the salesperson intact. Engagement mid-floor forces rediscovery from scratch; handovers and returns lose the original spatial context.
-
-## Solution
-
-**PinPoint:** customers wear Spectacles, pin reactions to products with voice (and crops), Snap Cloud extracts structure and catalog fit, staff see everything live on the web—turning cold “How can I help?” into consultation with context.
 
 ---
 
