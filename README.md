@@ -2,8 +2,7 @@
 
 **Pin it. Say it. Sell it.**
 
-PinPoint is a multi-platform spatial briefing system for showroom retail, built on Snap Spectacles, Snap Cloud, and a companion web portal. A spatial briefing system captures what a customer sees and says in physical space, anchors those verbal reactions to the exact products that triggered them, and turns that into a structured dashboard a salesperson can utilise. In other words, it converts the showroom itself into a memory layer.
-
+PinPoint is a multi-platform spatial briefing system for showroom retail, built on Snap Spectacles, Snap Cloud, and a companion web portal. It captures what customers see and say, anchors those reactions to the exact products that triggered them, and delivers a structured, retrievable preference profile that turns cold introductions into informed consultations. In other words, the showroom stops being a place customers forget and starts being one that remembers them.
 ---
 
 ## 1. Problem
