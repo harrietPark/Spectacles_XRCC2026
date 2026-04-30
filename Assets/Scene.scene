@@ -7051,9 +7051,9 @@
     {}
   ScriptInputs:
     "":
-      openAIToken: 6a89284c-2898-4bd3-9fe9-a2f47ac507cf
-      googleToken: 71390ddb-892d-4634-8bf4-373da964585c
-      snapToken: 3a047324-860b-4488-955b-35c3a4948277
+      openAIToken: ""
+      googleToken: ""
+      snapToken: ""
       enableLogging: false
       enableLoggingLifecycle: false
   ScriptTypes:
