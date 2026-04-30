@@ -48,7 +48,11 @@ The Lens uses Remote Service Gateway for transcription and AI, which requires an
 
 Dashboard: [https://sylvanerd.github.io/PinPoint_Web/](https://sylvanerd.github.io/PinPoint_Web/)
 
-It uses the same Snap Cloud project as this Lens archive. Open it in any browser to see pins update in near real time.
+Open it in any browser to see pins update in near real time.
+
+<p align="center">
+  <img src="README-ref/step4.png" alt="PinPoint companion web portal (dashboard)" width="480" />
+</p>
 
 ### Step 5: Try the full flow
 
@@ -62,7 +66,17 @@ It uses the same Snap Cloud project as this Lens archive. Open it in any browser
 
 4. The pin menu sits on the **back of your left hand**. The collapse button (top-right) hides the menu when you do not need it.
 5. Tap a pin from the menu, then touch a surface or point at something to place it.
+
+<p align="center">
+  <img src="README-ref/step5.png" alt="Choose a pin and place it in the scene" width="480" />
+</p>
+
 6. Press the microphone to record; press again to stop. Transcription can take a moment; text appears on the note shortly after you finish.
+
+<p align="center">
+  <img src="README-ref/step6.png" alt="Record a voice note on the pin" width="480" />
+</p>
+
 7. Open the companion web portal — [https://sylvanerd.github.io/PinPoint_Web/](https://sylvanerd.github.io/PinPoint_Web/) (**Step 4**) — and confirm the pin with image, transcript, AI tags, and matched recommendations.
 8. When finished, choose **End Session** and refresh the portal if visit summaries appear after session end.
 
