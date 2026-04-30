@@ -145,9 +145,16 @@ A live web dashboard renders each pin as a card with image thumbnail, transcript
 
 Salespeople can push product suggestions from the dashboard directly into the customer's Spectacles view in real time. The dashboard becomes a two-way channel, not a passive feed.
 
-<p align="center">
-  <img src="README-ref/gif9.gif" alt="Live AR recommendations from dashboard to Spectacles" width="380" />
-</p>
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif5.gif" alt="Live AR recommendations — spawn from dashboard" width="380" />
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/gif9.gif" alt="Live AR recommendations — on Spectacles view" width="380" />
+    </td>
+  </tr>
+</table>
 
 ### 5. Cross-Session Memory
 
