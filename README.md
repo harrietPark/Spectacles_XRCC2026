@@ -175,6 +175,10 @@ Profiles persist across visits and staff turnover via Snap Cloud. Returning cust
 
 Every visit ends with a full recap: stats, saved images, AI summary, and one-tap email to the customer. For the business, every session feeds catalog intelligence and intent data for smarter product decisions.
 
+<p align="center">
+  <img src="README-ref/feature6.png" alt="session recap" width="480" />
+</p>
+
 ---
 
 ## User journey
