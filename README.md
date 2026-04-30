@@ -101,6 +101,17 @@ Showroom shoppers build strong spatial preferences, but **intent lives in space*
 
 Customers look at a product through Spectacles, spawn a spatial note by touching or pointing at it, and speak their reaction: "I love this handle but the color is too cold." The system bundles a quiet image capture, voice recording, real-time transcript, and world-locked anchor into one retrievable brief pinned to the exact product. Customers can also crop visual references and attach voice notes the same way.
 
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/git1.gif" alt="Pin and speak preview" width="380" />
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="README-ref/git2.gif" alt="Crop preview" width="380" />
+    </td>
+  </tr>
+</table>
+
 ### 2. AI Preference Extraction & Catalog Matching (Snap Cloud)
 
 Each brief is processed in realtime by Snap Cloud edge functions. Voice notes are transcribed, the target product is detected via Gemini-based object detection, and intent is extracted: style, color, material, function, budget. Results are matched against the company's product catalog (temporarily using IKEA's API) to surface alternatives. The aggregated profile builds as the customer browses.
