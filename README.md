@@ -148,10 +148,10 @@ Salespeople can push product suggestions from the dashboard directly into the cu
 <table>
   <tr>
     <td align="center" valign="top" width="50%">
-      <img src="README-ref/gif5.gif" alt="Live AR recommendations — spawn from dashboard" width="380" />
+      <img src="README-ref/gif9.gif" alt="Live AR recommendations — on Spectacles view" width="380" />
     </td>
     <td align="center" valign="top" width="50%">
-      <img src="README-ref/gif9.gif" alt="Live AR recommendations — on Spectacles view" width="380" />
+      <img src="README-ref/gif52.gif" alt="Live AR recommendations — spawn from dashboard" width="380" />
     </td>
   </tr>
 </table>
