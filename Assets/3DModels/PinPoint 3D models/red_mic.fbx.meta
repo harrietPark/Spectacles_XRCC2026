@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> fc567ee8-a70d-47ff-9aa5-5685348bac83
     .hidden/white: !<reference> 22aa6f1a-a87d-49e1-80f9-4b13b24e75ec
-    573610c9cf6b6922: !<reference> 17088fca-34c1-4eb3-9ba0-55d20fd40260
-    7a0dd5cd69df73fa: !<reference> 6c531d65-6dc0-4700-9f6c-8d45c363526c
+    66780cf3a4dcb2b8: !<reference> 1148ee48-cc3a-4dc9-902c-332c23af8305
+    72c714cf4f36a5cd: !<reference> 07f84d49-cbd1-45c0-8554-42cf5116f8ef
     Materials/Material.001: !<reference> ddd26437-fb3e-4b8a-a36a-888d57294e84
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> df00087e-e164-4438-9b66-dbed21662e5f
     Meshes/Mesh_0: !<reference> 9820cb1e-8229-4fc6-9118-ce3f4acfde7a
     Scene: !<reference> 47d3cdd4-c54b-48b1-bc50-4b806f2d3ff6
     Textures/Image_0: !<reference> b0a098b7-110f-404b-9ed4-2b09918c3843
     Textures/normal: !<reference> b2ad1e46-af18-47b5-8833-8fa134666760
-    a5dd961b4db1c70e: !<reference> 78ddf1fa-6155-45dc-8f68-0e64cf40950b
+    acb1925c659c99f8: !<reference> 7185dcb6-b984-45dd-ba36-b8018bb1bab7
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> 47d3cdd4-c54b-48b1-bc50-4b806f2d3ff6
   PackageType: LegacyPackage
@@ -53,27 +53,7 @@
       png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/22782191-e5b6-42cd-7f48-0435fd060991>
-  PrefabRemaps:
-    []
-  Name: red_mic
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> f206dbaf-c386-4b94-4a79-6051e549f84f
-  Components:
-    []
-- !<ObjectPrefabAssetData/40ee09ac-88cb-4dc8-a335-b1816242f0d9>
-  Prototype: !<ObjectOwner/2c56abd1-11b8-4dba-b07f-9430af038ef5>
-    PackagePath: ""
-    objects:
-      - !<own> 22782191-e5b6-42cd-7f48-0435fd060991
-- !<RenderMeshVisual/794f8f98-46a0-4d15-459c-c6ec72be7afd>
+- !<RenderMeshVisual/07f84d49-cbd1-45c0-7aab-bd30aee90710>
   PrefabRemaps:
     []
   Name: component_0
@@ -93,7 +73,27 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/f206dbaf-c386-4b94-4a79-6051e549f84f>
+- !<SceneObject/1148ee48-cc3a-4dc9-6fd3-ccd3dc507cfa>
+  PrefabRemaps:
+    []
+  Name: red_mic
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 7185dcb6-b984-45dd-45c9-47fe744e4548
+  Components:
+    []
+- !<ObjectPrefabAssetData/40ee09ac-88cb-4dc8-a335-b1816242f0d9>
+  Prototype: !<ObjectOwner/2c56abd1-11b8-4dba-b07f-9430af038ef5>
+    PackagePath: ""
+    objects:
+      - !<own> 1148ee48-cc3a-4dc9-6fd3-ccd3dc507cfa
+- !<SceneObject/7185dcb6-b984-45dd-45c9-47fe744e4548>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -107,4 +107,4 @@
   Children:
     []
   Components:
-    - !<own> 794f8f98-46a0-4d15-459c-c6ec72be7afd
+    - !<own> 07f84d49-cbd1-45c0-7aab-bd30aee90710

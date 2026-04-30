@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> 29718bd1-0bfd-4cb7-813b-19ced4969f8e
     .hidden/white: !<reference> c33f3177-12b8-496a-885f-6dbe95920184
-    573610c9cf6b6922: !<reference> fef9a809-2ac7-44b0-bbe8-ccf7999c1524
-    7a0dd5cd69df73fa: !<reference> 3a0035a3-14f3-4809-915a-ee9fd691e243
+    66780cf3a4dcb2b8: !<reference> a5dd96c2-e425-48d9-8a36-c5032bdbfbbe
+    72c714cf4f36a5cd: !<reference> d12eded7-11da-44c9-be38-b77e0ecc2a53
     Materials/Material.001: !<reference> 74732ed0-21b2-491a-ba80-3b9baa16575b
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> 3be3e0e1-772c-49ed-9c5c-e6b681d983b8
     Meshes/Mesh_0: !<reference> 72242116-175a-49e7-b0fb-3df70c273ded
     Scene: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
     Textures/Image_0: !<reference> 09e4ff91-e8ac-4eff-8da6-6e7eba42b638
     Textures/normal: !<reference> 1d5f05f4-fbf3-4ba5-a0e4-eff6e4e1f640
-    a5dd961b4db1c70e: !<reference> 6a50a790-c95a-4ad9-b8b5-de54365d30b6
+    acb1925c659c99f8: !<reference> 90e9e38d-2f2a-4dc2-a501-32b923bf71e7
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> 737979c0-13dd-4612-bf05-cea501a28ce1
   PackageType: LegacyPackage
@@ -53,7 +53,12 @@
       png: Performance Compression
     Overrides:
       {}
-- !<SceneObject/54212446-b19f-4ef7-5bdf-f1b2bb3ba08a>
+- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
+  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
+    PackagePath: ""
+    objects:
+      - !<own> a5dd96c2-e425-48d9-75c9-3afcd4240441
+- !<SceneObject/90e9e38d-2f2a-4dc2-5afe-cd46dc408e18>
   PrefabRemaps:
     []
   Name: Mesh_0
@@ -67,13 +72,8 @@
   Children:
     []
   Components:
-    - !<own> ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d
-- !<ObjectPrefabAssetData/5b4829b3-0e34-498f-9264-b5ca33235942>
-  Prototype: !<ObjectOwner/0dcf6737-68e5-4144-85bf-2552d943b9e8>
-    PackagePath: ""
-    objects:
-      - !<own> b36ef3b5-345a-4bea-5730-00d49b1764c6
-- !<SceneObject/b36ef3b5-345a-4bea-5730-00d49b1764c6>
+    - !<own> d12eded7-11da-44c9-41c7-4881f133d5ac
+- !<SceneObject/a5dd96c2-e425-48d9-75c9-3afcd4240441>
   PrefabRemaps:
     []
   Name: bin
@@ -85,10 +85,10 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 54212446-b19f-4ef7-5bdf-f1b2bb3ba08a
+    - !<own> 90e9e38d-2f2a-4dc2-5afe-cd46dc408e18
   Components:
     []
-- !<RenderMeshVisual/ebcf770a-3bd9-48ff-5c22-9e7d93ff8c6d>
+- !<RenderMeshVisual/d12eded7-11da-44c9-41c7-4881f133d5ac>
   PrefabRemaps:
     []
   Name: component_0

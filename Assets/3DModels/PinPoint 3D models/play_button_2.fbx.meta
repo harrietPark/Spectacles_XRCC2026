@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> 89a39122-8180-4c81-8869-b1808d5281a6
     .hidden/white: !<reference> 1957a3a0-5583-4a49-9353-49c0c2869a7a
-    34bdc6b9055eebed: !<reference> f5c99f88-10d4-4d58-aeec-89ea4d2cb9f9
-    7a0dd5cd69df73fa: !<reference> 51535f15-8ae5-41f2-9dec-5083ff8dd236
+    39a1cba68f7f563f: !<reference> 937fccae-4e67-47e4-a797-a65b37a36e77
+    66780cf3a4dcb2b8: !<reference> 53dd9889-7f79-460f-b099-8723df5c2876
     Materials/Material.001: !<reference> 75180b8d-aa54-4ca5-8cb6-89f77d994bfe
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> 010eaf95-d023-41e8-a36c-d8fe5ed78cc1
     Meshes/Mesh1.0: !<reference> 52db7bb8-4981-415d-9c66-b3400aff8508
     Scene: !<reference> 23d527ba-2ee3-4ea0-a92c-98bce14eb827
     Textures/Baked_BaseColor: !<reference> 5702eb76-c471-4df4-a345-0f2164d9c8a8
     Textures/normal: !<reference> e2caf002-32f3-497b-b51b-b004b37c3d04
-    f67b8335867a4b89: !<reference> b42df7d7-189c-44b4-a157-02b37ef5d069
+    e2904e62e1bc5917: !<reference> 365cca41-d7ca-4ee9-b8dd-ed6d13908d24
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> 23d527ba-2ee3-4ea0-a92c-98bce14eb827
   PackageType: LegacyPackage
@@ -53,7 +53,27 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<SceneObject/02242338-3de2-4a20-6475-ac20364de463>
+- !<ObjectPrefabAssetData/144b2840-ba6e-4f5c-a4bc-c321d9f7c183>
+  Prototype: !<ObjectOwner/6a55b84b-9e11-4aff-b716-9f2dc064b004>
+    PackagePath: ""
+    objects:
+      - !<own> 53dd9889-7f79-460f-4f66-78dc20a3d789
+- !<SceneObject/365cca41-d7ca-4ee9-4722-1292ec6f72db>
+  PrefabRemaps:
+    []
+  Name: Mesh1.0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 937fccae-4e67-47e4-5868-59a4c85c9188
+- !<SceneObject/53dd9889-7f79-460f-4f66-78dc20a3d789>
   PrefabRemaps:
     []
   Name: play_button_2
@@ -65,15 +85,10 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> ad479cb8-b180-489e-64e3-325901d241cc
+    - !<own> 365cca41-d7ca-4ee9-4722-1292ec6f72db
   Components:
     []
-- !<ObjectPrefabAssetData/144b2840-ba6e-4f5c-a4bc-c321d9f7c183>
-  Prototype: !<ObjectOwner/6a55b84b-9e11-4aff-b716-9f2dc064b004>
-    PackagePath: ""
-    objects:
-      - !<own> 02242338-3de2-4a20-6475-ac20364de463
-- !<RenderMeshVisual/8732e5c3-249a-4a30-491e-88a1ef68f422>
+- !<RenderMeshVisual/937fccae-4e67-47e4-5868-59a4c85c9188>
   PrefabRemaps:
     []
   Name: component_0
@@ -93,18 +108,3 @@
   BlendNormals: false
   BlendShapes:
     {}
-- !<SceneObject/ad479cb8-b180-489e-64e3-325901d241cc>
-  PrefabRemaps:
-    []
-  Name: Mesh1.0
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
-    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 8732e5c3-249a-4a30-491e-88a1ef68f422

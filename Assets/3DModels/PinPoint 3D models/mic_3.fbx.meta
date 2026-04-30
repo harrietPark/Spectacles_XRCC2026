@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> 84826b35-f76d-4ee4-8963-8649b4bfa122
     .hidden/white: !<reference> b4aca125-7c59-4367-bf11-58660b2bd1c5
-    34bdc6b9055eebed: !<reference> 17a5fee9-aa9a-4668-94eb-9fad9c6ade5a
-    7a0dd5cd69df73fa: !<reference> 5fff8791-b7c7-41c7-abdf-4e735476fc16
+    39a1cba68f7f563f: !<reference> 97cacdae-764c-446a-b003-c4ebadfd3746
+    66780cf3a4dcb2b8: !<reference> 001ebc9a-a976-4310-864d-38a779f1fbee
     Materials/Material.001: !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> a8bf9ad7-8a17-49d3-be2c-a38bad7a050e
     Meshes/Mesh1.0: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
     Scene: !<reference> ebb67cbe-6005-4db3-afaa-f88df2037832
     Textures/Baked_BaseColor: !<reference> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
     Textures/normal: !<reference> 8664781b-a752-439b-9990-90079fdc271e
-    f67b8335867a4b89: !<reference> 89602c81-7a91-4c23-8ad7-e683f1736c94
+    e2904e62e1bc5917: !<reference> 6309ffdb-bf9e-4b6c-a4f4-d8cd0a1fb453
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> ebb67cbe-6005-4db3-afaa-f88df2037832
   PackageType: LegacyPackage
@@ -53,7 +53,7 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<SceneObject/311d99a8-960d-462e-48c8-84f633bbf8ec>
+- !<SceneObject/001ebc9a-a976-4310-79b2-c758860e0411>
   PrefabRemaps:
     []
   Name: mic_3
@@ -65,10 +65,10 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 8430aca7-6740-4243-60ed-eae03f01c362
+    - !<own> 6309ffdb-bf9e-4b6c-5b0b-2732f5e04bac
   Components:
     []
-- !<SceneObject/8430aca7-6740-4243-60ed-eae03f01c362>
+- !<SceneObject/6309ffdb-bf9e-4b6c-5b0b-2732f5e04bac>
   PrefabRemaps:
     []
   Name: Mesh1.0
@@ -82,13 +82,13 @@
   Children:
     []
   Components:
-    - !<own> 9ea4e5d5-6a4d-433e-5bb9-2ce7d29f45b8
+    - !<own> 97cacdae-764c-446a-4ffc-3b145202c8b9
 - !<ObjectPrefabAssetData/8e0ba511-a1ed-4712-bb98-f67855bce466>
   Prototype: !<ObjectOwner/e6a85383-61ea-4418-92de-f5e57f1567bd>
     PackagePath: ""
     objects:
-      - !<own> 311d99a8-960d-462e-48c8-84f633bbf8ec
-- !<RenderMeshVisual/9ea4e5d5-6a4d-433e-5bb9-2ce7d29f45b8>
+      - !<own> 001ebc9a-a976-4310-79b2-c758860e0411
+- !<RenderMeshVisual/97cacdae-764c-446a-4ffc-3b145202c8b9>
   PrefabRemaps:
     []
   Name: component_0

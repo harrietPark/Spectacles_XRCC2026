@@ -2,15 +2,15 @@
   ImportedAssetIds:
     .hidden/Material.001: !<reference> 2e8fd532-97c7-4aa1-bd80-6f387117f9b3
     .hidden/white: !<reference> 341d7b50-49c0-4bc3-a56b-5522dc234fbb
-    573610c9cf6b6922: !<reference> d276dd5e-3141-41b2-bd59-7e649f9f0af9
-    7a0dd5cd69df73fa: !<reference> 9f534ccb-0115-4a90-aa01-558c3ad262f8
+    66780cf3a4dcb2b8: !<reference> 4114e539-a9d2-4ad3-bcdd-77899568016b
+    72c714cf4f36a5cd: !<reference> 76ce1fd5-6251-40e6-9bf3-6d402f03a50a
     Materials/Material.001: !<reference> b415679d-b68c-4330-8ab0-c7196fc99685
     Materials/Material.001|Material.001|GraphPassInfo: !<reference> 61ccd27a-99d0-48d9-9e18-8adbf40b5b8f
     Meshes/Mesh_0: !<reference> d19e10d5-4324-49bf-846a-5ba37415b45f
     Scene: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
     Textures/Image_0: !<reference> 74a1b44e-1a7c-4710-ac9b-d91e552df95e
     Textures/Image_2: !<reference> 31b13b2f-a231-4126-ad54-8ca9b9450e43
-    a5dd961b4db1c70e: !<reference> 478b6001-453f-4627-97c9-3fade42b6363
+    acb1925c659c99f8: !<reference> 15ee9e92-fbbf-4b59-a085-faf724789cc9
   ImporterName: FbxImporter
   PrimaryAsset: !<reference> efdb9da0-33a7-44ad-9db4-f10234dbc91d
   PackageType: LegacyPackage
@@ -52,7 +52,37 @@
       jpg: Performance Compression
     Overrides:
       {}
-- !<RenderMeshVisual/58336786-834f-4fcd-48e8-ad2161f05a5d>
+- !<SceneObject/15ee9e92-fbbf-4b59-5f7a-0508db876336>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 76ce1fd5-6251-40e6-640c-92bfd0fc5af5
+- !<SceneObject/4114e539-a9d2-4ad3-4322-88766a97fe94>
+  PrefabRemaps:
+    []
+  Name: red_pin
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 15ee9e92-fbbf-4b59-5f7a-0508db876336
+  Components:
+    []
+- !<RenderMeshVisual/76ce1fd5-6251-40e6-640c-92bfd0fc5af5>
   PrefabRemaps:
     []
   Name: component_0
@@ -76,34 +106,4 @@
   Prototype: !<ObjectOwner/c5faf900-5f35-4c94-9830-3a3b158d1a05>
     PackagePath: ""
     objects:
-      - !<own> b40a7776-0276-483c-5817-2271153e805f
-- !<SceneObject/b40a7776-0276-483c-5817-2271153e805f>
-  PrefabRemaps:
-    []
-  Name: red_pin
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    - !<own> b5d78d2a-6e02-4d66-6633-d20b4785cdde
-  Components:
-    []
-- !<SceneObject/b5d78d2a-6e02-4d66-6633-d20b4785cdde>
-  PrefabRemaps:
-    []
-  Name: Mesh_0
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
-    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 58336786-834f-4fcd-48e8-ad2161f05a5d
+      - !<own> 4114e539-a9d2-4ad3-4322-88766a97fe94
