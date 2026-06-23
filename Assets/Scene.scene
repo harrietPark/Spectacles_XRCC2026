@@ -5023,26 +5023,36 @@
   Enabled: true
   ScriptAsset: !<reference> f677615d-b92e-43fd-8936-36378c3a2d52
   ScriptInputsDefault:
+    modelUrlColumn: true
+    modelScale: true
+    convertMetersToCentimeters: true
     faceCamera: true
     hideOnStart: true
     ignoreEditorPreview: true
     pollIntervalSeconds: true
     tableName: true
-    debugLogs: true
+    testMode: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       targetModel: !<reference.SceneObject> 2f18091e-35d0-4548-8424-980d61c8f5d4
       cameraObject: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      baseMaterial: !<reference.Material> 7f105fb9-dff1-4bc8-a4ce-cec30e6c53ef
+      spawnParent: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      modelUrlColumn: original_model_3d_url
+      modelScale: !<float> 1.000000
+      convertMetersToCentimeters: true
       spawnDistance: !<float> -80.000000
-      heightOffset: !<float> -135.000000
+      heightOffset: !<float> -100.000000
       faceCamera: true
       hideOnStart: true
       ignoreEditorPreview: true
       pollIntervalSeconds: !<float> 1.000000
       tableName: ar_spawn_requests
-      debugLogs: true
+      debugLogs: false
+      testMode: false
+      testModelUrl: "https://web-api.ikea.com/dimma/assets/1.2/20359154/PS01_S01_NV01/rqp3/glb_draco/20359154_PS01_S01_NV01_RQP3_3.0_298fca27ac4a41379a171d7e7aba1e9a.glb"
   ScriptTypes:
     "":
       {}

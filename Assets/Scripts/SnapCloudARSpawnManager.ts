@@ -4,23 +4,53 @@ import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
 /**
  * SnapCloudARSpawnManager
  * -----------------------
- * Simplified AR spawn bridge.
+ * AR spawn bridge that loads the product GLB by URL.
  *
- * Web portal inserts a row in `ar_spawn_requests` with `status='pending'`.
- * This script claims that row, enables a pre-placed SceneObject in the Lens,
- * and places it once in front of the user's camera at camera height.
+ * Web portal inserts a row in `ar_spawn_requests` with `status='pending'` and
+ * an `original_model_3d_url` pointing at the product's GLB. This script claims
+ * that row, downloads the GLB at runtime, instantiates it, and places it once
+ * in front of the user's camera at camera height.
+ *
+ * The previous behavior (enabling a single pre-placed `targetModel`) is kept
+ * below as commented-out code for reference / fallback.
  */
 @component
 export class SnapCloudARSpawnManager extends BaseScriptComponent {
+  // Lens Studio modules used to download + instantiate the remote GLB.
+  private internetModule: InternetModule = require("LensStudio:InternetModule")
+  private remoteMediaModule: RemoteMediaModule = require("LensStudio:RemoteMediaModule")
+
   @input
-  @hint("Pre-placed 3D model root to show when a spawn request arrives.")
+  @hint("LEGACY: pre-placed 3D model root (no longer used for spawning; URL load replaces it).")
   @allowUndefined
   private targetModel: SceneObject | undefined
 
   @input
-  @hint("Camera SceneObject used to place the target model in front of the user.")
+  @hint("Camera SceneObject used to place the spawned model in front of the user.")
   @allowUndefined
   private cameraObject: SceneObject | undefined
+
+  @input
+  @hint("Base PBR material applied to the instantiated GLB (required by tryInstantiate).")
+  @allowUndefined
+  private baseMaterial: Material | undefined
+
+  @input
+  @hint("DEPRECATED/ignored: spawned models always parent to an auto-created static scene root so they stay world-locked.")
+  @allowUndefined
+  private spawnParent: SceneObject | undefined
+
+  @input
+  @hint("Request column holding the GLB URL to download.")
+  private modelUrlColumn: string = "original_model_3d_url"
+
+  @input
+  @hint("Uniform scale applied to the spawned model (1 = no change).")
+  private modelScale: number = 1.0
+
+  @input
+  @hint("Convert GLTF meters to Lens centimetres on instantiate (usually true).")
+  private convertMetersToCentimeters: boolean = true
 
   @input
   @hint("Centimetres in front of the camera (50 = 0.5 m).")
@@ -54,13 +84,30 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   @hint("Enable verbose logs.")
   private debugLogs: boolean = true
 
+  @input
+  @hint("TEST MODE: ignore spawn requests and load the hard-coded testModelUrl once on start.")
+  private testMode: boolean = false
+
+  @input
+  @hint("Hard-coded GLB URL loaded when testMode is on.")
+  private testModelUrl: string =
+    "https://web-api.ikea.com/dimma/assets/1.2/20359154/PS01_S01_NV01/rqp3/glb_draco/20359154_PS01_S01_NV01_RQP3_3.0_298fca27ac4a41379a171d7e7aba1e9a.glb"
+
   private pollTimer: DelayedCallbackEvent | null = null
   private isPolling: boolean = false
   private pollingEnabled: boolean = true
+  private spawnedObject: SceneObject | null = null
+  private spawnRoot: SceneObject | null = null
 
   onAwake(): void {
     if (this.hideOnStart && this.targetModel) {
       this.targetModel.enabled = false
+    }
+
+    if (this.testMode) {
+      this.pollingEnabled = false
+      this.createEvent("OnStartEvent").bind(this.runTestSpawn.bind(this))
+      return
     }
 
     if (this.ignoreEditorPreview && global.deviceInfoSystem && global.deviceInfoSystem.isEditor()) {
@@ -72,12 +119,27 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     this.createEvent("OnStartEvent").bind(this.startPolling.bind(this))
   }
 
+  private runTestSpawn(): void {
+    if (!this.testModelUrl) {
+      this.log("TEST MODE: testModelUrl is empty; nothing to spawn.")
+      return
+    }
+    if (!this.cameraObject) {
+      this.log("TEST MODE: cameraObject is not wired; model will spawn but cannot be positioned.")
+    }
+    this.log(`TEST MODE: loading hard-coded model from ${this.testModelUrl}`)
+    this.loadAndSpawn(this.testModelUrl).then((ok) => {
+      this.log(`TEST MODE: spawn ${ok ? "succeeded" : "failed"}.`)
+    })
+  }
+
   private startPolling(): void {
     if (!this.pollingEnabled) return
 
     this.log(
-      `Ready. targetModel=${this.targetModel ? this.targetModel.name : "NOT SET"}, ` +
-        `camera=${this.cameraObject ? this.cameraObject.name : "NOT SET"}`
+      `Ready. camera=${this.cameraObject ? this.cameraObject.name : "NOT SET"}, ` +
+        `baseMaterial=${this.baseMaterial ? "SET" : "NOT SET"}, ` +
+        `urlColumn=${this.modelUrlColumn}, table=${this.tableName}`
     )
 
     this.pollTimer = this.createEvent("DelayedCallbackEvent")
@@ -107,7 +169,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     try {
       const {data, error} = await client
         .from(this.tableName)
-        .select("id,pin_id,product_id,status,created_at")
+        .select(`id,pin_id,product_id,${this.modelUrlColumn},status,created_at`)
         .eq("status", "pending")
         .order("created_at", {ascending: true})
         .limit(1)
@@ -117,6 +179,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
         return
       }
 
+      this.debugLog(`Poll ok: ${data ? data.length : 0} pending request(s).`)
       if (data && data.length > 0) {
         await this.processRequest(client, data[0])
       }
@@ -146,54 +209,202 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       this.debugLog(`Claim lost for ${request.id}.`)
       return
     }
+    this.debugLog(`Claim won for ${request.id}; status=processing.`)
 
-    if (!this.targetModel) {
-      this.log("targetModel is not wired; marking request failed.")
-      await this.setRequestStatus(client, request.id, "failed")
-      return
-    }
     if (!this.cameraObject) {
       this.log("cameraObject is not wired; marking request failed.")
       await this.setRequestStatus(client, request.id, "failed")
       return
     }
 
-    this.showTargetModel()
-    await this.setRequestStatus(client, request.id, "spawned")
-    this.log(`Spawn request ${request.id} completed by showing pre-placed model.`)
+    const modelUrl = request[this.modelUrlColumn]
+    this.debugLog(`Resolved url from '${this.modelUrlColumn}': ${modelUrl ? modelUrl : "<none>"}`)
+    if (!modelUrl || typeof modelUrl !== "string") {
+      this.log(`No '${this.modelUrlColumn}' on request ${request.id}; marking failed.`)
+      await this.setRequestStatus(client, request.id, "failed")
+      return
+    }
+
+    const ok = await this.loadAndSpawn(modelUrl)
+    if (ok) {
+      await this.setRequestStatus(client, request.id, "spawned")
+      this.log(`Spawn request ${request.id} completed by loading GLB from url.`)
+    } else {
+      await this.setRequestStatus(client, request.id, "failed")
+      this.log(`Spawn request ${request.id} failed to load GLB.`)
+    }
+
+    // ===== OLD pre-placed model path (kept for reference / fallback) =====
+    // if (!this.targetModel) {
+    //   this.log("targetModel is not wired; marking request failed.")
+    //   await this.setRequestStatus(client, request.id, "failed")
+    //   return
+    // }
+    // this.showTargetModel()
+    // await this.setRequestStatus(client, request.id, "spawned")
+    // this.log(`Spawn request ${request.id} completed by showing pre-placed model.`)
   }
 
-  private showTargetModel(): void {
-    if (!this.targetModel || !this.cameraObject) return
-    this.positionTargetModel()
-    this.targetModel.enabled = true
+  /** Download the GLB at `url`, instantiate it, and position it. Resolves true on success. */
+  private loadAndSpawn(url: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      try {
+        this.debugLog(`Resolving resource from url=${url}`)
+        const resource = this.internetModule.makeResourceFromUrl(url)
+        if (!resource) {
+          this.log("makeResourceFromUrl returned null/undefined.")
+          resolve(false)
+          return
+        }
+
+        this.debugLog("Download started (loadResourceAsGltfAsset).")
+        this.remoteMediaModule.loadResourceAsGltfAsset(
+          resource,
+          (gltfAsset: GltfAsset) => {
+            this.debugLog("GLB downloaded ok; instantiating.")
+            resolve(this.instantiateGltf(gltfAsset))
+          },
+          (errorMessage: string) => {
+            this.log(`GLB load failed: ${errorMessage}`)
+            resolve(false)
+          }
+        )
+      } catch (e) {
+        this.log(`loadAndSpawn threw: ${this.describeError(e)}`)
+        resolve(false)
+      }
+    })
   }
 
-  private positionTargetModel(): void {
-    if (!this.targetModel || !this.cameraObject) return
+  /**
+   * Returns a stable, world-anchored parent for spawned models. The model
+   * must NOT be parented under the camera (it would follow the user's head),
+   * so we ALWAYS use a persistent SceneObject created at the scene root and
+   * ignore `spawnParent` for parenting. The model is placed in world space,
+   * and because this root never moves the model stays put.
+   */
+  private getSpawnRoot(): SceneObject {
+    if (!this.spawnRoot) {
+      this.spawnRoot = global.scene.createSceneObject("SnapCloudARSpawnRoot")
+      const rootParent = this.spawnRoot.getParent()
+      this.debugLog(
+        `Created static spawn root 'SnapCloudARSpawnRoot' (parent=${rootParent ? rootParent.name : "<scene root>"}).`
+      )
+    }
+    if (this.spawnParent) {
+      this.debugLog("Ignoring 'spawnParent' input on purpose; using static scene root so the model stays world-locked.")
+    }
+    return this.spawnRoot
+  }
+
+  private instantiateGltf(gltfAsset: GltfAsset): boolean {
+    const parent = this.getSpawnRoot()
+    if (!this.baseMaterial) {
+      this.log("baseMaterial is not wired; instantiate may fail or render without material.")
+    }
+
+    this.cleanupPrevious()
+
+    let spawned: SceneObject | null = null
+    try {
+      const settings = GltfSettings.create()
+      settings.convertMetersToCentimeters = this.convertMetersToCentimeters
+      spawned = gltfAsset.tryInstantiateWithSetting(parent, this.baseMaterial, settings)
+    } catch (e) {
+      this.log(`tryInstantiateWithSetting threw: ${this.describeError(e)}`)
+      return false
+    }
+
+    if (!spawned) {
+      this.log("tryInstantiateWithSetting returned null.")
+      return false
+    }
+
+    this.spawnedObject = spawned
+    this.debugLog(`Instantiated GLB under '${parent.name}' as '${spawned.name}'.`)
+    this.positionObject(spawned)
+    return true
+  }
+
+  private cleanupPrevious(): void {
+    if (this.spawnedObject) {
+      this.debugLog(`Destroying previous spawned model '${this.spawnedObject.name}'.`)
+      this.spawnedObject.destroy()
+      this.spawnedObject = null
+    }
+  }
+
+  private positionObject(obj: SceneObject): void {
+    if (!this.cameraObject) {
+      this.log("cameraObject not wired; cannot position spawned model.")
+      return
+    }
 
     const cameraTransform = this.cameraObject.getTransform()
     const cameraPos = cameraTransform.getWorldPosition()
     const forward = this.horizontalForward(cameraTransform)
 
-    const modelTransform = this.targetModel.getTransform()
+    const objTransform = obj.getTransform()
     const targetPos = new vec3(
       cameraPos.x + forward.x * this.spawnDistance,
       cameraPos.y + this.heightOffset,
       cameraPos.z + forward.z * this.spawnDistance
     )
 
-    modelTransform.setWorldPosition(targetPos)
+    objTransform.setWorldPosition(targetPos)
+
+    if (this.modelScale !== 1.0) {
+      objTransform.setLocalScale(new vec3(this.modelScale, this.modelScale, this.modelScale))
+      this.debugLog(`Applied uniform scale ${this.modelScale}.`)
+    }
 
     if (this.faceCamera) {
       const toCameraX = cameraPos.x - targetPos.x
       const toCameraZ = cameraPos.z - targetPos.z
       if (toCameraX * toCameraX + toCameraZ * toCameraZ > 0.000001) {
         const yaw = Math.atan2(toCameraX, toCameraZ)
-        modelTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
+        objTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
       }
     }
+
+    this.debugLog(
+      `Positioned model at (${targetPos.x.toFixed(1)}, ${targetPos.y.toFixed(1)}, ${targetPos.z.toFixed(1)}) ` +
+        `faceCamera=${this.faceCamera}.`
+    )
   }
+
+  // ===== OLD pre-placed model methods (kept for reference / fallback) =====
+  // private showTargetModel(): void {
+  //   if (!this.targetModel || !this.cameraObject) return
+  //   this.positionTargetModel()
+  //   this.targetModel.enabled = true
+  // }
+  //
+  // private positionTargetModel(): void {
+  //   if (!this.targetModel || !this.cameraObject) return
+  //
+  //   const cameraTransform = this.cameraObject.getTransform()
+  //   const cameraPos = cameraTransform.getWorldPosition()
+  //   const forward = this.horizontalForward(cameraTransform)
+  //
+  //   const modelTransform = this.targetModel.getTransform()
+  //   const targetPos = new vec3(
+  //     cameraPos.x + forward.x * this.spawnDistance,
+  //     cameraPos.y + this.heightOffset,
+  //     cameraPos.z + forward.z * this.spawnDistance
+  //   )
+  //
+  //   modelTransform.setWorldPosition(targetPos)
+  //
+  //   if (this.faceCamera) {
+  //     const toCameraX = cameraPos.x - targetPos.x
+  //     const toCameraZ = cameraPos.z - targetPos.z
+  //     if (toCameraX * toCameraX + toCameraZ * toCameraZ > 0.000001) {
+  //       const yaw = Math.atan2(toCameraX, toCameraZ)
+  //       modelTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
+  //     }
+  //   }
+  // }
 
   private horizontalForward(cameraTransform: Transform): vec3 {
     const forward = cameraTransform.forward
@@ -210,6 +421,8 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     const {error} = await client.from(this.tableName).update({status}).eq("id", requestId)
     if (error) {
       this.log(`Failed to set ${requestId} status=${status}: ${JSON.stringify(error)}`)
+    } else {
+      this.debugLog(`Request ${requestId} -> status=${status}.`)
     }
   }
 

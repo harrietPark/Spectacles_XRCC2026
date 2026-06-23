@@ -26,16 +26,23 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    baseMaterial: false
     cameraObject: false
+    convertMetersToCentimeters: false
     debugLogs: false
     faceCamera: false
     heightOffset: false
     hideOnStart: false
     ignoreEditorPreview: false
+    modelScale: false
+    modelUrlColumn: false
     pollIntervalSeconds: false
     spawnDistance: false
+    spawnParent: false
     tableName: false
     targetModel: false
+    testMode: false
+    testModelUrl: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -47,6 +54,11 @@
   DefaultScriptInputs:
     - targetModel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraObject: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      baseMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      spawnParent: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      modelUrlColumn: original_model_3d_url
+      modelScale: !<float> 1.000000
+      convertMetersToCentimeters: true
       spawnDistance: !<float> 50.000000
       heightOffset: !<float> 0.000000
       faceCamera: true
@@ -55,12 +67,19 @@
       pollIntervalSeconds: !<float> 1.000000
       tableName: ar_spawn_requests
       debugLogs: true
+      testMode: false
+      testModelUrl: "https://web-api.ikea.com/dimma/assets/1.2/10496477/PS01_S01_NV01/rqp3/glb_draco/10496477_PS01_S01_NV01_RQP3_3.0_02ab82a8a2ff45c1a583025c53f2ba68.glb"
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @input SceneObject targetModel {"hint":"Pre-placed 3D model root to show when a spawn request arrives."}'
-    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject used to place the target model in front of the user."}'
+    - '// @input SceneObject targetModel {"hint":"LEGACY: pre-placed 3D model root (no longer used for spawning; URL load replaces it)."}'
+    - '// @input SceneObject cameraObject {"hint":"Camera SceneObject used to place the spawned model in front of the user."}'
+    - '// @input Asset.Material baseMaterial {"hint":"Base PBR material applied to the instantiated GLB (required by tryInstantiate)."}'
+    - '// @input SceneObject spawnParent {"hint":"DEPRECATED/ignored: spawned models always parent to an auto-created static scene root so they stay world-locked."}'
+    - '// @input string modelUrlColumn = "original_model_3d_url" {"hint":"Request column holding the GLB URL to download."}'
+    - '// @input float modelScale = 1 {"hint":"Uniform scale applied to the spawned model (1 = no change)."}'
+    - '// @input bool convertMetersToCentimeters = true {"hint":"Convert GLTF meters to Lens centimetres on instantiate (usually true)."}'
     - '// @input float spawnDistance = 50 {"hint":"Centimetres in front of the camera (50 = 0.5 m)."}'
     - '// @input float heightOffset {"hint":"Centimetres added to camera height when placing the model."}'
     - '// @input bool faceCamera = true {"hint":"Rotate the model so it faces the camera."}'
@@ -69,3 +88,5 @@
     - '// @input float pollIntervalSeconds = 1 {"hint":"How often (seconds) to poll ar_spawn_requests."}'
     - '// @input string tableName = "ar_spawn_requests" {"hint":"Supabase table name for AR spawn requests."}'
     - '// @input bool debugLogs = true {"hint":"Enable verbose logs."}'
+    - '// @input bool testMode {"hint":"TEST MODE: ignore spawn requests and load the hard-coded testModelUrl once on start."}'
+    - '// @input string testModelUrl = "https://web-api.ikea.com/dimma/assets/1.2/20359154/PS01_S01_NV01/rqp3/glb_draco/20359154_PS01_S01_NV01_RQP3_3.0_298fca27ac4a41379a171d7e7aba1e9a.glb" {"hint":"Hard-coded GLB URL loaded when testMode is on."}'
