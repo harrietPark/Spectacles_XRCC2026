@@ -30,10 +30,11 @@ export class SceneManager extends BaseScriptComponent {
     @allowUndefined
     @hint("Optional centralized sound effects controller.")
     private soundEffectsController: SoundEffectsController | undefined;
-    @input private NoteController: NotesController;
+    @input private NotesController: NotesController;
     @ui.group_end
     @ui.group_start("UI References")
-    @input private buttonActivateNoteCreation: RoundButton;
+    @input
+    private buttonActivateNoteCreation: RoundButton;
     @input
     @allowUndefined
     @hint("Optional debug button for Lens Studio editor to spawn a note immediately.")
@@ -75,7 +76,7 @@ export class SceneManager extends BaseScriptComponent {
 
     private onStart() {
         this.buttonActivateNoteCreation?.onTriggerUp.add(() => {
-            this.NoteController.activateCreationProcess();
+            this.NotesController.activateCreationProcess();
         });
         this.buttonDebugSpawnNote?.onTriggerUp.add(() => {
             const buttonTransform = this.buttonDebugSpawnNote.getSceneObject().getTransform();
@@ -83,7 +84,7 @@ export class SceneManager extends BaseScriptComponent {
             const spawnPosition = buttonPosition
                 .add(buttonTransform.forward.uniformScale(8))
                 .add(vec3.up().uniformScale(2));
-            this.NoteController.spawnDebugNoteInEditor(spawnPosition);
+            this.NotesController.spawnDebugNoteInEditor(spawnPosition);
         });
         this.requestMicrophonePermissionEarly();
     }
@@ -110,7 +111,7 @@ export class SceneManager extends BaseScriptComponent {
         if (!this.didWarnMissingUxFeedbackController) {
             this.didWarnMissingUxFeedbackController = true;
             print(
-                "[SceneManager] uxFeedbackController is missing or not ready; using no-op fallback until component loads."
+                "[SceneManager] uxFeedbackController is missing or not ready; using no-op fallback until component loads.",
             );
         }
         return this.noopUxFeedbackController;
@@ -135,7 +136,7 @@ export class SceneManager extends BaseScriptComponent {
 
     public sendCompleteNoteDataToBackend(noteData: INoteData) {
         // TODO: send note data to backend
-        print("--- sending complete note data to backend: \n" + JSON.stringify(noteData));
+        print("---TODO: sending complete note data to backend: \n" + JSON.stringify(noteData));
     }
 
     public playDwellCancelledFeedback(): void {
@@ -177,5 +178,4 @@ export class SceneManager extends BaseScriptComponent {
             print("[SceneManager] Failed to request microphone permission at startup.");
         }
     }
-
 }

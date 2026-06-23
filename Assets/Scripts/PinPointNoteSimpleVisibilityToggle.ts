@@ -148,7 +148,6 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
   }
 
   public show() {
-    print("--- Show note")
     this.isVisible = true
     this.applyVisibility()
     this.startPinScaleAnimation(1.0)
@@ -156,7 +155,6 @@ export class PinPointNoteSimpleVisibilityToggle extends BaseScriptComponent {
   }
 
   public hide() {
-    print("--- Hide note")
     if (this.isVisible) {
       this.startHideAnimation()
     }

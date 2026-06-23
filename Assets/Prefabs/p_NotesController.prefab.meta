@@ -49,6 +49,7 @@
   ScriptInputs:
     "":
       areaManager: !<MappingBased.AssignableType> 48bba20c-c647-437a-a0ad-7f856429d087
+      presetNotes: !<reference.SceneObject> 986e9f69-1388-4eec-a3c5-dd159bcd60f6
       fingerDwellingTimeThreshold: !<float> 1.000000
       fingerDwellRadius: !<float> 1.000000
       pictureController: !<MappingBased.AssignableType_1> d04c1bfe-0946-4345-9d03-a7da70283e8c

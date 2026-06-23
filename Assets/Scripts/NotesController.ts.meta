@@ -34,6 +34,7 @@
     fovCone: false
     noteSpawnYawOffsetDegrees: false
     pictureController: false
+    presetNotes: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -44,6 +45,7 @@
     []
   DefaultScriptInputs:
     - areaManager: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      presetNotes: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       fingerDwellingTimeThreshold: !<float> 3.000000
       fingerDwellRadius: !<float> 2.000000
       pictureController: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
@@ -56,6 +58,7 @@
       {}
   InputLines:
     - // @input AssignableType areaManager
+    - // @input SceneObject presetNotes
     - '// @ui {"widget":"group_start", "label":"Note Spawning Settings"}'
     - // @input float fingerDwellingTimeThreshold = 2
     - // @input float fingerDwellRadius = 1

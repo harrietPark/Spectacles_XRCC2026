@@ -8,6 +8,7 @@ import WorldCameraFinderProvider from "SpectaclesInteractionKit.lspkg/Providers/
 import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
+import { PresetNote } from "./PresetNote";
 // import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
 
 @component
@@ -21,6 +22,7 @@ export class NotesController extends BaseScriptComponent {
     @input
     @allowUndefined
     private areaManager: AreaManager | undefined;
+    @input private presetNotes: SceneObject;
     @ui.group_start("Note Spawning Settings")
     @input
     private fingerDwellingTimeThreshold: number = 2; // in seconds
@@ -58,7 +60,8 @@ export class NotesController extends BaseScriptComponent {
     private prevHandPosition: vec3 = vec3.zero();
 
     // User looks away and notes minimised
-    private prevNotesObjInFOV: SceneObject[] = [];
+    private prevLiveNotesObjInFOV: SceneObject[] = [];
+    private prevPresetNotesObjInFOV: SceneObject[] = [];
 
     // State booleans
     private isNoteAnchoringActive: boolean = false;
@@ -96,8 +99,12 @@ export class NotesController extends BaseScriptComponent {
         const notesFilter = Physics.Filter.create();
         notesFilter.onlyLayers = LayerSet.fromNumber(1);
         fovCollider.overlapFilter = notesFilter;
-        fovCollider.onOverlapEnter.add((OverlapEnterEventArgs) => this.updateNotesInFOV(OverlapEnterEventArgs));
-        fovCollider.onOverlapExit.add((OverlapExitEventArgs) => this.updateNotesInFOV(OverlapExitEventArgs));
+        fovCollider.onOverlapEnter.add((OverlapEnterEventArgs) => {
+            this.updateAllNotesInFOV(OverlapEnterEventArgs);
+        });
+        fovCollider.onOverlapExit.add((OverlapExitEventArgs) => {
+            this.updateAllNotesInFOV(OverlapExitEventArgs);
+        });
 
         // this.fovConeEMA = new ExponentialMovingAverage(0.5);
     }
@@ -140,24 +147,47 @@ export class NotesController extends BaseScriptComponent {
         this.notes = updatedNotes;
     }
 
-    private updateNotesInFOV(overlap: OverlapEnterEventArgs | OverlapExitEventArgs) {
-        // print("--- " + overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject().name).join(", "))
-        const currNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+    private updateAllNotesInFOV(overlap: OverlapEnterEventArgs | OverlapExitEventArgs) {
+        const currAllNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+        const currLiveNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(Note.getTypeName()) !== undefined);
+        const currPresetNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(PresetNote.getTypeName()) !== undefined);
 
-        if (this.prevNotesObjInFOV.length == 0) {
-            this.prevNotesObjInFOV = currNotesObjInFOV;
+        this.updateLiveNotesInFOV(currLiveNotesObjInFOV);
+        this.updatePresetNotesInFOV(currPresetNotesObjInFOV);
+    }
+
+    private updateLiveNotesInFOV(currLiveNotesObjInFOV: SceneObject[]) {
+        if (this.prevLiveNotesObjInFOV.length == 0) {
+            this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
             return;
         }
 
-        const addedNotesObjInFOV = currNotesObjInFOV.filter((obj) => !this.prevNotesObjInFOV.includes(obj));
-        const removedNotesObjInFOV = this.prevNotesObjInFOV.filter((obj) => !currNotesObjInFOV.includes(obj));
+        const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !this.prevLiveNotesObjInFOV.includes(obj));
+        const removedNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
         for (const note of addedNotesObjInFOV) {
             note.getComponent(Note.getTypeName())?.pullToForeground();
         }
         for (const note of removedNotesObjInFOV) {
             note.getComponent(Note.getTypeName())?.pushToBackground();
         }
-        this.prevNotesObjInFOV = currNotesObjInFOV;
+        this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
+    }
+
+    private updatePresetNotesInFOV(currPresetNotesObjInFOV: SceneObject[]) {
+        if (this.prevPresetNotesObjInFOV.length == 0) {
+            this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
+            return;
+        }
+
+        const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !this.prevPresetNotesObjInFOV.includes(obj));
+        const removedNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
+        for (const note of addedNotesObjInFOV) {
+            note.getComponent(PresetNote.getTypeName())?.pullToForeground();
+        }
+        for (const note of removedNotesObjInFOV) {
+            note.getComponent(PresetNote.getTypeName())?.pushToBackground();
+        }
+        this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
     }
 
     private tryAnchorNote(): boolean {
@@ -215,8 +245,6 @@ export class NotesController extends BaseScriptComponent {
 
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
-
-        print("--- Spawned a note");
     }
 
     public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {
