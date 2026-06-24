@@ -1,5 +1,6 @@
 import {SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
 import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
+import {InteractableManipulation} from "SpectaclesInteractionKit.lspkg/Components/Interaction/InteractableManipulation/InteractableManipulation"
 
 /**
  * SnapCloudARSpawnManager
@@ -92,6 +93,19 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   @hint("Hard-coded GLB URL loaded when testMode is on.")
   private testModelUrl: string =
     "https://web-api.ikea.com/dimma/assets/1.2/20359154/PS01_S01_NV01/rqp3/glb_draco/20359154_PS01_S01_NV01_RQP3_3.0_298fca27ac4a41379a171d7e7aba1e9a.glb"
+
+  @input
+  @hint("Prefab with Collider + Interactable + InteractableManipulation. The GLB is parented under it for grabbing.")
+  @allowUndefined
+  private grabbableWrapper: ObjectPrefab | undefined
+
+  @input
+  @hint("Allow grabbing/manipulating spawned models (requires grabbableWrapper).")
+  private enableGrab: boolean = true
+
+  @input
+  @hint("Extra padding (cm) added around the auto-fit grab collider.")
+  private grabColliderPadding: number = 2.0
 
   private pollTimer: DelayedCallbackEvent | null = null
   private isPolling: boolean = false
@@ -298,32 +312,135 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   }
 
   private instantiateGltf(gltfAsset: GltfAsset): boolean {
-    const parent = this.getSpawnRoot()
+    const root = this.getSpawnRoot()
     if (!this.baseMaterial) {
       this.log("baseMaterial is not wired; instantiate may fail or render without material.")
     }
 
     this.cleanupPrevious()
 
-    let spawned: SceneObject | null = null
+    // Optionally wrap the GLB in a grabbable prefab so it can be manipulated.
+    let wrapper: SceneObject | null = null
+    let glbParent: SceneObject = root
+    if (this.enableGrab) {
+      if (this.grabbableWrapper) {
+        wrapper = this.grabbableWrapper.instantiate(root)
+        wrapper.name = "GrabbableWrapper"
+        glbParent = wrapper
+        this.debugLog("Instantiated grabbable wrapper under spawn root.")
+      } else {
+        this.log("enableGrab is on but grabbableWrapper is not wired; spawning without grab.")
+      }
+    }
+
+    let glb: SceneObject | null = null
     try {
       const settings = GltfSettings.create()
       settings.convertMetersToCentimeters = this.convertMetersToCentimeters
-      spawned = gltfAsset.tryInstantiateWithSetting(parent, this.baseMaterial, settings)
+      glb = gltfAsset.tryInstantiateWithSetting(glbParent, this.baseMaterial, settings)
     } catch (e) {
       this.log(`tryInstantiateWithSetting threw: ${this.describeError(e)}`)
+      if (wrapper) wrapper.destroy()
       return false
     }
 
-    if (!spawned) {
+    if (!glb) {
       this.log("tryInstantiateWithSetting returned null.")
+      if (wrapper) wrapper.destroy()
       return false
     }
 
-    this.spawnedObject = spawned
-    this.debugLog(`Instantiated GLB under '${parent.name}' as '${spawned.name}'.`)
-    this.positionObject(spawned)
+    this.applyModelScale(glb)
+
+    if (wrapper) {
+      this.fitGrabCollider(wrapper, glb)
+      this.configureManipulation(wrapper)
+      this.placeInFront(wrapper)
+      this.spawnedObject = wrapper
+      this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper.`)
+    } else {
+      this.placeInFront(glb)
+      this.spawnedObject = glb
+      this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}'.`)
+    }
     return true
+  }
+
+  /** Auto-fit the wrapper's box collider to the GLB's combined mesh bounds and center the GLB inside it. */
+  private fitGrabCollider(wrapper: SceneObject, glb: SceneObject): void {
+    const collider = wrapper.getComponent("Physics.ColliderComponent") as ColliderComponent
+    if (!collider) {
+      this.log("Grabbable wrapper has no Physics.ColliderComponent; cannot size grab collider.")
+      return
+    }
+
+    const visuals: RenderMeshVisual[] = []
+    this.collectRenderMeshVisuals(glb, visuals)
+
+    let size = new vec3(20, 20, 20)
+    if (visuals.length === 0) {
+      this.log("No RenderMeshVisual found under GLB; using default collider size.")
+    } else {
+      let min = visuals[0].worldAabbMin()
+      let max = visuals[0].worldAabbMax()
+      for (let i = 1; i < visuals.length; i++) {
+        const vmin = visuals[i].worldAabbMin()
+        const vmax = visuals[i].worldAabbMax()
+        min = new vec3(Math.min(min.x, vmin.x), Math.min(min.y, vmin.y), Math.min(min.z, vmin.z))
+        max = new vec3(Math.max(max.x, vmax.x), Math.max(max.y, vmax.y), Math.max(max.z, vmax.z))
+      }
+      const center = min.add(max).uniformScale(0.5)
+      size = max.sub(min)
+
+      // Wrapper is still at the spawn root origin here, so world space == wrapper-local
+      // space. Shift the GLB so its bounds center sits at the wrapper origin, keeping the
+      // origin-centered box collider aligned to the model.
+      const glbTransform = glb.getTransform()
+      glbTransform.setLocalPosition(glbTransform.getLocalPosition().sub(center))
+      this.debugLog(
+        `Grab bounds center=(${center.x.toFixed(1)}, ${center.y.toFixed(1)}, ${center.z.toFixed(1)}) ` +
+          `size=(${size.x.toFixed(1)}, ${size.y.toFixed(1)}, ${size.z.toFixed(1)}).`
+      )
+    }
+
+    const pad = Math.max(0, this.grabColliderPadding)
+    const box = Shape.createBoxShape()
+    box.size = new vec3(Math.abs(size.x) + pad, Math.abs(size.y) + pad, Math.abs(size.z) + pad)
+    collider.shape = box
+    this.debugLog(`Grab collider box size=(${box.size.x.toFixed(1)}, ${box.size.y.toFixed(1)}, ${box.size.z.toFixed(1)}).`)
+  }
+
+  private collectRenderMeshVisuals(obj: SceneObject, out: RenderMeshVisual[]): void {
+    const comps = obj.getComponents("Component.RenderMeshVisual") as RenderMeshVisual[]
+    for (let i = 0; i < comps.length; i++) {
+      out.push(comps[i])
+    }
+    const childCount = obj.getChildrenCount()
+    for (let c = 0; c < childCount; c++) {
+      this.collectRenderMeshVisuals(obj.getChild(c), out)
+    }
+  }
+
+  /** Enable move + rotate, disable scale, and wire grab start/end debug hooks. */
+  private configureManipulation(wrapper: SceneObject): void {
+    const manip = wrapper.getComponent(InteractableManipulation.getTypeName()) as InteractableManipulation
+    if (!manip) {
+      this.log("Grabbable wrapper has no InteractableManipulation; model will not be grabbable.")
+      return
+    }
+    manip.setCanTranslate(true)
+    manip.setCanRotate(true)
+    manip.setCanScale(false)
+    manip.onManipulationStart.add(() => this.debugLog("Grab start."))
+    manip.onManipulationEnd.add(() => this.debugLog("Grab end."))
+    this.debugLog("Configured manipulation: translate+rotate on, scale off.")
+  }
+
+  private applyModelScale(obj: SceneObject): void {
+    if (this.modelScale !== 1.0) {
+      obj.getTransform().setLocalScale(new vec3(this.modelScale, this.modelScale, this.modelScale))
+      this.debugLog(`Applied uniform scale ${this.modelScale}.`)
+    }
   }
 
   private cleanupPrevious(): void {
@@ -334,7 +451,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     }
   }
 
-  private positionObject(obj: SceneObject): void {
+  private placeInFront(obj: SceneObject): void {
     if (!this.cameraObject) {
       this.log("cameraObject not wired; cannot position spawned model.")
       return
@@ -352,11 +469,6 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     )
 
     objTransform.setWorldPosition(targetPos)
-
-    if (this.modelScale !== 1.0) {
-      objTransform.setLocalScale(new vec3(this.modelScale, this.modelScale, this.modelScale))
-      this.debugLog(`Applied uniform scale ${this.modelScale}.`)
-    }
 
     if (this.faceCamera) {
       const toCameraX = cameraPos.x - targetPos.x

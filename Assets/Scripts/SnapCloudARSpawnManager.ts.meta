@@ -30,7 +30,10 @@
     cameraObject: false
     convertMetersToCentimeters: false
     debugLogs: false
+    enableGrab: false
     faceCamera: false
+    grabColliderPadding: false
+    grabbableWrapper: false
     heightOffset: false
     hideOnStart: false
     ignoreEditorPreview: false
@@ -69,6 +72,9 @@
       debugLogs: true
       testMode: false
       testModelUrl: "https://web-api.ikea.com/dimma/assets/1.2/10496477/PS01_S01_NV01/rqp3/glb_draco/10496477_PS01_S01_NV01_RQP3_3.0_02ab82a8a2ff45c1a583025c53f2ba68.glb"
+      grabbableWrapper: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      enableGrab: true
+      grabColliderPadding: !<float> 2.000000
   ScriptTypes:
     -
       {}
@@ -90,3 +96,6 @@
     - '// @input bool debugLogs = true {"hint":"Enable verbose logs."}'
     - '// @input bool testMode {"hint":"TEST MODE: ignore spawn requests and load the hard-coded testModelUrl once on start."}'
     - '// @input string testModelUrl = "https://web-api.ikea.com/dimma/assets/1.2/20359154/PS01_S01_NV01/rqp3/glb_draco/20359154_PS01_S01_NV01_RQP3_3.0_298fca27ac4a41379a171d7e7aba1e9a.glb" {"hint":"Hard-coded GLB URL loaded when testMode is on."}'
+    - '// @input Asset.ObjectPrefab grabbableWrapper {"hint":"Prefab with Collider + Interactable + InteractableManipulation. The GLB is parented under it for grabbing."}'
+    - '// @input bool enableGrab = true {"hint":"Allow grabbing/manipulating spawned models (requires grabbableWrapper)."}'
+    - '// @input float grabColliderPadding = 2 {"hint":"Extra padding (cm) added around the auto-fit grab collider."}'
