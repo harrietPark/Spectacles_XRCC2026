@@ -1,6 +1,17 @@
 import {SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
 import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
 import {InteractableManipulation} from "SpectaclesInteractionKit.lspkg/Components/Interaction/InteractableManipulation/InteractableManipulation"
+import {Interactable} from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable"
+import {DragInteractorEvent} from "SpectaclesInteractionKit.lspkg/Core/Interactor/InteractorEvent"
+import {Interactor} from "SpectaclesInteractionKit.lspkg/Core/Interactor/Interactor"
+
+/** A discovered grab-handle sphere under the wrapper. */
+interface GrabHandle {
+  object: SceneObject
+  manip: InteractableManipulation
+  interactable: Interactable | null
+  isRotation: boolean
+}
 
 /**
  * SnapCloudARSpawnManager
@@ -104,13 +115,41 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private enableGrab: boolean = true
 
   @input
-  @hint("Extra padding (cm) added around the auto-fit grab collider.")
+  @hint("Extra padding (cm) added around the auto-fit parent box collider (the hover/reveal trigger).")
   private grabColliderPadding: number = 2.0
+
+  @input
+  @hint("Distance (cm) the grab-handle spheres sit beyond the model's bounding box.")
+  private grabHandleOffset: number = 3.0
+
+  @input
+  @hint("Hide grab handles until the hand hovers the model box or a handle.")
+  private revealHandlesOnHover: boolean = true
+
+  @input
+  @hint("Grace period (seconds) before hiding handles after the hand leaves, to avoid flicker when reaching for a handle.")
+  private handleHideDelaySeconds: number = 0.3
+
+  @input
+  @hint("Snap model position to a grid while dragging.")
+  private enableGridSnap: boolean = true
+
+  @input
+  @hint("Grid cell size in centimetres for translation snapping.")
+  private gridSnapUnit: number = 5.0
+
+  @input
+  @hint("Snap Y-axis rotation to fixed steps while rotating.")
+  private enableRotationSnap: boolean = true
+
+  @input
+  @hint("Rotation step in degrees for Y-axis snapping.")
+  private rotationSnapDegrees: number = 15.0
 
   private pollTimer: DelayedCallbackEvent | null = null
   private isPolling: boolean = false
   private pollingEnabled: boolean = true
-  private spawnedObject: SceneObject | null = null
+  private spawnedObjects: SceneObject[] = []
   private spawnRoot: SceneObject | null = null
 
   onAwake(): void {
@@ -131,6 +170,10 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     }
 
     this.createEvent("OnStartEvent").bind(this.startPolling.bind(this))
+  }
+
+  onDestroy(): void {
+    this.clearAllSpawned()
   }
 
   private runTestSpawn(): void {
@@ -317,7 +360,8 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       this.log("baseMaterial is not wired; instantiate may fail or render without material.")
     }
 
-    this.cleanupPrevious()
+    // Note: previously spawned models are intentionally NOT removed here, so
+    // multiple recommended products can coexist. Use clearAllSpawned() to reset.
 
     // Optionally wrap the GLB in a grabbable prefab so it can be manipulated.
     let wrapper: SceneObject | null = null
@@ -353,33 +397,45 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     this.applyModelScale(glb)
 
     if (wrapper) {
-      this.fitGrabCollider(wrapper, glb)
-      this.configureManipulation(wrapper)
+      // Measure + center the GLB while the wrapper is still at the origin
+      // (world == wrapper-local), then position the handles and the wrapper.
+      // All of this runs before grab/turntable wiring so any handle-setup
+      // failure can never leave the model unpositioned (stuck at origin).
+      let half = new vec3(10, 10, 10)
+      try {
+        half = this.fitWrapperColliderAndMeasure(wrapper, glb)
+      } catch (e) {
+        this.log(`fitWrapperColliderAndMeasure failed (continuing): ${this.describeError(e)}`)
+      }
+      this.positionGrabHandles(wrapper, half)
       this.placeInFront(wrapper)
-      this.spawnedObject = wrapper
-      this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper.`)
+      try {
+        this.configureGrabHandles(wrapper)
+      } catch (e) {
+        this.log(`configureGrabHandles failed (model still placed): ${this.describeError(e)}`)
+      }
+      this.spawnedObjects.push(wrapper)
+      this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper. Total spawned=${this.spawnedObjects.length}.`)
     } else {
       this.placeInFront(glb)
-      this.spawnedObject = glb
-      this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}'.`)
+      this.spawnedObjects.push(glb)
+      this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}'. Total spawned=${this.spawnedObjects.length}.`)
     }
     return true
   }
 
-  /** Auto-fit the wrapper's box collider to the GLB's combined mesh bounds and center the GLB inside it. */
-  private fitGrabCollider(wrapper: SceneObject, glb: SceneObject): void {
-    const collider = wrapper.getComponent("Physics.ColliderComponent") as ColliderComponent
-    if (!collider) {
-      this.log("Grabbable wrapper has no Physics.ColliderComponent; cannot size grab collider.")
-      return
-    }
-
+  /**
+   * Center the GLB inside the wrapper, size the wrapper's box collider (the
+   * hover/reveal trigger) to the model's combined mesh bounds, and return the
+   * model half-extents (cm) for placing the grab handles.
+   */
+  private fitWrapperColliderAndMeasure(wrapper: SceneObject, glb: SceneObject): vec3 {
     const visuals: RenderMeshVisual[] = []
     this.collectRenderMeshVisuals(glb, visuals)
 
     let size = new vec3(20, 20, 20)
     if (visuals.length === 0) {
-      this.log("No RenderMeshVisual found under GLB; using default collider size.")
+      this.log("No RenderMeshVisual found under GLB; using default size.")
     } else {
       let min = visuals[0].worldAabbMin()
       let max = visuals[0].worldAabbMax()
@@ -394,20 +450,27 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
 
       // Wrapper is still at the spawn root origin here, so world space == wrapper-local
       // space. Shift the GLB so its bounds center sits at the wrapper origin, keeping the
-      // origin-centered box collider aligned to the model.
+      // origin-centered box collider and the symmetric handle ring aligned to the model.
       const glbTransform = glb.getTransform()
       glbTransform.setLocalPosition(glbTransform.getLocalPosition().sub(center))
       this.debugLog(
-        `Grab bounds center=(${center.x.toFixed(1)}, ${center.y.toFixed(1)}, ${center.z.toFixed(1)}) ` +
+        `Model bounds center=(${center.x.toFixed(1)}, ${center.y.toFixed(1)}, ${center.z.toFixed(1)}) ` +
           `size=(${size.x.toFixed(1)}, ${size.y.toFixed(1)}, ${size.z.toFixed(1)}).`
       )
     }
 
-    const pad = Math.max(0, this.grabColliderPadding)
-    const box = Shape.createBoxShape()
-    box.size = new vec3(Math.abs(size.x) + pad, Math.abs(size.y) + pad, Math.abs(size.z) + pad)
-    collider.shape = box
-    this.debugLog(`Grab collider box size=(${box.size.x.toFixed(1)}, ${box.size.y.toFixed(1)}, ${box.size.z.toFixed(1)}).`)
+    const collider = wrapper.getComponent("Physics.ColliderComponent") as ColliderComponent
+    if (collider) {
+      const pad = Math.max(0, this.grabColliderPadding)
+      const box = Shape.createBoxShape()
+      box.size = new vec3(Math.abs(size.x) + pad, Math.abs(size.y) + pad, Math.abs(size.z) + pad)
+      collider.shape = box
+      this.debugLog(`Parent box collider size=(${box.size.x.toFixed(1)}, ${box.size.y.toFixed(1)}, ${box.size.z.toFixed(1)}).`)
+    } else {
+      this.log("Wrapper has no Physics.ColliderComponent; reveal-on-hover trigger will not size.")
+    }
+
+    return new vec3(Math.abs(size.x) * 0.5, Math.abs(size.y) * 0.5, Math.abs(size.z) * 0.5)
   }
 
   private collectRenderMeshVisuals(obj: SceneObject, out: RenderMeshVisual[]): void {
@@ -421,19 +484,266 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     }
   }
 
-  /** Enable move + rotate, disable scale, and wire grab start/end debug hooks. */
-  private configureManipulation(wrapper: SceneObject): void {
-    const manip = wrapper.getComponent(InteractableManipulation.getTypeName()) as InteractableManipulation
-    if (!manip) {
-      this.log("Grabbable wrapper has no InteractableManipulation; model will not be grabbable.")
+  /** Find every grab-handle sphere (child with an InteractableManipulation). */
+  private collectGrabHandles(wrapper: SceneObject): GrabHandle[] {
+    const out: GrabHandle[] = []
+    const count = wrapper.getChildrenCount()
+    for (let i = 0; i < count; i++) {
+      this.collectGrabHandlesRecursive(wrapper.getChild(i), out)
+    }
+    return out
+  }
+
+  private collectGrabHandlesRecursive(obj: SceneObject, out: GrabHandle[]): void {
+    const manip = obj.getComponent(InteractableManipulation.getTypeName()) as InteractableManipulation
+    if (manip) {
+      const interactable = obj.getComponent(Interactable.getTypeName()) as Interactable
+      out.push({
+        object: obj,
+        manip: manip,
+        interactable: interactable ? interactable : null,
+        isRotation: obj.name.toLowerCase().indexOf("rot") >= 0
+      })
+    }
+    const childCount = obj.getChildrenCount()
+    for (let c = 0; c < childCount; c++) {
+      this.collectGrabHandlesRecursive(obj.getChild(c), out)
+    }
+  }
+
+  /** Place translation handles at the box side midpoints and rotation handles at the corners. */
+  private positionGrabHandles(wrapper: SceneObject, half: vec3): void {
+    const handles = this.collectGrabHandles(wrapper)
+    const o = Math.max(0, this.grabHandleOffset)
+    const sx = half.x + o
+    const sz = half.z + o
+
+    // y = 0: handles ring the model at its vertical center.
+    const sidePositions = [new vec3(0, 0, sz), new vec3(0, 0, -sz), new vec3(sx, 0, 0), new vec3(-sx, 0, 0)]
+    const cornerPositions = [new vec3(sx, 0, sz), new vec3(sx, 0, -sz), new vec3(-sx, 0, sz), new vec3(-sx, 0, -sz)]
+
+    let nTranslate = 0
+    let nRotate = 0
+    for (let i = 0; i < handles.length; i++) {
+      const h = handles[i]
+      if (h.isRotation) {
+        h.object.getTransform().setLocalPosition(cornerPositions[nRotate % cornerPositions.length])
+        nRotate++
+      } else {
+        h.object.getTransform().setLocalPosition(sidePositions[nTranslate % sidePositions.length])
+        nTranslate++
+      }
+    }
+
+    if (nTranslate !== 4 || nRotate !== 4) {
+      this.log(`Grab handles: expected 4 translate + 4 rotate, found ${nTranslate} translate + ${nRotate} rotate.`)
+    }
+    this.debugLog(`Positioned ${nTranslate} translate + ${nRotate} rotate handles (offset=${o}cm, sx=${sx.toFixed(1)}, sz=${sz.toFixed(1)}).`)
+  }
+
+  /** Wire translation (side) + rotation (corner) handles and the hover-reveal behavior. */
+  private configureGrabHandles(wrapper: SceneObject): void {
+    const handles = this.collectGrabHandles(wrapper)
+    if (handles.length === 0) {
+      this.log("No grab handles (children with InteractableManipulation) found under wrapper.")
       return
     }
+
+    const wrapperTransform = wrapper.getTransform()
+    const reveal = this.revealHandlesOnHover
+    let parentHovered = false
+    const handleHovered: boolean[] = []
+    const handleActive: boolean[] = []
+    let hideTimer: DelayedCallbackEvent | null = null
+
+    const computeShow = (): boolean => {
+      if (parentHovered) return true
+      for (let i = 0; i < handles.length; i++) {
+        if (handleHovered[i] || handleActive[i]) return true
+      }
+      return false
+    }
+    const setHandlesEnabled = (on: boolean) => {
+      for (let i = 0; i < handles.length; i++) handles[i].object.enabled = on
+    }
+
+    // Reveal immediately, but defer hiding by a grace period. Because a handle
+    // sticks out beyond the parent box, the parent's hover-exit may fire just
+    // before the handle's hover-enter; a deferred, re-checked hide prevents the
+    // handle from being disabled in that gap (which would make it un-hoverable).
+    const updateVisibility = () => {
+      if (!reveal) return
+      if (computeShow()) {
+        setHandlesEnabled(true)
+        return
+      }
+      if (!hideTimer) {
+        hideTimer = this.createEvent("DelayedCallbackEvent")
+        hideTimer.bind(() => {
+          if (!computeShow()) setHandlesEnabled(false)
+        })
+      }
+      hideTimer.reset(Math.max(0, this.handleHideDelaySeconds))
+    }
+
+    for (let i = 0; i < handles.length; i++) {
+      handleHovered[i] = false
+      handleActive[i] = false
+      const h = handles[i]
+      const idx = i
+      if (reveal) h.object.enabled = false
+
+      if (h.isRotation) {
+        this.setupRotationHandle(h, wrapperTransform, idx, handleActive, updateVisibility)
+      } else {
+        this.setupTranslationHandle(h, wrapperTransform, idx, handleActive, updateVisibility)
+      }
+
+      if (h.interactable) {
+        h.interactable.onHoverEnter.add(() => {
+          handleHovered[idx] = true
+          updateVisibility()
+        })
+        h.interactable.onHoverExit.add(() => {
+          handleHovered[idx] = false
+          updateVisibility()
+        })
+      }
+    }
+
+    if (reveal) {
+      const parentInteractable = wrapper.getComponent(Interactable.getTypeName()) as Interactable
+      if (parentInteractable) {
+        parentInteractable.onHoverEnter.add(() => {
+          parentHovered = true
+          updateVisibility()
+        })
+        parentInteractable.onHoverExit.add(() => {
+          parentHovered = false
+          updateVisibility()
+        })
+      } else {
+        this.log("Wrapper has no Interactable; cannot reveal on hover. Keeping handles visible.")
+        for (let i = 0; i < handles.length; i++) handles[i].object.enabled = true
+      }
+    }
+
+    const nRot = handles.filter((h) => h.isRotation).length
+    this.debugLog(
+      `Configured ${handles.length} handles (${handles.length - nRot} translate + ${nRot} rotate), reveal=${reveal}.`
+    )
+  }
+
+  /** Side handle: drags the whole model via the shared wrapper root, with grid snapping. */
+  private setupTranslationHandle(
+    h: GrabHandle,
+    wrapperTransform: Transform,
+    idx: number,
+    handleActive: boolean[],
+    updateVisibility: () => void
+  ): void {
+    const manip = h.manip
+    manip.enabled = true
+    manip.setManipulateRoot(wrapperTransform)
     manip.setCanTranslate(true)
-    manip.setCanRotate(true)
+    manip.setCanRotate(false)
     manip.setCanScale(false)
-    manip.onManipulationStart.add(() => this.debugLog("Grab start."))
-    manip.onManipulationEnd.add(() => this.debugLog("Grab end."))
-    this.debugLog("Configured manipulation: translate+rotate on, scale off.")
+
+    const snapPosition = () => {
+      if (!this.enableGridSnap || this.gridSnapUnit <= 0) return
+      const p = wrapperTransform.getWorldPosition()
+      wrapperTransform.setWorldPosition(new vec3(this.snapToGrid(p.x), this.snapToGrid(p.y), this.snapToGrid(p.z)))
+    }
+    manip.onTranslationUpdate.add(snapPosition)
+    manip.onTranslationEnd.add(snapPosition)
+
+    manip.onManipulationStart.add(() => {
+      handleActive[idx] = true
+      updateVisibility()
+    })
+    manip.onManipulationEnd.add(() => {
+      handleActive[idx] = false
+      updateVisibility()
+    })
+  }
+
+  /** Corner handle: turntable rotation about the model's vertical center (manip disabled, custom drag). */
+  private setupRotationHandle(
+    h: GrabHandle,
+    wrapperTransform: Transform,
+    idx: number,
+    handleActive: boolean[],
+    updateVisibility: () => void
+  ): void {
+    // Disable SIK manipulation on this handle: rotation is driven manually so a
+    // single-hand drag orbits the model around its center.
+    h.manip.enabled = false
+
+    if (!h.interactable) {
+      this.log(`Rotation handle '${h.object.name}' has no Interactable; cannot drive turntable.`)
+      return
+    }
+
+    let startPointerAngle = 0
+    let startYaw = 0
+
+    h.interactable.onDragStart.add((e: DragInteractorEvent) => {
+      const center = wrapperTransform.getWorldPosition()
+      startYaw = this.currentYaw(wrapperTransform)
+      startPointerAngle = this.pointerAngle(e.interactor, center)
+      handleActive[idx] = true
+      updateVisibility()
+    })
+
+    h.interactable.onDragUpdate.add((e: DragInteractorEvent) => {
+      const center = wrapperTransform.getWorldPosition()
+      const delta = this.pointerAngle(e.interactor, center) - startPointerAngle
+      const yaw = this.snapYawValue(startYaw + delta)
+      wrapperTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
+    })
+
+    h.interactable.onDragEnd.add(() => {
+      const yaw = this.snapYawValue(this.currentYaw(wrapperTransform))
+      wrapperTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
+      handleActive[idx] = false
+      updateVisibility()
+    })
+  }
+
+  /**
+   * Angle (radians) of the interactor's pointing position around `center` in the
+   * horizontal plane. Intersects the interactor ray with the y=center.y plane so
+   * the turntable tracks where the user points, independent of the moving handle.
+   */
+  private pointerAngle(interactor: Interactor, center: vec3): number {
+    const origin = interactor.startPoint
+    const dir = interactor.direction
+    let point: vec3 | null = interactor.targetHitPosition
+
+    if (origin && dir && Math.abs(dir.y) > 1e-4) {
+      const t = (center.y - origin.y) / dir.y
+      if (t > 0) {
+        point = new vec3(origin.x + dir.x * t, center.y, origin.z + dir.z * t)
+      }
+    }
+    if (!point) point = origin ? origin : center
+
+    return Math.atan2(point.x - center.x, point.z - center.z)
+  }
+
+  private currentYaw(t: Transform): number {
+    return t.getWorldRotation().toEulerAngles().y
+  }
+
+  private snapYawValue(yaw: number): number {
+    if (!this.enableRotationSnap || this.rotationSnapDegrees <= 0) return yaw
+    const stepRad = (this.rotationSnapDegrees * Math.PI) / 180
+    return Math.round(yaw / stepRad) * stepRad
+  }
+
+  private snapToGrid(value: number): number {
+    const unit = this.gridSnapUnit
+    return Math.round(value / unit) * unit
   }
 
   private applyModelScale(obj: SceneObject): void {
@@ -443,12 +753,14 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     }
   }
 
-  private cleanupPrevious(): void {
-    if (this.spawnedObject) {
-      this.debugLog(`Destroying previous spawned model '${this.spawnedObject.name}'.`)
-      this.spawnedObject.destroy()
-      this.spawnedObject = null
+  /** Destroys every spawned model. Not called on spawn; available for a manual reset. */
+  private clearAllSpawned(): void {
+    for (let i = 0; i < this.spawnedObjects.length; i++) {
+      const obj = this.spawnedObjects[i]
+      if (obj) obj.destroy()
     }
+    this.debugLog(`Cleared ${this.spawnedObjects.length} spawned model(s).`)
+    this.spawnedObjects = []
   }
 
   private placeInFront(obj: SceneObject): void {
