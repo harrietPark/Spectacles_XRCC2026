@@ -88,7 +88,13 @@ export class SnapCloudPinManager extends BaseScriptComponent {
 
   @input
   @hint("How long (seconds) a pending captured image_url stays claimable by the next discovered Note.")
-  private pendingImageFreshnessSeconds: number = 10.0
+  private pendingImageFreshnessSeconds: number = 60.0
+
+  @input
+  @hint(
+    "Max seconds to wait at note completion while a capture upload is in flight, before falling back to transcript-only INSERT."
+  )
+  private captureClaimMaxWaitSeconds: number = 8.0
 
   private static instanceRef: SnapCloudPinManager | null = null
 
@@ -237,7 +243,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       // a new capture-time orphan row).
       const noteId = noteData.noteId
       const preAllocatedPinId = this.pinIdByNoteId.has(noteId) ? undefined : this.claimPendingPinIdIfFresh(note)
-      this.saveNoteAsync(noteData, spatialPosition, preAllocatedPinId)
+      void this.saveNoteAsync(noteData, spatialPosition, preAllocatedPinId, note)
     })
     print(`[SnapCloudPinManager] Subscribed to Note on "${note.getSceneObject().name}"`)
   }
@@ -264,7 +270,8 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     // capture/pre-INSERT failed), saveNoteAsync INSERTs a fresh row as
     // it always did -- just without image_url.
     // ==================================================================
-    preAllocatedPinId: string | undefined
+    preAllocatedPinId: string | undefined,
+    note?: Note
   ): Promise<void> {
     const noteId = noteData.noteId
     const transcript = (noteData.voiceTranscription || "").trim()
@@ -303,6 +310,10 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       const customerId = sm.getCustomerId()
 
       const existingPinId = this.pinIdByNoteId.get(noteId)
+      let resolvedPreAllocatedPinId = preAllocatedPinId
+      if (!existingPinId && !resolvedPreAllocatedPinId && this.uploadInFlight) {
+        resolvedPreAllocatedPinId = await this.waitForPendingCapturePinId(note)
+      }
 
       if (existingPinId) {
         // Re-recording the same note → UPDATE transcript only
@@ -325,7 +336,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       // invoked for this pin -- the pre-INSERT deliberately skipped it
       // because the transcript wasn't available yet.
       // ==================================================================
-      else if (preAllocatedPinId) {
+      else if (resolvedPreAllocatedPinId) {
         const updateRow: Record<string, unknown> = {
           transcribe_text: transcript,
           updated_at: new Date().toISOString()
@@ -336,18 +347,18 @@ export class SnapCloudPinManager extends BaseScriptComponent {
         const {error} = await client
           .from(this.pinsTableName)
           .update(updateRow)
-          .eq("id", preAllocatedPinId)
+          .eq("id", resolvedPreAllocatedPinId)
         if (error) {
           print(
-            `[SnapCloudPinManager] pin finalize-UPDATE failed (${preAllocatedPinId}): ${JSON.stringify(error)}`
+            `[SnapCloudPinManager] pin finalize-UPDATE failed (${resolvedPreAllocatedPinId}): ${JSON.stringify(error)}`
           )
           return
         }
-        this.pinIdByNoteId.set(noteId, preAllocatedPinId)
+        this.pinIdByNoteId.set(noteId, resolvedPreAllocatedPinId)
         print(
-          `[SnapCloudPinManager] pin finalize-UPDATE ok (id=${preAllocatedPinId}, noteId=${noteId})`
+          `[SnapCloudPinManager] pin finalize-UPDATE ok (id=${resolvedPreAllocatedPinId}, noteId=${noteId})`
         )
-        this.invokeProcessPin(client, preAllocatedPinId)
+        this.invokeProcessPin(client, resolvedPreAllocatedPinId)
       }
       // ==================================================================
       // [SnapCloudCapture] Changed: original INSERT-on-completion path
@@ -652,6 +663,64 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     }
   }
 
+  private delaySeconds(seconds: number): Promise<void> {
+    return new Promise((resolve) => {
+      const delayedEvent = this.createEvent("DelayedCallbackEvent")
+      delayedEvent.bind(() => {
+        resolve()
+      })
+      delayedEvent.reset(Math.max(0, seconds))
+    })
+  }
+
+  /**
+   * When the transcript finalizes before the spawn-time capture lands,
+   * poll briefly for `pendingPinId` instead of immediately INSERTing a
+   * transcript-only row.
+   */
+  private async waitForPendingCapturePinId(note: Note | undefined): Promise<string | undefined> {
+    const pollIntervalSeconds = 0.5
+    const maxWaitSeconds = Math.max(0, this.captureClaimMaxWaitSeconds)
+    if (maxWaitSeconds <= 0) {
+      return undefined
+    }
+
+    print(
+      `[SnapCloudPinManager][Capture] Transcript landed before capture pin; waiting up to ${maxWaitSeconds}s...`
+    )
+
+    let waited = 0
+    while (waited < maxWaitSeconds) {
+      const claimed = this.claimPendingPinIdIfFresh(note)
+      if (claimed) {
+        print(
+          `[SnapCloudPinManager][Capture] Claimed pending pinId after ${waited.toFixed(1)}s wait.`
+        )
+        return claimed
+      }
+
+      if (!this.uploadInFlight && !this.pendingPinId) {
+        break
+      }
+
+      await this.delaySeconds(pollIntervalSeconds)
+      waited += pollIntervalSeconds
+    }
+
+    const lastChance = this.claimPendingPinIdIfFresh(note)
+    if (lastChance) {
+      print(
+        `[SnapCloudPinManager][Capture] Claimed pending pinId after ${Math.min(waited, maxWaitSeconds).toFixed(1)}s wait.`
+      )
+      return lastChance
+    }
+
+    print(
+      `[SnapCloudPinManager][Capture] No pending pinId after ${Math.min(waited, maxWaitSeconds).toFixed(1)}s; transcript-only fallback.`
+    )
+    return undefined
+  }
+
   /**
    * If there's a fresh pending pinId from a recent capture-time INSERT,
    * return it (and consume the pending slot). Called from the
@@ -664,7 +733,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
    * one pending pinId at any given time, so this "first completion
    * grabs whatever's pending" policy is unambiguous in practice.
    */
-  private claimPendingPinIdIfFresh(note: Note): string | undefined {
+  private claimPendingPinIdIfFresh(note: Note | undefined): string | undefined {
     if (!this.pendingPinId) {
       return undefined
     }
@@ -677,9 +746,8 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       return undefined
     }
     const pinId = this.pendingPinId.pinId
-    print(
-      `[SnapCloudPinManager][Capture] Claimed pending pinId=${pinId} for "${note.getSceneObject().name}".`
-    )
+    const noteName = note ? note.getSceneObject().name : "note"
+    print(`[SnapCloudPinManager][Capture] Claimed pending pinId=${pinId} for "${noteName}".`)
     this.pendingPinId = null
     return pinId
   }

@@ -28,6 +28,7 @@
   ScriptInputsHidden:
     autoInvokeProcessPin: false
     cameraTextureOverride: false
+    captureClaimMaxWaitSeconds: false
     captureCloudFolderPrefix: false
     captureDelaySeconds: false
     captureFilenameSlug: false
@@ -57,6 +58,7 @@
       captureDelaySeconds: 0.750000
       cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
       pendingImageFreshnessSeconds: !<float> 10.000000
+      captureClaimMaxWaitSeconds: !<float> 8.000000
   ScriptTypes:
     -
       {}
@@ -71,4 +73,5 @@
     - '// @input string captureFilenameSlug = "view" {"hint":"Filename slug for quiet captures. Final file: slug_<timestamp>.jpg"}'
     - '// @input float captureDelaySeconds = 0.75 {"hint":"Seconds to wait after captureForNextNote() before grabbing the frame."}'
     - '// @input Asset.Texture cameraTextureOverride {"hint":"Optional camera Texture override. Leave empty; script owns its own camera subscription."}'
-    - '// @input float pendingImageFreshnessSeconds = 10 {"hint":"How long (seconds) a pending captured image_url stays claimable by the next discovered Note."}'
+    - '// @input float pendingImageFreshnessSeconds = 60 {"hint":"How long (seconds) a pending captured image_url stays claimable by the next discovered Note."}'
+    - '// @input float captureClaimMaxWaitSeconds = 8 {"hint":"Max seconds to wait at note completion while a capture upload is in flight, before falling back to transcript-only INSERT."}'

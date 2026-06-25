@@ -7136,7 +7136,7 @@
     captureCloudFolderPrefix: true
     captureFilenameSlug: true
     cameraTextureOverride: true
-    pendingImageFreshnessSeconds: true
+    captureClaimMaxWaitSeconds: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -7151,7 +7151,8 @@
       captureFilenameSlug: view
       captureDelaySeconds: !<float> 3.000000
       cameraTextureOverride: !<reference.Texture> 00000000-0000-0000-0000-000000000000
-      pendingImageFreshnessSeconds: !<float> 10.000000
+      pendingImageFreshnessSeconds: !<float> 60.000000
+      captureClaimMaxWaitSeconds: !<float> 8.000000
   ScriptTypes:
     "":
       {}
