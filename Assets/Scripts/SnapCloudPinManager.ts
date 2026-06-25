@@ -179,6 +179,19 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     }
   }
 
+  // ======================================================================
+  // [AutoStartSTT] NEW
+  // Public, race-free registration entry point. The 1s scene scan can lag
+  // behind a freshly spawned (and now auto-recording) note, so callers can
+  // register a note explicitly at spawn time. Guarded by knownNotes so the
+  // later scan will not double-subscribe.
+  // ======================================================================
+  public registerNote(note: Note): void {
+    if (!note) return
+    if (this.knownNotes.has(note)) return
+    this.attachToNote(note)
+  }
+
   private attachToNote(note: Note): void {
     this.knownNotes.add(note)
     // ====================================================================

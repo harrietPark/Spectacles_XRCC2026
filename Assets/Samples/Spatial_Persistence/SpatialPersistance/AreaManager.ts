@@ -270,6 +270,14 @@ export class AreaManager extends BaseScriptComponent {
 
     const noteComponent = widgetObject.getComponent(Note.getTypeName())
     if (noteComponent && shouldPlaySpawnPopAnimation) {
+      // ============================================================
+      // [AutoStartSTT] NEW
+      // `shouldPlaySpawnPopAnimation` is true only for FRESH spawns
+      // (dwell / debug), and false on restoreWidgets(). So this is the
+      // correct, restore-safe place to flag the note to auto-start
+      // recording + speech-to-text once its onStart() runs next frame.
+      // ============================================================
+      noteComponent.autoStartRecordingOnReady = true
       if (shouldDelaySpawnPopAnimation) {
         // Debug-only delay so preview users can clearly see the pop start.
         this.log("Debug spawn: delaying pop animation start for visibility.")

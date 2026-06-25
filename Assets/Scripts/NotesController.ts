@@ -9,6 +9,8 @@ import SIK from "SpectaclesInteractionKit.lspkg/SIK";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { SceneManager } from "./SceneManager";
 import { PresetNote } from "./PresetNote";
+// [AutoStartSTT] NEW: explicit, race-free Snap Cloud subscription at spawn.
+import { SnapCloudPinManager } from "./SnapCloudPinManager";
 // import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
 
 @component
@@ -136,6 +138,16 @@ export class NotesController extends BaseScriptComponent {
             note.onNoteCompleted.add((noteData) => {
                 this.sceneManager.sendCompleteNoteDataToBackend(noteData);
             });
+
+            // ============================================================
+            // [AutoStartSTT] NEW
+            // Subscribe the note to Snap Cloud immediately at spawn time
+            // instead of waiting for SnapCloudPinManager's ~1s scene scan.
+            // With auto-start, recording begins right at spawn, so a short
+            // first utterance could otherwise finalize before the scan
+            // subscribes. registerNote() is guarded against double-subscribe.
+            // ============================================================
+            SnapCloudPinManager.getInstance()?.registerNote(note);
         }
 
         const removedNotes = this.notes.filter((note) => !updatedNotes.includes(note));

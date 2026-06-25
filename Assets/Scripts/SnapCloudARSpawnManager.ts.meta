@@ -49,6 +49,7 @@
     rotationSnapDegrees: false
     spawnDistance: false
     spawnParent: false
+    spawnSound: false
     tableName: false
     targetModel: false
     testMode: false
@@ -85,6 +86,7 @@
       grabHandleOffset: !<float> 3.000000
       revealHandlesOnHover: true
       handleHideDelaySeconds: 0.300000
+      spawnSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
       enableGridSnap: true
       gridSnapUnit: !<float> 5.000000
       enableRotationSnap: true
@@ -116,6 +118,7 @@
     - "// @input float grabHandleOffset = 3 {\"hint\":\"Distance (cm) the grab-handle spheres sit beyond the model's bounding box.\"}"
     - '// @input bool revealHandlesOnHover = true {"hint":"Hide grab handles until the hand hovers the model box or a handle."}'
     - '// @input float handleHideDelaySeconds = 0.3 {"hint":"Grace period (seconds) before hiding handles after the hand leaves, to avoid flicker when reaching for a handle."}'
+    - '// @input Component.AudioComponent spawnSound {"hint":"Sound played once each time an AR model is spawned (optional)."}'
     - '// @input bool enableGridSnap = true {"hint":"Snap model position to a grid while dragging."}'
     - '// @input float gridSnapUnit = 5 {"hint":"Grid cell size in centimetres for translation snapping."}'
     - '// @input bool enableRotationSnap = true {"hint":"Snap Y-axis rotation to fixed steps while rotating."}'

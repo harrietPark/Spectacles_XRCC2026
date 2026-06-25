@@ -4452,6 +4452,23 @@
     - !<own> cb8954a0-6ba9-4f55-9792-5988a8e69cd4
   Components:
     []
+- !<AudioComponent/8d1c2c31-7bb3-4763-b17a-f0edfae98f4f>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> cec699fd-5cb8-452d-a7c2-3f8b78a2e6b8
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/8ffb5c13-ce94-42f0-aa9c-e6de994d3fd3>
   PrefabRemaps:
     []
@@ -5066,6 +5083,7 @@
       grabHandleOffset: !<float> 3.000000
       revealHandlesOnHover: true
       handleHideDelaySeconds: 0.300000
+      spawnSound: !<reference.AudioComponent> 8d1c2c31-7bb3-4763-b17a-f0edfae98f4f
       enableGridSnap: false
       gridSnapUnit: !<float> 5.000000
       enableRotationSnap: false
@@ -6166,6 +6184,7 @@
     - !<own> 2f18091e-35d0-4548-8424-980d61c8f5d4
   Components:
     - !<own> 9f47b62c-41a4-4577-8ea0-24f068f37feb
+    - !<own> 8d1c2c31-7bb3-4763-b17a-f0edfae98f4f
 - !<Camera/b9656885-10ad-4d0b-af8c-1a5705ce9bc8>
   PrefabRemaps:
     []

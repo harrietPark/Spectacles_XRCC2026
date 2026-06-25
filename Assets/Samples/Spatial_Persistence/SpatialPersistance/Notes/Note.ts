@@ -133,6 +133,17 @@ export class Note extends BaseScriptComponent {
     private isAsrRunning = false;
     private effectiveSampleRate = DEFAULT_SAMPLE_RATE;
 
+    // ============================================================
+    // [AutoStartSTT] NEW
+    // When true, this note begins voice recording + speech-to-text
+    // automatically once onStart() finishes wiring up the mic.
+    // Set by AreaManager.spawnWidget() for FRESH spawns only (dwell /
+    // debug), and left false for restored notes so reloading an area
+    // does not start recording on every saved note.
+    // The manual record button (pinch) is left fully intact.
+    // ============================================================
+    public autoStartRecordingOnReady = false;
+
     // Note's states
     private createdAt: Date;
     private voiceTranscription: string = "";
@@ -287,14 +298,42 @@ export class Note extends BaseScriptComponent {
 
         this.setupVoiceNoteControls();
         this.createdAt = new Date(Date.now());
+
+        // ============================================================
+        // [AutoStartSTT] NEW
+        // Kick off recording + speech-to-text automatically for freshly
+        // spawned notes. This reuses the exact same code path as the
+        // manual mic-button pinch (recordMicrophoneAudio -> mic.start ->
+        // startSpeechToText), so:
+        //   - the mic "recording" icon + status text update immediately,
+        //   - the live transcript still flows into _textField, and
+        //   - onNoteCompleted (final transcript) still fires, so the
+        //     Snap Cloud / Supabase sync is unchanged.
+        // recordMicrophoneAudio() safely no-ops if voice setup was
+        // skipped (no mic/output asset), so this is guard-free here.
+        // ============================================================
+        if (this.autoStartRecordingOnReady) {
+            this.recordMicrophoneAudio(true);
+        }
     }
 
     private onUpdate() {
         this.updateSpawnPopAnimation();
         this.updateSpawnRotateBounceAnimation();
 
+        // ===== [AutoStartSTT] OLD (commented out, kept for reference) =====
+        // const shouldShowButtons =
+        //     getTime() - this.timeToShowButtonsAfterHover < this.lastHoveredTime;
+        // ============================================================
+        // [AutoStartSTT] NEW
+        // Also keep the controls (mic icon, status text, etc.) visible
+        // while actively recording, so an auto-started note clearly shows
+        // "mic is on" without the user first having to hover it. Normal
+        // hover-to-reveal behaviour is preserved via the original clause.
+        // ============================================================
         const shouldShowButtons =
-            getTime() - this.timeToShowButtonsAfterHover < this.lastHoveredTime;
+            getTime() - this.timeToShowButtonsAfterHover < this.lastHoveredTime ||
+            this.isRecording;
         this._editToggle.getSceneObject().enabled = shouldShowButtons;
         if (this.deleteButton) {
             this.deleteButton.getSceneObject().enabled = shouldShowButtons;

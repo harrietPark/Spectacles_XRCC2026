@@ -131,6 +131,11 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private handleHideDelaySeconds: number = 0.3
 
   @input
+  @hint("Sound played once each time an AR model is spawned (optional).")
+  @allowUndefined
+  private spawnSound: AudioComponent | undefined
+
+  @input
   @hint("Snap model position to a grid while dragging.")
   private enableGridSnap: boolean = true
 
@@ -421,7 +426,18 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       this.spawnedObjects.push(glb)
       this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}'. Total spawned=${this.spawnedObjects.length}.`)
     }
+    this.playSpawnSound()
     return true
+  }
+
+  private playSpawnSound(): void {
+    if (!this.spawnSound) return
+    try {
+      this.spawnSound.play(1)
+      this.debugLog("Played spawn sound.")
+    } catch (e) {
+      this.log(`playSpawnSound failed: ${this.describeError(e)}`)
+    }
   }
 
   /**
