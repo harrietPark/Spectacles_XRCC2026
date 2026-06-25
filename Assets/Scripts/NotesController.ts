@@ -65,6 +65,18 @@ export class NotesController extends BaseScriptComponent {
     private prevLiveNotesObjInFOV: SceneObject[] = [];
     private prevPresetNotesObjInFOV: SceneObject[] = [];
 
+    // ============================================================
+    // [DeleteCrashFix] NEW
+    // Authoritative set of currently-alive live-note SceneObjects, rebuilt
+    // by updateNotes() on every widget add/remove (incl. delete). The FOV
+    // diff filters against this by REFERENCE (Set.has) - a pure JS compare
+    // that never calls a native API on a possibly-destroyed handle - so a
+    // deleted note's object is dropped before we ever dereference it. This
+    // is the primary guard against the delete-then-create crash; the
+    // isSceneObjectAlive() probe and try/catch blocks are secondary backups.
+    // ============================================================
+    private liveNoteObjects: Set<SceneObject> = new Set();
+
     // State booleans
     private isNoteAnchoringActive: boolean = false;
     private wasFingerDwellIndicatorActive: boolean = false;
@@ -157,10 +169,60 @@ export class NotesController extends BaseScriptComponent {
             });
         }
         this.notes = updatedNotes;
+
+        // ============================================================
+        // [DeleteCrashFix] NEW
+        // updateNotes runs on every widget add/remove (incl. delete), so
+        // this is the earliest deterministic point to refresh state. The
+        // passed-in `widgets` are all alive, so their SceneObjects form the
+        // authoritative live-note set. Rebuild it here, then scrub the FOV
+        // tracking array by REFERENCE against that set: a deleted note's
+        // object is no longer in the set, so it is dropped without ever
+        // calling a native API on the destroyed handle. (The note's Widget
+        // and Note components live on the same SceneObject, so this object
+        // is exactly what the FOV overlap reports for that note.)
+        // ============================================================
+        const nextLiveNoteObjects = new Set<SceneObject>();
+        for (const widget of widgets) {
+            try {
+                nextLiveNoteObjects.add(widget.getSceneObject());
+            } catch (_) {
+                // Widget mid-teardown; skip it.
+            }
+        }
+        this.liveNoteObjects = nextLiveNoteObjects;
+
+        this.prevLiveNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => this.liveNoteObjects.has(obj));
+
+        // Preset notes are never deleted by this flow, but keep the probe-based
+        // scrub as a safety net in case a preset object is ever torn down.
+        this.prevPresetNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
     }
 
     private updateAllNotesInFOV(overlap: OverlapEnterEventArgs | OverlapExitEventArgs) {
-        const currAllNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+        // ============================================================
+        // [DeleteCrashFix] NEW
+        // The physics overlap set can still reference a just-deleted note's
+        // collider/SceneObject. Resolving it (getSceneObject) or calling
+        // getComponent() on it throws on a destroyed object. Build the list
+        // defensively: skip any overlap whose object can't be safely read.
+        // ============================================================
+        const currAllNotesObjInFOV: SceneObject[] = [];
+        for (const singleOverlap of overlap.currentOverlaps) {
+            try {
+                const obj = singleOverlap.collider.getSceneObject();
+                if (this.isSceneObjectAlive(obj)) {
+                    currAllNotesObjInFOV.push(obj);
+                }
+            } catch (_) {
+                // Destroyed/invalid collider left in the overlap set; skip it.
+            }
+        }
+
+        // ===== [DeleteCrashFix] OLD (mapped raw overlaps, could touch a destroyed object) =====
+        // const currAllNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+        // ====================================================================
+
         const currLiveNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(Note.getTypeName()) !== undefined);
         const currPresetNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(PresetNote.getTypeName()) !== undefined);
 
@@ -169,37 +231,149 @@ export class NotesController extends BaseScriptComponent {
     }
 
     private updateLiveNotesInFOV(currLiveNotesObjInFOV: SceneObject[]) {
-        if (this.prevLiveNotesObjInFOV.length == 0) {
+        // ============================================================
+        // [DeleteCrashFix] NEW
+        // A note deleted while inside the FOV cone leaves its destroyed
+        // SceneObject stranded in prevLiveNotesObjInFOV (destroying a
+        // collider does not reliably emit onOverlapExit). On the next
+        // overlap event - which fires reliably the moment the user spawns
+        // the next note in view - the old diff below dereferenced that
+        // destroyed object via getComponent() and crashed the lens.
+        // Drop any dead objects from both the previous and current lists
+        // BEFORE diffing/dereferencing so we never touch a destroyed note.
+        // The `prev` list is filtered by REFERENCE against the authoritative
+        // live-note set (no native call on a destroyed handle); `curr` comes
+        // from current overlaps and is additionally guarded by the probe.
+        // ============================================================
+        const prevLiveNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => this.liveNoteObjects.has(obj));
+        currLiveNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
+
+        // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevLiveNotesObjInFOV) =====
+        // if (this.prevLiveNotesObjInFOV.length == 0) {
+        //     this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
+        //     return;
+        // }
+        //
+        // const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !this.prevLiveNotesObjInFOV.includes(obj));
+        // const removedNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
+        // ====================================================================
+
+        if (prevLiveNotesObjInFOV.length == 0) {
             this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
             return;
         }
 
-        const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !this.prevLiveNotesObjInFOV.includes(obj));
-        const removedNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
+        const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !prevLiveNotesObjInFOV.includes(obj));
+        const removedNotesObjInFOV = prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
+        // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
+        // for (const note of addedNotesObjInFOV) {
+        //     note.getComponent(Note.getTypeName())?.pullToForeground();
+        // }
+        // for (const note of removedNotesObjInFOV) {
+        //     note.getComponent(Note.getTypeName())?.pushToBackground();
+        // }
+        // ====================================================================
+        // [DeleteCrashFix] NEW: defense-in-depth try/catch so a note destroyed
+        // between overlap events can never crash the lens here.
         for (const note of addedNotesObjInFOV) {
-            note.getComponent(Note.getTypeName())?.pullToForeground();
+            try {
+                note.getComponent(Note.getTypeName())?.pullToForeground();
+            } catch (_) {
+                // Note destroyed between events; nothing to bring to foreground.
+            }
         }
         for (const note of removedNotesObjInFOV) {
-            note.getComponent(Note.getTypeName())?.pushToBackground();
+            try {
+                note.getComponent(Note.getTypeName())?.pushToBackground();
+            } catch (_) {
+                // Note destroyed between events; nothing to push to background.
+            }
         }
         this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
     }
 
     private updatePresetNotesInFOV(currPresetNotesObjInFOV: SceneObject[]) {
-        if (this.prevPresetNotesObjInFOV.length == 0) {
+        // ============================================================
+        // [DeleteCrashFix] NEW
+        // Same destroyed-object protection as updateLiveNotesInFOV: a
+        // destroyed preset note left in prevPresetNotesObjInFOV would be
+        // dereferenced on the next overlap event and crash the lens.
+        // Filter out dead objects from both lists before diffing.
+        // ============================================================
+        const prevPresetNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
+        currPresetNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
+
+        // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevPresetNotesObjInFOV) =====
+        // if (this.prevPresetNotesObjInFOV.length == 0) {
+        //     this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
+        //     return;
+        // }
+        //
+        // const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !this.prevPresetNotesObjInFOV.includes(obj));
+        // const removedNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
+        // ====================================================================
+
+        if (prevPresetNotesObjInFOV.length == 0) {
             this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
             return;
         }
 
-        const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !this.prevPresetNotesObjInFOV.includes(obj));
-        const removedNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
+        const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !prevPresetNotesObjInFOV.includes(obj));
+        const removedNotesObjInFOV = prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
+        // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
+        // for (const note of addedNotesObjInFOV) {
+        //     note.getComponent(PresetNote.getTypeName())?.pullToForeground();
+        // }
+        // for (const note of removedNotesObjInFOV) {
+        //     note.getComponent(PresetNote.getTypeName())?.pushToBackground();
+        // }
+        // ====================================================================
+        // [DeleteCrashFix] NEW: defense-in-depth try/catch (see updateLiveNotesInFOV).
         for (const note of addedNotesObjInFOV) {
-            note.getComponent(PresetNote.getTypeName())?.pullToForeground();
+            try {
+                note.getComponent(PresetNote.getTypeName())?.pullToForeground();
+            } catch (_) {
+                // Preset note destroyed between events; skip.
+            }
         }
         for (const note of removedNotesObjInFOV) {
-            note.getComponent(PresetNote.getTypeName())?.pushToBackground();
+            try {
+                note.getComponent(PresetNote.getTypeName())?.pushToBackground();
+            } catch (_) {
+                // Preset note destroyed between events; skip.
+            }
         }
         this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
+    }
+
+    // ============================================================
+    // [DeleteCrashFix] NEW (v2 - reliable probe)
+    // Validity check used before calling component APIs on any FOV-tracked
+    // SceneObject. A note deleted via its delete button runs
+    // sceneObject.destroy(); afterwards any native API call on that handle
+    // throws and crashes the lens.
+    //
+    // NOTE: the previous version only read `isNull`, which does not exist
+    // on SceneObject in this runtime (it returned undefined, so the check
+    // always reported "alive" and never filtered the dead object). We now
+    // actively PROBE the handle: getTransform() throws on a destroyed
+    // object, so the catch is what actually detects destruction. `isNull`
+    // is still honoured first for runtimes that expose it.
+    // ============================================================
+    private isSceneObjectAlive(obj: SceneObject): boolean {
+        if (!obj) {
+            return false;
+        }
+        try {
+            if ((obj as unknown as { isNull?: boolean }).isNull === true) {
+                return false;
+            }
+            // Probe a native accessor; this throws if the object was destroyed.
+            obj.getTransform();
+            return true;
+        } catch (_) {
+            return false;
+        }
     }
 
     private tryAnchorNote(): boolean {

@@ -203,8 +203,26 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     // finishes recording, the pre-INSERT has definitely landed.
     // ====================================================================
     note.onNoteCompleted.add((noteData: INoteData) => {
-      const worldPos = note.getSceneObject().getTransform().getWorldPosition()
-      const spatialPosition = {x: worldPos.x, y: worldPos.y, z: worldPos.z}
+      // ================================================================
+      // [DeleteCrashFix] NEW
+      // A note can fire a final onNoteCompleted (from a late ASR result)
+      // right as it is being deleted, after sceneObject.destroy() has run.
+      // Reading note.getSceneObject().getTransform() on the destroyed
+      // handle throws and crashes the lens. Guard the spatial-position
+      // read; if the note is gone we still persist the transcript without
+      // a spatial position rather than taking down the app.
+      // ================================================================
+      let spatialPosition: {x: number; y: number; z: number} | undefined = undefined
+      try {
+        const worldPos = note.getSceneObject().getTransform().getWorldPosition()
+        spatialPosition = {x: worldPos.x, y: worldPos.y, z: worldPos.z}
+      } catch (_) {
+        print("[SnapCloudPinManager] Note destroyed before completion; saving without spatial position.")
+      }
+      // ===== [DeleteCrashFix] OLD (unguarded; threw if the note was destroyed) =====
+      // const worldPos = note.getSceneObject().getTransform().getWorldPosition()
+      // const spatialPosition = {x: worldPos.x, y: worldPos.y, z: worldPos.z}
+      // ====================================================================
       // ================================================================
       // [SnapCloudCapture] Changed: claim the pending capture-time
       // pinId here (at completion), not at scene-scan time. On re-
