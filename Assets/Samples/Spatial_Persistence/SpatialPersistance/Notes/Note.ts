@@ -355,9 +355,13 @@ export class Note extends BaseScriptComponent {
         this.updateMicrophoneButtonVisualState();
     }
 
+    public getNoteId(): number {
+        return this.createdAt.getUTCSeconds();
+    }
+
     public sendCompleteNoteData() {
         const noteData: INoteData = {
-            noteId: this.createdAt.getUTCSeconds(),
+            noteId: this.getNoteId(),
             createdAt: this.createdAt,
             voiceTranscription: this.voiceTranscription,
             croppedImageTexture: this.croppedImageTexture,

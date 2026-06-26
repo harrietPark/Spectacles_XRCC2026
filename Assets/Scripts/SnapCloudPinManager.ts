@@ -1,5 +1,6 @@
 import {SupabaseClient} from "SupabaseClient.lspkg/supabase-snapcloud"
 import {Note} from "../Samples/Spatial_Persistence/SpatialPersistance/Notes/Note"
+import {Widget} from "../Samples/Spatial_Persistence/SpatialPersistance/Widget"
 import {INoteData} from "./INoteData"
 import {SnapCloudSessionManager} from "./SnapCloudSessionManager"
 
@@ -53,6 +54,10 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   private autoInvokeProcessPin: boolean = true
 
   @input
+  @hint("Edge function to soft-delete a pin when the user removes a note.")
+  private deletePinFunctionName: string = "delete-pin"
+
+  @input
   @hint("How often (seconds) to re-scan the scene for new Note components.")
   private noteScanIntervalSeconds: number = 1.0
 
@@ -102,6 +107,8 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   private pinIdByNoteId: Map<number, string> = new Map()
   // noteIds currently being written (prevents double-write on rapid re-record)
   private inflightByNoteId: Set<number> = new Set()
+  private deletedNoteIds: Set<number> = new Set()
+  private captureTargetNote: Note | null = null
 
   private knownNotes: Set<Note> = new Set()
   private scanTimer: number = 0
@@ -125,7 +132,12 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule
   private liveCamTexture: Texture | null = null
   private uploadInFlight: boolean = false
-  private pendingPinId: {pinId: string; imageUrl: string; timestamp: number} | null = null
+  private pendingPinId: {
+    pinId: string
+    imageUrl: string
+    timestamp: number
+    targetNote?: Note
+  } | null = null
 
   onAwake() {
     if (SnapCloudPinManager.instanceRef) {
@@ -195,11 +207,22 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   public registerNote(note: Note): void {
     if (!note) return
     if (this.knownNotes.has(note)) return
+    if (this.uploadInFlight) {
+      this.captureTargetNote = note
+    }
     this.attachToNote(note)
   }
 
   private attachToNote(note: Note): void {
     this.knownNotes.add(note)
+
+    const widget = note.getSceneObject().getComponent(Widget.getTypeName()) as Widget | null
+    if (widget) {
+      widget.onDelete.add(() => {
+        this.onNoteDeleted(note)
+      })
+    }
+
     // ====================================================================
     // [SnapCloudCapture] Changed: the pending capture-time pinId is no
     // longer claimed here. The scene scan often spots the Note before
@@ -209,6 +232,10 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     // finishes recording, the pre-INSERT has definitely landed.
     // ====================================================================
     note.onNoteCompleted.add((noteData: INoteData) => {
+      if (this.deletedNoteIds.has(noteData.noteId)) {
+        print("[SnapCloudPinManager] Note was deleted; skipping completion write.")
+        return
+      }
       // ================================================================
       // [DeleteCrashFix] NEW
       // A note can fire a final onNoteCompleted (from a late ASR result)
@@ -278,6 +305,11 @@ export class SnapCloudPinManager extends BaseScriptComponent {
 
     if (transcript === "") {
       print("[SnapCloudPinManager] Empty transcript; skipping pin write.")
+      return
+    }
+
+    if (this.deletedNoteIds.has(noteId)) {
+      print("[SnapCloudPinManager] Note was deleted; skipping pin write.")
       return
     }
 
@@ -422,6 +454,66 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       })
   }
 
+  private onNoteDeleted(note: Note): void {
+    let noteId: number
+    try {
+      noteId = note.getNoteId()
+    } catch (_) {
+      print("[SnapCloudPinManager] onNoteDeleted: could not read noteId.")
+      return
+    }
+
+    this.deletedNoteIds.add(noteId)
+    this.inflightByNoteId.delete(noteId)
+    this.knownNotes.delete(note)
+
+    const pinIds = new Set<string>()
+    const mapped = this.pinIdByNoteId.get(noteId)
+    if (mapped) pinIds.add(mapped)
+    this.pinIdByNoteId.delete(noteId)
+
+    if (this.pendingPinId?.targetNote === note) {
+      pinIds.add(this.pendingPinId.pinId)
+      this.pendingPinId = null
+    }
+
+    for (const pinId of pinIds) {
+      this.invokeDeletePin(pinId)
+    }
+    if (pinIds.size === 0) {
+      print(`[SnapCloudPinManager] onNoteDeleted: no pin row mapped for noteId=${noteId}`)
+    }
+  }
+
+  private invokeDeletePin(pinId: string): void {
+    if (!this.deletePinFunctionName) return
+
+    const client = SnapCloudSessionManager.getInstance()?.getClient()
+    if (!client) {
+      print("[SnapCloudPinManager] delete-pin skipped: no client.")
+      return
+    }
+
+    const clientWithFns = client as unknown as {
+      functions: {
+        invoke: (
+          name: string,
+          opts: {body: Record<string, unknown>}
+        ) => Promise<{data: unknown; error: unknown}>
+      }
+    }
+
+    clientWithFns.functions
+      .invoke(this.deletePinFunctionName, {body: {pin_id: pinId}})
+      .then((res) => {
+        if (res.error) {
+          print(`[SnapCloudPinManager] delete-pin failed (${pinId}): ${JSON.stringify(res.error)}`)
+          return
+        }
+        print(`[SnapCloudPinManager] delete-pin ok (${pinId}): ${JSON.stringify(res.data)}`)
+      })
+  }
+
   // -------------------------------------------------------------- uuid util
 
   private static generateUuidV4(): string {
@@ -543,7 +635,13 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     const finish = (pinId: string, imageUrl: string) => {
       this.uploadInFlight = false
       if (pinId) {
-        this.pendingPinId = {pinId, imageUrl, timestamp: Date.now()}
+        this.pendingPinId = {
+          pinId,
+          imageUrl,
+          timestamp: Date.now(),
+          targetNote: this.captureTargetNote ?? undefined
+        }
+        this.captureTargetNote = null
         print(`[SnapCloudPinManager][Capture] Stashed pending pinId=${pinId} for next Note.`)
       }
     }
