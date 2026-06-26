@@ -19,6 +19,7 @@ import {SerializationManager} from "./Serialization/SerializationManager"
 import {AnchorManager} from "./SpatialPersistence/AnchorManager"
 import {Widget} from "./Widget"
 import { NotesController } from "Scripts/NotesController"
+import { ToggleButton } from "SpectaclesInteractionKit.lspkg/Components/UI/ToggleButton/ToggleButton"
 
 const CAMERA_GAZE_OFFSET_FACTOR = 60
 
@@ -157,6 +158,10 @@ export class AreaManager extends BaseScriptComponent {
 
     // Area UI Events
     this.areaSelectionMenu.onAreaSelect((event) => {
+      // auto-minimize the toggle menu once an area button is selected
+      const toggleButton = this.toggleMenuButton.sceneObject.getComponent(ToggleButton.getTypeName());
+      if(toggleButton?.isToggledOn) toggleButton.toggle();
+
       this.selectArea(event.areaName, event.isNew)
     })
     this.areaSelectionMenu.onAreaDelete((event) => {
