@@ -180,9 +180,9 @@ export class UXFeedbackController extends BaseScriptComponent {
         if (this.isSilentCameraCaptureFeedbackActive) return;
 
         print("... Play Silent Camera Capture Feedback");
-        this.silentCameraCaptureFrameVisual.enabled = true;
         const camVisualTransform = this.silentCameraCaptureFrameVisual.getTransform();
         camVisualTransform.setLocalScale(vec3.one());
+        this.silentCameraCaptureFrameVisual.enabled = true;
         LSTween.scaleToLocal(camVisualTransform, vec3.zero(), 1000)
             .easing(Easing.Quadratic.InOut)
             .onComplete(() => {
