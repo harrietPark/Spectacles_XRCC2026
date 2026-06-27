@@ -54,6 +54,7 @@
     - !<own> f4939aeb-76bf-44fe-a810-0d860b08b4f1
     - !<own> cfd1b857-450e-4c18-b39e-0a35b2819e1c
     - !<own> 779d7bdf-a689-482b-b2fb-c074fa82ebce
+    - !<own> 5d091006-cf60-4788-abc3-f8cb950d0318
   Components:
     - !<own> 00000000-0000-0065-0000-000000000065
     - !<own> 5b52f4ab-2705-4ffb-8800-89025fd07b2c
@@ -1334,6 +1335,25 @@
     []
   Components:
     - !<own> d7d4f5d7-4459-4bcf-8306-80bd1309e9c5
+- !<Image/1f5b6cc4-13e5-425f-9d91-ed87d70b8325>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> e31ad608-33f2-44a1-b3d1-6b5ccf918198
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/1fa65000-195a-4bb3-8c4e-12dc5e6b0dcf>
   PrefabRemaps:
     []
@@ -3040,6 +3060,21 @@
     - !<own> c114640d-eadb-414e-a88c-f73d71d7d2c4
   Components:
     []
+- !<SceneObject/5d091006-cf60-4788-abc3-f8cb950d0318>
+  PrefabRemaps:
+    []
+  Name: Camera_Frame
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> e4c21858-06e1-484f-8be7-44401a8316af
+  Components:
+    []
 - !<SceneObject/5d564d8f-d729-49f5-97eb-c29436081643>
   PrefabRemaps:
     []
@@ -3939,7 +3974,7 @@
     - 03fc7c90-3d31-44a9-84d6-709bce49982f: 12286a94-1ebc-4f41-71b0-9b80814928c9
     - 6db8b462-fa5e-4c88-9076-77e1144ef44f: f3415b03-3955-4f1c-6448-e1584e208ebd
     - 779d7bdf-a689-482b-b2fb-c074fa82ebce: bf8502a6-889a-4f8d-6758-e2b799ca3cad
-  Name: Cone_FOV
+  Name: FOV_Cone
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
@@ -6277,6 +6312,7 @@
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       dwellSignalDebounceSeconds: 0.150000
       dwellReadyAfterSeconds: 1.500000
+      silentCameraCaptureFrameVisual: !<reference.SceneObject> 5d091006-cf60-4788-abc3-f8cb950d0318
       showLoadingIndicator: true
       loadingIndicatorPrefab: !<reference.ObjectPrefab> 99eaea18-bf42-4f87-a2a2-bd6c90e027f6
       loadingIndicatorLocalOffset: !<Vec3> {x: 0.000000, y: -5.000000, z: 0.000000}
@@ -7534,6 +7570,21 @@
   RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/e4c21858-06e1-484f-8be7-44401a8316af>
+  PrefabRemaps:
+    []
+  Name: Visual
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: -10.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 1f5b6cc4-13e5-425f-9d91-ed87d70b8325
 - !<SceneObject/e4d338df-a6a7-421d-b149-4c0091da4ba7>
   PrefabRemaps:
     []

@@ -42,6 +42,7 @@
     midasTouchColorParameter: false
     midasTouchVisualMesh: false
     showLoadingIndicator: false
+    silentCameraCaptureFrameVisual: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -62,6 +63,7 @@
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       dwellSignalDebounceSeconds: 0.080000
       dwellReadyAfterSeconds: 1.500000
+      silentCameraCaptureFrameVisual: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       showLoadingIndicator: false
       loadingIndicatorPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       loadingIndicatorLocalOffset: !<Vec3> {x: 0.000000, y: -5.000000, z: 0.000000}
@@ -83,6 +85,7 @@
     - '// @input vec4 dwellReadyColor = {0,1,0,1} {"widget":"color"}'
     - '// @input float dwellSignalDebounceSeconds = 0.08 {"hint":"Seconds the dwell signal must remain changed before applying state (reduces jitter flicker)."}'
     - '// @input float dwellReadyAfterSeconds = 1.5 {"hint":"Seconds in active dwell before switching from not-ready to ready visual."}'
+    - '// @input SceneObject silentCameraCaptureFrameVisual {"hint":"Silent camera capture frame visual feedback"}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Post-Ready Loading"}'
     - '// @input bool showLoadingIndicator {"hint":"Show loading icon while note is being created after dwell is ready."}'
