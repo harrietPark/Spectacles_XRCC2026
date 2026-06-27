@@ -27,12 +27,6 @@ const SPAWN_ROTATE_BOUNCE_FREQUENCY_HZ = 2.8;
 const SPAWN_ROTATE_BOUNCE_DAMPING = 2.8;
 const SPAWN_ROTATE_BOUNCE_PIVOT_LOCAL = new vec3(0, 5, 0);
 
-// enum NoteStatus {
-//   background, // minimised, muted
-//   foregroundIdle, // maximised, ready to be edited
-//   foregroundActive, // maximised, is being edited
-// }
-
 @component
 export class Note extends BaseScriptComponent {
     private readonly onTranscriptionFinalEvent = new Event<void>();

@@ -7130,6 +7130,7 @@
     pinsTableName: true
     processPinFunctionName: true
     autoInvokeProcessPin: true
+    deletePinFunctionName: true
     noteScanIntervalSeconds: true
     saveCaptureToCloud: true
     captureStorageBucket: true
@@ -7144,6 +7145,7 @@
       pinsTableName: pins
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
+      deletePinFunctionName: delete-pin
       noteScanIntervalSeconds: !<float> 1.000000
       saveCaptureToCloud: true
       captureStorageBucket: specs-captures

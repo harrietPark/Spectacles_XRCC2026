@@ -147,6 +147,10 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.requestDwellSignalState(false);
     }
 
+    public playSilentCameraCaptureFeedback() {
+        print("... Play Silent Camera Capture Feedback")
+    }
+
     private forceNotReadyVisualState(): void {
         this.isDwellSignalActive = false;
         this.pendingDwellSignalActive = false;

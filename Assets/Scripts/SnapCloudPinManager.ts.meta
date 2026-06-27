@@ -33,6 +33,7 @@
     captureDelaySeconds: false
     captureFilenameSlug: false
     captureStorageBucket: false
+    deletePinFunctionName: false
     noteScanIntervalSeconds: false
     pendingImageFreshnessSeconds: false
     pinsTableName: false
@@ -50,6 +51,7 @@
     - pinsTableName: pins
       processPinFunctionName: process_pin
       autoInvokeProcessPin: true
+      deletePinFunctionName: delete-pin
       noteScanIntervalSeconds: !<float> 1.000000
       saveCaptureToCloud: true
       captureStorageBucket: specs-captures
@@ -66,6 +68,7 @@
     - '// @input string pinsTableName = "pins" {"hint":"Supabase table name for pins."}'
     - '// @input string processPinFunctionName = "process-pin" {"hint":"Name of the Supabase edge function to invoke after each pin write."}'
     - '// @input bool autoInvokeProcessPin = true {"hint":"If true, invoke process-pin automatically after every INSERT/UPDATE."}'
+    - '// @input string deletePinFunctionName = "delete-pin" {"hint":"Edge function to soft-delete a pin when the user removes a note."}'
     - '// @input float noteScanIntervalSeconds = 1 {"hint":"How often (seconds) to re-scan the scene for new Note components."}'
     - '// @input bool saveCaptureToCloud = true {"hint":"Master switch for uploading quiet captures to Snap Cloud storage."}'
     - '// @input string captureStorageBucket = "specs-captures" {"hint":"Supabase storage bucket name. Must match the bucket in Snap Cloud."}'

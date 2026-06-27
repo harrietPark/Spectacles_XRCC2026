@@ -17,6 +17,7 @@ type UXFeedbackControllerApi = {
     deactivateIndexTipHighlight: () => void;
     activateDwellIndicator: () => void;
     deactivateDwellIndicator: () => void;
+    playSilentCameraCaptureFeedback: () => void;
 };
 
 @component
@@ -62,6 +63,7 @@ export class SceneManager extends BaseScriptComponent {
         deactivateIndexTipHighlight: () => {},
         activateDwellIndicator: () => {},
         deactivateDwellIndicator: () => {},
+        playSilentCameraCaptureFeedback: () => {},
     };
 
     private onAwake() {

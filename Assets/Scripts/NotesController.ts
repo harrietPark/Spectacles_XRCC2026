@@ -11,7 +11,6 @@ import { SceneManager } from "./SceneManager";
 import { PresetNote } from "./PresetNote";
 // [AutoStartSTT] NEW: explicit, race-free Snap Cloud subscription at spawn.
 import { SnapCloudPinManager } from "./SnapCloudPinManager";
-// import { ExponentialMovingAverage } from "Scripts/Utils/ExponentialMovingAverage";
 
 @component
 export class NotesController extends BaseScriptComponent {
@@ -85,8 +84,6 @@ export class NotesController extends BaseScriptComponent {
     private notes: Note[] = [];
     private sceneManager: SceneManager = SceneManager.getInstance();
 
-    // private fovConeEMA: ExponentialMovingAverage;
-
     private onAwake() {
         this.deactivateCreationProcess();
 
@@ -119,14 +116,12 @@ export class NotesController extends BaseScriptComponent {
         fovCollider.onOverlapExit.add((OverlapExitEventArgs) => {
             this.updateAllNotesInFOV(OverlapExitEventArgs);
         });
-
-        // this.fovConeEMA = new ExponentialMovingAverage(0.5);
     }
 
     private onUpdate() {
         if (this.isNoteAnchoringActive) {
             if (this.tryAnchorNote()) {
-                this.spawnNote();
+                this.spawnANote();
             }
         }
     }
@@ -219,10 +214,6 @@ export class NotesController extends BaseScriptComponent {
             }
         }
 
-        // ===== [DeleteCrashFix] OLD (mapped raw overlaps, could touch a destroyed object) =====
-        // const currAllNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
-        // ====================================================================
-
         const currLiveNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(Note.getTypeName()) !== undefined);
         const currPresetNotesObjInFOV = currAllNotesObjInFOV.filter((obj) => obj.getComponent(PresetNote.getTypeName()) !== undefined);
 
@@ -248,16 +239,6 @@ export class NotesController extends BaseScriptComponent {
         const prevLiveNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => this.liveNoteObjects.has(obj));
         currLiveNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
 
-        // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevLiveNotesObjInFOV) =====
-        // if (this.prevLiveNotesObjInFOV.length == 0) {
-        //     this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
-        //     return;
-        // }
-        //
-        // const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !this.prevLiveNotesObjInFOV.includes(obj));
-        // const removedNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
-        // ====================================================================
-
         if (prevLiveNotesObjInFOV.length == 0) {
             this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
             return;
@@ -265,14 +246,7 @@ export class NotesController extends BaseScriptComponent {
 
         const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !prevLiveNotesObjInFOV.includes(obj));
         const removedNotesObjInFOV = prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
-        // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
-        // for (const note of addedNotesObjInFOV) {
-        //     note.getComponent(Note.getTypeName())?.pullToForeground();
-        // }
-        // for (const note of removedNotesObjInFOV) {
-        //     note.getComponent(Note.getTypeName())?.pushToBackground();
-        // }
-        // ====================================================================
+
         // [DeleteCrashFix] NEW: defense-in-depth try/catch so a note destroyed
         // between overlap events can never crash the lens here.
         for (const note of addedNotesObjInFOV) {
@@ -303,16 +277,6 @@ export class NotesController extends BaseScriptComponent {
         const prevPresetNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
         currPresetNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => this.isSceneObjectAlive(obj));
 
-        // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevPresetNotesObjInFOV) =====
-        // if (this.prevPresetNotesObjInFOV.length == 0) {
-        //     this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
-        //     return;
-        // }
-        //
-        // const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !this.prevPresetNotesObjInFOV.includes(obj));
-        // const removedNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
-        // ====================================================================
-
         if (prevPresetNotesObjInFOV.length == 0) {
             this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
             return;
@@ -320,14 +284,7 @@ export class NotesController extends BaseScriptComponent {
 
         const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !prevPresetNotesObjInFOV.includes(obj));
         const removedNotesObjInFOV = prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
-        // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
-        // for (const note of addedNotesObjInFOV) {
-        //     note.getComponent(PresetNote.getTypeName())?.pullToForeground();
-        // }
-        // for (const note of removedNotesObjInFOV) {
-        //     note.getComponent(PresetNote.getTypeName())?.pushToBackground();
-        // }
-        // ====================================================================
+
         // [DeleteCrashFix] NEW: defense-in-depth try/catch (see updateLiveNotesInFOV).
         for (const note of addedNotesObjInFOV) {
             try {
@@ -417,7 +374,7 @@ export class NotesController extends BaseScriptComponent {
         return false;
     }
 
-    private spawnNote() {
+    private spawnANote() {
         this.deactivateCreationProcess();
 
         const spawnPosition = this.rightHand.indexTip.position;
@@ -429,6 +386,7 @@ export class NotesController extends BaseScriptComponent {
             fromDwell: true,
         });
 
+        this.sceneManager.uxFeedbackController.playSilentCameraCaptureFeedback();
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
     }
