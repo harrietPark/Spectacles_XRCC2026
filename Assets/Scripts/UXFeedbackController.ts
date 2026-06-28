@@ -90,6 +90,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     // State booleans
     private isIndexTipHighlightActive: boolean = false;
     private isSilentCameraCaptureFeedbackActive: boolean = false;
+    private cameraFrameScale: vec3 = vec3.one();
 
     private dwellBaseMeshVisual: RenderMeshVisual | undefined;
     private dwellIndicatorMaterial: Material | undefined;
@@ -181,8 +182,15 @@ export class UXFeedbackController extends BaseScriptComponent {
 
         const cameraFrameTransform = this.silentCaptureVisual.getTransform();
         this.silentCaptureVisual.enabled = true;
-        LSTween.scaleFromToLocal(cameraFrameTransform, vec3.one(), vec3.one().uniformScale(0.9), 200)
-            .yoyo(true).repeat(2).delay(100)
+        LSTween.scaleFromToLocal(
+            cameraFrameTransform,
+            vec3.one().uniformScale(this.cameraFrameScale.x),
+            vec3.one().uniformScale(0.9 * this.cameraFrameScale.x),
+            200,
+        )
+            .yoyo(true)
+            .repeat(2)
+            .delay(100)
             .easing(Easing.Quadratic.InOut)
             .onComplete(() => {
                 this.isSilentCameraCaptureFeedbackActive = false;
@@ -362,6 +370,9 @@ export class UXFeedbackController extends BaseScriptComponent {
 
     private initializeSilentCaptureVisual(): void {
         this.silentCaptureVisual.enabled = false;
+        this.cameraFrameScale = this.silentCaptureVisual
+            .getTransform()
+            .getLocalScale();
     }
 
     private instantiateStatePrefab(
