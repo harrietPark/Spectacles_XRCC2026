@@ -6199,6 +6199,7 @@
   ScriptInputsDefault:
     _renderOrder: true
     _inactive: true
+    _playAudio: true
     _style: true
     _shadowPositionOffset: true
     _toggleable: true
@@ -6213,7 +6214,7 @@
     "":
       _renderOrder: 0
       _inactive: false
-      _playAudio: true
+      _playAudio: false
       _style: PrimaryNeutral
       _hasShadow: true
       _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
@@ -7925,7 +7926,7 @@
   PrefabRemaps:
     []
   Name: Button_Test
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 4.535132, y: -5.962982, z: 6.000000}

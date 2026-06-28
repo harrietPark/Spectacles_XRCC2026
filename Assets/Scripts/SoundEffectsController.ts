@@ -21,7 +21,7 @@ export class SoundEffectsController extends BaseScriptComponent {
     private noteSpawnedSfx: AudioTrackAsset | undefined;
     @input
     @hint("Volume for note-spawned sound effect.")
-    private noteSpawnedSfxVolume: number = 1.0;
+    private noteSpawnedSfxVolume: number = 1.0;  
     @input
     @allowUndefined
     @hint("Optional sound when dwell is cancelled before reaching ready/spawn state.")

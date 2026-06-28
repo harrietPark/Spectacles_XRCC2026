@@ -187,6 +187,7 @@ export class UXFeedbackController extends BaseScriptComponent {
             .onComplete(() => {
                 this.isSilentCameraCaptureFeedbackActive = false;
                 this.silentCaptureVisual.enabled = false;
+                this.sceneManager.playCropCapturedFeedback();
             })
             .start();
     }
