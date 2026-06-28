@@ -154,8 +154,11 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private pollTimer: DelayedCallbackEvent | null = null
   private isPolling: boolean = false
   private pollingEnabled: boolean = true
-  private spawnedObjects: SceneObject[] = []
+  // Top-level spawned object (wrapper or GLB) keyed by `${pin_id}:${product_id}`
+  // so a specific product can be removed when the portal toggles it off.
+  private spawnedByKey: Map<string, SceneObject> = new Map()
   private spawnRoot: SceneObject | null = null
+  private testSpawnCounter: number = 0
 
   onAwake(): void {
     if (this.hideOnStart && this.targetModel) {
@@ -190,7 +193,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       this.log("TEST MODE: cameraObject is not wired; model will spawn but cannot be positioned.")
     }
     this.log(`TEST MODE: loading hard-coded model from ${this.testModelUrl}`)
-    this.loadAndSpawn(this.testModelUrl).then((ok) => {
+    this.loadAndSpawn(this.testModelUrl, `test:${this.testSpawnCounter++}`).then((ok) => {
       this.log(`TEST MODE: spawn ${ok ? "succeeded" : "failed"}.`)
     })
   }
@@ -232,7 +235,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       const {data, error} = await client
         .from(this.tableName)
         .select(`id,pin_id,product_id,${this.modelUrlColumn},status,created_at`)
-        .eq("status", "pending")
+        .in("status", ["pending", "remove_pending"])
         .order("created_at", {ascending: true})
         .limit(1)
 
@@ -241,7 +244,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
         return
       }
 
-      this.debugLog(`Poll ok: ${data ? data.length : 0} pending request(s).`)
+      this.debugLog(`Poll ok: ${data ? data.length : 0} actionable request(s).`)
       if (data && data.length > 0) {
         await this.processRequest(client, data[0])
       }
@@ -255,23 +258,19 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private async processRequest(client: SupabaseClient, request: any): Promise<void> {
     if (!request || !request.id) return
 
-    this.debugLog(`Claiming spawn request ${request.id}`)
-    const {data: claimed, error: claimError} = await client
-      .from(this.tableName)
-      .update({status: "processing"})
-      .eq("id", request.id)
-      .eq("status", "pending")
-      .select("id")
+    const key = this.spawnKey(request)
 
-    if (claimError) {
-      this.log(`Claim failed for ${request.id}: ${JSON.stringify(claimError)}`)
+    // Removal toggle from the web portal: despawn the matching product.
+    if (request.status === "remove_pending") {
+      if (!(await this.claimRequest(client, request.id, "remove_pending", "removing"))) return
+      const removed = this.removeSpawned(key)
+      await this.setRequestStatus(client, request.id, "removed")
+      this.log(`Remove request ${request.id} (key=${key}): ${removed ? "model removed" : "no matching model found"}.`)
       return
     }
-    if (!claimed || claimed.length === 0) {
-      this.debugLog(`Claim lost for ${request.id}.`)
-      return
-    }
-    this.debugLog(`Claim won for ${request.id}; status=processing.`)
+
+    // Spawn flow.
+    if (!(await this.claimRequest(client, request.id, "pending", "processing"))) return
 
     if (!this.cameraObject) {
       this.log("cameraObject is not wired; marking request failed.")
@@ -287,28 +286,50 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       return
     }
 
-    const ok = await this.loadAndSpawn(modelUrl)
+    const ok = await this.loadAndSpawn(modelUrl, key)
     if (ok) {
       await this.setRequestStatus(client, request.id, "spawned")
-      this.log(`Spawn request ${request.id} completed by loading GLB from url.`)
+      this.log(`Spawn request ${request.id} completed (key=${key}).`)
     } else {
       await this.setRequestStatus(client, request.id, "failed")
       this.log(`Spawn request ${request.id} failed to load GLB.`)
     }
+  }
 
-    // ===== OLD pre-placed model path (kept for reference / fallback) =====
-    // if (!this.targetModel) {
-    //   this.log("targetModel is not wired; marking request failed.")
-    //   await this.setRequestStatus(client, request.id, "failed")
-    //   return
-    // }
-    // this.showTargetModel()
-    // await this.setRequestStatus(client, request.id, "spawned")
-    // this.log(`Spawn request ${request.id} completed by showing pre-placed model.`)
+  /** Stable per-card key so a spawned model can later be located and removed. */
+  private spawnKey(request: any): string {
+    return `${request.pin_id}:${request.product_id}`
+  }
+
+  /** Atomically move a request from `fromStatus` to `toStatus`; true if this client won the claim. */
+  private async claimRequest(
+    client: SupabaseClient,
+    requestId: string,
+    fromStatus: string,
+    toStatus: string
+  ): Promise<boolean> {
+    this.debugLog(`Claiming request ${requestId} (${fromStatus} -> ${toStatus}).`)
+    const {data: claimed, error} = await client
+      .from(this.tableName)
+      .update({status: toStatus})
+      .eq("id", requestId)
+      .eq("status", fromStatus)
+      .select("id")
+
+    if (error) {
+      this.log(`Claim failed for ${requestId}: ${JSON.stringify(error)}`)
+      return false
+    }
+    if (!claimed || claimed.length === 0) {
+      this.debugLog(`Claim lost for ${requestId}.`)
+      return false
+    }
+    this.debugLog(`Claim won for ${requestId}; status=${toStatus}.`)
+    return true
   }
 
   /** Download the GLB at `url`, instantiate it, and position it. Resolves true on success. */
-  private loadAndSpawn(url: string): Promise<boolean> {
+  private loadAndSpawn(url: string, key: string): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       try {
         this.debugLog(`Resolving resource from url=${url}`)
@@ -324,7 +345,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
           resource,
           (gltfAsset: GltfAsset) => {
             this.debugLog("GLB downloaded ok; instantiating.")
-            resolve(this.instantiateGltf(gltfAsset))
+            resolve(this.instantiateGltf(gltfAsset, key))
           },
           (errorMessage: string) => {
             this.log(`GLB load failed: ${errorMessage}`)
@@ -359,14 +380,14 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     return this.spawnRoot
   }
 
-  private instantiateGltf(gltfAsset: GltfAsset): boolean {
+  private instantiateGltf(gltfAsset: GltfAsset, key: string): boolean {
     const root = this.getSpawnRoot()
     if (!this.baseMaterial) {
       this.log("baseMaterial is not wired; instantiate may fail or render without material.")
     }
 
-    // Note: previously spawned models are intentionally NOT removed here, so
-    // multiple recommended products can coexist. Use clearAllSpawned() to reset.
+    // Different products coexist (distinct keys). Re-spawning the SAME product
+    // replaces its previous instance via registerSpawned().
 
     // Optionally wrap the GLB in a grabbable prefab so it can be manipulated.
     let wrapper: SceneObject | null = null
@@ -419,12 +440,12 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       } catch (e) {
         this.log(`configureGrabHandles failed (model still placed): ${this.describeError(e)}`)
       }
-      this.spawnedObjects.push(wrapper)
-      this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper. Total spawned=${this.spawnedObjects.length}.`)
+      this.registerSpawned(key, wrapper)
+      this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper (key=${key}). Total spawned=${this.spawnedByKey.size}.`)
     } else {
       this.placeInFront(glb)
-      this.spawnedObjects.push(glb)
-      this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}'. Total spawned=${this.spawnedObjects.length}.`)
+      this.registerSpawned(key, glb)
+      this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}' (key=${key}). Total spawned=${this.spawnedByKey.size}.`)
     }
     this.playSpawnSound()
     return true
@@ -769,14 +790,37 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     }
   }
 
-  /** Destroys every spawned model. Not called on spawn; available for a manual reset. */
-  private clearAllSpawned(): void {
-    for (let i = 0; i < this.spawnedObjects.length; i++) {
-      const obj = this.spawnedObjects[i]
-      if (obj) obj.destroy()
+  /** Register a freshly spawned model, replacing any prior instance for the same key. */
+  private registerSpawned(key: string, obj: SceneObject): void {
+    const existing = this.spawnedByKey.get(key)
+    if (existing) {
+      existing.destroy()
+      this.debugLog(`Replaced existing spawned model for key=${key}.`)
     }
-    this.debugLog(`Cleared ${this.spawnedObjects.length} spawned model(s).`)
-    this.spawnedObjects = []
+    this.spawnedByKey.set(key, obj)
+  }
+
+  /** Destroy the spawned model for `key`. Returns true if one existed. */
+  private removeSpawned(key: string): boolean {
+    const obj = this.spawnedByKey.get(key)
+    if (!obj) return false
+    obj.destroy()
+    this.spawnedByKey.delete(key)
+    this.debugLog(`Removed spawned model key=${key}. Remaining=${this.spawnedByKey.size}.`)
+    return true
+  }
+
+  /** Destroys every spawned model. Used on component teardown. */
+  private clearAllSpawned(): void {
+    let n = 0
+    this.spawnedByKey.forEach((obj) => {
+      if (obj) {
+        obj.destroy()
+        n++
+      }
+    })
+    this.spawnedByKey.clear()
+    this.debugLog(`Cleared ${n} spawned model(s).`)
   }
 
   private placeInFront(obj: SceneObject): void {
