@@ -55,7 +55,7 @@ export class UXFeedbackController extends BaseScriptComponent {
     private dwellReadyAfterSeconds: number = 1.5;
     @input
     @hint("Silent camera capture frame visual feedback")
-    private silentCameraCaptureFrameVisual: SceneObject;
+    private silentCaptureVisual: SceneObject;
     @ui.group_end
     @ui.group_start("Post-Ready Loading")
     @input
@@ -122,7 +122,7 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
         this.initializeLoadingIndicator();
-        this.initializeSilentCameraCaptureFrameVisual();
+        this.initializeSilentCaptureVisual();
         this.setDwellIndicatorReady(false);
         this.isDwellSignalActive = false;
         this.pendingDwellSignalActive = false;
@@ -179,15 +179,14 @@ export class UXFeedbackController extends BaseScriptComponent {
     public playSilentCameraCaptureFeedback() {
         if (this.isSilentCameraCaptureFeedbackActive) return;
 
-        print("... Play Silent Camera Capture Feedback");
-        const camVisualTransform = this.silentCameraCaptureFrameVisual.getTransform();
-        camVisualTransform.setLocalScale(vec3.one());
-        this.silentCameraCaptureFrameVisual.enabled = true;
-        LSTween.scaleToLocal(camVisualTransform, vec3.zero(), 1000)
+        const cameraFrameTransform = this.silentCaptureVisual.getTransform();
+        this.silentCaptureVisual.enabled = true;
+        LSTween.scaleFromToLocal(cameraFrameTransform, vec3.one(), vec3.one().uniformScale(0.9), 200)
+            .yoyo(true).repeat(2).delay(100)
             .easing(Easing.Quadratic.InOut)
             .onComplete(() => {
                 this.isSilentCameraCaptureFeedbackActive = false;
-                this.silentCameraCaptureFrameVisual.enabled = false;
+                this.silentCaptureVisual.enabled = false;
             })
             .start();
     }
@@ -360,8 +359,8 @@ export class UXFeedbackController extends BaseScriptComponent {
         );
     }
 
-    private initializeSilentCameraCaptureFrameVisual(): void {
-        this.silentCameraCaptureFrameVisual.enabled = false;
+    private initializeSilentCaptureVisual(): void {
+        this.silentCaptureVisual.enabled = false;
     }
 
     private instantiateStatePrefab(
