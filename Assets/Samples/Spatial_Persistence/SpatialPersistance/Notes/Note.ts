@@ -108,11 +108,10 @@ export class Note extends BaseScriptComponent {
   @hint("Sample rate used for recording and playback")
   private sampleRate = DEFAULT_SAMPLE_RATE;
 
-  // Camera view capture setup
-  @input
-  @allowUndefined
-  @hint("Optional mesh visual whose texture changes while recording.")
-  private cameraIndicatorMesh: RenderMeshVisual | undefined;
+  // Camera capture indicator setup
+  @input private cameraIndicatorMesh: RenderMeshVisual;
+  @input private cameraIndicatorActiveMaterial: Material;
+  @input private cameraIndicatorInactiveMaterial: Material;
 
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
@@ -272,6 +271,7 @@ export class Note extends BaseScriptComponent {
 
     this.initializeMicrophoneButtonVisual();
     this.initializePlaybackButtonVisual();
+    this.setCameraIndicatorActiveVisual(true);
 
     if (this._croppedImage && this._croppedImage.mainMaterial) {
       this._croppedImage.mainMaterial = this._croppedImage.mainMaterial.clone();
@@ -1104,8 +1104,13 @@ export class Note extends BaseScriptComponent {
   }
 
   public playObjectRecognitionStartFeedback(): void {
-    const cameraIndicatorTransform = this.cameraIndicatorMesh?.getSceneObject().getTransform();
-    const cameraIndicatorOriginalScale = cameraIndicatorTransform.getLocalScale().x;
+    this.setCameraIndicatorActiveVisual(true);
+
+    const cameraIndicatorTransform = this.cameraIndicatorMesh
+      .getSceneObject()
+      .getTransform();
+    const cameraIndicatorOriginalScale =
+      cameraIndicatorTransform.getLocalScale().x;
     this.cameraMeshTween = LSTween.scaleFromToLocal(
       cameraIndicatorTransform,
       vec3.one().uniformScale(cameraIndicatorOriginalScale * 0.8),
@@ -1117,17 +1122,33 @@ export class Note extends BaseScriptComponent {
       .repeat(Infinity)
       .delay(100)
       .start();
-    // TODO: add audio feedback + material change
   }
 
   public playObjectRecognitionEndFeedback(): void {
     if (this.cameraMeshTween?.isPlaying()) this.cameraMeshTween.stop();
 
-    // TODO: add audio feedback + material change
+    this.setCameraIndicatorActiveVisual(false);
+  }
+
+  private setCameraIndicatorActiveVisual(isActive: boolean): void {
+    if (!this.cameraIndicatorMesh) {
+      return;
+    }
+
+    const material = isActive
+      ? this.cameraIndicatorActiveMaterial
+      : this.cameraIndicatorInactiveMaterial;
+    if (!material) {
+      return;
+    }
+
+    this.cameraIndicatorMesh.mainMaterial = material;
   }
 
   private playSSTStartFeedback(): void {
-    const microphoneTransform = this.microphoneButtonMesh?.getSceneObject().getTransform();
+    const microphoneTransform = this.microphoneButtonMesh
+      ?.getSceneObject()
+      .getTransform();
     const microphoneOriginalScale = microphoneTransform.getLocalScale().x;
     this.microphoneMeshTween = LSTween.scaleFromToLocal(
       microphoneTransform,

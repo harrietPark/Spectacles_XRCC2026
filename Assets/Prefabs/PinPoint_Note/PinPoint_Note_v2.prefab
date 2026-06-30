@@ -233,9 +233,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 13.651752, y: 8.297361, z: 0.403323}
+    Position: {x: -16.464165, y: 8.297361, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 47805da4-a049-4d25-b174-9dc576121e0d
@@ -360,8 +360,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
-  Mesh: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
+    - !<reference> fe009e28-322e-4544-95d3-5ed79ee2b9ae
+  Mesh: !<reference> c65cfd38-9aa8-4632-8b1b-515cf0ad829d
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
@@ -371,12 +371,12 @@
   PrefabRemaps:
     []
   Name: PlaybackButton
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 14.024997, y: 1.680930, z: 5.918234}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
+    Scale: {x: 0.010000, y: 0.010000, z: 0.010000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 181ebc43-4fa3-4822-a1b4-690aebef6432
@@ -1034,6 +1034,8 @@
       voiceStatusText: !<reference.Text> 2a789837-f16e-4053-91bd-f53071353b23
       sampleRate: !<float> 44100.000000
       cameraIndicatorMesh: !<reference.RenderMeshVisual> 1ee48470-2b37-4b90-b747-3b387814af25
+      cameraIndicatorActiveMaterial: !<reference.Material> 13384245-9124-431d-8a56-816a5f5655b5
+      cameraIndicatorInactiveMaterial: !<reference.Material> 47397afe-438a-46d1-93e6-ebc654de5b70
   ScriptTypes:
     "":
       {}
@@ -1349,7 +1351,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 7.473204, y: -11.233904, z: 8.882133}
+    Position: {x: 16.000000, y: -5.000000, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -1817,7 +1819,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 14.477201, y: -11.073833, z: 8.882133}
+    Position: {x: 16.000000, y: 5.000000, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false

@@ -3036,7 +3036,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 7.473204, y: -11.233904, z: 8.882133}
+    Position: {x: 16.000000, y: -5.000000, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -4797,7 +4797,7 @@
     - fdea8cb6-9ed2-4412-a430-1e38a06f6e0b: cc3a1595-e8d5-4411-6e0f-c0b79815e7e2
     - fe2540a2-c1ce-4c0d-a38f-18ebafe1e01a: c6e45faf-3cfd-4e92-7302-ae10575a15f6
   Name: PinPoint_Note_v2
-  Enabled: false
+  Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -5089,6 +5089,8 @@
       voiceStatusText: !<reference.Text> 94a9899f-0ae8-4ec4-9c6f-219175f7b99d
       sampleRate: !<float> 44100.000000
       cameraIndicatorMesh: !<reference.RenderMeshVisual> e7c41269-0381-4ec2-8d80-2635c508ee6b
+      cameraIndicatorActiveMaterial: !<reference.Material> 13384245-9124-431d-8a56-816a5f5655b5
+      cameraIndicatorInactiveMaterial: !<reference.Material> 47397afe-438a-46d1-93e6-ebc654de5b70
   ScriptTypes:
     "":
       {}
@@ -5489,7 +5491,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 14.477201, y: -11.073833, z: 8.882133}
+    Position: {x: 16.000000, y: 5.000000, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
@@ -7502,9 +7504,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 13.651752, y: 8.297361, z: 0.403323}
+    Position: {x: -16.464165, y: 8.297361, z: 0.500000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> fc8f111d-d0ee-4818-84bb-0925b587a0ed
@@ -9118,12 +9120,12 @@
   PrefabRemaps:
     []
   Name: PlaybackButton
-  Enabled: false
+  Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 14.024997, y: 1.680930, z: 5.918234}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.500000, y: 1.500000, z: 1.500000}
+    Scale: {x: 0.010000, y: 0.010000, z: 0.010000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 1739e04c-e23f-441e-b3b3-8fa740e3f33e
@@ -10089,8 +10091,8 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 3e798a53-df8e-4f77-95d7-8428734ec880
-  Mesh: !<reference> 29dd36c0-8b2e-4ae1-86aa-d2b1886ae3b8
+    - !<reference> fe009e28-322e-4544-95d3-5ed79ee2b9ae
+  Mesh: !<reference> c65cfd38-9aa8-4632-8b1b-515cf0ad829d
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
   BlendNormals: false
