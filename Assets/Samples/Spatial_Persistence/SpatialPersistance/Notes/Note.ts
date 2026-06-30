@@ -6,6 +6,7 @@ import { Widget } from "../Widget";
 import Event, { PublicApi } from "SpectaclesInteractionKit.lspkg/Utils/Event";
 import { INoteData } from "Scripts/INoteData";
 import { PinPointNoteSimpleVisibilityToggle } from "Scripts/PinPointNoteSimpleVisibilityToggle";
+import { CustomMath } from "Scripts/Utils/CustomMath";
 
 type AudioFrameData = {
     audioFrame: Float32Array;
@@ -931,7 +932,7 @@ export class Note extends BaseScriptComponent {
         this.isSpawnRotateBounceActive = true;
 
         transform.setLocalScale(
-            this.multiplyScale(this.spawnPopBaseScale, SPAWN_POP_START_SCALE_MULTIPLIER),
+            CustomMath.multiplyScale(this.spawnPopBaseScale, SPAWN_POP_START_SCALE_MULTIPLIER),
         );
     }
 
@@ -943,12 +944,12 @@ export class Note extends BaseScriptComponent {
         const elapsed = getTime() - this.spawnPopAnimationStartedAt;
         const duration = SPAWN_POP_DURATION_SECONDS;
         const normalized = Math.max(0, Math.min(1, elapsed / duration));
-        const eased = this.easeInOutCubic(normalized);
-        const scaleMultiplier = this.lerp(SPAWN_POP_START_SCALE_MULTIPLIER, 1, eased);
+        const eased = CustomMath.easeInOutCubic(normalized);
+        const scaleMultiplier = CustomMath.lerp(SPAWN_POP_START_SCALE_MULTIPLIER, 1, eased);
 
         this.sceneObject
             .getTransform()
-            .setLocalScale(this.multiplyScale(this.spawnPopBaseScale, scaleMultiplier));
+            .setLocalScale(CustomMath.multiplyScale(this.spawnPopBaseScale, scaleMultiplier));
 
         if (normalized >= 1) {
             this.isSpawnPopAnimationActive = false;
@@ -983,25 +984,25 @@ export class Note extends BaseScriptComponent {
         }
     }
 
-    private multiplyScale(baseScale: vec3, multiplier: number): vec3 {
-        return new vec3(
-            baseScale.x * multiplier,
-            baseScale.y * multiplier,
-            baseScale.z * multiplier,
-        );
-    }
+    // private multiplyScale(baseScale: vec3, multiplier: number): vec3 {
+    //     return new vec3(
+    //         baseScale.x * multiplier,
+    //         baseScale.y * multiplier,
+    //         baseScale.z * multiplier,
+    //     );
+    // }
 
-    private lerp(start: number, end: number, t: number): number {
-        return start + (end - start) * t;
-    }
+    // private lerp(start: number, end: number, t: number): number {
+    //     return start + (end - start) * t;
+    // }
 
-    private easeInOutCubic(t: number): number {
-        if (t < 0.5) {
-            return 4 * t * t * t;
-        }
-        const p = -2 * t + 2;
-        return 1 - (p * p * p) / 2;
-    }
+    // private easeInOutCubic(t: number): number {
+    //     if (t < 0.5) {
+    //         return 4 * t * t * t;
+    //     }
+    //     const p = -2 * t + 2;
+    //     return 1 - (p * p * p) / 2;
+    // }
 
     private addEditOutline(): void {
         const matCount = this.noteMesh.getMaterialsCount();
@@ -1044,4 +1045,8 @@ export class Note extends BaseScriptComponent {
             this.noteMesh.addMaterial(materials[k]);
         }
     }
+
+    private captureCameraView() : void {}
+
+    private recognizeObjectsInView() : void {}
 }
