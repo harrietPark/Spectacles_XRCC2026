@@ -442,11 +442,11 @@ export class NotesController extends BaseScriptComponent {
     const latestNote = this.notes[this.notes.length - 1];
 
     latestNote.playObjectRecognitionStartFeedback();
-    this.sceneManager.playCropCapturedFeedback();
-    // TODO: to replace the below with an object recognition pipeline
+    // TODO: to replace the below hard-coded time delay with an object recognition pipeline
     setTimeout(() => {
         latestNote.playObjectRecognitionEndFeedback();
-    }, 2000);
+        this.sceneManager.playCropCapturedFeedback();
+    }, 3000);
   }
 
   public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {

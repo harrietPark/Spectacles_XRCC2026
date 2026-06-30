@@ -367,6 +367,10 @@ export class Note extends BaseScriptComponent {
       this.voiceStatusText.getSceneObject().enabled = shouldShowButtons;
     }
 
+    if (this.cameraIndicatorMesh) {
+      this.cameraIndicatorMesh.getSceneObject().enabled = shouldShowButtons;
+    }
+
     // Some UI components may re-apply materials every frame; enforce icon state.
     this.updateMicrophoneButtonVisualState();
   }
