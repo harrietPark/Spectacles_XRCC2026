@@ -30,6 +30,7 @@
     _editToggle: false
     _textField: false
     audioOutputAsset: false
+    cameraIndicatorMesh: false
     deleteButton: false
     editOutlineMaterial: false
     microphoneAsset: false
@@ -73,6 +74,7 @@
       audioOutputAsset: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       sampleRate: !<float> 0.000000
+      cameraIndicatorMesh: !<reference.RenderMeshVisual> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -96,3 +98,4 @@
     - '// @input Asset.AudioTrackAsset audioOutputAsset {"hint":"Audio Output track asset used for playback"}'
     - '// @input Component.Text voiceStatusText {"hint":"Optional text component used to show record/playback status"}'
     - '// @input float sampleRate {"hint":"Sample rate used for recording and playback"}'
+    - '// @input Component.RenderMeshVisual cameraIndicatorMesh {"hint":"Optional mesh visual whose texture changes while recording."}'

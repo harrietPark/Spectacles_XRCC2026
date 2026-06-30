@@ -389,6 +389,7 @@ export class NotesController extends BaseScriptComponent {
         this.sceneManager.uxFeedbackController.playSilentCameraCaptureFeedback();
         this.sceneManager.sendProductViewToBackend();
         this.enableCrop();
+        print("--- Spawned notes: " + this.notes.length);
     }
 
     public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {

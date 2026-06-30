@@ -108,6 +108,12 @@ export class Note extends BaseScriptComponent {
   @hint("Sample rate used for recording and playback")
   private sampleRate = DEFAULT_SAMPLE_RATE;
 
+  // Camera view capture setup
+  @input
+  @allowUndefined
+  @hint("Optional mesh visual whose texture changes while recording.")
+  private cameraIndicatorMesh: RenderMeshVisual | undefined;
+
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
   private outlineFeedback: InteractableOutlineFeedback;
@@ -168,6 +174,7 @@ export class Note extends BaseScriptComponent {
     "albedoTex",
   ];
   private microphoneMeshTween: Tween | undefined;
+  private cameraMeshTween: Tween | undefined;
 
   private mergeFinalAndPartial(
     finalizedRaw: string,
@@ -1096,14 +1103,30 @@ export class Note extends BaseScriptComponent {
     }
   }
 
-  private playCameraViewCapturedFeedback(): void {}
+  public playObjectRecognitionStartFeedback(): void {
+    const cameraIndicatorTransform = this.cameraIndicatorMesh?.getSceneObject().getTransform();
+    const cameraIndicatorOriginalScale = cameraIndicatorTransform.getLocalScale().x;
+    this.cameraMeshTween = LSTween.scaleFromToLocal(
+      cameraIndicatorTransform,
+      vec3.one().uniformScale(cameraIndicatorOriginalScale * 0.8),
+      vec3.one().uniformScale(cameraIndicatorOriginalScale * 1.2),
+      1000,
+    )
+      .easing(Easing.Quadratic.Out)
+      .yoyo(true)
+      .repeat(Infinity)
+      .start();
+    // TODO: add audio feedback + material change
+  }
 
-  private playObjectsRecognizedFeedback(): void {}
+  public playObjectRecognitionEndFeedback(): void {
+    if (this.cameraMeshTween?.isPlaying()) this.cameraMeshTween.stop();
+
+    // TODO: add audio feedback + material change
+  }
 
   private playSSTStartFeedback(): void {
-    const microphoneTransform = this.microphoneButtonMesh
-      ?.getSceneObject()
-      .getTransform();
+    const microphoneTransform = this.microphoneButtonMesh?.getSceneObject().getTransform();
     const microphoneOriginalScale = microphoneTransform.getLocalScale().x;
     this.microphoneMeshTween = LSTween.scaleFromToLocal(
       microphoneTransform,
