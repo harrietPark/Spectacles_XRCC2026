@@ -1115,6 +1115,7 @@ export class Note extends BaseScriptComponent {
       .easing(Easing.Quadratic.Out)
       .yoyo(true)
       .repeat(Infinity)
+      .delay(100)
       .start();
     // TODO: add audio feedback + material change
   }

@@ -430,19 +430,20 @@ export class NotesController extends BaseScriptComponent {
       fromDwell: true,
     });
 
-    this.sceneManager.uxFeedbackController.playSilentCameraCaptureFeedback();
     this.sceneManager.sendProductViewToBackend();
     this.enableCrop();
 
     this.recognizeObjectsInView();
-    print("--- Spawned note: " + this.notes.length);
   }
 
   public recognizeObjectsInView() {
     if (this.notes.length === 0) return;
 
     const latestNote = this.notes[this.notes.length - 1];
+
     latestNote.playObjectRecognitionStartFeedback();
+    this.sceneManager.playCropCapturedFeedback();
+    // TODO: to replace the below with an object recognition pipeline
     setTimeout(() => {
         latestNote.playObjectRecognitionEndFeedback();
     }, 2000);

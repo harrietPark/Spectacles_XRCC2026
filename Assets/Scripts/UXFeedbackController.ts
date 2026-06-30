@@ -177,28 +177,30 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.requestDwellSignalState(false);
     }
 
-    public playSilentCameraCaptureFeedback() {
-        if (this.isSilentCameraCaptureFeedbackActive) return;
+    // public playSilentCameraCaptureFeedback() {
+    //     this.sceneManager.playCropCapturedFeedback();
+        
+    //     if (this.isSilentCameraCaptureFeedbackActive) return;
 
-        const cameraFrameTransform = this.silentCaptureVisual.getTransform();
-        this.silentCaptureVisual.enabled = true;
-        LSTween.scaleFromToLocal(
-            cameraFrameTransform,
-            vec3.one().uniformScale(this.cameraFrameScale.x),
-            vec3.one().uniformScale(0.9 * this.cameraFrameScale.x),
-            200,
-        )
-            .yoyo(true)
-            .repeat(2)
-            .delay(100)
-            .easing(Easing.Quadratic.InOut)
-            .onComplete(() => {
-                this.isSilentCameraCaptureFeedbackActive = false;
-                this.silentCaptureVisual.enabled = false;
-                this.sceneManager.playCropCapturedFeedback();
-            })
-            .start();
-    }
+    //     const cameraFrameTransform = this.silentCaptureVisual.getTransform();
+    //     this.silentCaptureVisual.enabled = true;
+    //     LSTween.scaleFromToLocal(
+    //         cameraFrameTransform,
+    //         vec3.one().uniformScale(this.cameraFrameScale.x),
+    //         vec3.one().uniformScale(0.9 * this.cameraFrameScale.x),
+    //         200,
+    //     )
+    //         .yoyo(true)
+    //         .repeat(2)
+    //         .delay(100)
+    //         .easing(Easing.Quadratic.InOut)
+    //         .onComplete(() => {
+    //             this.isSilentCameraCaptureFeedbackActive = false;
+    //             this.silentCaptureVisual.enabled = false;
+    //             this.sceneManager.playCropCapturedFeedback();
+    //         })
+    //         .start();
+    // }
 
     private forceNotReadyVisualState(): void {
         this.isDwellSignalActive = false;
