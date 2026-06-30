@@ -28,6 +28,7 @@
     - !<own> a3803e72-1505-41fc-9d17-7f8770f22791
     - !<own> 1e6a709c-3ef4-4db8-9baa-b4c211994421
     - !<own> b9577e01-bd98-4c85-a784-f8e64620626c
+    - !<own> 2a815fb0-6eb4-4c06-ba25-0f4a65d06e9a
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -1814,6 +1815,21 @@
     []
   Components:
     - !<own> 979cb68b-aba2-4cd6-b779-3443c550b9c7
+- !<SceneObject/2a815fb0-6eb4-4c06-ba25-0f4a65d06e9a>
+  PrefabRemaps:
+    []
+  Name: "------------ Test ---------------"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<SceneObject/2b0f1f13-048a-4ca6-82c8-2f9bbdcd3ecc>
   PrefabRemaps:
     []
