@@ -3497,8 +3497,6 @@
     _shadowPositionOffset: true
     _toggleable: true
     _defaultToOn: true
-    addCallbacks: true
-    triggerUpCallbacks: true
     triggerDownCallbacks: true
     onValueChangeCallbacks: true
     onFinishedCallbacks: true
@@ -3515,9 +3513,10 @@
       _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
       _toggleable: false
       _defaultToOn: false
-      addCallbacks: false
+      addCallbacks: true
       triggerUpCallbacks:
-        []
+        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+          functionName: callSalesPerson
       triggerDownCallbacks:
         []
       onValueChangeCallbacks:
@@ -7158,8 +7157,8 @@
       menuType: !<float> 0.000000
       maxAngleToCamera: !<float> 45.000000
       maxNoTrackCount: !<float> 10.000000
-      uiContainer: !<reference.SceneObject> c0da6ff6-10ee-4f4a-b3fc-c51dd08b1304
-      distanceToHandOnXAxis: !<float> 10.000000
+      uiContainer: !<reference.SceneObject> c2da520c-df31-41ec-93f6-903e3ee51f29
+      distanceToHandOnXAxis: !<float> 6.000000
       distanceToHandOnZAxis: !<float> 0.000000
   ScriptTypes:
     "":

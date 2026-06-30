@@ -141,6 +141,11 @@ export class SceneManager extends BaseScriptComponent {
         print("---TODO: sending complete note data to backend: \n" + JSON.stringify(noteData));
     }
 
+    public callSalesPerson() : void {
+        // TODO: wire up to call sales person
+        print("---TODO: calling sales person");
+    }
+
     public playDwellCancelledFeedback(): void {
         this.soundEffectsController?.playDwellCancelled();
     }
