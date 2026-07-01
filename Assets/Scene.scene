@@ -2187,19 +2187,21 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
+    openAnimationDuration: true
+    flyBackDistance: true
+    flyAwayScale: true
+    handoffMidpoint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      visibilityToggle: !<MappingBased.AssignableType> 5860933e-608e-4496-b5cd-3840fa8cae34
+      openContentRoot: !<reference.SceneObject> fa0aeb97-3707-4995-ad79-895f2f642410
       closedVisualRoot: !<reference.SceneObject> e27c8d04-7a80-4451-abad-77fbf2e9b3ed
-      foregroundScaleDifference: 0.150000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.650000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     "":
       {}
@@ -2246,7 +2248,6 @@
     - 2edcb5bf-35d0-434b-ae0b-98d4d7d2b7c9: 7c75ce34-4870-4b13-4278-b76da7b8d183
     - 2f7e8906-c075-4641-baec-e8abe079e942: 4149ae61-efab-4578-be84-a181973b3b3b
     - 326ccc6c-39f9-49c6-96ac-4246f03179cc: bcc96ecd-f848-4e1d-83e5-3bd7949f6712
-    - 331e493f-1257-47cb-8dc7-c6a54370ab9d: e723a0d3-b1e4-4b98-8558-678a9629e1d5
     - 37c445ec-87bc-4991-a63e-03e10f915e48: 3699e973-852c-4f98-81c9-ea277f671708
     - 3a6414b9-fbc1-4de1-b3b9-3fe01262d192: b0a14be5-6900-43c8-8cef-d0200b511829
     - 3d14f63f-e16a-4cee-9813-ab162c2d7fd0: 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
@@ -5386,7 +5387,6 @@
     - 650b389e-2056-49ec-a9fe-4f9e067a6ed9: 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - 67ab351d-8bfa-415f-b6bf-d0321a7dc1f0: 64a8eb77-c8fc-4c99-9b55-7aa11f51951e
     - 76bfefdb-f204-4972-bf80-e70103889051: 556a02d3-26cf-4243-a115-b6650959e3e6
-    - 8297ba15-35ad-4284-8294-760e5149311a: e723a0d3-b1e4-4b98-8558-678a9629e1d5
     - 864705fe-8c29-41ec-bf59-29361ab4c476: 498b5fae-e9da-42dc-a929-d204902155c4
     - 87101f21-1627-4664-a163-bd2865509deb: 7c75ce34-4870-4b13-4278-b76da7b8d183
     - 909decdf-4ab8-4bce-a8be-a09f0355b21c: a78857cb-d8ef-4f0d-bfb5-6c49e0ebc141
@@ -6826,7 +6826,6 @@
     - 40dd0e68-ab32-4150-aebe-e2e07db45dc4: e95a87b4-0668-4464-8106-22ab3600b437
     - 4779cbb2-8dcf-4481-b016-15aa13890caa: 64a8eb77-c8fc-4c99-9b55-7aa11f51951e
     - 482bc8f4-44de-400a-8f29-77e564cc8bbd: 9c4bf09c-8922-484b-8b82-78f0232be426
-    - 5860933e-608e-4496-b5cd-3840fa8cae34: e723a0d3-b1e4-4b98-8558-678a9629e1d5
     - 631f9a40-3ea5-4063-8695-d9990865c086: dc647583-c26a-4fda-9d2b-76213dc1a752
     - 6442268f-f867-4a3b-bb06-832c129f1f23: 9516fd50-a02d-45fc-b87a-9c1e76f84598
     - 670394ea-4018-473d-90b4-2489f8c89076: e4ccc0bb-ad2c-4f82-b248-90507c49f64a
@@ -9276,19 +9275,21 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
+    openAnimationDuration: true
+    flyBackDistance: true
+    flyAwayScale: true
+    handoffMidpoint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      visibilityToggle: !<MappingBased.AssignableType> 331e493f-1257-47cb-8dc7-c6a54370ab9d
+      openContentRoot: !<reference.SceneObject> 326ccc6c-39f9-49c6-96ac-4246f03179cc
       closedVisualRoot: !<reference.SceneObject> a6b0af13-3b1e-4a9b-998d-69a477de729d
-      foregroundScaleDifference: 0.150000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.650000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     "":
       {}
@@ -10242,19 +10243,21 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
+    openAnimationDuration: true
+    flyBackDistance: true
+    flyAwayScale: true
+    handoffMidpoint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      visibilityToggle: !<MappingBased.AssignableType> 8297ba15-35ad-4284-8294-760e5149311a
+      openContentRoot: !<reference.SceneObject> 428c85f3-3051-48b9-a962-f77f0c4811d4
       closedVisualRoot: !<reference.SceneObject> f2472e88-5f9f-473d-81e6-593d56abb706
-      foregroundScaleDifference: 0.150000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.650000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     "":
       {}

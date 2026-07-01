@@ -643,19 +643,20 @@
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
     openAnimationDuration: true
-    closeAnimationDuration: true
-    collapsedScaleY: true
-    expandAnchorY: true
+    flyBackDistance: true
+    flyAwayScale: true
+    handoffMidpoint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       openContentRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
       closedVisualRoot: !<reference.SceneObject> 95939888-649a-4d63-b2f4-99803a41614c
-      openAnimationDuration: 0.700000
-      closeAnimationDuration: 1.000000
-      collapsedScaleY: 0.210000
-      expandAnchorY: 0.200000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.650000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     "":
       {}

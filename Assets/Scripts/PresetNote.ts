@@ -52,6 +52,8 @@ export class PresetNote extends BaseScriptComponent {
   }
 
   private onStart() {
+    this.resolveContentRoots();
+
     if (this.openContentRoot) {
       this.openTransform = this.openContentRoot.getTransform();
       this.openBaseScale = this.openTransform.getLocalScale();
@@ -130,7 +132,43 @@ export class PresetNote extends BaseScriptComponent {
     this.animElapsed = 0;
     this.animPlaying = true;
     this.animStartT = this.currentOpenPresenceT;
+
+    if (this.openContentRoot) {
+      this.openContentRoot.enabled = true;
+    }
+    if (this.closedVisualRoot) {
+      this.closedVisualRoot.enabled = true;
+    }
+
     this.applyDualFlyState(this.currentOpenPresenceT, true);
+  }
+
+  private resolveContentRoots(): void {
+    const host = this.getSceneObject();
+
+    if (!this.openContentRoot || !this.closedVisualRoot) {
+      const childCount = host.getChildrenCount();
+      for (let i = 0; i < childCount; i++) {
+        const child = host.getChild(i);
+        if (!this.openContentRoot && child.name === "OpenContent") {
+          this.openContentRoot = child;
+        }
+        if (!this.closedVisualRoot && child.name === "ClosedVisual") {
+          this.closedVisualRoot = child;
+        }
+      }
+    }
+
+    if (!this.openContentRoot) {
+      print(
+        `[PresetNote] Missing openContentRoot on "${host.name}". Assign OpenContent in the Inspector.`,
+      );
+    }
+    if (!this.closedVisualRoot) {
+      print(
+        `[PresetNote] Missing closedVisualRoot on "${host.name}". Assign ClosedVisual in the Inspector.`,
+      );
+    }
   }
 
   private finishTransition(): void {
