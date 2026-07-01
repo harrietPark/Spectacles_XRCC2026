@@ -132,6 +132,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
   private camModule: CameraModule = require("LensStudio:CameraModule") as CameraModule
   private liveCamTexture: Texture | null = null
   private uploadInFlight: boolean = false
+  private pendingCaptureFrameResolve: ((frame: Texture | null) => void) | null = null
   private pendingPinId: {
     pinId: string
     imageUrl: string
@@ -547,20 +548,21 @@ export class SnapCloudPinManager extends BaseScriptComponent {
 
   /**
    * Public API used by SceneManager at note-spawn time.
-   * Fire-and-forget. Never throws.
+   * Resolves with the frozen camera frame once the delayed snapshot is taken.
+   * Upload continues in the background. Never throws.
    */
-  public captureForNextNote(): void {
+  public captureForNextNote(): Promise<Texture | null> {
     if (!this.saveCaptureToCloud) {
       print("[SnapCloudPinManager][Capture] Disabled (saveCaptureToCloud=false).")
-      return
+      return Promise.resolve(null)
     }
     if (!this.captureStorageBucket) {
       print("[SnapCloudPinManager][Capture] Skipped: captureStorageBucket is empty.")
-      return
+      return Promise.resolve(null)
     }
     if (this.uploadInFlight) {
       print("[SnapCloudPinManager][Capture] Skipped: an upload is already in flight.")
-      return
+      return Promise.resolve(null)
     }
 
     const sm = SnapCloudSessionManager.getInstance()
@@ -568,17 +570,21 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     const sessionId = sm ? sm.getSessionId() : ""
     if (!client) {
       print("[SnapCloudPinManager][Capture] Skipped: Supabase client unavailable.")
-      return
+      return Promise.resolve(null)
     }
     if (!sessionId) {
       print("[SnapCloudPinManager][Capture] Skipped: no sessionId.")
-      return
+      return Promise.resolve(null)
     }
 
     // Claim the in-flight guard IMMEDIATELY so rapid re-triggers don't
     // queue up multiple captures. The actual frame grab + upload runs
     // after `captureDelaySeconds` to let the user's hand clear the shot.
     this.uploadInFlight = true
+    const captureFramePromise = new Promise<Texture | null>((resolve) => {
+      this.pendingCaptureFrameResolve = resolve
+    })
+
     const delaySeconds = Math.max(0, this.captureDelaySeconds)
     if (delaySeconds > 0) {
       print(`[SnapCloudPinManager][Capture] Capture scheduled in ${delaySeconds}s.`)
@@ -589,6 +595,17 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       this.performDelayedCapture(client, sessionId)
     })
     delayedEvent.reset(delaySeconds)
+
+    return captureFramePromise
+  }
+
+  private resolveCaptureFrame(frame: Texture | null): void {
+    if (!this.pendingCaptureFrameResolve) {
+      return
+    }
+
+    this.pendingCaptureFrameResolve(frame)
+    this.pendingCaptureFrameResolve = null
   }
 
   private startCameraSubscription(): void {
@@ -653,6 +670,7 @@ export class SnapCloudPinManager extends BaseScriptComponent {
     const sourceTexture: Texture | null = this.cameraTextureOverride || this.liveCamTexture
     if (!sourceTexture) {
       print("[SnapCloudPinManager][Capture] Skipped: no camera source.")
+      this.resolveCaptureFrame(null)
       finish("", "")
       return
     }
@@ -662,12 +680,16 @@ export class SnapCloudPinManager extends BaseScriptComponent {
       frozenFrame = ProceduralTextureProvider.createFromTexture(sourceTexture)
     } catch (e) {
       print("[SnapCloudPinManager][Capture] Skipped: snapshot failed (camera not ready yet?). " + e)
+      this.resolveCaptureFrame(null)
       finish("", "")
       return
     }
 
+    this.resolveCaptureFrame(frozenFrame)
+
     print("[SnapCloudPinManager][Capture] Starting quiet capture upload...")
 
+    print("...[SnapCloudPinManager] frozen frame: " + frozenFrame.getHeight());
     Base64.encodeTextureAsync(
       frozenFrame,
       async (base64String: string) => {

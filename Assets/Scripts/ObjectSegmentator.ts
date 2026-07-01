@@ -6,6 +6,8 @@ import { setTimeout } from "SpectaclesInteractionKit.lspkg/Utils/FunctionTimingU
 
 @component
 export class ObjectSegmentator extends BaseScriptComponent {
+    private latestFrozenFrame: Texture | null = null
+
     private onAwake() {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
         this.createEvent("UpdateEvent").bind(this.onUpdate.bind(this));
@@ -15,7 +17,15 @@ export class ObjectSegmentator extends BaseScriptComponent {
 
     private onUpdate() {}
 
-    public async segmentObjectsInView(): Promise<void> {
+    public async segmentObjectsInView(frozenFrame: Texture | null): Promise<void> {
+        if (!frozenFrame) {
+            print("[ObjectSegmentator] Skipped: no frozen camera frame.")
+            return
+        }
+
+        this.latestFrozenFrame = frozenFrame
+        print("[ObjectSegmentator] frozen frame: " + frozenFrame.getHeight());
+
         // send camera view to cloud AI
         // get object segmentation results from cloud AI
         // anchor visual feedback to objects

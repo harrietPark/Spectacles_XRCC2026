@@ -22,7 +22,7 @@ type UXFeedbackControllerApi = {
 };
 
 type ObjectSegmentatorApi = {
-    segmentObjectsInView: () => Promise<void>;
+    segmentObjectsInView: (frozenFrame: Texture | null) => Promise<void>;
     anchorVisualFeedbackToObjects: () => void;
 }
 
@@ -73,7 +73,7 @@ export class SceneManager extends BaseScriptComponent {
         playSilentCameraCaptureFeedback: () => {},
     };
     private readonly noopObjectSegmentator: ObjectSegmentatorApi = {
-        segmentObjectsInView: () => Promise.resolve(),
+        segmentObjectsInView: (_frozenFrame) => Promise.resolve(),
         anchorVisualFeedbackToObjects: () => {},
     };
 
@@ -150,13 +150,14 @@ export class SceneManager extends BaseScriptComponent {
     // by SnapCloudPinManager's scene scan, it can be folded into the
     // eventual pins-row INSERT as `image_url`. No DB writes happen here.
     // ======================================================================
-    public sendProductViewToBackend() {
+    public sendProductViewToBackend(): Promise<Texture | null> {
+        print("...[SceneManager] sending product view to backend");
         const pm = SnapCloudPinManager.getInstance();
         if (!pm) {
             print("[SceneManager] SnapCloudPinManager not in scene; capture skipped.");
-            return;
+            return Promise.resolve(null);
         }
-        pm.captureForNextNote();
+        return pm.captureForNextNote();
     }
 
     public sendCompleteNoteDataToBackend(noteData: INoteData) {

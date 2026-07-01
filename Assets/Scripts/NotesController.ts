@@ -430,20 +430,21 @@ export class NotesController extends BaseScriptComponent {
       fromDwell: true,
     });
 
-    this.sceneManager.sendProductViewToBackend();
+    this.sceneManager.sendProductViewToBackend().then((frozenFrame) => {
+      this.segmentObjectsInView(frozenFrame);
+    });
     this.enableCrop();
-
-    this.segmentObjectsInView();
   }
 
-  public segmentObjectsInView() {
+  public segmentObjectsInView(frozenFrame: Texture | null) {
     if (this.notes.length === 0) return;
 
     // play start feedback
     const latestNote = this.notes[this.notes.length - 1];
     latestNote.playObjectSegmentationStartFeedback();
 
-    this.sceneManager.objectSegmentator.segmentObjectsInView().then(() => {
+    print("...[NotesController] segmenting objects in view");
+    this.sceneManager.objectSegmentator.segmentObjectsInView(frozenFrame).then(() => {
       // play end feedback
       latestNote.playObjectSegmentationEndFeedback();
       this.sceneManager.playCropCapturedFeedback();
