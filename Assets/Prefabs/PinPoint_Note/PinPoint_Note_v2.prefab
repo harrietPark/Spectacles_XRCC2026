@@ -1078,11 +1078,7 @@
       microphoneButtonMesh: !<reference.RenderMeshVisual> af87ccab-e7cc-46cd-9eb5-2dab774a6f1b
       microphoneButtonRecordingTexture: !<reference.Texture> b0a098b7-110f-404b-9ed4-2b09918c3843
       microphoneButtonIdleTexture: !<reference.Texture> 1dba9813-29c8-4ce4-8dfb-7abf296f7c7f
-      playbackButton: !<MappingBased.AssignableType_5> 8dc55048-129e-4290-aba6-6ec6600e7725
-      playbackButtonIdleVisual: !<reference.RenderMeshVisual> 71b7045d-39aa-4feb-9335-94be811d9ed7
-      playbackButtonStopVisual: !<reference.RenderMeshVisual> ead52eee-0cd0-4802-b6eb-0d9a3696d1ff
       microphoneAsset: !<reference.AudioTrackAsset> 87c6a30d-46b3-4939-8d46-3aa20667f2c2
-      audioOutputAsset: !<reference.AudioTrackAsset> c6a15f33-e393-45b8-a87d-3814027f7713
       voiceStatusText: !<reference.Text> 2a789837-f16e-4053-91bd-f53071353b23
       sampleRate: !<float> 44100.000000
       cameraIndicatorContainer: !<reference.SceneObject> c1f99462-42d0-4df5-a38d-47f43d0b19fa

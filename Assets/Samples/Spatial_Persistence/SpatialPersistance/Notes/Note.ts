@@ -11,11 +11,6 @@ import { LSTween } from "LSTween.lspkg/Examples/Scripts/LSTween";
 import Tween from "LSTween.lspkg/TweenJS/Tween";
 import Easing from "LSTween.lspkg/TweenJS/Easing";
 
-type AudioFrameData = {
-  audioFrame: Float32Array;
-  audioFrameShape: vec3;
-};
-
 // SST constants
 const DEFAULT_SAMPLE_RATE = 44100;
 const ASR_SILENCE_UNTIL_TERMINATION_MS = 1000; // in milliseconds
@@ -60,9 +55,8 @@ export class Note extends BaseScriptComponent {
   @ui.separator
   @ui.group_start("Mic Recording Setup")
   @input
-  @allowUndefined
   @hint("Button used to start/stop voice recording")
-  private recordButton: PinchButton | undefined;
+  private recordButton: PinchButton;
   @input
   @allowUndefined
   @hint("Optional mesh visual whose texture changes while recording.")
@@ -77,73 +71,42 @@ export class Note extends BaseScriptComponent {
     "Optional idle texture to restore when recording stops. If empty, captures current texture on start.",
   )
   private microphoneButtonIdleTexture: Texture | undefined;
-  @ui.group_end
-
-  // Playback setup
-  @ui.separator
-  @ui.group_start("Playback")
-  @input
-  @allowUndefined
-  @hint("Optional button used to playback the recorded voice note")
-  private playbackButton: PinchButton | undefined;
-  @input
-  @allowUndefined
-  @hint("Optional playback icon visual for idle state (arrow).")
-  private playbackButtonIdleVisual: RenderMeshVisual | undefined;
-  @input
-  @allowUndefined
-  @hint("Optional playback icon visual for active state (stop).")
-  private playbackButtonStopVisual: RenderMeshVisual | undefined;
-
   @input
   @allowUndefined
   @hint("Audio From Microphone track asset")
   private microphoneAsset: AudioTrackAsset | undefined;
-
   @input
   @allowUndefined
-  @hint("Audio Output track asset used for playback")
-  private audioOutputAsset: AudioTrackAsset | undefined;
-
-  @input
-  @allowUndefined
-  @hint("Optional text component used to show record/playback status")
+  @hint("Optional text component used to show recording status")
   private voiceStatusText: Text | undefined;
 
   @input
-  @hint("Sample rate used for recording and playback")
+  @hint("Sample rate used for recording")
   private sampleRate = DEFAULT_SAMPLE_RATE;
   @ui.group_end
 
   // Camera indicator setup
   @ui.separator
   @ui.group_start("Camera Indicator")
-  @input private cameraIndicatorContainer: SceneObject;
+  @input
+  private cameraIndicatorContainer: SceneObject;
   @input private cameraIndicatorActive: SceneObject;
   @input private cameraIndicatorInactive: SceneObject;
   @input private cameraStatusText: Text;
   @ui.group_end
-
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
   private outlineFeedback: InteractableOutlineFeedback;
 
   private widget: Widget;
   private meshMaterial: Material;
-  private audioComponent: AudioComponent | undefined;
   private microphoneControl: MicrophoneAudioProvider | undefined;
-  private audioOutputProvider: AudioOutputProvider | undefined;
   private recordAudioUpdateEvent: UpdateEvent | undefined;
-  private playbackAudioUpdateEvent: UpdateEvent | undefined;
-  private recordedAudioFrames: AudioFrameData[] = [];
   private numberOfSamples = 0;
   private recordingDuration = 0;
-  private currentPlaybackTime = 0;
-  private playbackSafetyTimeout = 0;
   private isRecording = false;
   private recordingStartedAt = 0;
   private didRetryMicAfterEmptyFrames = false;
-  private isPlayingBack = false;
   private asrModule: AsrModule | undefined;
   private isAsrRunning = false;
   private effectiveSampleRate = DEFAULT_SAMPLE_RATE;
@@ -281,7 +244,6 @@ export class Note extends BaseScriptComponent {
     this.noteMesh.mainMaterial = this.meshMaterial;
 
     this.initializeMicrophoneButtonVisual();
-    this.initializePlaybackButtonVisual();
     this.setCameraIndicatorActiveVisual(true);
 
     if (this._croppedImage && this._croppedImage.mainMaterial) {
@@ -337,7 +299,7 @@ export class Note extends BaseScriptComponent {
     //   - onNoteCompleted (final transcript) still fires, so the
     //     Snap Cloud / Supabase sync is unchanged.
     // recordMicrophoneAudio() safely no-ops if voice setup was
-    // skipped (no mic/output asset), so this is guard-free here.
+    // skipped (no mic asset), so this is guard-free here.
     // ============================================================
     if (this.autoStartRecordingOnReady) {
       this.recordMicrophoneAudio(true);
@@ -368,10 +330,6 @@ export class Note extends BaseScriptComponent {
 
     if (this.recordButton) {
       this.recordButton.getSceneObject().enabled = shouldShowButtons;
-    }
-
-    if (this.playbackButton) {
-      this.playbackButton.getSceneObject().enabled = shouldShowButtons;
     }
 
     if (this.voiceStatusText) {
@@ -414,17 +372,9 @@ export class Note extends BaseScriptComponent {
   }
 
   private setupVoiceNoteControls(): void {
-    if (!this.recordButton && !this.playbackButton) {
-      return;
-    }
-
-    if (!this.microphoneAsset || !this.audioOutputAsset) {
-      this.updateVoiceStatusText(
-        "Voice setup needs microphone and output assets",
-      );
-      print(
-        "Voice note setup skipped: microphoneAsset or audioOutputAsset missing.",
-      );
+    if (!this.microphoneAsset) {
+      this.updateVoiceStatusText("Voice setup needs microphone asset");
+      print("Voice note setup skipped: microphoneAsset missing.");
       return;
     }
 
@@ -433,21 +383,9 @@ export class Note extends BaseScriptComponent {
     this.effectiveSampleRate = this.resolveSampleRate();
     this.microphoneControl.sampleRate = this.effectiveSampleRate;
 
-    this.audioComponent = this.sceneObject.createComponent("AudioComponent");
-    this.audioComponent.audioTrack = this.audioOutputAsset;
-    this.audioComponent.playbackMode = Audio.PlaybackMode.LowLatency;
-
-    this.audioOutputProvider = this.audioOutputAsset
-      .control as AudioOutputProvider;
-    this.audioOutputProvider.sampleRate = this.effectiveSampleRate;
-
     this.recordAudioUpdateEvent = this.createEvent("UpdateEvent");
     this.recordAudioUpdateEvent.bind(() => this.onRecordAudio());
     this.recordAudioUpdateEvent.enabled = false;
-
-    this.playbackAudioUpdateEvent = this.createEvent("UpdateEvent");
-    this.playbackAudioUpdateEvent.bind(() => this.onPlaybackAudio());
-    this.playbackAudioUpdateEvent.enabled = false;
 
     this.recordButton?.onButtonPinched.add(() => {
       const shouldRecord = !this.isRecording;
@@ -455,12 +393,6 @@ export class Note extends BaseScriptComponent {
       this.microphoneButtonShowsRecordingTexture = shouldRecord;
       this.updateMicrophoneButtonVisualState();
       this.recordMicrophoneAudio(shouldRecord);
-    });
-
-    this.playbackButton?.onButtonPinched.add(() => {
-      // Immediate visual feedback on tap; reverted if playback cannot start.
-      this.setPlaybackButtonVisualState(!this.isPlayingBack);
-      this.playbackRecordedAudio();
     });
 
     this.updateVoiceStatusText("Press record button");
@@ -581,44 +513,12 @@ export class Note extends BaseScriptComponent {
       return;
     }
 
-    const frameData = new Float32Array(rawFrame.subarray(0, audioFrameShape.x));
     this.numberOfSamples += audioFrameShape.x;
     this.recordingDuration = this.numberOfSamples / this.effectiveSampleRate;
-
-    this.recordedAudioFrames.push({
-      audioFrame: frameData,
-      audioFrameShape: audioFrameShape,
-    });
 
     this.updateVoiceStatusText(
       `Recording ${this.formatSeconds(this.recordingDuration)}s`,
     );
-  }
-
-  private onPlaybackAudio(): void {
-    if (!this.isPlayingBack) {
-      if (this.playbackAudioUpdateEvent) {
-        this.playbackAudioUpdateEvent.enabled = false;
-      }
-      return;
-    }
-
-    this.currentPlaybackTime += getDeltaTime();
-    this.currentPlaybackTime = Math.min(
-      this.currentPlaybackTime,
-      this.recordingDuration,
-    );
-
-    this.updateVoiceStatusText(
-      `Playback ${this.formatSeconds(this.currentPlaybackTime)}s / ${this.formatSeconds(this.recordingDuration)}s`,
-    );
-
-    if (
-      this.currentPlaybackTime >= this.recordingDuration ||
-      this.currentPlaybackTime >= this.playbackSafetyTimeout
-    ) {
-      this.stopPlayback("Playback complete");
-    }
   }
 
   private recordMicrophoneAudio(shouldRecord: boolean): void {
@@ -644,17 +544,12 @@ export class Note extends BaseScriptComponent {
       return;
     }
 
-    this.recordedAudioFrames = [];
     this.numberOfSamples = 0;
     this.recordingDuration = 0;
-    this.currentPlaybackTime = 0;
     this.voiceTranscription = "";
     this._textField.text = "";
-    this.isPlayingBack = false;
     this.recordingStartedAt = getTime();
     this.didRetryMicAfterEmptyFrames = false;
-    this.updatePlaybackButtonVisualState();
-    this.audioComponent?.stop(false);
     this.microphoneControl.start();
     this.startSpeechToText();
     this.isRecording = true;
@@ -663,110 +558,15 @@ export class Note extends BaseScriptComponent {
       this.recordAudioUpdateEvent.enabled = true;
     }
 
-    if (this.playbackAudioUpdateEvent) {
-      this.playbackAudioUpdateEvent.enabled = false;
-    }
-
     this.updateVoiceStatusText("Recording started");
     this.microphoneButtonShowsRecordingTexture = true;
     this.updateMicrophoneButtonVisualState();
-  }
-
-  private playbackRecordedAudio(): void {
-    if (!this.audioOutputProvider || !this.audioComponent) {
-      this.setPlaybackButtonVisualState(false);
-      return;
-    }
-
-    if (this.isPlayingBack) {
-      this.stopPlayback("Playback stopped");
-      return;
-    }
-
-    if (this.isRecording) {
-      this.recordMicrophoneAudio(false);
-      this.updateVoiceStatusText("Recording stopped, starting playback");
-    }
-
-    if (this.recordedAudioFrames.length === 0) {
-      this.updateVoiceStatusText("No recording yet");
-      this.setPlaybackButtonVisualState(false);
-      return;
-    }
-
-    if (!isFinite(this.recordingDuration) || this.recordingDuration <= 0) {
-      this.recordingDuration = this.numberOfSamples / this.effectiveSampleRate;
-    }
-    if (!isFinite(this.recordingDuration) || this.recordingDuration <= 0) {
-      this.updateVoiceStatusText("Playback unavailable: invalid recording");
-      this.setPlaybackButtonVisualState(false);
-      return;
-    }
-
-    this.currentPlaybackTime = 0;
-    this.playbackSafetyTimeout = Math.max(this.recordingDuration + 0.5, 0.5);
-    (
-      this.audioOutputProvider as unknown as { clearAudioFrames?: () => void }
-    ).clearAudioFrames?.();
-    this.audioComponent.stop(false);
-    this.audioComponent.play(1);
-    this.isPlayingBack = true;
-    this.updatePlaybackButtonVisualState();
-
-    for (let i = 0; i < this.recordedAudioFrames.length; i++) {
-      this.audioOutputProvider.enqueueAudioFrame(
-        this.recordedAudioFrames[i].audioFrame,
-        this.recordedAudioFrames[i].audioFrameShape,
-      );
-    }
-
-    if (this.playbackAudioUpdateEvent) {
-      this.playbackAudioUpdateEvent.enabled = true;
-    }
-
-    this.updateVoiceStatusText(
-      `Playback ${this.formatSeconds(this.currentPlaybackTime)}s / ${this.formatSeconds(this.recordingDuration)}s`,
-    );
-  }
-
-  private stopPlayback(statusMessage: string): void {
-    this.audioComponent?.stop(false);
-    (
-      this.audioOutputProvider as unknown as { clearAudioFrames?: () => void }
-    ).clearAudioFrames?.();
-    this.isPlayingBack = false;
-    this.currentPlaybackTime = 0;
-    this.playbackSafetyTimeout = 0;
-
-    if (this.playbackAudioUpdateEvent) {
-      this.playbackAudioUpdateEvent.enabled = false;
-    }
-
-    this.updateVoiceStatusText(statusMessage);
-    this.updatePlaybackButtonVisualState();
   }
 
   private stopAllVoiceActivity(): void {
     if (this.isRecording) {
       this.recordMicrophoneAudio(false);
     }
-    if (this.isPlayingBack) {
-      this.stopPlayback("Playback stopped");
-      return;
-    }
-
-    // Ensure any queued audio is still flushed even if state desynced.
-    this.audioComponent?.stop(false);
-    (
-      this.audioOutputProvider as unknown as { clearAudioFrames?: () => void }
-    ).clearAudioFrames?.();
-    if (this.playbackAudioUpdateEvent) {
-      this.playbackAudioUpdateEvent.enabled = false;
-    }
-    this.isPlayingBack = false;
-    this.currentPlaybackTime = 0;
-    this.playbackSafetyTimeout = 0;
-    this.updatePlaybackButtonVisualState();
   }
 
   private updateVoiceStatusText(message: string): void {
@@ -791,31 +591,6 @@ export class Note extends BaseScriptComponent {
       this.getMicrophoneButtonTextureFromPass();
 
     this.updateMicrophoneButtonVisualState();
-  }
-
-  private initializePlaybackButtonVisual(): void {
-    if (!this.playbackButtonIdleVisual && !this.playbackButtonStopVisual) {
-      return;
-    }
-
-    this.updatePlaybackButtonVisualState();
-  }
-
-  private updatePlaybackButtonVisualState(): void {
-    this.setPlaybackButtonVisualState(this.isPlayingBack);
-  }
-
-  private setPlaybackButtonVisualState(showStop: boolean): void {
-    if (!this.playbackButtonIdleVisual && !this.playbackButtonStopVisual) {
-      return;
-    }
-
-    if (this.playbackButtonIdleVisual) {
-      this.playbackButtonIdleVisual.getSceneObject().enabled = !showStop;
-    }
-    if (this.playbackButtonStopVisual) {
-      this.playbackButtonStopVisual.getSceneObject().enabled = showStop;
-    }
   }
 
   private updateMicrophoneButtonVisualState(): void {
@@ -1126,7 +901,8 @@ export class Note extends BaseScriptComponent {
     this.setCameraIndicatorActiveVisual(true);
 
     // Play camera indicator breathing animation feedback
-    const cameraIndicatorTransform = this.cameraIndicatorContainer.getTransform();
+    const cameraIndicatorTransform =
+      this.cameraIndicatorContainer.getTransform();
     const cameraIndicatorOriginalScale =
       cameraIndicatorTransform.getLocalScale().x;
     this.cameraMeshTween = LSTween.scaleFromToLocal(
@@ -1140,7 +916,7 @@ export class Note extends BaseScriptComponent {
       .repeat(Infinity)
       .delay(100)
       .start();
-    
+
     this.cameraStatusText.text = "Camera on ...";
   }
 
