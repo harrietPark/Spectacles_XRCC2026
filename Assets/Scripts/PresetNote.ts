@@ -30,11 +30,11 @@ export class PresetNote extends BaseScriptComponent {
 
   @input
   @hint("Seconds for the open expand animation.")
-  private openAnimationDuration: number = 0.35;
+  private openAnimationDuration: number = 0.7;
 
   @input
   @hint("Seconds for the close collapse animation.")
-  private closeAnimationDuration: number = 0.55;
+  private closeAnimationDuration: number = 1.0;
 
   @input
   @hint("Y scale of open content when collapsed (should match the closed visual height).")
