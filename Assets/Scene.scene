@@ -3186,7 +3186,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Mic status
+  Text: Voice transcription status
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -5061,7 +5061,7 @@
     - f5698d28-549e-4b37-a3b0-7fe9c37de990: 175010e0-9423-4793-88df-94c26b14f4d6
     - f906944f-5e5d-4764-ac7e-08195afeafe4: aaa085f4-df19-4344-4372-9f3246425e3a
   Name: PinPoint_Note_v2
-  Enabled: true
+  Enabled: false
   Layers: 2
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}

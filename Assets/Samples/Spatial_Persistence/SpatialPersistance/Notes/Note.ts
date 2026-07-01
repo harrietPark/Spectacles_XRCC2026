@@ -1122,9 +1122,10 @@ export class Note extends BaseScriptComponent {
     }
   }
 
-  public playObjectRecognitionStartFeedback(): void {
+  public playCameraCaptureStartFeedback(): void {
     this.setCameraIndicatorActiveVisual(true);
 
+    // Play camera indicator breathing animation feedback
     const cameraIndicatorTransform = this.cameraIndicatorContainer.getTransform();
     const cameraIndicatorOriginalScale =
       cameraIndicatorTransform.getLocalScale().x;
@@ -1139,16 +1140,19 @@ export class Note extends BaseScriptComponent {
       .repeat(Infinity)
       .delay(100)
       .start();
+    
+    this.cameraStatusText.text = "Camera on ...";
   }
 
-  public playObjectRecognitionEndFeedback(): void {
+  public playCameraCaptureEndFeedback(): void {
     if (this.cameraMeshTween?.isPlaying()) this.cameraMeshTween.stop();
 
     this.setCameraIndicatorActiveVisual(false);
+    this.cameraStatusText.text = "Camera off.";
   }
 
   private setCameraIndicatorActiveVisual(isActive: boolean): void {
-    this.cameraIndicatorContainer.enabled = true;
+    // this.cameraIndicatorContainer.enabled = true;
     this.cameraIndicatorActive.enabled = isActive;
     this.cameraIndicatorInactive.enabled = !isActive;
   }
