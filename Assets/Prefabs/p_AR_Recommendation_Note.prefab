@@ -27,7 +27,7 @@
 - !<SceneObject/0a9d9462-b8ae-4f83-b7b8-377e321a2629>
   PrefabRemaps:
     []
-  Name: description
+  Name: DescriptionText
   Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
@@ -57,11 +57,11 @@
 - !<SceneObject/182149a9-7640-4c5d-a326-db15c214eb28>
   PrefabRemaps:
     []
-  Name: price
+  Name: PriceText
   Enabled: true
   Layers: 2
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: -0.282893, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -154,7 +154,7 @@
     - ecd1965b-cf58-40ab-ac00-c004b2b65f66: 4ca59747-2368-4e04-9db5-4d3cf69550e0
   Name: Preset_Note
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -13.336129}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -403,17 +403,24 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
+    openContentRoot: true
+    closedVisualRoot: true
+    openAnimationDuration: true
+    closeAnimationDuration: true
+    flyBackDistance: true
+    flyAwayScale: true
+    handoffMidpoint: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      foregroundScaleDifference: 0.150000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openContentRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      closedVisualRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.550000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     "":
       {}

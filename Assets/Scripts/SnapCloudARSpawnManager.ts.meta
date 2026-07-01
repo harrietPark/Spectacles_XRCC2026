@@ -28,10 +28,14 @@
   ScriptInputsHidden:
     baseMaterial: false
     cameraObject: false
+    cardOffset: false
     convertMetersToCentimeters: false
     debugLogs: false
+    descriptionColumn: false
+    descriptionObjectName: false
     enableGrab: false
     enableGridSnap: false
+    enableInfoCard: false
     enableRotationSnap: false
     faceCamera: false
     grabColliderPadding: false
@@ -42,10 +46,16 @@
     heightOffset: false
     hideOnStart: false
     ignoreEditorPreview: false
+    infoCardPrefab: false
     modelScale: false
     modelUrlColumn: false
     pollIntervalSeconds: false
+    priceColumn: false
+    priceObjectName: false
+    productKeyColumn: false
+    productsTableName: false
     revealHandlesOnHover: false
+    rotationSmoothing: false
     rotationSnapDegrees: false
     spawnDistance: false
     spawnParent: false
@@ -87,10 +97,20 @@
       revealHandlesOnHover: true
       handleHideDelaySeconds: 0.300000
       spawnSound: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      enableInfoCard: true
+      infoCardPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+      cardOffset: !<Vec3> {x: 0.000000, y: 20.000000, z: 0.000000}
+      productsTableName: products
+      productKeyColumn: id
+      descriptionColumn: description
+      priceColumn: price
+      descriptionObjectName: DescriptionText
+      priceObjectName: PriceText
       enableGridSnap: true
       gridSnapUnit: !<float> 5.000000
       enableRotationSnap: true
       rotationSnapDegrees: !<float> 15.000000
+      rotationSmoothing: 0.300000
   ScriptTypes:
     -
       {}
@@ -119,7 +139,17 @@
     - '// @input bool revealHandlesOnHover = true {"hint":"Hide grab handles until the hand hovers the model box or a handle."}'
     - '// @input float handleHideDelaySeconds = 0.3 {"hint":"Grace period (seconds) before hiding handles after the hand leaves, to avoid flicker when reaching for a handle."}'
     - '// @input Component.AudioComponent spawnSound {"hint":"Sound played once each time an AR model is spawned (optional)."}'
+    - '// @input bool enableInfoCard = true {"hint":"Spawn a product info card (description + price) with each model."}'
+    - '// @input Asset.ObjectPrefab infoCardPrefab {"hint":"Info card prefab (UI background + Text fields). Instantiated under the grabbable wrapper so it despawns with the model."}'
+    - '// @input vec3 cardOffset = {0,20,0} {"hint":"Local offset (cm) of the info card relative to the model center."}'
+    - '// @input string productsTableName = "products" {"hint":"Products catalog table to look up card text from."}'
+    - '// @input string productKeyColumn = "id" {"hint":"Products column that ar_spawn_requests.product_id matches."}'
+    - "// @input string descriptionColumn = \"description\" {\"hint\":\"Products column read into the card's description field.\"}"
+    - "// @input string priceColumn = \"price\" {\"hint\":\"Products column read into the card's price field.\"}"
+    - '// @input string descriptionObjectName = "description" {"hint":"Name of the SceneObject holding the description Text component inside the info card prefab."}'
+    - '// @input string priceObjectName = "price" {"hint":"Name of the SceneObject holding the price Text component inside the info card prefab."}'
     - '// @input bool enableGridSnap = true {"hint":"Snap model position to a grid while dragging."}'
     - '// @input float gridSnapUnit = 5 {"hint":"Grid cell size in centimetres for translation snapping."}'
     - '// @input bool enableRotationSnap = true {"hint":"Snap Y-axis rotation to fixed steps while rotating."}'
     - '// @input float rotationSnapDegrees = 15 {"hint":"Rotation step in degrees for Y-axis snapping."}'
+    - '// @input float rotationSmoothing = 0.3 {"hint":"Turntable smoothing (0 = instant/snappy, up to ~0.9 = very smooth but laggy). Dampens hand-tracking jitter."}'

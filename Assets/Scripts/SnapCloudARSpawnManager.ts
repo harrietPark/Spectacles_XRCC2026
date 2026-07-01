@@ -13,6 +13,12 @@ interface GrabHandle {
   isRotation: boolean
 }
 
+/** Product text pulled from the products table for the info card. */
+interface CardData {
+  description: string
+  price: string
+}
+
 /**
  * SnapCloudARSpawnManager
  * -----------------------
@@ -136,6 +142,43 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private spawnSound: AudioComponent | undefined
 
   @input
+  @hint("Spawn a product info card (description + price) with each model.")
+  private enableInfoCard: boolean = true
+
+  @input
+  @hint("Info card prefab (UI background + Text fields). Instantiated under the grabbable wrapper so it despawns with the model.")
+  @allowUndefined
+  private infoCardPrefab: ObjectPrefab | undefined
+
+  @input
+  @hint("Local offset (cm) of the info card relative to the model center.")
+  private cardOffset: vec3 = new vec3(0, 20, 0)
+
+  @input
+  @hint("Products catalog table to look up card text from.")
+  private productsTableName: string = "products"
+
+  @input
+  @hint("Products column that ar_spawn_requests.product_id matches.")
+  private productKeyColumn: string = "id"
+
+  @input
+  @hint("Products column read into the card's description field.")
+  private descriptionColumn: string = "description"
+
+  @input
+  @hint("Products column read into the card's price field.")
+  private priceColumn: string = "price"
+
+  @input
+  @hint("Name of the SceneObject holding the description Text component inside the info card prefab.")
+  private descriptionObjectName: string = "description"
+
+  @input
+  @hint("Name of the SceneObject holding the price Text component inside the info card prefab.")
+  private priceObjectName: string = "price"
+
+  @input
   @hint("Snap model position to a grid while dragging.")
   private enableGridSnap: boolean = true
 
@@ -150,6 +193,10 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   @input
   @hint("Rotation step in degrees for Y-axis snapping.")
   private rotationSnapDegrees: number = 15.0
+
+  @input
+  @hint("Turntable smoothing (0 = instant/snappy, up to ~0.9 = very smooth but laggy). Dampens hand-tracking jitter.")
+  private rotationSmoothing: number = 0.3
 
   private pollTimer: DelayedCallbackEvent | null = null
   private isPolling: boolean = false
@@ -193,7 +240,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       this.log("TEST MODE: cameraObject is not wired; model will spawn but cannot be positioned.")
     }
     this.log(`TEST MODE: loading hard-coded model from ${this.testModelUrl}`)
-    this.loadAndSpawn(this.testModelUrl, `test:${this.testSpawnCounter++}`).then((ok) => {
+    this.loadAndSpawn(this.testModelUrl, `test:${this.testSpawnCounter++}`, null).then((ok) => {
       this.log(`TEST MODE: spawn ${ok ? "succeeded" : "failed"}.`)
     })
   }
@@ -286,7 +333,9 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       return
     }
 
-    const ok = await this.loadAndSpawn(modelUrl, key)
+    const cardData = await this.fetchCardData(client, request.product_id)
+
+    const ok = await this.loadAndSpawn(modelUrl, key, cardData)
     if (ok) {
       await this.setRequestStatus(client, request.id, "spawned")
       this.log(`Spawn request ${request.id} completed (key=${key}).`)
@@ -294,6 +343,49 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       await this.setRequestStatus(client, request.id, "failed")
       this.log(`Spawn request ${request.id} failed to load GLB.`)
     }
+  }
+
+  /** Look up the info-card text for a product. Returns null on error / no match / disabled. */
+  private async fetchCardData(client: SupabaseClient, productId: unknown): Promise<CardData | null> {
+    if (!this.enableInfoCard) return null
+    if (productId === null || productId === undefined || productId === "") {
+      this.debugLog("fetchCardData: no product_id on request; skipping card.")
+      return null
+    }
+
+    try {
+      const {data, error} = await client
+        .from(this.productsTableName)
+        .select(`${this.descriptionColumn},${this.priceColumn}`)
+        .eq(this.productKeyColumn, productId)
+        .limit(1)
+
+      if (error) {
+        this.log(`fetchCardData failed for product ${productId}: ${JSON.stringify(error)}`)
+        return null
+      }
+      if (!data || data.length === 0) {
+        this.debugLog(`fetchCardData: no '${this.productsTableName}' row for ${this.productKeyColumn}=${productId}.`)
+        return null
+      }
+
+      const row = data[0]
+      const card: CardData = {
+        description: this.asText(row[this.descriptionColumn]),
+        price: this.asText(row[this.priceColumn])
+      }
+      this.debugLog(`fetchCardData ok for product ${productId}: description/price resolved.`)
+      return card
+    } catch (e) {
+      this.log(`fetchCardData threw: ${this.describeError(e)}`)
+      return null
+    }
+  }
+
+  /** Coerce a DB value into a display string (null/undefined -> empty). */
+  private asText(value: unknown): string {
+    if (value === null || value === undefined) return ""
+    return `${value}`
   }
 
   /** Stable per-card key so a spawned model can later be located and removed. */
@@ -329,7 +421,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   }
 
   /** Download the GLB at `url`, instantiate it, and position it. Resolves true on success. */
-  private loadAndSpawn(url: string, key: string): Promise<boolean> {
+  private loadAndSpawn(url: string, key: string, cardData: CardData | null): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       try {
         this.debugLog(`Resolving resource from url=${url}`)
@@ -345,7 +437,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
           resource,
           (gltfAsset: GltfAsset) => {
             this.debugLog("GLB downloaded ok; instantiating.")
-            resolve(this.instantiateGltf(gltfAsset, key))
+            resolve(this.instantiateGltf(gltfAsset, key, cardData))
           },
           (errorMessage: string) => {
             this.log(`GLB load failed: ${errorMessage}`)
@@ -380,7 +472,7 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     return this.spawnRoot
   }
 
-  private instantiateGltf(gltfAsset: GltfAsset, key: string): boolean {
+  private instantiateGltf(gltfAsset: GltfAsset, key: string, cardData: CardData | null): boolean {
     const root = this.getSpawnRoot()
     if (!this.baseMaterial) {
       this.log("baseMaterial is not wired; instantiate may fail or render without material.")
@@ -440,10 +532,12 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       } catch (e) {
         this.log(`configureGrabHandles failed (model still placed): ${this.describeError(e)}`)
       }
+      this.applyInfoCard(wrapper, cardData)
       this.registerSpawned(key, wrapper)
       this.debugLog(`Instantiated GLB '${glb.name}' inside grabbable wrapper (key=${key}). Total spawned=${this.spawnedByKey.size}.`)
     } else {
       this.placeInFront(glb)
+      this.applyInfoCard(glb, cardData)
       this.registerSpawned(key, glb)
       this.debugLog(`Instantiated GLB under '${root.name}' as '${glb.name}' (key=${key}). Total spawned=${this.spawnedByKey.size}.`)
     }
@@ -459,6 +553,66 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
     } catch (e) {
       this.log(`playSpawnSound failed: ${this.describeError(e)}`)
     }
+  }
+
+  /**
+   * Instantiate the info card prefab under `parent` (the grabbable wrapper, so it
+   * moves/rotates and despawns with the model), place it at `cardOffset`, and fill
+   * its description + price Text fields (found by object name). Never throws: a
+   * card failure must not block the already-placed model.
+   */
+  private applyInfoCard(parent: SceneObject, cardData: CardData | null): void {
+    if (!this.enableInfoCard) return
+    if (!this.infoCardPrefab) {
+      this.debugLog("enableInfoCard is on but infoCardPrefab is not wired; skipping card.")
+      return
+    }
+    if (!cardData) {
+      this.debugLog("No card data resolved; skipping info card.")
+      return
+    }
+
+    try {
+      const card = this.infoCardPrefab.instantiate(parent)
+      card.name = "InfoCard"
+      card.getTransform().setLocalPosition(this.cardOffset)
+
+      const descText = this.findTextByObjectName(card, this.descriptionObjectName)
+      const priceText = this.findTextByObjectName(card, this.priceObjectName)
+
+      if (descText) {
+        descText.text = cardData.description
+      } else {
+        this.log(`Info card: no Text object named '${this.descriptionObjectName}' in the card prefab.`)
+      }
+      if (priceText) {
+        priceText.text = cardData.price
+      } else {
+        this.log(`Info card: no Text object named '${this.priceObjectName}' in the card prefab.`)
+      }
+
+      this.debugLog(
+        `Info card spawned under '${parent.name}' at offset (${this.cardOffset.x}, ${this.cardOffset.y}, ${this.cardOffset.z}) ` +
+          `(description=${!!descText}, price=${!!priceText}).`
+      )
+    } catch (e) {
+      this.log(`applyInfoCard failed (model still placed): ${this.describeError(e)}`)
+    }
+  }
+
+  /** Find the first Component.Text on a descendant SceneObject whose name matches `name`. */
+  private findTextByObjectName(root: SceneObject, name: string): Text | null {
+    if (!name) return null
+    if (root.name === name) {
+      const t = root.getComponent("Component.Text") as Text
+      if (t) return t
+    }
+    const count = root.getChildrenCount()
+    for (let i = 0; i < count; i++) {
+      const found = this.findTextByObjectName(root.getChild(i), name)
+      if (found) return found
+    }
+    return null
   }
 
   /**
@@ -721,26 +875,63 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
       return
     }
 
-    let startPointerAngle = 0
+    // Turntable state. `accumulatedDelta` grows continuously (unbounded) by
+    // summing per-frame angle steps, so crossing the +/-180 deg seam never causes
+    // a ~360 deg snap. `smoothedYaw` is the damped value actually applied.
     let startYaw = 0
+    let prevPointerAngle = 0
+    let havePrevAngle = false
+    let accumulatedDelta = 0
+    let smoothedYaw = 0
 
     h.interactable.onDragStart.add((e: DragInteractorEvent) => {
       const center = wrapperTransform.getWorldPosition()
       startYaw = this.currentYaw(wrapperTransform)
-      startPointerAngle = this.pointerAngle(e.interactor, center)
+      const a = this.pointerAngle(e.interactor, center)
+      havePrevAngle = !isNaN(a)
+      prevPointerAngle = havePrevAngle ? a : 0
+      accumulatedDelta = 0
+      smoothedYaw = startYaw
       handleActive[idx] = true
       updateVisibility()
     })
 
     h.interactable.onDragUpdate.add((e: DragInteractorEvent) => {
       const center = wrapperTransform.getWorldPosition()
-      const delta = this.pointerAngle(e.interactor, center) - startPointerAngle
-      const yaw = this.snapYawValue(startYaw + delta)
+      const a = this.pointerAngle(e.interactor, center)
+      // Skip frames where the pointing ray gives no reliable horizontal point
+      // (e.g. near-horizontal ray): applying them would jerk the model.
+      if (isNaN(a)) return
+      if (!havePrevAngle) {
+        prevPointerAngle = a
+        havePrevAngle = true
+        return
+      }
+
+      // Add only the shortest-arc step since last frame; this is what keeps the
+      // accumulation continuous across the atan2 wrap boundary.
+      accumulatedDelta += this.normalizeAngle(a - prevPointerAngle)
+      prevPointerAngle = a
+
+      const targetYaw = startYaw + accumulatedDelta
+      // Exponential, frame-rate-independent smoothing toward the target. Both
+      // values are continuous (no wrapping needed), so a plain lerp is safe.
+      const s = Math.max(0, Math.min(0.95, this.rotationSmoothing))
+      if (s > 0) {
+        const k = 1 - Math.pow(s, getDeltaTime() * 60)
+        smoothedYaw = smoothedYaw + (targetYaw - smoothedYaw) * k
+      } else {
+        smoothedYaw = targetYaw
+      }
+
+      const yaw = this.snapYawValue(smoothedYaw)
       wrapperTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
     })
 
     h.interactable.onDragEnd.add(() => {
-      const yaw = this.snapYawValue(this.currentYaw(wrapperTransform))
+      // Settle from the accumulated value (not a re-extracted Euler angle, which
+      // can differ slightly and cause a small snap on release).
+      const yaw = this.snapYawValue(startYaw + accumulatedDelta)
       wrapperTransform.setWorldRotation(quat.angleAxis(yaw, vec3.up()))
       handleActive[idx] = false
       updateVisibility()
@@ -755,17 +946,32 @@ export class SnapCloudARSpawnManager extends BaseScriptComponent {
   private pointerAngle(interactor: Interactor, center: vec3): number {
     const origin = interactor.startPoint
     const dir = interactor.direction
-    let point: vec3 | null = interactor.targetHitPosition
 
-    if (origin && dir && Math.abs(dir.y) > 1e-4) {
+    // Preferred: intersect the pointing ray with the horizontal plane through the
+    // model center. Require a non-shallow ray (|dir.y| not tiny) and a forward hit
+    // (t > 0) so we don't project to a wildly distant, jittery point.
+    if (origin && dir && Math.abs(dir.y) > 1e-2) {
       const t = (center.y - origin.y) / dir.y
       if (t > 0) {
-        point = new vec3(origin.x + dir.x * t, center.y, origin.z + dir.z * t)
+        const px = origin.x + dir.x * t
+        const pz = origin.z + dir.z * t
+        return Math.atan2(px - center.x, pz - center.z)
       }
     }
-    if (!point) point = origin ? origin : center
 
-    return Math.atan2(point.x - center.x, point.z - center.z)
+    // Fallback: use the actual hit point if we have one.
+    const hit = interactor.targetHitPosition
+    if (hit) {
+      return Math.atan2(hit.x - center.x, hit.z - center.z)
+    }
+
+    // No reliable horizontal point this frame.
+    return NaN
+  }
+
+  /** Wrap an angle (radians) into the shortest-arc range [-PI, PI]. */
+  private normalizeAngle(angle: number): number {
+    return Math.atan2(Math.sin(angle), Math.cos(angle))
   }
 
   private currentYaw(t: Transform): number {

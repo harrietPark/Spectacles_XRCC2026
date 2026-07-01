@@ -6308,8 +6308,16 @@
     grabHandleOffset: true
     revealHandlesOnHover: true
     handleHideDelaySeconds: true
+    enableInfoCard: true
+    productsTableName: true
+    productKeyColumn: true
+    descriptionColumn: true
+    priceColumn: true
+    descriptionObjectName: true
+    priceObjectName: true
     gridSnapUnit: true
     rotationSnapDegrees: true
+    rotationSmoothing: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -6338,10 +6346,20 @@
       revealHandlesOnHover: true
       handleHideDelaySeconds: 0.300000
       spawnSound: !<reference.AudioComponent> 8d1c2c31-7bb3-4763-b17a-f0edfae98f4f
+      enableInfoCard: true
+      infoCardPrefab: !<reference.ObjectPrefab> 4fcd311c-9048-455e-a1cc-cf20c40f7cd1
+      cardOffset: !<Vec3> {x: 0.000000, y: 40.000000, z: 0.000000}
+      productsTableName: products
+      productKeyColumn: id
+      descriptionColumn: description
+      priceColumn: price
+      descriptionObjectName: DescriptionText
+      priceObjectName: PriceText
       enableGridSnap: false
       gridSnapUnit: !<float> 5.000000
       enableRotationSnap: false
       rotationSnapDegrees: !<float> 15.000000
+      rotationSmoothing: 0.300000
   ScriptTypes:
     "":
       {}
