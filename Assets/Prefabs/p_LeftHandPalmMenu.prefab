@@ -23,6 +23,21 @@
   RotationAngle: 0
   Pivot: {x: 0.000000, y: 0.000000}
   ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/7643c2f5-498e-4529-8312-d98cc510c188>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 1.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b9bff78e-7300-4df6-ae46-7f61ccdb2bc5
 - !<ScriptComponent/77be17d1-cd6f-4387-8f2b-d7b43ebe329c>
   PrefabRemaps:
     []
@@ -45,6 +60,49 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/8f658e3e-ed8f-420b-805e-3a69aa9531e7>
+  PrefabRemaps:
+    []
+  Name: CapsuleButton
+  Enabled: true
+  ScriptAsset: !<reference> a60d3b86-0a33-458b-8e5a-daaeb2d7266a
+  ScriptInputsDefault:
+    _renderOrder: true
+    _inactive: true
+    _style: true
+    _hasShadow: true
+    _shadowPositionOffset: true
+    _toggleable: true
+    _defaultToOn: true
+    triggerDownCallbacks: true
+    onValueChangeCallbacks: true
+    onFinishedCallbacks: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      _renderOrder: 0
+      _inactive: false
+      _playAudio: true
+      _style: PrimaryNeutral
+      _hasShadow: false
+      _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
+      _toggleable: false
+      _defaultToOn: false
+      addCallbacks: true
+      triggerUpCallbacks:
+        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+          functionName: callSalesPerson
+      triggerDownCallbacks:
+        []
+      onValueChangeCallbacks:
+        []
+      onFinishedCallbacks:
+        []
+      _size: !<Vec3> {x: 8.000000, y: 4.000000, z: 1.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/9c3883b1-3bf2-49ec-b618-cb434a0709bc>
   PrefabRemaps:
     []
@@ -60,56 +118,15 @@
     - !<own> cbd182e4-5ab1-43b4-9bc7-df79a685b481
   Components:
     []
-- !<ScriptComponent/9d5d717c-b299-49e0-98d0-c37e401e2dab>
-  PrefabRemaps:
-    []
-  Name: RoundButton
-  Enabled: true
-  ScriptAsset: !<reference> ecf4e352-5db4-4239-8a5e-c4c517a0f03c
-  ScriptInputsDefault:
-    _renderOrder: true
-    _inactive: true
-    _style: true
-    _shadowPositionOffset: true
-    _toggleable: true
-    _defaultToOn: true
-    triggerDownCallbacks: true
-    onValueChangeCallbacks: true
-    onFinishedCallbacks: true
-    _width: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      _renderOrder: 0
-      _inactive: false
-      _playAudio: true
-      _style: PrimaryNeutral
-      _hasShadow: true
-      _shadowPositionOffset: !<Vec3> {x: 0.050000, y: -0.050000, z: -0.010000}
-      _toggleable: false
-      _defaultToOn: false
-      addCallbacks: true
-      triggerUpCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
-          functionName: callSalesPerson
-      triggerDownCallbacks:
-        []
-      onValueChangeCallbacks:
-        []
-      onFinishedCallbacks:
-        []
-      _width: !<float> 4.000000
-  ScriptTypes:
-    "":
-      {}
 - !<SceneObject/b0688e49-4383-4b2d-b62b-b0ccc19b8807>
   PrefabRemaps:
     - 5cdbf989-851a-424e-9d58-a7363ad0cfbe: 5cdbf989-851a-424e-62a7-58c9c52f3041
+    - 7643c2f5-498e-4529-8312-d98cc510c188: 7cdd7abd-c430-4a02-ad6a-249b9cda1d5f
     - 77be17d1-cd6f-4387-8f2b-d7b43ebe329c: 77be17d1-cd6f-4387-70d4-284bc141cd63
+    - 8f658e3e-ed8f-420b-805e-3a69aa9531e7: b02b6644-15f9-4ba8-b5ec-712e3cf2ba3f
     - 9c3883b1-3bf2-49ec-b618-cb434a0709bc: 9c3883b1-3bf2-49ec-49e7-34bcb5f8f643
-    - 9d5d717c-b299-49e0-98d0-c37e401e2dab: 9d5d717c-b299-49e0-672f-3c81bfe1d254
     - b0688e49-4383-4b2d-b62b-b0ccc19b8807: b0688e49-4383-4b2d-49d4-4f333e6477f8
+    - b9bff78e-7300-4df6-ae46-7f61ccdb2bc5: 349290cc-01d9-4477-a3b1-de5af65beb23
     - cbd182e4-5ab1-43b4-9bc7-df79a685b481: cbd182e4-5ab1-43b4-6438-2086597a4b7e
     - f2bdbaef-d802-4e21-81af-86a2360ad1ea: f2bdbaef-d802-4e21-7e50-795dc9f52e15
   Name: LeftHandPalmMenu
@@ -124,6 +141,87 @@
     - !<own> 9c3883b1-3bf2-49ec-b618-cb434a0709bc
   Components:
     - !<own> 77be17d1-cd6f-4387-8f2b-d7b43ebe329c
+- !<Text/b9bff78e-7300-4df6-ae46-7f61ccdb2bc5>
+  PrefabRemaps:
+    []
+  Name: Text
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Text: Talk to Sales
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 30
+  Font: !<reference> 00000000-0000-0000-0000-000000000000
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  Fill: !<TextFill>
+    Mode: Solid
+    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Texture: !<reference> 00000000-0000-0000-0000-000000000000
+    ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    TileCount: 5.000000
+    TileZone: Rect
+    TextureStretch: FitWidth
+  BlendMode: PremultipliedAlpha
+  Outline: !<OutlineSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Size: 0.250000
+  Dropshadow: !<DropshadowSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    OffsetX: 0.250000
+    OffsetY: 0.250000
+  Background: !<BackgroundSettings>
+    Enabled: false
+    Fill: !<TextFill>
+      Mode: Solid
+      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Texture: !<reference> 00000000-0000-0000-0000-000000000000
+      ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      TileCount: 5.000000
+      TileZone: Rect
+      TextureStretch: FitWidth
+    Margins:
+      left: 0.000000
+      bottom: 0.000000
+      right: 0.000000
+      top: 0.000000
+    CornerRadius: 0.000000
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: 0.000000
+    LineSpacing: 1.000000
+    CapitalizationOverride: None
+  DepthTest: false
+  TwoSided: false
 - !<SceneObject/cbd182e4-5ab1-43b4-9bc7-df79a685b481>
   PrefabRemaps:
     []
@@ -137,8 +235,9 @@
     HasSegmentScaleCompensation: false
   Children:
     - !<own> f2bdbaef-d802-4e21-81af-86a2360ad1ea
+    - !<own> 7643c2f5-498e-4529-8312-d98cc510c188
   Components:
-    - !<own> 9d5d717c-b299-49e0-98d0-c37e401e2dab
+    - !<own> 8f658e3e-ed8f-420b-805e-3a69aa9531e7
 - !<SceneObject/f2bdbaef-d802-4e21-81af-86a2360ad1ea>
   PrefabRemaps:
     []
@@ -146,7 +245,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.100000}
+    Position: {x: -2.000000, y: 0.000000, z: 0.100000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 2.000000, y: 2.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
