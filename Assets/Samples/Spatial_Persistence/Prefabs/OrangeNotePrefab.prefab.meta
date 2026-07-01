@@ -872,6 +872,7 @@
     cameraIndicatorContainer: true
     cameraIndicatorActive: true
     cameraIndicatorInactive: true
+    cameraStatusText: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -898,6 +899,7 @@
       cameraIndicatorContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraIndicatorActive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraIndicatorInactive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
       {}

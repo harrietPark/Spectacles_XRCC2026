@@ -33,6 +33,7 @@
     cameraIndicatorActive: false
     cameraIndicatorContainer: false
     cameraIndicatorInactive: false
+    cameraStatusText: false
     deleteButton: false
     editOutlineMaterial: false
     microphoneAsset: false
@@ -79,6 +80,7 @@
       cameraIndicatorContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraIndicatorActive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraIndicatorInactive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
       {}
@@ -91,10 +93,15 @@
     - // @input Component.RenderMeshVisual noteMesh
     - '// @input Asset.Material editOutlineMaterial {"hint":"Outline material that appears when the note is being edited"}'
     - // @input AssignableType_3 visibilityToggle
-    - '// @input AssignableType_4 recordButton {"hint":"Optional button used to start/stop voice recording"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Mic Recording Setup"}'
+    - '// @input AssignableType_4 recordButton {"hint":"Button used to start/stop voice recording"}'
     - '// @input Component.RenderMeshVisual microphoneButtonMesh {"hint":"Optional mesh visual whose texture changes while recording."}'
     - '// @input Asset.Texture microphoneButtonRecordingTexture {"hint":"Texture used for microphone button while recording."}'
     - '// @input Asset.Texture microphoneButtonIdleTexture {"hint":"Optional idle texture to restore when recording stops. If empty, captures current texture on start."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Playback"}'
     - '// @input AssignableType_5 playbackButton {"hint":"Optional button used to playback the recorded voice note"}'
     - '// @input Component.RenderMeshVisual playbackButtonIdleVisual {"hint":"Optional playback icon visual for idle state (arrow)."}'
     - '// @input Component.RenderMeshVisual playbackButtonStopVisual {"hint":"Optional playback icon visual for active state (stop)."}'
@@ -102,6 +109,11 @@
     - '// @input Asset.AudioTrackAsset audioOutputAsset {"hint":"Audio Output track asset used for playback"}'
     - '// @input Component.Text voiceStatusText {"hint":"Optional text component used to show record/playback status"}'
     - '// @input float sampleRate {"hint":"Sample rate used for recording and playback"}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Camera Indicator"}'
     - // @input SceneObject cameraIndicatorContainer
     - // @input SceneObject cameraIndicatorActive
     - // @input SceneObject cameraIndicatorInactive
+    - // @input Component.Text cameraStatusText
+    - '// @ui {"widget":"group_end"}'

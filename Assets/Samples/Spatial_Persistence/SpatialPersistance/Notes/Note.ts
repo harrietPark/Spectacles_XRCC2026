@@ -56,10 +56,12 @@ export class Note extends BaseScriptComponent {
   private editOutlineMaterial: Material;
   @input private visibilityToggle: PinPointNoteSimpleVisibilityToggle;
 
-  // Voice recording setup
+  // Mic recording setup
+  @ui.separator
+  @ui.group_start("Mic Recording Setup")
   @input
   @allowUndefined
-  @hint("Optional button used to start/stop voice recording")
+  @hint("Button used to start/stop voice recording")
   private recordButton: PinchButton | undefined;
   @input
   @allowUndefined
@@ -75,7 +77,11 @@ export class Note extends BaseScriptComponent {
     "Optional idle texture to restore when recording stops. If empty, captures current texture on start.",
   )
   private microphoneButtonIdleTexture: Texture | undefined;
+  @ui.group_end
 
+  // Playback setup
+  @ui.separator
+  @ui.group_start("Playback")
   @input
   @allowUndefined
   @hint("Optional button used to playback the recorded voice note")
@@ -107,11 +113,16 @@ export class Note extends BaseScriptComponent {
   @input
   @hint("Sample rate used for recording and playback")
   private sampleRate = DEFAULT_SAMPLE_RATE;
+  @ui.group_end
 
-  // Camera capture indicator setup
+  // Camera indicator setup
+  @ui.separator
+  @ui.group_start("Camera Indicator")
   @input private cameraIndicatorContainer: SceneObject;
   @input private cameraIndicatorActive: SceneObject;
   @input private cameraIndicatorInactive: SceneObject;
+  @input private cameraStatusText: Text;
+  @ui.group_end
 
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
@@ -367,11 +378,12 @@ export class Note extends BaseScriptComponent {
       this.voiceStatusText.getSceneObject().enabled = shouldShowButtons;
     }
 
-    // if (this.cameraIndicatorMesh) {
-    //   this.cameraIndicatorMesh.getSceneObject().enabled = shouldShowButtons;
-    // }
     if (this.cameraIndicatorContainer) {
       this.cameraIndicatorContainer.enabled = shouldShowButtons;
+    }
+
+    if (this.cameraStatusText) {
+      this.cameraStatusText.getSceneObject().enabled = shouldShowButtons;
     }
 
     // Some UI components may re-apply materials every frame; enforce icon state.
