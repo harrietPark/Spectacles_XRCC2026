@@ -1,0 +1,109 @@
+- !<AssetImportMetadata/a62ae358-b29f-4203-a1ee-bfc9bffeec2c>
+  ImportedAssetIds:
+    .hidden/Material.001: !<reference> 0cc9938f-5ab6-4638-9c3b-163adf08e065
+    .hidden/white: !<reference> 7b4ba4b6-2deb-4eee-9ed8-54f6906c6ce7
+    66780cf3a4dcb2b8: !<reference> 4feff7e5-13f3-4e06-90e8-2b28471e982a
+    72c714cf4f36a5cd: !<reference> 8cde25e5-ab31-4626-a538-7acca7419318
+    Materials/Material.001: !<reference> ee4c00e7-394d-44f8-bb64-0eeeabfc2bd2
+    Materials/Material.001|Material.001|GraphPassInfo: !<reference> 2ff4cbd1-5cfd-4167-8d4e-3cb37ee809f0
+    Meshes/Mesh_0: !<reference> 19c54e1a-8be4-4400-88a0-e99385857f79
+    Scene: !<reference> b7c9caa2-2fec-4075-85dc-730165b38a9f
+    Textures/Image_0: !<reference> 4d508326-9d97-476d-a0a9-111cb11330a3
+    Textures/Image_2: !<reference> 656a6147-fdb6-4392-a97e-e47176d905da
+    acb1925c659c99f8: !<reference> 28ec72ed-a4a4-4fb6-924b-7db12dae4d09
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> b7c9caa2-2fec-4075-85dc-730165b38a9f
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 97833209-284d-46f6-a576-869885d16520
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<SceneObject/28ec72ed-a4a4-4fb6-6db4-824ed251b2f6>
+  PrefabRemaps:
+    []
+  Name: Mesh_0
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: -0.000000, z: 0.000000}
+    Scale: {x: 100.000000, y: 100.000000, z: 100.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 8cde25e5-ab31-4626-5ac7-853358be6ce7
+- !<SceneObject/4feff7e5-13f3-4e06-6f17-d4d7b8e167d5>
+  PrefabRemaps:
+    []
+  Name: Meshy_AI_Camera1_0701104103_texture
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 28ec72ed-a4a4-4fb6-6db4-824ed251b2f6
+  Components:
+    []
+- !<RenderMeshVisual/8cde25e5-ab31-4626-5ac7-853358be6ce7>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> ee4c00e7-394d-44f8-bb64-0eeeabfc2bd2
+  Mesh: !<reference> 19c54e1a-8be4-4400-88a0-e99385857f79
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<ObjectPrefabAssetData/97833209-284d-46f6-a576-869885d16520>
+  Prototype: !<ObjectOwner/2027e5f2-58a6-40b6-8098-e32547a11b8b>
+    PackagePath: ""
+    objects:
+      - !<own> 4feff7e5-13f3-4e06-6f17-d4d7b8e167d5

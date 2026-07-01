@@ -26,10 +26,13 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    backgroundDurationMs: false
-    backgroundScaleDifference: false
-    foregroundDurationMs: false
-    foregroundScaleDifference: false
+    closeAnimationDuration: false
+    closedVisualRoot: false
+    flyAwayScale: false
+    flyBackDistance: false
+    handoffMidpoint: false
+    openAnimationDuration: false
+    openContentRoot: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,17 +42,23 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - foregroundScaleDifference: 0.100000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+    - openContentRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      closedVisualRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.550000
+      flyBackDistance: 0.450000
+      flyAwayScale: 0.100000
+      handoffMidpoint: 0.500000
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @ui {"widget":"group_start", "label":"Visual Settings"}'
-    - // @input float foregroundScaleDifference = 0.1
-    - // @input float foregroundDurationMs = 1000
-    - // @input float backgroundScaleDifference = 0.05
-    - // @input float backgroundDurationMs = 2000
+    - '// @ui {"widget":"group_start", "label":"Open / Close (head movement)"}'
+    - '// @input SceneObject openContentRoot {"hint":"Full open note content shown when the user looks at the note."}'
+    - '// @input SceneObject closedVisualRoot {"hint":"Compact closed visual shown when the user looks away."}'
+    - '// @input float openAnimationDuration = 0.65 {"hint":"Seconds for the fly-in zoom when opening."}'
+    - '// @input float closeAnimationDuration = 0.55 {"hint":"Seconds for the fly-away zoom when closing."}'
+    - '// @input float flyBackDistance = 0.45 {"hint":"Local Z offset when flown away (positive = deeper into the scene)."}'
+    - '// @input float flyAwayScale = 0.1 {"hint":"Uniform scale when flown away (0-1)."}'
+    - '// @input float handoffMidpoint = 0.5 {"hint":"Progress (0-1) where visibility swaps at the vanishing point."}'
     - '// @ui {"widget":"group_end"}'
