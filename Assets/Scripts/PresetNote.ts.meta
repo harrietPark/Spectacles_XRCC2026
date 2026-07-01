@@ -28,8 +28,10 @@
   ScriptInputsHidden:
     backgroundDurationMs: false
     backgroundScaleDifference: false
+    closedVisualRoot: false
     foregroundDurationMs: false
     foregroundScaleDifference: false
+    visibilityToggle: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -39,7 +41,9 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - foregroundScaleDifference: 0.100000
+    - visibilityToggle: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      closedVisualRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      foregroundScaleDifference: 0.100000
       foregroundDurationMs: !<float> 1000.000000
       backgroundScaleDifference: 0.050000
       backgroundDurationMs: !<float> 2000.000000
@@ -47,6 +51,10 @@
     -
       {}
   InputLines:
+    - '// @ui {"widget":"group_start", "label":"Visibility (head movement)"}'
+    - '// @input AssignableType visibilityToggle {"hint":"Hides/shows open note content on look away (same as PinPoint voice note)."}'
+    - '// @input SceneObject closedVisualRoot {"hint":"Closed-state visual (e.g. p_preset_note_closed root). Shown when user looks away."}'
+    - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"group_start", "label":"Visual Settings"}'
     - // @input float foregroundScaleDifference = 0.1
     - // @input float foregroundDurationMs = 1000

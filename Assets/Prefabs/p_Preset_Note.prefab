@@ -179,6 +179,8 @@
     {}
   ScriptInputs:
     "":
+      visibilityToggle: !<MappingBased.AssignableType> d0f5a4c3-6e7f-4a8b-9c2d-3e4f5a6b7c83
+      closedVisualRoot: !<reference.SceneObject> c9e4f3b2-5d6e-4f7a-8b1c-2d3e4f5a6b72
       foregroundScaleDifference: 0.150000
       foregroundDurationMs: !<float> 1000.000000
       backgroundScaleDifference: 0.050000
@@ -258,10 +260,13 @@
     - 9fa0427c-9e30-4783-88d7-1b0033749b37: e4ccc0bb-ad2c-4f82-b248-90507c49f64a
     - a4e33abe-03cf-4dee-9b71-ab68092f5b0f: 0429ae90-b67e-4c1b-9e0a-e275cc3143d6
     - abf07528-ced7-4baa-a783-aefa2ba7d3d9: 64a8eb77-c8fc-4c99-9b55-7aa11f51951e
+    - b8f3e2a1-4c5d-4e6f-9a0b-1c2d3e4f5a61: bcc96ecd-f848-4e1d-83e5-3bd7949f6712
     - c389a8ea-a643-49b5-a95b-8b055a7b96dc: e71888d0-4dd5-4eff-9b67-bf11bc32b792
     - c74efaef-9461-4c4b-9fbe-728ea36d05ef: e95a87b4-0668-4464-8106-22ab3600b437
     - c8d5d9c3-99cd-4433-a6b2-935399f14f9a: dc647583-c26a-4fda-9d2b-76213dc1a752
+    - c9e4f3b2-5d6e-4f7a-8b1c-2d3e4f5a6b72: 95939888-649a-4d63-b2f4-99803a41614c
     - ce8a2a07-8fc7-4140-8364-b1c9b501c3b7: 75de06ca-e4a2-421a-b9ce-bd66d7f1e50c
+    - d0f5a4c3-6e7f-4a8b-9c2d-3e4f5a6b7c83: e723a0d3-b1e4-4b98-8558-678a9629e1d5
     - f0a9a2a3-a065-45b7-a54a-627030ece25f: b0a14be5-6900-43c8-8cef-d0200b511829
     - f15c7700-da7f-41e0-80d9-1a740c1c5c98: 3699e973-852c-4f98-81c9-ea277f671708
   Name: Preset_Note
@@ -273,9 +278,8 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 9fa0427c-9e30-4783-88d7-1b0033749b37
-    - !<own> 1f58433e-03aa-4e31-81db-47b174e921d4
-    - !<own> c8d5d9c3-99cd-4433-a6b2-935399f14f9a
+    - !<own> b8f3e2a1-4c5d-4e6f-9a0b-1c2d3e4f5a61
+    - !<own> c9e4f3b2-5d6e-4f7a-8b1c-2d3e4f5a6b72
   Components:
     - !<own> 3cc2d2b2-7fd1-49ef-b479-536d173c16af
     - !<own> a4e33abe-03cf-4dee-9b71-ab68092f5b0f
@@ -284,6 +288,7 @@
     - !<own> 15b2bf03-bc9a-4752-8695-fef092949ee8
     - !<own> 1827e5e8-671e-4519-831c-c5541701eb19
     - !<own> 60192df9-8373-4c22-b0ba-00bf0fc8d44c
+    - !<own> d0f5a4c3-6e7f-4a8b-9c2d-3e4f5a6b7c83
 - !<SceneObject/9fa0427c-9e30-4783-88d7-1b0033749b37>
   PrefabRemaps:
     []
@@ -337,6 +342,23 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/b8f3e2a1-4c5d-4e6f-9a0b-1c2d3e4f5a61>
+  PrefabRemaps:
+    []
+  Name: OpenContent
+  Enabled: true
+  Layers: 2
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 9fa0427c-9e30-4783-88d7-1b0033749b37
+    - !<own> 1f58433e-03aa-4e31-81db-47b174e921d4
+    - !<own> c8d5d9c3-99cd-4433-a6b2-935399f14f9a
+  Components:
+    []
 - !<ScriptComponent/c389a8ea-a643-49b5-a95b-8b055a7b96dc>
   PrefabRemaps:
     []
@@ -409,6 +431,21 @@
     - !<own> 516b044c-5241-4264-8496-986f36c75869
     - !<own> 54281c7d-05ef-4468-8caa-e616e0f9243a
     - !<own> 6065dea9-e0d5-4318-aa9f-826d495d4b8b
+  Components:
+    []
+- !<SceneObject/c9e4f3b2-5d6e-4f7a-8b1c-2d3e4f5a6b72>
+  PrefabRemaps:
+    []
+  Name: ClosedVisual
+  Enabled: false
+  Layers: 2
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
   Components:
     []
 - !<Text/ce8a2a07-8fc7-4140-8364-b1c9b501c3b7>
@@ -492,6 +529,50 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<ScriptComponent/d0f5a4c3-6e7f-4a8b-9c2d-3e4f5a6b7c83>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> b8f3e2a1-4c5d-4e6f-9a0b-1c2d3e4f5a61
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/f0a9a2a3-a065-45b7-a54a-627030ece25f>
   PrefabRemaps:
     []

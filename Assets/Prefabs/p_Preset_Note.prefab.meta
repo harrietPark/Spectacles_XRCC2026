@@ -316,9 +316,8 @@
     Scale: {x: 5.000000, y: 5.000000, z: 5.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> e4ccc0bb-ad2c-4f82-b248-90507c49f64a
-    - !<own> 9516fd50-a02d-45fc-b87a-9c1e76f84598
-    - !<own> dc647583-c26a-4fda-9d2b-76213dc1a752
+    - !<own> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
+    - !<own> 95939888-649a-4d63-b2f4-99803a41614c
   Components:
     - !<own> 3cc2d2b2-7fd1-49ef-4b86-ac92e8c3e950
     - !<own> 0429ae90-b67e-4c1b-9e0a-e275cc3143d6
@@ -327,6 +326,7 @@
     - !<own> 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - !<own> 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
     - !<own> a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
+    - !<own> e723a0d3-b1e4-4b98-8558-678a9629e1d5
 - !<SceneObject/9516fd50-a02d-45fc-b87a-9c1e76f84598>
   PrefabRemaps:
     []
@@ -387,6 +387,21 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/95939888-649a-4d63-b2f4-99803a41614c>
+  PrefabRemaps:
+    []
+  Name: ClosedVisual
+  Enabled: false
+  Layers: 2
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    []
 - !<ScriptComponent/a77a85bc-8fb7-4e87-b9b7-aeccf51013ba>
   PrefabRemaps:
     []
@@ -401,6 +416,8 @@
     {}
   ScriptInputs:
     "":
+      visibilityToggle: !<MappingBased.AssignableType> e723a0d3-b1e4-4b98-8558-678a9629e1d5
+      closedVisualRoot: !<reference.SceneObject> 95939888-649a-4d63-b2f4-99803a41614c
       foregroundScaleDifference: 0.150000
       foregroundDurationMs: !<float> 1000.000000
       backgroundScaleDifference: 0.050000
@@ -428,6 +445,23 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<SceneObject/bcc96ecd-f848-4e1d-83e5-3bd7949f6712>
+  PrefabRemaps:
+    []
+  Name: OpenContent
+  Enabled: true
+  Layers: 2
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> e4ccc0bb-ad2c-4f82-b248-90507c49f64a
+    - !<own> 9516fd50-a02d-45fc-b87a-9c1e76f84598
+    - !<own> dc647583-c26a-4fda-9d2b-76213dc1a752
+  Components:
+    []
 - !<ObjectPrefabAssetData/be85cd37-7aa3-4fdf-bd58-66ca36ea9936>
   Prototype: !<ObjectOwner/b94e14fc-1c49-4303-ba1e-596d828dd08b>
     PackagePath: ""
@@ -499,6 +533,50 @@
       acceptableYDirections: !<float> 0.000000
       acceptableZDirections: !<float> 1.000000
       useFilteredPinch: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/e723a0d3-b1e4-4b98-8558-678a9629e1d5>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
   ScriptTypes:
     "":
       {}
