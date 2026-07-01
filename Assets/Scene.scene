@@ -2187,7 +2187,6 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    openAnimationDuration: true
     flyBackDistance: true
     flyAwayScale: true
     handoffMidpoint: true
@@ -2197,8 +2196,8 @@
     "":
       openContentRoot: !<reference.SceneObject> fa0aeb97-3707-4995-ad79-895f2f642410
       closedVisualRoot: !<reference.SceneObject> e27c8d04-7a80-4451-abad-77fbf2e9b3ed
-      openAnimationDuration: 0.650000
-      closeAnimationDuration: 0.650000
+      openAnimationDuration: 0.850000
+      closeAnimationDuration: 0.850000
       flyBackDistance: 0.450000
       flyAwayScale: 0.100000
       handoffMidpoint: 0.500000
@@ -2281,7 +2280,7 @@
     - fb12ec70-7d05-446d-89c4-dbd204bd9fab: 0429ae90-b67e-4c1b-9e0a-e275cc3143d6
   Name: Preset_Note
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: -30.000000, y: 0.000000, z: 55.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -4703,7 +4702,7 @@
   PrefabRemaps:
     []
   Name: Test Button
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 29.082560, z: 56.431126}
@@ -5404,7 +5403,7 @@
     - f774d5d0-a977-4d3b-b4b6-69b7dfe2af58: a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
   Name: Preset_Note
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 30.000000, y: 0.000000, z: 55.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -6853,7 +6852,7 @@
     - fa0aeb97-3707-4995-ad79-895f2f642410: bcc96ecd-f848-4e1d-83e5-3bd7949f6712
   Name: Preset_Note
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 55.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -9275,7 +9274,6 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    openAnimationDuration: true
     flyBackDistance: true
     flyAwayScale: true
     handoffMidpoint: true
@@ -9285,8 +9283,8 @@
     "":
       openContentRoot: !<reference.SceneObject> 326ccc6c-39f9-49c6-96ac-4246f03179cc
       closedVisualRoot: !<reference.SceneObject> a6b0af13-3b1e-4a9b-998d-69a477de729d
-      openAnimationDuration: 0.650000
-      closeAnimationDuration: 0.650000
+      openAnimationDuration: 0.850000
+      closeAnimationDuration: 0.850000
       flyBackDistance: 0.450000
       flyAwayScale: 0.100000
       handoffMidpoint: 0.500000
@@ -10243,7 +10241,6 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    openAnimationDuration: true
     flyBackDistance: true
     flyAwayScale: true
     handoffMidpoint: true
@@ -10253,8 +10250,8 @@
     "":
       openContentRoot: !<reference.SceneObject> 428c85f3-3051-48b9-a962-f77f0c4811d4
       closedVisualRoot: !<reference.SceneObject> f2472e88-5f9f-473d-81e6-593d56abb706
-      openAnimationDuration: 0.650000
-      closeAnimationDuration: 0.650000
+      openAnimationDuration: 0.850000
+      closeAnimationDuration: 0.850000
       flyBackDistance: 0.450000
       flyAwayScale: 0.100000
       handoffMidpoint: 0.500000

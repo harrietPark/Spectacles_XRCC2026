@@ -288,7 +288,6 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    openAnimationDuration: true
     flyBackDistance: true
     flyAwayScale: true
     handoffMidpoint: true
@@ -298,8 +297,8 @@
     "":
       openContentRoot: !<reference.SceneObject> b8f3e2a1-4c5d-4e6f-9a0b-1c2d3e4f5a61
       closedVisualRoot: !<reference.SceneObject> c9e4f3b2-5d6e-4f7a-8b1c-2d3e4f5a6b72
-      openAnimationDuration: 0.650000
-      closeAnimationDuration: 0.650000
+      openAnimationDuration: 0.850000
+      closeAnimationDuration: 0.850000
       flyBackDistance: 0.450000
       flyAwayScale: 0.100000
       handoffMidpoint: 0.500000
@@ -440,7 +439,7 @@
     - f15c7700-da7f-41e0-80d9-1a740c1c5c98: 3699e973-852c-4f98-81c9-ea277f671708
   Name: Preset_Note
   Enabled: true
-  Layers: 2
+  Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: -13.336129}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
