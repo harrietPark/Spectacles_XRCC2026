@@ -1,0 +1,38 @@
+- !<ObjectPrefab/13ba63aa-f66c-4855-810b-db6b905d7a65>
+  PackagePath: ""
+  objects:
+    - !<own> 78790c14-0496-465a-99e2-d8028a5745e5
+  LazyLoading: false
+  RetainAssets: true
+- !<SceneObject/78790c14-0496-465a-99e2-d8028a5745e5>
+  PrefabRemaps:
+    - 78790c14-0496-465a-99e2-d8028a5745e5: 78790c14-0496-465a-661d-27fd75a8ba1a
+    - c0dcd799-b022-4fff-9f4c-3b06f9deddfc: c0dcd799-b022-4fff-60b3-c4f906212203
+  Name: p_ObjectSegmentator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> c0dcd799-b022-4fff-9f4c-3b06f9deddfc
+- !<ScriptComponent/c0dcd799-b022-4fff-9f4c-3b06f9deddfc>
+  PrefabRemaps:
+    []
+  Name: ObjectSegmentator
+  Enabled: true
+  ScriptAsset: !<reference> f8049175-8a2b-4498-a25a-46f8d10b68b8
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}

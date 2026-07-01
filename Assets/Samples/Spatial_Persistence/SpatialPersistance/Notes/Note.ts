@@ -1107,7 +1107,7 @@ export class Note extends BaseScriptComponent {
     }
   }
 
-  public playObjectRecognitionStartFeedback(): void {
+  public playObjectSegmentationStartFeedback(): void {
     this.setCameraIndicatorActiveVisual(true);
 
     const cameraIndicatorTransform = this.cameraIndicatorMesh
@@ -1128,7 +1128,7 @@ export class Note extends BaseScriptComponent {
       .start();
   }
 
-  public playObjectRecognitionEndFeedback(): void {
+  public playObjectSegmentationEndFeedback(): void {
     if (this.cameraMeshTween?.isPlaying()) this.cameraMeshTween.stop();
 
     this.setCameraIndicatorActiveVisual(false);

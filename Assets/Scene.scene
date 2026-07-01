@@ -5,6 +5,7 @@
     - !<own> 0005641c-028d-459a-0000-000000014b4d
     - !<own> 5eb5b4a1-e208-4c9a-970f-43d67fda4233
     - !<own> 4be171e2-d1f6-4b93-9876-1edec0ef6cb0
+    - !<own> ac8a4021-f1c8-410d-8d30-77f89e9f1692
     - !<own> 9d1fd12b-4de8-4060-9559-485ec7790114
     - !<own> e77e50d7-ddb1-4bcc-8447-b7d071e2355c
     - !<own> 7a9be6c1-01e4-42be-8ec1-57f58f5db1c4
@@ -2417,11 +2418,12 @@
     {}
   ScriptInputs:
     "":
-      uxFeedbackControllerComponent: !<MappingBased.AssignableType> bc125d43-b68c-4c5f-a235-5d41fd4100de
-      soundEffectsController: !<MappingBased.AssignableType_1> 0d92aebe-0c3f-4576-8d44-db94604d5a7d
-      NotesController: !<MappingBased.AssignableType_2> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
-      buttonActivateNoteCreation: !<MappingBased.AssignableType_3> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
-      buttonDebugSpawnNote: !<MappingBased.AssignableType_4> 0de7612b-d631-43ff-958d-efb071145a9d
+      objectSegmentatorComponent: !<MappingBased.AssignableType> b3b969be-d022-40e7-982e-0e4eaf8a1dd6
+      uxFeedbackControllerComponent: !<MappingBased.AssignableType_1> bc125d43-b68c-4c5f-a235-5d41fd4100de
+      soundEffectsController: !<MappingBased.AssignableType_2> 0d92aebe-0c3f-4576-8d44-db94604d5a7d
+      NotesController: !<MappingBased.AssignableType_3> ae6a3fe2-93a3-4a3d-80da-25f02ac1fb70
+      buttonActivateNoteCreation: !<MappingBased.AssignableType_4> b0f6950f-da9d-45ef-9b5a-d36cb27544aa
+      buttonDebugSpawnNote: !<MappingBased.AssignableType_5> 0de7612b-d631-43ff-958d-efb071145a9d
       requestMicrophonePermissionOnStart: true
       microphoneAsset: !<reference.AudioTrackAsset> acf855e3-f791-416d-9d81-6fc09fc68d96
       microphoneWarmupDurationSeconds: 0.250000
@@ -6034,6 +6036,22 @@
     - !<own> ae48da5e-bc2f-4f92-9eba-96d4383ab764
   Components:
     []
+- !<SceneObject/ac8a4021-f1c8-410d-8d30-77f89e9f1692>
+  PrefabRemaps:
+    - ac8a4021-f1c8-410d-8d30-77f89e9f1692: 78790c14-0496-465a-661d-27fd75a8ba1a
+    - b3b969be-d022-40e7-982e-0e4eaf8a1dd6: c0dcd799-b022-4fff-60b3-c4f906212203
+  Name: ObjectSegmentator
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> b3b969be-d022-40e7-982e-0e4eaf8a1dd6
 - !<SceneObject/aca9df6b-93d8-41f8-a2de-0904dde341fb>
   PrefabRemaps:
     - 2183597a-0772-4f04-84b6-76a0fd1994ad: 5533268b-03f2-44ad-8df6-17391790b83f
@@ -6516,6 +6534,22 @@
     CapitalizationOverride: None
   DepthTest: false
   TwoSided: false
+- !<ScriptComponent/b3b969be-d022-40e7-982e-0e4eaf8a1dd6>
+  PrefabRemaps:
+    []
+  Name: ObjectSegmentator
+  Enabled: true
+  ScriptAsset: !<reference> f8049175-8a2b-4498-a25a-46f8d10b68b8
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b4c9a379-71be-4b27-a113-6b69581413ac>
   PrefabRemaps:
     []

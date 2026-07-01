@@ -433,20 +433,21 @@ export class NotesController extends BaseScriptComponent {
     this.sceneManager.sendProductViewToBackend();
     this.enableCrop();
 
-    this.recognizeObjectsInView();
+    this.segmentObjectsInView();
   }
 
-  public recognizeObjectsInView() {
+  public segmentObjectsInView() {
     if (this.notes.length === 0) return;
 
+    // play start feedback
     const latestNote = this.notes[this.notes.length - 1];
+    latestNote.playObjectSegmentationStartFeedback();
 
-    latestNote.playObjectRecognitionStartFeedback();
-    // TODO: to replace the below hard-coded time delay with an object recognition pipeline
-    setTimeout(() => {
-        latestNote.playObjectRecognitionEndFeedback();
-        this.sceneManager.playCropCapturedFeedback();
-    }, 3000);
+    this.sceneManager.objectSegmentator.segmentObjectsInView().then(() => {
+      // play end feedback
+      latestNote.playObjectSegmentationEndFeedback();
+      this.sceneManager.playCropCapturedFeedback();
+    });
   }
 
   public spawnDebugNoteInEditor(spawnPositionOverride?: vec3): void {

@@ -11,6 +11,7 @@ import { RoundButton } from "SpectaclesUIKit.lspkg/Scripts/Components/Button/Rou
 import { SoundEffectsController } from "./SoundEffectsController";
 import { INoteData } from "./INoteData";
 import { NotesController } from "./NotesController";
+import { ObjectSegmentator } from "./ObjectSegmentator";
 
 type UXFeedbackControllerApi = {
     activateIndexTipHighlight: () => void;
@@ -20,9 +21,15 @@ type UXFeedbackControllerApi = {
     playSilentCameraCaptureFeedback: () => void;
 };
 
+type ObjectSegmentatorApi = {
+    segmentObjectsInView: () => Promise<void>;
+    anchorVisualFeedbackToObjects: () => void;
+}
+
 @component
 export class SceneManager extends BaseScriptComponent {
     @ui.group_start("Controller References")
+    @input private objectSegmentatorComponent: BaseScriptComponent | undefined;
     @input
     @allowUndefined
     @hint("Assign UXFeedbackController component. Uses safe no-op fallback if missing or still compiling.")
@@ -64,6 +71,10 @@ export class SceneManager extends BaseScriptComponent {
         activateDwellIndicator: () => {},
         deactivateDwellIndicator: () => {},
         playSilentCameraCaptureFeedback: () => {},
+    };
+    private readonly noopObjectSegmentator: ObjectSegmentatorApi = {
+        segmentObjectsInView: () => Promise.resolve(),
+        anchorVisualFeedbackToObjects: () => {},
     };
 
     private onAwake() {
@@ -117,6 +128,18 @@ export class SceneManager extends BaseScriptComponent {
             );
         }
         return this.noopUxFeedbackController;
+    }
+
+    public get objectSegmentator(): ObjectSegmentatorApi {
+        const candidate = this.objectSegmentatorComponent as unknown as Partial<ObjectSegmentatorApi> | undefined;
+        if (
+            candidate &&
+            typeof candidate.segmentObjectsInView === "function" &&
+            typeof candidate.anchorVisualFeedbackToObjects === "function"
+        ) {
+            return candidate as ObjectSegmentatorApi;
+        }
+        return this.noopObjectSegmentator;
     }
 
     // ======================================================================
