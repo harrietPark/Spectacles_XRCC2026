@@ -26,12 +26,12 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    backgroundDurationMs: false
-    backgroundScaleDifference: false
+    closeAnimationDuration: false
     closedVisualRoot: false
-    foregroundDurationMs: false
-    foregroundScaleDifference: false
-    visibilityToggle: false
+    collapsedScaleY: false
+    expandAnchorY: false
+    openAnimationDuration: false
+    openContentRoot: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,23 +41,21 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - visibilityToggle: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+    - openContentRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       closedVisualRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      foregroundScaleDifference: 0.100000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openAnimationDuration: 0.350000
+      closeAnimationDuration: 0.550000
+      collapsedScaleY: 0.210000
+      expandAnchorY: 0.200000
   ScriptTypes:
     -
       {}
   InputLines:
-    - '// @ui {"widget":"group_start", "label":"Visibility (head movement)"}'
-    - '// @input AssignableType visibilityToggle {"hint":"Hides/shows open note content on look away (same as PinPoint voice note)."}'
-    - '// @input SceneObject closedVisualRoot {"hint":"Closed-state visual (e.g. p_preset_note_closed root). Shown when user looks away."}'
-    - '// @ui {"widget":"group_end"}'
-    - '// @ui {"widget":"group_start", "label":"Visual Settings"}'
-    - // @input float foregroundScaleDifference = 0.1
-    - // @input float foregroundDurationMs = 1000
-    - // @input float backgroundScaleDifference = 0.05
-    - // @input float backgroundDurationMs = 2000
+    - '// @ui {"widget":"group_start", "label":"Open / Close (head movement)"}'
+    - '// @input SceneObject openContentRoot {"hint":"Full open note content shown when the user looks at the note."}'
+    - '// @input SceneObject closedVisualRoot {"hint":"Compact closed visual shown when the user looks away."}'
+    - '// @input float openAnimationDuration = 0.35 {"hint":"Seconds for the open expand animation."}'
+    - '// @input float closeAnimationDuration = 0.55 {"hint":"Seconds for the close collapse animation."}'
+    - '// @input float collapsedScaleY = 0.21 {"hint":"Y scale of open content when collapsed (should match the closed visual height)."}'
+    - '// @input float expandAnchorY = 0.2 {"hint":"Local Y offset used to keep the top edge fixed while scaling."}'
     - '// @ui {"widget":"group_end"}'

@@ -104,8 +104,8 @@
     {}
   ScriptInputs:
     "":
-      scaleDifference: 0.050000
-      durationMs: !<float> 2000.000000
+      scaleDifference: 0.030000
+      durationMs: !<float> 2200.000000
   ScriptTypes:
     "":
       {}
@@ -522,7 +522,6 @@
     - !<own> 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - !<own> 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
     - !<own> a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
-    - !<own> e723a0d3-b1e4-4b98-8558-678a9629e1d5
 - !<SceneObject/9516fd50-a02d-45fc-b87a-9c1e76f84598>
   PrefabRemaps:
     []
@@ -643,19 +642,20 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
-    foregroundDurationMs: true
-    backgroundScaleDifference: true
-    backgroundDurationMs: true
+    openAnimationDuration: true
+    closeAnimationDuration: true
+    collapsedScaleY: true
+    expandAnchorY: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      visibilityToggle: !<MappingBased.AssignableType> e723a0d3-b1e4-4b98-8558-678a9629e1d5
+      openContentRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
       closedVisualRoot: !<reference.SceneObject> 95939888-649a-4d63-b2f4-99803a41614c
-      foregroundScaleDifference: 0.150000
-      foregroundDurationMs: !<float> 1000.000000
-      backgroundScaleDifference: 0.050000
-      backgroundDurationMs: !<float> 2000.000000
+      openAnimationDuration: 0.350000
+      closeAnimationDuration: 0.550000
+      collapsedScaleY: 0.210000
+      expandAnchorY: 0.200000
   ScriptTypes:
     "":
       {}
@@ -803,50 +803,6 @@
       acceptableYDirections: !<float> 0.000000
       acceptableZDirections: !<float> 1.000000
       useFilteredPinch: false
-  ScriptTypes:
-    "":
-      {}
-- !<ScriptComponent/e723a0d3-b1e4-4b98-8558-678a9629e1d5>
-  PrefabRemaps:
-    []
-  Name: PinPointNoteSimpleVisibilityToggle
-  Enabled: true
-  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
-  ScriptInputsDefault:
-    pinToggleButtons: true
-    startVisible: true
-    pinScaleAnimationDuration: true
-    enableShowSway: true
-    showSwayMaxAngleDegrees: true
-    enableHideDropAnimation: true
-    hideDropEndScaleMultiplier: true
-    useHangingPivot: true
-    hangingPivotLocal: true
-    pinScaleObjects: true
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      pinToggleButtons: !<MappingBased.AssignableType[]>
-        []
-      noteObjectsRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
-      startVisible: true
-      hiddenPinScaleMultiplier: !<float> 1.000000
-      pinScaleAnimationDuration: 0.220000
-      enableShowSway: true
-      showSwayDuration: 0.600000
-      showSwayMaxAngleDegrees: !<float> 11.000000
-      showSwayFrequencyHz: !<float> 3.000000
-      showSwayDamping: !<float> 3.000000
-      enableHideDropAnimation: true
-      hideDropDuration: 0.400000
-      hideDropDistance: !<float> 5.000000
-      hideDropRotateDegrees: !<float> 30.000000
-      hideDropEndScaleMultiplier: 0.700000
-      useHangingPivot: true
-      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
-      pinScaleObjects: !<reference.SceneObject[]>
-        []
   ScriptTypes:
     "":
       {}
