@@ -642,6 +642,10 @@
   Enabled: true
   ScriptAsset: !<reference> e76cc4ca-017b-458e-8c41-562f15c8712b
   ScriptInputsDefault:
+    openContentRoot: true
+    closedVisualRoot: true
+    openAnimationDuration: true
+    closeAnimationDuration: true
     flyBackDistance: true
     flyAwayScale: true
     handoffMidpoint: true
@@ -649,10 +653,10 @@
     {}
   ScriptInputs:
     "":
-      openContentRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
-      closedVisualRoot: !<reference.SceneObject> 95939888-649a-4d63-b2f4-99803a41614c
-      openAnimationDuration: 0.850000
-      closeAnimationDuration: 0.850000
+      openContentRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      closedVisualRoot: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      openAnimationDuration: 0.650000
+      closeAnimationDuration: 0.550000
       flyBackDistance: 0.450000
       flyAwayScale: 0.100000
       handoffMidpoint: 0.500000
