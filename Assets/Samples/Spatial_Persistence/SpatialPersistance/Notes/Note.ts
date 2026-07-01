@@ -109,9 +109,9 @@ export class Note extends BaseScriptComponent {
   private sampleRate = DEFAULT_SAMPLE_RATE;
 
   // Camera capture indicator setup
-  @input private cameraIndicatorMesh: RenderMeshVisual;
-  @input private cameraIndicatorActiveMaterial: Material;
-  @input private cameraIndicatorInactiveMaterial: Material;
+  @input private cameraIndicatorContainer: SceneObject;
+  @input private cameraIndicatorActive: SceneObject;
+  @input private cameraIndicatorInactive: SceneObject;
 
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
@@ -367,8 +367,11 @@ export class Note extends BaseScriptComponent {
       this.voiceStatusText.getSceneObject().enabled = shouldShowButtons;
     }
 
-    if (this.cameraIndicatorMesh) {
-      this.cameraIndicatorMesh.getSceneObject().enabled = shouldShowButtons;
+    // if (this.cameraIndicatorMesh) {
+    //   this.cameraIndicatorMesh.getSceneObject().enabled = shouldShowButtons;
+    // }
+    if (this.cameraIndicatorContainer) {
+      this.cameraIndicatorContainer.enabled = shouldShowButtons;
     }
 
     // Some UI components may re-apply materials every frame; enforce icon state.
@@ -1110,9 +1113,7 @@ export class Note extends BaseScriptComponent {
   public playObjectRecognitionStartFeedback(): void {
     this.setCameraIndicatorActiveVisual(true);
 
-    const cameraIndicatorTransform = this.cameraIndicatorMesh
-      .getSceneObject()
-      .getTransform();
+    const cameraIndicatorTransform = this.cameraIndicatorContainer.getTransform();
     const cameraIndicatorOriginalScale =
       cameraIndicatorTransform.getLocalScale().x;
     this.cameraMeshTween = LSTween.scaleFromToLocal(
@@ -1135,18 +1136,9 @@ export class Note extends BaseScriptComponent {
   }
 
   private setCameraIndicatorActiveVisual(isActive: boolean): void {
-    if (!this.cameraIndicatorMesh) {
-      return;
-    }
-
-    const material = isActive
-      ? this.cameraIndicatorActiveMaterial
-      : this.cameraIndicatorInactiveMaterial;
-    if (!material) {
-      return;
-    }
-
-    this.cameraIndicatorMesh.mainMaterial = material;
+    this.cameraIndicatorContainer.enabled = true;
+    this.cameraIndicatorActive.enabled = isActive;
+    this.cameraIndicatorInactive.enabled = !isActive;
   }
 
   private playSSTStartFeedback(): void {

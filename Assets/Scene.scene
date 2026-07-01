@@ -1059,26 +1059,6 @@
     - !<own> 34c35e8d-ce1f-43b1-8cd9-2ff2295d6270
     - !<own> 99928852-9796-4456-98d0-27064bf87227
     - !<own> 66df7b51-3b3b-45d8-a5f8-33a6b23eb985
-- !<RenderMeshVisual/12be9e40-15a1-4105-9e29-f8a024a4024a>
-  PrefabRemaps:
-    []
-  Name: Render Mesh Visual
-  Enabled: true
-  RenderOrder: 0
-  StretchMode: Stretch
-  VerticalAlignment: Center
-  HorizontalAlignment: Center
-  MeshShadowMode: None
-  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
-  ShadowDensity: 1.000000
-  Materials:
-    - !<reference> e31ad608-33f2-44a1-b3d1-6b5ccf918198
-  Mesh: !<reference> c65cfd38-9aa8-4632-8b1b-515cf0ad829d
-  Skin: !<reference> 00000000-0000-0000-0000-000000000000
-  BlendShapesEnabled: true
-  BlendNormals: false
-  BlendShapes:
-    {}
 - !<ScriptComponent/13d5d433-3d4b-42fd-b940-3dffcbdb95ae>
   PrefabRemaps:
     []
@@ -3747,21 +3727,6 @@
     - !<own> c114640d-eadb-414e-a88c-f73d71d7d2c4
   Components:
     []
-- !<SceneObject/5d091006-cf60-4788-abc3-f8cb950d0318>
-  PrefabRemaps:
-    []
-  Name: Icon_Camera
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: -35.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 10.000000, y: 10.000000, z: 10.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> 12be9e40-15a1-4105-9e29-f8a024a4024a
 - !<SceneObject/5d564d8f-d729-49f5-97eb-c29436081643>
   PrefabRemaps:
     []
@@ -5959,7 +5924,7 @@
   PrefabRemaps:
     []
   Name: "------------ Preset Notes ---------------"
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
@@ -7861,7 +7826,6 @@
       dwellReadyColor: !<Vec4> {x: 0.000000, y: 1.000000, z: 0.000000, w: 1.000000}
       dwellSignalDebounceSeconds: 0.150000
       dwellReadyAfterSeconds: 1.500000
-      silentCaptureVisual: !<reference.SceneObject> 5d091006-cf60-4788-abc3-f8cb950d0318
       showLoadingIndicator: true
       loadingIndicatorPrefab: !<reference.ObjectPrefab> 99eaea18-bf42-4f87-a2a2-bd6c90e027f6
       loadingIndicatorLocalOffset: !<Vec3> {x: 0.000000, y: -5.000000, z: 0.000000}
@@ -9418,7 +9382,7 @@
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
-    - !<own> 5d091006-cf60-4788-abc3-f8cb950d0318
+    []
   Components:
     []
 - !<SceneObject/e20bb505-dbd5-4a7c-ae3a-14926e14d807>

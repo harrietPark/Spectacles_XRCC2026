@@ -2,8 +2,6 @@ import { HandInputData } from "SpectaclesInteractionKit.lspkg/Providers/HandInpu
 import { SIK } from "SpectaclesInteractionKit.lspkg/SIK";
 import { AreaManager } from "Samples/Spatial_Persistence/SpatialPersistance/AreaManager";
 import { SceneManager } from "./SceneManager";
-import { LSTween } from "LSTween.lspkg/Examples/Scripts/LSTween";
-import Easing from "LSTween.lspkg/TweenJS/Easing";
 
 @component
 export class UXFeedbackController extends BaseScriptComponent {
@@ -53,9 +51,6 @@ export class UXFeedbackController extends BaseScriptComponent {
         "Seconds in active dwell before switching from not-ready to ready visual.",
     )
     private dwellReadyAfterSeconds: number = 1.5;
-    @input
-    @hint("Silent camera capture frame visual feedback")
-    private silentCaptureVisual: SceneObject;
     @ui.group_end
     @ui.group_start("Post-Ready Loading")
     @input
@@ -89,8 +84,6 @@ export class UXFeedbackController extends BaseScriptComponent {
 
     // State booleans
     private isIndexTipHighlightActive: boolean = false;
-    private isSilentCameraCaptureFeedbackActive: boolean = false;
-    private cameraFrameScale: vec3 = vec3.one();
 
     private dwellBaseMeshVisual: RenderMeshVisual | undefined;
     private dwellIndicatorMaterial: Material | undefined;
@@ -123,7 +116,6 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.initializeDwellStateVisuals();
         this.initializeDwellIndicatorMaterial();
         this.initializeLoadingIndicator();
-        this.initializeSilentCaptureVisual();
         this.setDwellIndicatorReady(false);
         this.isDwellSignalActive = false;
         this.pendingDwellSignalActive = false;
@@ -176,31 +168,6 @@ export class UXFeedbackController extends BaseScriptComponent {
         this.hideLoadingIndicator();
         this.requestDwellSignalState(false);
     }
-
-    // public playSilentCameraCaptureFeedback() {
-    //     this.sceneManager.playCropCapturedFeedback();
-        
-    //     if (this.isSilentCameraCaptureFeedbackActive) return;
-
-    //     const cameraFrameTransform = this.silentCaptureVisual.getTransform();
-    //     this.silentCaptureVisual.enabled = true;
-    //     LSTween.scaleFromToLocal(
-    //         cameraFrameTransform,
-    //         vec3.one().uniformScale(this.cameraFrameScale.x),
-    //         vec3.one().uniformScale(0.9 * this.cameraFrameScale.x),
-    //         200,
-    //     )
-    //         .yoyo(true)
-    //         .repeat(2)
-    //         .delay(100)
-    //         .easing(Easing.Quadratic.InOut)
-    //         .onComplete(() => {
-    //             this.isSilentCameraCaptureFeedbackActive = false;
-    //             this.silentCaptureVisual.enabled = false;
-    //             this.sceneManager.playCropCapturedFeedback();
-    //         })
-    //         .start();
-    // }
 
     private forceNotReadyVisualState(): void {
         this.isDwellSignalActive = false;
@@ -368,13 +335,6 @@ export class UXFeedbackController extends BaseScriptComponent {
             this.dwellReadyStatePrefab,
             this.dwellReadyStateScale,
         );
-    }
-
-    private initializeSilentCaptureVisual(): void {
-        this.silentCaptureVisual.enabled = false;
-        this.cameraFrameScale = this.silentCaptureVisual
-            .getTransform()
-            .getLocalScale();
     }
 
     private instantiateStatePrefab(
