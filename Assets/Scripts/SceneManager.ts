@@ -142,8 +142,7 @@ export class SceneManager extends BaseScriptComponent {
     }
 
     public callSalesPerson() : void {
-        // TODO: wire up to call sales person
-        print("---TODO: calling sales person");
+        this.soundEffectsController?.playTalkToSales();
     }
 
     public playDwellCancelledFeedback(): void {

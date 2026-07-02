@@ -925,7 +925,6 @@
     loadingStartSfxVolume: true
     loadingDoneSfxVolume: true
     cropCapturedSfxVolume: true
-    talkToSalesSfxVolume: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -947,7 +946,7 @@
       cropCapturedSfx: !<reference.AudioTrackAsset> 7d0242db-746c-428a-8038-eafcf8b06c57
       cropCapturedSfxVolume: !<float> 1.000000
       talkToSalesSfx: !<reference.AudioTrackAsset> 32e4de81-f852-478c-b8ee-2d93591c9f70
-      talkToSalesSfxVolume: !<float> 1.000000
+      talkToSalesSfxVolume: 1.500000
   ScriptTypes:
     "":
       {}
@@ -8428,6 +8427,8 @@
       addCallbacks: true
       triggerUpCallbacks:
         - scriptComponent: !<reference.ScriptComponent> db8b60f4-dcc4-4932-8929-fc1570e8ed5f
+          functionName: callSalesPerson
+        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
           functionName: callSalesPerson
       triggerDownCallbacks:
         []

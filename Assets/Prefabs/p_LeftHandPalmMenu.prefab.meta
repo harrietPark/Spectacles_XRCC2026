@@ -197,6 +197,8 @@
       _defaultToOn: false
       addCallbacks: true
       triggerUpCallbacks:
+        - scriptComponent: !<reference.ScriptComponent> db8b60f4-dcc4-4932-8929-fc1570e8ed5f
+          functionName: callSalesPerson
         - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
           functionName: callSalesPerson
       triggerDownCallbacks:
