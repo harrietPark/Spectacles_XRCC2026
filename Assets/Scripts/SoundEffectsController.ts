@@ -56,6 +56,11 @@ export class SoundEffectsController extends BaseScriptComponent {
     @hint("Volume for crop-captured sound effect.")
     private cropCapturedSfxVolume: number = 1.0;
     @ui.group_end
+    @ui.separator
+    @ui.group_start("Other Event Sounds")
+    @input private talkToSalesSfx: AudioTrackAsset;
+    @input private talkToSalesSfxVolume: number = 1.0;
+    @ui.group_end
 
     private bgmPlayer: AudioComponent | undefined;
     private activateDwellPlayer: AudioComponent | undefined;
@@ -65,6 +70,7 @@ export class SoundEffectsController extends BaseScriptComponent {
     private loadingStartPlayer: AudioComponent | undefined;
     private loadingDonePlayer: AudioComponent | undefined;
     private cropCapturedPlayer: AudioComponent | undefined;
+    private talkToSalesPlayer: AudioComponent | undefined;
 
     private onAwake(): void {
         this.createEvent("OnStartEvent").bind(this.onStart.bind(this));
@@ -79,7 +85,8 @@ export class SoundEffectsController extends BaseScriptComponent {
         this.dwellCancelledPlayer = this.createPlayer(this.dwellCancelledSfx, this.dwellCancelledSfxVolume);
         this.loadingStartPlayer = this.createPlayer(this.loadingStartSfx, this.loadingStartSfxVolume);
         this.loadingDonePlayer = this.createPlayer(this.loadingDoneSfx, this.loadingDoneSfxVolume);
-        this.cropCapturedPlayer = this.createPlayer(this.cropCapturedSfx, this.cropCapturedSfxVolume);    
+        this.cropCapturedPlayer = this.createPlayer(this.cropCapturedSfx, this.cropCapturedSfxVolume);
+        this.talkToSalesPlayer = this.createPlayer(this.talkToSalesSfx, this.talkToSalesSfxVolume);
     }
 
     public playBGM(): void {
@@ -116,6 +123,10 @@ export class SoundEffectsController extends BaseScriptComponent {
 
     public playCropCaptured(): void {
         this.playOneShot(this.cropCapturedPlayer);
+    }
+
+    public playTalkToSales(): void {
+        this.playOneShot(this.talkToSalesPlayer);
     }
 
     private createPlayer(track: AudioTrackAsset | undefined, volume: number): AudioComponent | undefined {

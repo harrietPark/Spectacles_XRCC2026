@@ -918,7 +918,6 @@
   Enabled: true
   ScriptAsset: !<reference> b990fc1c-bd0f-4bb6-83b6-bcb7d608f951
   ScriptInputsDefault:
-    BGMSfxVolume: true
     activateDwellSfxVolume: true
     dwellReadySfxVolume: true
     noteSpawnedSfxVolume: true
@@ -926,12 +925,13 @@
     loadingStartSfxVolume: true
     loadingDoneSfxVolume: true
     cropCapturedSfxVolume: true
+    talkToSalesSfxVolume: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      BGMSfx: !<reference.AudioTrackAsset> 5e7938c2-bb7d-4095-aecd-2ce6299aa8d7
-      BGMSfxVolume: 0.800000
+      BGMSfx: !<reference.AudioTrackAsset> 38e7c24d-8cd2-4e51-a462-4642d738e85a
+      BGMSfxVolume: !<float> 1.000000
       activateDwellSfx: !<reference.AudioTrackAsset> de73be74-1411-45d2-a01c-3eaa983c7c35
       activateDwellSfxVolume: !<float> 1.000000
       dwellReadySfx: !<reference.AudioTrackAsset> 271f211c-1a9e-4d04-ae0e-96a4ac37a049
@@ -946,6 +946,8 @@
       loadingDoneSfxVolume: !<float> 1.000000
       cropCapturedSfx: !<reference.AudioTrackAsset> 7d0242db-746c-428a-8038-eafcf8b06c57
       cropCapturedSfxVolume: !<float> 1.000000
+      talkToSalesSfx: !<reference.AudioTrackAsset> 32e4de81-f852-478c-b8ee-2d93591c9f70
+      talkToSalesSfxVolume: !<float> 1.000000
   ScriptTypes:
     "":
       {}

@@ -42,6 +42,8 @@
     loadingStartSfxVolume: false
     noteSpawnedSfx: false
     noteSpawnedSfxVolume: false
+    talkToSalesSfx: false
+    talkToSalesSfxVolume: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -67,6 +69,8 @@
       loadingDoneSfxVolume: !<float> 1.000000
       cropCapturedSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       cropCapturedSfxVolume: !<float> 1.000000
+      talkToSalesSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      talkToSalesSfxVolume: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -91,4 +95,9 @@
     - '// @input float loadingDoneSfxVolume = 1 {"hint":"Volume for loading-done sound effect."}'
     - '// @input Asset.AudioTrackAsset cropCapturedSfx {"hint":"Optional sound when a crop capture is received and applied to note."}'
     - '// @input float cropCapturedSfxVolume = 1 {"hint":"Volume for crop-captured sound effect."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"Other Event Sounds"}'
+    - // @input Asset.AudioTrackAsset talkToSalesSfx
+    - // @input float talkToSalesSfxVolume = 1
     - '// @ui {"widget":"group_end"}'
