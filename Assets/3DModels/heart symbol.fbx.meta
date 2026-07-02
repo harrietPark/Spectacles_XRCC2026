@@ -1,0 +1,184 @@
+- !<AssetImportMetadata/3351ca6f-7d0a-4d3d-8a3c-65d4180b1b95>
+  ImportedAssetIds:
+    .hidden/Mat: !<reference> d2f05d94-be25-4654-9730-866ad6b0e28f
+    .hidden/white: !<reference> 4973ef12-7d69-4491-952d-5ad7383189b9
+    15b0009786adc233: !<reference> 85e576d6-2bbd-488e-acc8-678bec4b576a
+    2ca02b02177880ac: !<reference> 64667bd4-5fcf-4c95-b64d-e070ccd7bb41
+    464646e7de0951ee: !<reference> b4f1c02f-ce02-4a54-b0ff-6b4239df1c7a
+    4c0ac1ac0c955b73: !<reference> ead497c6-51c0-4dad-80b7-bb041fa93d6c
+    66780cf3a4dcb2b8: !<reference> ba534790-28f2-43e1-8b31-be0054f7d6d6
+    6c413ac447f992cb: !<reference> 53cb5eb6-8ef6-416a-b0ae-05c7bbfa8329
+    Materials/Mat: !<reference> 2d048812-0102-44aa-a9d7-8c86afed0fce
+    Materials/Mat|Mat|GraphPassInfo: !<reference> d65ff77b-34c2-4228-a850-e4c5ecea5a4f
+    Meshes/Tapa_1: !<reference> ea2b9685-1141-4520-865f-a2bcf99a1ff4
+    Meshes/Tapa_2: !<reference> 462f0406-6a93-4ab5-9772-397c6d89c8ee
+    Meshes/heart: !<reference> 65123e35-984d-4972-a184-789da6b9360a
+    Scene: !<reference> b8ed63a2-d1c4-455a-bb20-6cd0faaf4a72
+    ccb921fcd07689df: !<reference> 8db84f18-153a-438c-85d1-297574eb68cc
+  ImporterName: FbxImporter
+  PrimaryAsset: !<reference> b8ed63a2-d1c4-455a-bb20-6cd0faaf4a72
+  PackageType: LegacyPackage
+  LegacyPackagePolicy: CanBeUnpackedTransparent
+  ExtraData:
+    {}
+  AssetDataMap:
+    Scene: !<own> 0b4edd9b-8264-4fbe-936f-d2f1a31b5eb8
+  DependentFiles:
+    []
+  ImporterSettings: !<FbxImporterSettings>
+    UseLegacyImporter: false
+    WithMaterials: true
+    NamingConvention: ByCategorySanitizeV2
+    PersistentIdGenerationAlgorithm: DescriptorBased
+    AnimationCurveOptimization: true
+    CustomAnimationSamplingRate: 30.000000
+    ImportVertexColor: true
+    ImportTangentsAndBinormals: true
+    RegenerateTangentsAndBinormals: false
+    RegenerateNormalsForSkinnedMeshes: true
+    ImportBlendShapeAnimation: true
+    ImportVertexAnimation: true
+    GeneratePivots: true
+    TriangulateNURBS: true
+    UseLegacyFbxLoader: false
+  CompressionSettings: !<ComplexCompressionSettings>
+    Presets:
+      None Compression: !<SingleCompressionSettings>
+        CompressorName: None
+        CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+      Performance Compression: !<SingleCompressionSettings>
+        CompressorName: Performance
+        CompressionSettings: !<TextureCompressionMipmapSettings>
+          Level: Medium
+          Mipmap: false
+    ExtensionMappings:
+      mesh: None Compression
+      jpg: Performance Compression
+    Overrides:
+      {}
+- !<ObjectPrefabAssetData/0b4edd9b-8264-4fbe-936f-d2f1a31b5eb8>
+  Prototype: !<ObjectOwner/b501895a-826b-4444-b7b0-3f33d3161b17>
+    PackagePath: ""
+    objects:
+      - !<own> ba534790-28f2-43e1-74ce-41ffab082929
+- !<RenderMeshVisual/53cb5eb6-8ef6-416a-4f51-fa3844057cd6>
+  PrefabRemaps:
+    []
+  Name: component_1
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 2d048812-0102-44aa-a9d7-8c86afed0fce
+  Mesh: !<reference> ea2b9685-1141-4520-865f-a2bcf99a1ff4
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/64667bd4-5fcf-4c95-49b2-1f8f332844be>
+  PrefabRemaps:
+    []
+  Name: heart
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> ead497c6-51c0-4dad-7f48-44fbe056c293
+    - !<own> b4f1c02f-ce02-4a54-4f00-94bdc620e385
+  Components:
+    - !<own> 8db84f18-153a-438c-7a2e-d68a8b149733
+- !<RenderMeshVisual/85e576d6-2bbd-488e-5337-987413b4a895>
+  PrefabRemaps:
+    []
+  Name: component_2
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 2d048812-0102-44aa-a9d7-8c86afed0fce
+  Mesh: !<reference> 462f0406-6a93-4ab5-9772-397c6d89c8ee
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<RenderMeshVisual/8db84f18-153a-438c-7a2e-d68a8b149733>
+  PrefabRemaps:
+    []
+  Name: component_0
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 2d048812-0102-44aa-a9d7-8c86afed0fce
+  Mesh: !<reference> 65123e35-984d-4972-a184-789da6b9360a
+  Skin: !<reference> 00000000-0000-0000-0000-000000000000
+  BlendShapesEnabled: true
+  BlendNormals: false
+  BlendShapes:
+    {}
+- !<SceneObject/b4f1c02f-ce02-4a54-4f00-94bdc620e385>
+  PrefabRemaps:
+    []
+  Name: Tapa_2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 85e576d6-2bbd-488e-5337-987413b4a895
+- !<SceneObject/ba534790-28f2-43e1-74ce-41ffab082929>
+  PrefabRemaps:
+    []
+  Name: heart symbol
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 64667bd4-5fcf-4c95-49b2-1f8f332844be
+  Components:
+    []
+- !<SceneObject/ead497c6-51c0-4dad-7f48-44fbe056c293>
+  PrefabRemaps:
+    []
+  Name: Tapa_1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 53cb5eb6-8ef6-416a-4f51-fa3844057cd6
