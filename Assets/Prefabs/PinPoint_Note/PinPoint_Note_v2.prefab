@@ -960,7 +960,7 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    cameraIndicatorImage: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -981,7 +981,7 @@
       voiceStatusText: !<reference.Text> 2a789837-f16e-4053-91bd-f53071353b23
       sampleRate: !<float> 44100.000000
       cameraIndicatorContainer: !<reference.SceneObject> c1f99462-42d0-4df5-a38d-47f43d0b19fa
-      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      cameraIndicatorImage: !<reference.Image> 9289fbb7-309a-4386-bdc3-77f3e27c42e2
       cameraStatusText: !<reference.Text> 4cbaf730-6a9c-419e-89e0-bcfeb3f1756d
   ScriptTypes:
     "":
@@ -1048,6 +1048,23 @@
   ScriptTypes:
     "":
       {}
+- !<AudioComponent/844888e3-7b98-4114-8c29-625a8ae66496>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 00000000-0000-0000-0000-000000000000
+  EnableAutoplayLoop: false
+  Volume: 1.000000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<ScriptComponent/86b8f1f1-8c59-4296-81a7-5df3ab29d5e3>
   PrefabRemaps:
     []
@@ -1110,6 +1127,25 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<Image/9289fbb7-309a-4386-bdc3-77f3e27c42e2>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Fit
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> e31ad608-33f2-44a1-b3d1-6b5ccf918198
+  FlipX: false
+  FlipY: false
+  RotationAngle: 0
+  Pivot: {x: 0.000000, y: 0.000000}
+  ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
 - !<SceneObject/94b40a61-874d-48e8-8f7b-1291912cb6f6>
   PrefabRemaps:
     []
@@ -1637,6 +1673,7 @@
   Children:
     - !<own> 65d6c615-f526-4ef8-bf2f-f3772a655690
     - !<own> ab6df738-8c94-4aea-8871-4829bff21e1a
+    - !<own> e088dcc2-d431-4931-a6a2-0e8c4550cf00
   Components:
     - !<own> 27d493dd-91c0-4fbc-8746-215db4e70e07
     - !<own> 981f4abb-7b69-44f1-adb8-cdffeed829fb
@@ -1759,9 +1796,11 @@
     - 7ee2213f-af50-4c13-99f8-14100ed296f6: 7ee2213f-af50-4c13-6607-ebeff12d6909
     - 7f476be3-650d-4ade-a3ed-8376e05c135b: 7f476be3-650d-4ade-5c12-7c891fa3eca4
     - 805696bb-7f7c-4d94-9696-2e9d5ed57ee0: 175010e0-9423-4793-88df-94c26b14f4d6
+    - 844888e3-7b98-4114-8c29-625a8ae66496: 9b2a7fbd-f495-46b0-81e2-357154731497
     - 86b8f1f1-8c59-4296-81a7-5df3ab29d5e3: 86b8f1f1-8c59-4296-7e58-a20c54d62a1c
     - 8ecdf0fb-38c1-465e-965c-a192f38942c1: 8ecdf0fb-38c1-465e-69a3-5e6d0c76bd3e
     - 90a22dd4-875c-43bf-a21c-bb2a531557e5: 90a22dd4-875c-43bf-5de3-44d5aceaa81a
+    - 9289fbb7-309a-4386-bdc3-77f3e27c42e2: 447bebc3-612e-4659-81ce-4568bfa4f51d
     - 94b40a61-874d-48e8-8f7b-1291912cb6f6: 94b40a61-874d-48e8-7084-ed6e6ed34909
     - 96c1a16b-0871-43db-be63-bee732770f95: 96c1a16b-0871-43db-419c-4118cd88f06a
     - 981f4abb-7b69-44f1-adb8-cdffeed829fb: ba2799d0-21aa-4e2b-bdec-00253abdaacb
@@ -1794,6 +1833,7 @@
     - d1223388-a3b5-40d4-bb46-06684044e7bc: 86900391-f4ab-43b9-bad8-560480549049
     - da023d24-c17b-44d6-bc37-e82aa527d3bb: da023d24-c17b-44d6-43c8-17d55ad82c44
     - e00292e6-befc-4f8a-be15-73ffa8c6f24f: e00292e6-befc-4f8a-41ea-8c0057390db0
+    - e088dcc2-d431-4931-a6a2-0e8c4550cf00: d852e6f7-7a23-4637-b2c6-5e3bcf4c1e66
     - e3c53ca2-a16b-449a-8d2a-bd17b6273873: e3c53ca2-a16b-449a-72d5-42e849d8c78c
     - eb12b072-e19a-4411-b672-5b3296aa62ad: ab8240cf-9315-4093-af3b-80f3f71a760c
     - ef47fb6f-3c92-4866-bbcc-17cd77f39c7f: ef47fb6f-3c92-4866-4433-e832880c6380
@@ -1827,6 +1867,7 @@
     - !<own> 6d84976d-423b-4c77-aa30-7a03d5ec76cf
     - !<own> da023d24-c17b-44d6-bc37-e82aa527d3bb
     - !<own> 0571a8ca-3d1b-41bd-b97b-6deebc010c37
+    - !<own> 844888e3-7b98-4114-8c29-625a8ae66496
 - !<RenderMeshVisual/cc3a1595-e8d5-4411-91f0-3f4867ea181d>
   PrefabRemaps:
     []
@@ -1923,6 +1964,21 @@
   ForceCompound: false
   Intangible: false
   ShowCollider: false
+- !<SceneObject/e088dcc2-d431-4931-a6a2-0e8c4550cf00>
+  PrefabRemaps:
+    []
+  Name: Image
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 3.000000, y: 3.000000, z: 3.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9289fbb7-309a-4386-bdc3-77f3e27c42e2
 - !<ScriptComponent/e3c53ca2-a16b-449a-8d2a-bd17b6273873>
   PrefabRemaps:
     []
