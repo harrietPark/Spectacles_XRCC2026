@@ -109,6 +109,50 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/405ddc01-96e8-428a-a3a0-2bc201b10411>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> bcc96ecd-f848-4e1d-83e5-3bd7949f6712
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/4149ae61-efab-4578-be84-a181973b3b3b>
   PrefabRemaps:
     []
@@ -427,7 +471,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Aurora Handleless — Matt Graphite
+  Text: |
+    Lignum Oak Shaker
+
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -451,10 +497,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -508,11 +554,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
-    From £24,500 (12-unit configuration)
-    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
-    Lead time 8–10 weeks · Made to order in the UK
-
+  Text: |-
+    From £18,900
+     Solid European oak frame, hand-applied oil finish. Dovetail-jointed drawer boxes, brushed brass cup handles. Pairs with butcher-block or natural stone.
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -622,6 +666,7 @@
     - !<own> 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - !<own> 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
     - !<own> a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
+    - !<own> 405ddc01-96e8-428a-a3a0-2bc201b10411
     - !<own> b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
 - !<SceneObject/9516fd50-a02d-45fc-b87a-9c1e76f84598>
   PrefabRemaps:

@@ -1678,7 +1678,7 @@
   OverflowHorizontal: Overflow
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -1920,7 +1920,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Aurora Handleless — Matt Graphite
+  Text: |
+    Aurora Handleless — Matt Graphite
+
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -1944,10 +1946,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -2101,7 +2103,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Promotion
+  Text: Fenwick In-Frame Classic — Sage Green
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -2125,10 +2127,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -2558,6 +2560,7 @@
     - 2edcb5bf-35d0-434b-ae0b-98d4d7d2b7c9: 7c75ce34-4870-4b13-4278-b76da7b8d183
     - 2f7e8906-c075-4641-baec-e8abe079e942: 4149ae61-efab-4578-be84-a181973b3b3b
     - 326ccc6c-39f9-49c6-96ac-4246f03179cc: bcc96ecd-f848-4e1d-83e5-3bd7949f6712
+    - 331e493f-1257-47cb-8dc7-c6a54370ab9d: 405ddc01-96e8-428a-a3a0-2bc201b10411
     - 37c445ec-87bc-4991-a63e-03e10f915e48: 3699e973-852c-4f98-81c9-ea277f671708
     - 3a6414b9-fbc1-4de1-b3b9-3fe01262d192: b0a14be5-6900-43c8-8cef-d0200b511829
     - 3d14f63f-e16a-4cee-9813-ab162c2d7fd0: 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
@@ -3246,6 +3249,50 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/3be24d61-b4db-4c71-9daf-079263802e06>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 005447c5-322c-4abe-97bc-63b4507c151a
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/3c14419e-2132-4756-ab7b-5a35f11533e0>
   PrefabRemaps:
     []
@@ -3714,6 +3761,50 @@
     []
   Components:
     - !<own> bfecd2fc-b128-45bd-be98-ffa89af46c69
+- !<ScriptComponent/4836dc5a-53fd-4d5d-a93b-a51aa0d8c7b9>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 248d3ff0-7a66-4b74-8e9d-d9b0fba5c303
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/48bba20c-c647-437a-a0ad-7f856429d087>
   PrefabRemaps:
     []
@@ -3989,11 +4080,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
-    From £24,500 (12-unit configuration)
-    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
-    Lead time 8–10 weeks · Made to order in the UK
-
+  Text: |-
+    From £18,900
+    Solid European oak frame, hand-applied oil finish. Dovetail-jointed drawer boxes, brushed brass cup handles. Pairs with butcher-block or natural stone.
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -4464,7 +4553,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> bb868271-4794-4b5e-ad20-0a9e93acabbd
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -4532,6 +4621,50 @@
     InvertRotation: false
   SurfaceOptions: !<SurfaceOptions>
     EnhanceWithNativeAR: false
+- !<ScriptComponent/5b8857bb-1798-47fb-abcc-60bda2c7e4b2>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 428c85f3-3051-48b9-a962-f77f0c4811d4
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<Text/5cd8068c-8c1b-4dec-8991-9383b846530a>
   PrefabRemaps:
     []
@@ -4544,11 +4677,10 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
+  Text: |-
     From £24,500 (12-unit configuration)
     Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
     Lead time 8–10 weeks · Made to order in the UK
-
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -4661,6 +4793,7 @@
     - 3ad48014-2959-44eb-bcfb-1198b4ec6ff9: 7b7dbc08-b42e-40ab-9b9f-0ff9bc91afa6
     - 42784ad5-d0e1-492f-b2c4-646bf021f618: 65d74a04-8a74-4c00-b00c-27e751c5fc46
     - 47c235b9-1f4e-41fc-aea2-ad81893a7fb9: 9c4bf09c-8922-484b-8b82-78f0232be426
+    - 4836dc5a-53fd-4d5d-a93b-a51aa0d8c7b9: 405ddc01-96e8-428a-a3a0-2bc201b10411
     - 4d40562f-e117-4344-bf7c-6600d946b15c: b0a14be5-6900-43c8-8cef-d0200b511829
     - 599f42b1-fcc2-4af3-907c-5973e2bc27a2: 9516fd50-a02d-45fc-b87a-9c1e76f84598
     - 5a316e5d-3364-48c5-a5cc-8c34f53f6394: 46cb4a5b-b3d6-45f3-80e7-ddd6a14b196e
@@ -4706,6 +4839,7 @@
     - !<own> 6e29bf4d-51dd-49fa-88b2-e99c8ea74c32
     - !<own> 04398662-66ff-4689-869e-4dfac9aca4ec
     - !<own> d7742b46-d7a7-454e-be64-6ab58b15772b
+    - !<own> 4836dc5a-53fd-4d5d-a93b-a51aa0d8c7b9
     - !<own> 5f11884c-48ea-4093-b660-ca913752e3e6
     - !<own> d15ddceb-878a-4f42-9d09-6752d537f88b
 - !<RenderMeshVisual/5e669f92-074b-49ef-a057-36007aa747d9>
@@ -5016,7 +5150,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> d869092f-3dfa-4d9c-a582-402c650ad7c8
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -5683,7 +5817,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> bb868271-4794-4b5e-ad20-0a9e93acabbd
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -5718,7 +5852,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> d869092f-3dfa-4d9c-a582-402c650ad7c8
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -6571,6 +6705,50 @@
     []
   Components:
     - !<own> 00a953ad-8885-44f1-8788-0d4de14268c3
+- !<ScriptComponent/80145f9f-8369-4ea8-865b-84970221b03f>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> fa0aeb97-3707-4995-ad79-895f2f642410
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/81879a35-15da-4ebf-a24f-2faf451b410a>
   PrefabRemaps:
     []
@@ -6642,11 +6820,10 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
-    From £24,500 (12-unit configuration)
-    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
-    Lead time 8–10 weeks · Made to order in the UK
-
+  Text: |-
+    From £31,000
+    Hand-painted solid ash in-frame construction. Traditional bead detailing, solid brass knobs and latches. Compatible with range cooker recesses and integrated larder units.
+    Bespoke — hand-finished to order · 10–12 weeks
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -6864,6 +7041,7 @@
     - 323f5815-fd34-4150-a416-a9ff7e752868: 5cbbeed9-cf34-4b25-a42d-b603c6fe53ac
     - 38caf490-6d17-412d-a704-6391d3aa8541: 72cbc73f-3d8d-466f-8829-25ed0c9410bc
     - 39e5b594-5820-4422-b87a-1a80afa01d8d: 72ce73a6-d701-4036-a630-cb1115abe99a
+    - 3be24d61-b4db-4c71-9daf-079263802e06: 405ddc01-96e8-428a-a3a0-2bc201b10411
     - 496b1d90-0139-4f74-8641-d4581f466ba8: 4149ae61-efab-4578-be84-a181973b3b3b
     - 5e669f92-074b-49ef-a057-36007aa747d9: 7b7dbc08-b42e-40ab-9b9f-0ff9bc91afa6
     - 6257c743-2c8c-42a9-91f3-7b3c9cc3758b: a78857cb-d8ef-4f0d-bfb5-6c49e0ebc141
@@ -6908,6 +7086,7 @@
     - !<own> b4ba4273-9e52-4b7d-9402-f431aa284872
     - !<own> 0bdc77da-9632-4b29-b6e8-4fd6f68bd807
     - !<own> 0cb7bc03-3793-40fe-9c66-ea7beac5e150
+    - !<own> 3be24d61-b4db-4c71-9daf-079263802e06
     - !<own> 6888912b-64e5-430c-ab1b-97284f253360
     - !<own> e8fdde38-2f84-4fde-8bbd-a31bbbe93866
 - !<SceneObject/864705fe-8c29-41ec-bf59-29361ab4c476>
@@ -6964,6 +7143,7 @@
     - 4abc0f07-1c5e-4d61-ab8c-a7e9f9429a0a: 9516fd50-a02d-45fc-b87a-9c1e76f84598
     - 5825f0d2-3201-4b4e-a691-b88976e56b7d: e95a87b4-0668-4464-8106-22ab3600b437
     - 590b84d8-6a3f-4e0b-8c18-65fbcf2be895: 74a33436-e965-4542-9933-7b62df7ce876
+    - 5b8857bb-1798-47fb-abcc-60bda2c7e4b2: 405ddc01-96e8-428a-a3a0-2bc201b10411
     - 5cd8068c-8c1b-4dec-8991-9383b846530a: 781eb83e-f25b-428d-8b4c-7015a0e592fe
     - 61a703f1-3515-47f7-818e-4c10f6202958: 6139dfb4-dd8a-4e8e-bd19-33980cbc6ed5
     - 650b389e-2056-49ec-a9fe-4f9e067a6ed9: 9529fbca-6c76-4acc-ba64-477fe731cbc2
@@ -7003,6 +7183,7 @@
     - !<own> 650b389e-2056-49ec-a9fe-4f9e067a6ed9
     - !<own> 13fea2ab-6572-486d-bcba-21c3a28e41aa
     - !<own> f774d5d0-a977-4d3b-b4b6-69b7dfe2af58
+    - !<own> 5b8857bb-1798-47fb-abcc-60bda2c7e4b2
     - !<own> 8297ba15-35ad-4284-8294-760e5149311a
 - !<RenderMeshVisual/879022e1-d479-4753-b225-0390c1b645fe>
   PrefabRemaps:
@@ -7459,7 +7640,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Promotion
+  Text: Steel & Ash Industrial
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -7483,10 +7664,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -8793,6 +8974,7 @@
     - 670394ea-4018-473d-90b4-2489f8c89076: e4ccc0bb-ad2c-4f82-b248-90507c49f64a
     - 6f6b9731-bf6c-44f4-b597-9549f03c07b7: 3699e973-852c-4f98-81c9-ea277f671708
     - 7c8897d2-a943-4aeb-8a79-e0926d967d8e: 74a33436-e965-4542-9933-7b62df7ce876
+    - 80145f9f-8369-4ea8-865b-84970221b03f: 405ddc01-96e8-428a-a3a0-2bc201b10411
     - 8535edf4-6c53-4f34-b070-95d06cef2e01: 36e9eac0-8bcb-4b9c-a73c-29a6163597cd
     - 892ee4aa-795f-4144-b597-be71e6adf36d: 556a02d3-26cf-4243-a115-b6650959e3e6
     - 96f59969-23e2-4ee4-a4fc-9ed7c8c4488a: 0429ae90-b67e-4c1b-9e0a-e275cc3143d6
@@ -8834,6 +9016,7 @@
     - !<own> 3971dd12-3d64-4453-835d-038c3969494d
     - !<own> 8535edf4-6c53-4f34-b070-95d06cef2e01
     - !<own> 2ccfec3d-b5e6-47ec-87d9-87a43d4f0312
+    - !<own> 80145f9f-8369-4ea8-865b-84970221b03f
     - !<own> 5860933e-608e-4496-b5cd-3840fa8cae34
     - !<own> fc9a1c74-c29b-46d7-8cd6-7f5bc41807fd
 - !<ScriptComponent/ad084c98-55da-4e27-9056-bd55cb5f1616>
@@ -9487,7 +9670,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> 1e95e6f9-233a-430f-a110-ec9d88d63fb7
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -11159,7 +11342,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> 1e95e6f9-233a-430f-a110-ec9d88d63fb7
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -11422,11 +11605,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
-    From £24,500 (12-unit configuration)
-    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
-    Lead time 8–10 weeks · Made to order in the UK
-
+  Text: |-
+    From £15,200
+    High-gloss acrylic fronts on moisture-resistant board. Seamless edge-banding, push-to-open mechanism (handleless). Reflective finish suited to compact or low-light kitchens.
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -11442,7 +11623,7 @@
   OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -11738,7 +11919,7 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Promotion
+  Text: Novo Gloss — Arctic White
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
@@ -11754,7 +11935,7 @@
   OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
-    Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+    Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
     Texture: !<reference> 00000000-0000-0000-0000-000000000000
     ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
     TileCount: 5.000000
@@ -11762,10 +11943,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -11983,7 +12164,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Campaign
+    Lignum Oak Shaker
 
   Editable: false
   ShowEditingPreview: true
@@ -12008,10 +12189,10 @@
     TextureStretch: FitWidth
   BlendMode: PremultipliedAlpha
   Outline: !<OutlineSettings>
-    Enabled: false
+    Enabled: true
     Fill: !<TextFill>
       Mode: Solid
-      Color: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}
+      Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       Texture: !<reference> 00000000-0000-0000-0000-000000000000
       ColorTint: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       TileCount: 5.000000
@@ -12489,11 +12670,9 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: |
-    From £24,500 (12-unit configuration)
-    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
-    Lead time 8–10 weeks · Made to order in the UK
-
+  Text: |-
+    From £21,700
+    Powder-coated steel frames with reclaimed ash open shelving. Exposed bracket detailing, concrete-effect laminate worktop. Optional integrated breakfast bar.
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
