@@ -915,7 +915,8 @@
     voiceStatusText: true
     sampleRate: true
     cameraIndicatorContainer: true
-    cameraIndicatorImage: true
+    cameraIndicatorActive: true
+    cameraIndicatorInactive: true
     cameraStatusText: true
   ScriptTypesDefault:
     {}
@@ -937,7 +938,8 @@
       voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       sampleRate: !<float> 0.000000
       cameraIndicatorContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      cameraIndicatorActive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraIndicatorInactive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       cameraStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":
