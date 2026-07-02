@@ -959,8 +959,7 @@
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
     cameraIndicatorContainer: true
-    cameraIndicatorActive: true
-    cameraIndicatorInactive: true
+    cameraIndicatorImage: true
     cameraStatusText: true
   ScriptTypesDefault:
     {}
@@ -982,8 +981,7 @@
       voiceStatusText: !<reference.Text> 96753fd3-f135-4a36-ad92-cad5ca64da58
       sampleRate: !<float> 44100.000000
       cameraIndicatorContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cameraIndicatorActive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cameraIndicatorInactive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       cameraStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     "":

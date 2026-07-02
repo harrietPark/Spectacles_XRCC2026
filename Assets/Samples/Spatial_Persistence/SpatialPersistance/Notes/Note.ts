@@ -88,12 +88,15 @@ export class Note extends BaseScriptComponent {
   // Camera indicator setup
   @ui.separator
   @ui.group_start("Camera Indicator")
-  @input
-  private cameraIndicatorContainer: SceneObject;
-  @input private cameraIndicatorActive: SceneObject;
-  @input private cameraIndicatorInactive: SceneObject;
+  @input private cameraIndicatorContainer: SceneObject;
+  @input private cameraIndicatorImage: Image;
   @input private cameraStatusText: Text;
   @ui.group_end
+
+  // // Audio feedback setup
+  // @input private audio: AudioComponent;
+  // @input private sfxDeletion: AudioTrackAsset;
+  
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
   private outlineFeedback: InteractableOutlineFeedback;
@@ -255,6 +258,7 @@ export class Note extends BaseScriptComponent {
 
     if (this.deleteButton && this.deleteButton.onButtonPinched) {
       this.deleteButton.onButtonPinched.add(() => {
+        // this.playDeletionFeedback();
         this.stopAllVoiceActivity();
         if (this.widget) {
           this.widget.delete();
@@ -388,14 +392,18 @@ export class Note extends BaseScriptComponent {
     this.recordAudioUpdateEvent.enabled = false;
 
     this.recordButton?.onButtonPinched.add(() => {
-      const shouldRecord = !this.isRecording;
-      // Keep mic icon feedback responsive even if recording startup fails.
-      this.microphoneButtonShowsRecordingTexture = shouldRecord;
-      this.updateMicrophoneButtonVisualState();
-      this.recordMicrophoneAudio(shouldRecord);
+      this.handleRecordButtonPinched();
     });
 
     this.updateVoiceStatusText("Press record button");
+  }
+
+  private handleRecordButtonPinched(): void {
+    const shouldRecord = !this.isRecording;
+    // Keep mic icon feedback responsive even if recording startup fails.
+    this.microphoneButtonShowsRecordingTexture = shouldRecord;
+    this.updateMicrophoneButtonVisualState();
+    this.recordMicrophoneAudio(shouldRecord);
   }
 
   private getAsrModule(): AsrModule | undefined {
@@ -438,6 +446,8 @@ export class Note extends BaseScriptComponent {
           this._textField.text = (this.voiceTranscription || "").trim();
           this.onTranscriptionFinalEvent.invoke();
           this.sendCompleteNoteData();
+          // mock record button pinched behaviour
+          if (this.isRecording) this.handleRecordButtonPinched();
         } else {
           // Partial chunk — show live preview.
           const committed = (this.voiceTranscription || "").trim();
@@ -568,6 +578,16 @@ export class Note extends BaseScriptComponent {
       this.recordMicrophoneAudio(false);
     }
   }
+
+  // private playDeletionFeedback(): void {
+  //   if (!this.audio || !this.sfxDeletion) {
+  //     return;
+  //   }
+
+  //   this.audio.stop(false);
+  //   this.audio.audioTrack = this.sfxDeletion;
+  //   this.audio.play(1);
+  // }
 
   private updateVoiceStatusText(message: string): void {
     if (!this.voiceStatusText) {
@@ -928,9 +948,12 @@ export class Note extends BaseScriptComponent {
   }
 
   private setCameraIndicatorActiveVisual(isActive: boolean): void {
-    // this.cameraIndicatorContainer.enabled = true;
-    this.cameraIndicatorActive.enabled = isActive;
-    this.cameraIndicatorInactive.enabled = !isActive;
+    const mainMat = this.cameraIndicatorImage.mainMaterial;
+    if(isActive) {
+      mainMat.mainPass.baseColor = vec4.one();
+    } else {
+      mainMat.mainPass.baseColor = vec4.zero();
+    }
   }
 
   private playSSTStartFeedback(): void {

@@ -29,9 +29,8 @@
     _croppedImage: false
     _editToggle: false
     _textField: false
-    cameraIndicatorActive: false
     cameraIndicatorContainer: false
-    cameraIndicatorInactive: false
+    cameraIndicatorImage: false
     cameraStatusText: false
     deleteButton: false
     editOutlineMaterial: false
@@ -70,8 +69,7 @@
       voiceStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       sampleRate: !<float> 0.000000
       cameraIndicatorContainer: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cameraIndicatorActive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
-      cameraIndicatorInactive: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       cameraStatusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
   ScriptTypes:
     -
@@ -98,7 +96,6 @@
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Camera Indicator"}'
     - // @input SceneObject cameraIndicatorContainer
-    - // @input SceneObject cameraIndicatorActive
-    - // @input SceneObject cameraIndicatorInactive
+    - // @input Component.Image cameraIndicatorImage
     - // @input Component.Text cameraStatusText
     - '// @ui {"widget":"group_end"}'
