@@ -918,6 +918,7 @@
   Enabled: true
   ScriptAsset: !<reference> b990fc1c-bd0f-4bb6-83b6-bcb7d608f951
   ScriptInputsDefault:
+    BGMSfxVolume: true
     activateDwellSfxVolume: true
     dwellReadySfxVolume: true
     noteSpawnedSfxVolume: true
@@ -929,6 +930,8 @@
     {}
   ScriptInputs:
     "":
+      BGMSfx: !<reference.AudioTrackAsset> 5e7938c2-bb7d-4095-aecd-2ce6299aa8d7
+      BGMSfxVolume: 0.800000
       activateDwellSfx: !<reference.AudioTrackAsset> de73be74-1411-45d2-a01c-3eaa983c7c35
       activateDwellSfxVolume: !<float> 1.000000
       dwellReadySfx: !<reference.AudioTrackAsset> 271f211c-1a9e-4d04-ae0e-96a4ac37a049
@@ -4067,7 +4070,6 @@
     []
   Components:
     - !<own> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
-    - !<own> 72d59329-5b1f-4493-b6de-08abbce14daa
 - !<Text/4c893420-2090-4f3c-a36f-fda0af4f7848>
   PrefabRemaps:
     []
@@ -6218,23 +6220,6 @@
     - !<own> 493cdf8d-ce80-43f5-b0e1-11cd54abcb19
   Components:
     []
-- !<AudioComponent/72d59329-5b1f-4493-b6de-08abbce14daa>
-  PrefabRemaps:
-    []
-  Name: Audio
-  Enabled: true
-  AudioTrack: !<reference> 5e7938c2-bb7d-4095-aecd-2ce6299aa8d7
-  EnableAutoplayLoop: true
-  Volume: 0.800000
-  EnableMixToSnap: false
-  RecordVolume: 1.000000
-  EnableSpatialAudio: false
-  EnableDistanceEffect: false
-  CurveType: Logarithm
-  MinDistance: 0.000000
-  MaxDistance: 100.000000
-  EnableDirectivityEffect: false
-  EnablePositionEffect: false
 - !<SceneObject/739d74d7-bb35-471a-b64e-fa68c83ee950>
   PrefabRemaps:
     []

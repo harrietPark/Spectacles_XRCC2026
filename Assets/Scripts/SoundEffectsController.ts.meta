@@ -26,6 +26,8 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    BGMSfx: false
+    BGMSfxVolume: false
     activateDwellSfx: false
     activateDwellSfxVolume: false
     cropCapturedSfx: false
@@ -49,7 +51,9 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - activateDwellSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+    - BGMSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      BGMSfxVolume: 0.800000
+      activateDwellSfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       activateDwellSfxVolume: !<float> 1.000000
       dwellReadySfx: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       dwellReadySfxVolume: !<float> 1.000000
@@ -67,6 +71,11 @@
     -
       {}
   InputLines:
+    - '// @ui {"widget":"group_start", "label":"BGM"}'
+    - // @input Asset.AudioTrackAsset BGMSfx
+    - // @input float BGMSfxVolume = 0.8
+    - '// @ui {"widget":"group_end"}'
+    - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"group_start", "label":"Note Creation Sounds"}'
     - '// @input Asset.AudioTrackAsset activateDwellSfx {"hint":"Played when pressing hand button to start finger dwell note placement."}'
     - '// @input float activateDwellSfxVolume = 1 {"hint":"Volume for activate dwell sound effect."}'
