@@ -25,6 +25,7 @@ const CAMERA_GAZE_OFFSET_FACTOR = 60
 
 const LOCALIZATION_TIMEOUT_MS = 15000
 const DEBUG_SPAWN_POP_DELAY_SECONDS = 2.0
+const SPAWN_POP_DURATION_SECONDS = 0.22
 const DEBUG_FALLBACK_POP_DURATION_SECONDS = 0.45
 const DEBUG_FALLBACK_POP_START_SCALE_MULTIPLIER = 0.25
 
@@ -237,7 +238,8 @@ export class AreaManager extends BaseScriptComponent {
     localPosition: vec3,
     localRotation: quat,
     shouldPlaySpawnPopAnimation: boolean = false,
-    shouldDelaySpawnPopAnimation: boolean = false
+    shouldDelaySpawnPopAnimation: boolean = false,
+    skipPersistSave: boolean = false
   ): SceneObject {
     // Change to use mesh array instead?
     const objectPrefab = this.widgetPrefabs[prefabIndex]
@@ -274,6 +276,7 @@ export class AreaManager extends BaseScriptComponent {
     })
 
     const noteComponent = widgetObject.getComponent(Note.getTypeName())
+    let usedFallbackPop = false
     if (noteComponent && shouldPlaySpawnPopAnimation) {
       // ============================================================
       // [AutoStartSTT] NEW
@@ -296,10 +299,47 @@ export class AreaManager extends BaseScriptComponent {
       }
     } else if (shouldPlaySpawnPopAnimation) {
       this.log("Spawn pop requested, but Note component was not found on spawned prefab.")
+      usedFallbackPop = true
       this.playFallbackSpawnAnimation(widgetObject, shouldDelaySpawnPopAnimation)
     }
 
+    this.schedulePersistSaveAfterSpawn(
+      shouldPlaySpawnPopAnimation,
+      shouldDelaySpawnPopAnimation,
+      usedFallbackPop,
+      skipPersistSave
+    )
+
     return widgetObject
+  }
+
+  private schedulePersistSaveAfterSpawn(
+    shouldPlaySpawnPopAnimation: boolean,
+    shouldDelaySpawnPopAnimation: boolean,
+    usedFallbackPop: boolean,
+    skipPersistSave: boolean
+  ): void {
+    if (skipPersistSave) {
+      return
+    }
+
+    if (!(this.areaAnchor !== undefined || global.deviceInfoSystem.isEditor()) || this.currentArea === undefined) {
+      return
+    }
+
+    if (!shouldPlaySpawnPopAnimation) {
+      this.saveWidgets()
+      return
+    }
+
+    const popDurationMs =
+      (usedFallbackPop ? DEBUG_FALLBACK_POP_DURATION_SECONDS : SPAWN_POP_DURATION_SECONDS) * 1000
+    const delayMs = shouldDelaySpawnPopAnimation ? DEBUG_SPAWN_POP_DELAY_SECONDS * 1000 : 0
+    setTimeout(() => {
+      if (this.currentArea !== undefined) {
+        this.saveWidgets()
+      }
+    }, delayMs + popDurationMs + 50)
   }
 
   private playFallbackSpawnAnimation(widgetObject: SceneObject, withDelay: boolean): void {
@@ -342,8 +382,6 @@ export class AreaManager extends BaseScriptComponent {
       )
 
       this.toggleOffAllVoiceNotes()
-
-      this.saveWidgets()
     }
   }
 
@@ -397,7 +435,10 @@ export class AreaManager extends BaseScriptComponent {
         widgetMeshIndices[i],
         i,
         widgetMats[i].column0,
-        quat.fromEulerVec(widgetMats[i].column1)
+        quat.fromEulerVec(widgetMats[i].column1),
+        false,
+        false,
+        true
       )
 
       const widget = widgetObject.getComponent(Widget.getTypeName())
