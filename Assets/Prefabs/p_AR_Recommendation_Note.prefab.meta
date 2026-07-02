@@ -312,7 +312,6 @@
     - !<own> 0d078520-2359-4100-91e7-069468ff2615
     - !<own> 24a253ff-29a5-457d-bc30-117f8fcfcae9
     - !<own> d4f5838a-e438-4f15-a213-8d2e4e85772b
-    - !<own> 71987a6f-4654-4a0e-b007-df258ee3abbd
     - !<own> 03ab5762-5588-4b90-b3ae-568e022860b5
     - !<own> d0255d3c-bce5-40e7-9dec-e86a899ba81b
     - !<own> 8d7d4c14-6e83-49eb-9067-11b7db38163c
@@ -775,21 +774,6 @@
     []
   Components:
     - !<own> dc6305d7-fe00-4dbf-94fa-5bd6042fc488
-- !<SceneObject/71987a6f-4654-4a0e-b007-df258ee3abbd>
-  PrefabRemaps:
-    []
-  Name: New Badge
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    []
 - !<SceneObject/795ec350-9b2a-4f87-bf5b-14aa7c9e55c4>
   PrefabRemaps:
     []

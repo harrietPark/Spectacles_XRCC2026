@@ -435,21 +435,6 @@
     - !<own> e5a4a369-fc51-43c7-8a41-274eb42150dc
   Components:
     []
-- !<SceneObject/335d9d18-a106-4faf-92e7-b7169178e543>
-  PrefabRemaps:
-    []
-  Name: New Badge
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    []
 - !<SceneObject/3427f5d1-3d23-415b-af43-e3a77c66bdea>
   PrefabRemaps:
     []
@@ -596,7 +581,6 @@
     - 2e1d2a94-f337-4267-914d-55d4f3315af5: fa784eec-d3e5-45ac-9979-3a71bd4ae327
     - 2fac04f9-4a52-4c1b-8159-43286b7adce5: 92f181a8-b76f-409d-8d1f-47b07a2cb789
     - 30837a21-29a0-4d61-a82d-04698dce266c: 8d7d4c14-6e83-49eb-9067-11b7db38163c
-    - 335d9d18-a106-4faf-92e7-b7169178e543: 71987a6f-4654-4a0e-b007-df258ee3abbd
     - 3427f5d1-3d23-415b-af43-e3a77c66bdea: aa4b1d5e-7dda-4193-8efb-ce932045922d
     - 343bddfd-ae2e-4c80-83d6-57c1797ba636: f27e3067-98fd-4108-9ce6-65f5e0b852bf
     - 35f41dac-ec17-4819-8881-ededfb50224b: f28e4afc-3e87-4c10-902d-cd3d7c852de9
@@ -674,7 +658,6 @@
     - !<own> 40f5bbfb-fbfb-4fa2-b5f0-4882d590627f
     - !<own> 6af237e4-0064-4231-bf35-f05dc9d55d04
     - !<own> 856fa91a-252a-45d5-a557-9dc49cf3e11a
-    - !<own> 335d9d18-a106-4faf-92e7-b7169178e543
     - !<own> 5f464960-9b44-4f78-ac47-b5a596e79a94
     - !<own> 98231a04-14b1-4187-a18e-46af4ee88e25
     - !<own> 30837a21-29a0-4d61-a82d-04698dce266c
