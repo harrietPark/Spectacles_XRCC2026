@@ -238,6 +238,10 @@ export class NotesController extends BaseScriptComponent {
       }
     }
 
+    // ===== [DeleteCrashFix] OLD (mapped raw overlaps, could touch a destroyed object) =====
+    // const currAllNotesObjInFOV = overlap.currentOverlaps.map((overlap) => overlap.collider.getSceneObject());
+    // ====================================================================
+
     const currLiveNotesObjInFOV = currAllNotesObjInFOV.filter(
       (obj) => obj.getComponent(Note.getTypeName()) !== undefined,
     );
@@ -271,6 +275,16 @@ export class NotesController extends BaseScriptComponent {
       this.isSceneObjectAlive(obj),
     );
 
+    // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevLiveNotesObjInFOV) =====
+    // if (this.prevLiveNotesObjInFOV.length == 0) {
+    //     this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
+    //     return;
+    // }
+    //
+    // const addedNotesObjInFOV = currLiveNotesObjInFOV.filter((obj) => !this.prevLiveNotesObjInFOV.includes(obj));
+    // const removedNotesObjInFOV = this.prevLiveNotesObjInFOV.filter((obj) => !currLiveNotesObjInFOV.includes(obj));
+    // ====================================================================
+
     if (prevLiveNotesObjInFOV.length == 0) {
       this.prevLiveNotesObjInFOV = currLiveNotesObjInFOV;
       return;
@@ -283,6 +297,14 @@ export class NotesController extends BaseScriptComponent {
       (obj) => !currLiveNotesObjInFOV.includes(obj),
     );
 
+    // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
+    // for (const note of addedNotesObjInFOV) {
+    //     note.getComponent(Note.getTypeName())?.pullToForeground();
+    // }
+    // for (const note of removedNotesObjInFOV) {
+    //     note.getComponent(Note.getTypeName())?.pushToBackground();
+    // }
+    // ====================================================================
     // [DeleteCrashFix] NEW: defense-in-depth try/catch so a note destroyed
     // between overlap events can never crash the lens here.
     for (const note of addedNotesObjInFOV) {
@@ -317,6 +339,16 @@ export class NotesController extends BaseScriptComponent {
       this.isSceneObjectAlive(obj),
     );
 
+    // ===== [DeleteCrashFix] OLD (diffed the raw, unfiltered this.prevPresetNotesObjInFOV) =====
+    // if (this.prevPresetNotesObjInFOV.length == 0) {
+    //     this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
+    //     return;
+    // }
+    //
+    // const addedNotesObjInFOV = currPresetNotesObjInFOV.filter((obj) => !this.prevPresetNotesObjInFOV.includes(obj));
+    // const removedNotesObjInFOV = this.prevPresetNotesObjInFOV.filter((obj) => !currPresetNotesObjInFOV.includes(obj));
+    // ====================================================================
+
     if (prevPresetNotesObjInFOV.length == 0) {
       this.prevPresetNotesObjInFOV = currPresetNotesObjInFOV;
       return;
@@ -329,6 +361,14 @@ export class NotesController extends BaseScriptComponent {
       (obj) => !currPresetNotesObjInFOV.includes(obj),
     );
 
+    // ===== [DeleteCrashFix] OLD (unguarded dereference, could throw on a destroyed note) =====
+    // for (const note of addedNotesObjInFOV) {
+    //     note.getComponent(PresetNote.getTypeName())?.pullToForeground();
+    // }
+    // for (const note of removedNotesObjInFOV) {
+    //     note.getComponent(PresetNote.getTypeName())?.pushToBackground();
+    // }
+    // ====================================================================
     // [DeleteCrashFix] NEW: defense-in-depth try/catch (see updateLiveNotesInFOV).
     for (const note of addedNotesObjInFOV) {
       try {
@@ -444,8 +484,8 @@ export class NotesController extends BaseScriptComponent {
     latestNote.playCameraCaptureStartFeedback();
     // TODO: to replace the below hard-coded time delay with an object recognition pipeline
     setTimeout(() => {
-        latestNote.playCameraCaptureEndFeedback();
-        this.sceneManager.playCropCapturedFeedback();
+      latestNote.playCameraCaptureEndFeedback();
+      this.sceneManager.playCropCapturedFeedback();
     }, 3000);
   }
 
