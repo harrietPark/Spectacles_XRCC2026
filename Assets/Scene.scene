@@ -7513,7 +7513,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> aa70d723-1a84-4beb-88b5-7f8d3ac701e3
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -7887,9 +7887,9 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Position: {x: 0.000000, y: 10.074990, z: 0.000000}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    Scale: {x: 1.200000, y: 1.200000, z: 1.200000}
     HasSegmentScaleCompensation: false
   Children:
     - !<own> 87101f21-1627-4664-a163-bd2865509deb
@@ -8480,7 +8480,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> 7866da51-ce03-4cba-becc-939fb83b9ca2
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -9374,7 +9374,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> aa70d723-1a84-4beb-88b5-7f8d3ac701e3
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
@@ -9510,7 +9510,7 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Materials:
-    - !<reference> 5366c93e-5912-4afc-9eeb-e40884abf168
+    - !<reference> 7866da51-ce03-4cba-becc-939fb83b9ca2
   Mesh: !<reference> 52ce90cf-3c5f-4a05-8942-241a9f015c11
   Skin: !<reference> 00000000-0000-0000-0000-000000000000
   BlendShapesEnabled: true
