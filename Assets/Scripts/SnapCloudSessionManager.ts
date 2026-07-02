@@ -149,7 +149,9 @@ export class SnapCloudSessionManager extends BaseScriptComponent {
         .from(this.sessionsTableName)
         .update({
           status: "ended",
-          ended_at: endedAt
+          ended_at: endedAt,
+          staff_call_requested_at: null,
+          staff_call_spatial_position: null
         })
         .eq("id", this.sessionId)
 
@@ -165,7 +167,11 @@ export class SnapCloudSessionManager extends BaseScriptComponent {
       if (!visitSummaryOk) {
         const markAb = await this.client
           .from(this.sessionsTableName)
-          .update({status: "abandon"})
+          .update({
+            status: "abandon",
+            staff_call_requested_at: null,
+          staff_call_spatial_position: null
+          })
           .eq("id", this.sessionId)
         if (markAb.error) {
           print(`[SessionManager] sessions UPDATE(abandon) failed: ${JSON.stringify(markAb.error)}`)
@@ -196,7 +202,9 @@ export class SnapCloudSessionManager extends BaseScriptComponent {
       .from(this.sessionsTableName)
       .update({
         status: "abandon",
-        ended_at: endedAt
+        ended_at: endedAt,
+        staff_call_requested_at: null,
+        staff_call_spatial_position: null
       })
       .eq("id", this.sessionId)
     if (error) {

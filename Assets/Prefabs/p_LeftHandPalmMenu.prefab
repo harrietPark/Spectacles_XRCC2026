@@ -74,6 +74,7 @@
     _shadowPositionOffset: true
     _toggleable: true
     _defaultToOn: true
+    triggerUpCallbacks: true
     triggerDownCallbacks: true
     onValueChangeCallbacks: true
     onFinishedCallbacks: true
@@ -91,8 +92,7 @@
       _defaultToOn: false
       addCallbacks: true
       triggerUpCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
-          functionName: callSalesPerson
+        []
       triggerDownCallbacks:
         []
       onValueChangeCallbacks:

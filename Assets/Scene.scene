@@ -6570,7 +6570,7 @@
       _defaultToOn: false
       addCallbacks: true
       triggerUpCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+        - scriptComponent: !<reference.ScriptComponent> db8b60f4-dcc4-4932-8929-fc1570e8ed5f
           functionName: callSalesPerson
       triggerDownCallbacks:
         []
@@ -6663,6 +6663,7 @@
     []
   Components:
     - !<own> 67afd973-386c-45d9-8ff9-f5a8f98bf900
+    - !<own> db8b60f4-dcc4-4932-8929-fc1570e8ed5f
 - !<Text/a55eeb89-9ae7-4782-8d9a-f86a399c257d>
   PrefabRemaps:
     []
@@ -9325,6 +9326,22 @@
   BlendNormals: false
   BlendShapes:
     {}
+- !<ScriptComponent/db8b60f4-dcc4-4932-8929-fc1570e8ed5f>
+  PrefabRemaps:
+    []
+  Name: SnapCloudStaffCallManager
+  Enabled: true
+  ScriptAsset: !<reference> 32d980d9-6589-4ad2-bb50-2330e7e0678b
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/dbbf2170-ea64-4ec4-a7cd-90320ddb2436>
   PrefabRemaps:
     []
