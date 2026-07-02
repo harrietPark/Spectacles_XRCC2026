@@ -99,7 +99,7 @@
     baseTex:
       typeIdx: 9
       value:
-        id: 15bc9894-20ef-43b2-88a1-733d340f1b70
+        id: 83d4eb1a-c5ee-4c95-80dc-a79cd08789d7
         sampler:
           filteringMode: Trilinear
           wrapModeU: MirroredRepeat
