@@ -1920,20 +1920,20 @@
   MeshShadowMode: None
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
-  Text: Bestseller
+  Text: Aurora Handleless — Matt Graphite
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 3
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -0.350000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.400000
+    right: 0.400000
+    top: 0.480000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -2106,15 +2106,15 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 3
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -0.350000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.400000
+    right: 0.400000
+    top: 0.480000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -2572,6 +2572,7 @@
     - 834572e0-ea17-41fd-9238-3243c439fc4e: e4ccc0bb-ad2c-4f82-b248-90507c49f64a
     - 844c2010-9e2d-448e-bc0b-61e31adf1321: 64a8eb77-c8fc-4c99-9b55-7aa11f51951e
     - 880a7b83-c62f-4a76-a63d-bfde630fc7b2: 9c4bf09c-8922-484b-8b82-78f0232be426
+    - 8d268a3e-e42d-4353-a8e8-e10b6a8eac77: b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
     - 9338f4d0-9e24-413c-b8da-89ae30690882: 7b7dbc08-b42e-40ab-9b9f-0ff9bc91afa6
     - 97c33a7d-0933-4ffd-a8af-0f38b0673585: 1de02e7d-259c-419d-9d57-1b87af85d4b8
     - 9ebca964-d526-48f2-9c95-d3b3b162410b: 72cbc73f-3d8d-466f-8829-25ed0c9410bc
@@ -2610,6 +2611,7 @@
     - !<own> 3d14f63f-e16a-4cee-9813-ab162c2d7fd0
     - !<own> e05ee592-15d5-407a-b33c-f561b268c7d9
     - !<own> 331e493f-1257-47cb-8dc7-c6a54370ab9d
+    - !<own> 8d268a3e-e42d-4353-a8e8-e10b6a8eac77
 - !<SceneObject/2f18091e-35d0-4548-8424-980d61c8f5d4>
   PrefabRemaps:
     - 2521d465-9bca-4961-bc13-de4df6d280c2: 41236ef1-885d-4ece-5db4-956b5771bb92
@@ -3988,21 +3990,23 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Description
+    From £24,500 (12-unit configuration)
+    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
+    Lead time 8–10 weeks · Made to order in the UK
 
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 2
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
-    left: -0.350000
+    left: -0.400000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.280000
+    right: 0.450000
+    top: 0.200000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -4541,21 +4545,23 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Description
+    From £24,500 (12-unit configuration)
+    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
+    Lead time 8–10 weeks · Made to order in the UK
 
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 2
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
-    left: -0.350000
+    left: -0.400000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.280000
+    right: 0.450000
+    top: 0.200000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -4674,6 +4680,7 @@
     - a1b369cf-5018-4b32-b6de-eb6724d459b9: 95939888-649a-4d63-b2f4-99803a41614c
     - b6446591-42f8-4c9c-ac2a-67aed37b4acf: e95a87b4-0668-4464-8106-22ab3600b437
     - bca5f413-7d77-4c4a-bfd3-e8fe684fe572: 0429ae90-b67e-4c1b-9e0a-e275cc3143d6
+    - d15ddceb-878a-4f42-9d09-6752d537f88b: b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
     - d566d426-f470-43b5-9e49-fa238faca05e: 72ce73a6-d701-4036-a630-cb1115abe99a
     - d7742b46-d7a7-454e-be64-6ab58b15772b: a77a85bc-8fb7-4e87-b9b7-aeccf51013ba
     - e15bdf4f-7bad-4ae9-a8b2-8e4d8127db32: 1802d196-ba7e-42cc-9e1c-dd6f0e0ff3ca
@@ -4700,6 +4707,7 @@
     - !<own> 04398662-66ff-4689-869e-4dfac9aca4ec
     - !<own> d7742b46-d7a7-454e-be64-6ab58b15772b
     - !<own> 5f11884c-48ea-4093-b660-ca913752e3e6
+    - !<own> d15ddceb-878a-4f42-9d09-6752d537f88b
 - !<RenderMeshVisual/5e669f92-074b-49ef-a057-36007aa747d9>
   PrefabRemaps:
     []
@@ -6635,21 +6643,23 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Description
+    From £24,500 (12-unit configuration)
+    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
+    Lead time 8–10 weeks · Made to order in the UK
 
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 2
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
-    left: -0.350000
+    left: -0.400000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.280000
+    right: 0.450000
+    top: 0.200000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -6878,6 +6888,7 @@
     - c29be4dc-db9e-4f87-8c3a-39a36f5d9209: 65d74a04-8a74-4c00-b00c-27e751c5fc46
     - c96ff8d2-2230-4cbd-b71c-07901cca9c00: 556a02d3-26cf-4243-a115-b6650959e3e6
     - e269b744-d533-4856-8a85-9d3830ac8370: 95939888-649a-4d63-b2f4-99803a41614c
+    - e8fdde38-2f84-4fde-8bbd-a31bbbe93866: b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
     - ee5163b5-8789-45b9-ae32-dbbe3660fd22: 781eb83e-f25b-428d-8b4c-7015a0e592fe
   Name: Preset_Note_Steel
   Enabled: true
@@ -6898,6 +6909,7 @@
     - !<own> 0bdc77da-9632-4b29-b6e8-4fd6f68bd807
     - !<own> 0cb7bc03-3793-40fe-9c66-ea7beac5e150
     - !<own> 6888912b-64e5-430c-ab1b-97284f253360
+    - !<own> e8fdde38-2f84-4fde-8bbd-a31bbbe93866
 - !<SceneObject/864705fe-8c29-41ec-bf59-29361ab4c476>
   PrefabRemaps:
     []
@@ -6957,6 +6969,7 @@
     - 650b389e-2056-49ec-a9fe-4f9e067a6ed9: 9529fbca-6c76-4acc-ba64-477fe731cbc2
     - 67ab351d-8bfa-415f-b6bf-d0321a7dc1f0: 64a8eb77-c8fc-4c99-9b55-7aa11f51951e
     - 76bfefdb-f204-4972-bf80-e70103889051: 556a02d3-26cf-4243-a115-b6650959e3e6
+    - 8297ba15-35ad-4284-8294-760e5149311a: b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
     - 864705fe-8c29-41ec-bf59-29361ab4c476: 498b5fae-e9da-42dc-a929-d204902155c4
     - 87101f21-1627-4664-a163-bd2865509deb: 7c75ce34-4870-4b13-4278-b76da7b8d183
     - 909decdf-4ab8-4bce-a8be-a09f0355b21c: a78857cb-d8ef-4f0d-bfb5-6c49e0ebc141
@@ -7217,6 +7230,50 @@
   MaxDistance: 100.000000
   EnableDirectivityEffect: false
   EnablePositionEffect: false
+- !<ScriptComponent/8d268a3e-e42d-4353-a8e8-e10b6a8eac77>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 326ccc6c-39f9-49c6-96ac-4246f03179cc
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/8ffb5c13-ce94-42f0-aa9c-e6de994d3fd3>
   PrefabRemaps:
     []
@@ -7407,15 +7464,15 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 3
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -0.350000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.400000
+    right: 0.400000
+    top: 0.480000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -8758,6 +8815,7 @@
     - f35f7216-a312-4bab-be18-894a2d31fefd: 4149ae61-efab-4578-be84-a181973b3b3b
     - f827488e-2799-4ebe-a062-be49e9b4c1b5: 72ce73a6-d701-4036-a630-cb1115abe99a
     - fa0aeb97-3707-4995-ad79-895f2f642410: bcc96ecd-f848-4e1d-83e5-3bd7949f6712
+    - fc9a1c74-c29b-46d7-8cd6-7f5bc41807fd: b4b9a60c-f0e3-4cd2-ba1c-978d65c4accc
   Name: Preset_Note_Novo
   Enabled: true
   Layers: 1
@@ -8777,6 +8835,7 @@
     - !<own> 8535edf4-6c53-4f34-b070-95d06cef2e01
     - !<own> 2ccfec3d-b5e6-47ec-87d9-87a43d4f0312
     - !<own> 5860933e-608e-4496-b5cd-3840fa8cae34
+    - !<own> fc9a1c74-c29b-46d7-8cd6-7f5bc41807fd
 - !<ScriptComponent/ad084c98-55da-4e27-9056-bd55cb5f1616>
   PrefabRemaps:
     []
@@ -10910,6 +10969,50 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/d15ddceb-878a-4f42-9d09-6752d537f88b>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 248d3ff0-7a66-4b74-8e9d-d9b0fba5c303
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/d1e3c9ff-089d-42a3-93c3-7df310becbda>
   PrefabRemaps:
     []
@@ -11320,21 +11423,23 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Description
+    From £24,500 (12-unit configuration)
+    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
+    Lead time 8–10 weeks · Made to order in the UK
 
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 2
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
-    left: -0.350000
+    left: -0.400000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.280000
+    right: 0.450000
+    top: 0.200000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -11638,15 +11743,15 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 3
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -0.350000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.400000
+    right: 0.400000
+    top: 0.480000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -11884,15 +11989,15 @@
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 3
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
     left: -0.350000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.400000
+    right: 0.400000
+    top: 0.480000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -12098,6 +12203,50 @@
     - !<own> b03ae636-873b-4d0a-ab3e-710a0c6bbaf9
   Components:
     - !<own> d04c1bfe-0946-4345-9d03-a7da70283e8c
+- !<ScriptComponent/e8fdde38-2f84-4fde-8bbd-a31bbbe93866>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> 005447c5-322c-4abe-97bc-63b4507c151a
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/e9e9678a-2526-47da-995c-98ea0a209478>
   PrefabRemaps:
     []
@@ -12341,21 +12490,23 @@
   ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ShadowDensity: 1.000000
   Text: |
-    Description
+    From £24,500 (12-unit configuration)
+    Fingerprint-resistant matt lacquer on 18mm MDF carcass. Integrated aluminium J-profile, soft-close Blum hinges throughout. Worktop in 20mm honed Calacatta quartz.
+    Lead time 8–10 weeks · Made to order in the UK
 
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
   SizeToFit: false
-  FontSize: 4
+  FontSize: 2
   Font: !<reference> 00000000-0000-0000-0000-000000000000
   LayoutRect:
-    left: -0.350000
+    left: -0.400000
     bottom: 0.000000
-    right: 0.000000
-    top: 0.280000
+    right: 0.450000
+    top: 0.200000
   OverflowVertical: Overflow
-  OverflowHorizontal: Overflow
+  OverflowHorizontal: Wrap
   Fill: !<TextFill>
     Mode: Solid
     Color: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
@@ -13048,6 +13199,50 @@
     - !<own> f3bbd0db-8ab1-4bc2-94ca-39359a43db92
   Components:
     []
+- !<ScriptComponent/fc9a1c74-c29b-46d7-8cd6-7f5bc41807fd>
+  PrefabRemaps:
+    []
+  Name: PinPointNoteSimpleVisibilityToggle
+  Enabled: true
+  ScriptAsset: !<reference> f5adc48c-729e-46c7-ab6c-58be854d7d76
+  ScriptInputsDefault:
+    pinToggleButtons: true
+    startVisible: true
+    pinScaleAnimationDuration: true
+    enableShowSway: true
+    showSwayMaxAngleDegrees: true
+    enableHideDropAnimation: true
+    hideDropEndScaleMultiplier: true
+    useHangingPivot: true
+    hangingPivotLocal: true
+    pinScaleObjects: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      pinToggleButtons: !<MappingBased.AssignableType[]>
+        []
+      noteObjectsRoot: !<reference.SceneObject> fa0aeb97-3707-4995-ad79-895f2f642410
+      startVisible: true
+      hiddenPinScaleMultiplier: !<float> 1.000000
+      pinScaleAnimationDuration: 0.220000
+      enableShowSway: true
+      showSwayDuration: 0.600000
+      showSwayMaxAngleDegrees: !<float> 11.000000
+      showSwayFrequencyHz: !<float> 3.000000
+      showSwayDamping: !<float> 3.000000
+      enableHideDropAnimation: true
+      hideDropDuration: 0.400000
+      hideDropDistance: !<float> 5.000000
+      hideDropRotateDegrees: !<float> 30.000000
+      hideDropEndScaleMultiplier: 0.700000
+      useHangingPivot: true
+      hangingPivotLocal: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      pinScaleObjects: !<reference.SceneObject[]>
+        []
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/fd1024f0-fcc7-41d6-adb1-7e68b98da64c>
   PrefabRemaps:
     []
