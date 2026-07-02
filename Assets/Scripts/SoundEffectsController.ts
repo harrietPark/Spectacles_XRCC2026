@@ -1,5 +1,10 @@
 @component
 export class SoundEffectsController extends BaseScriptComponent {
+    @ui.group_start("BGM")
+    @input private BGMSfx: AudioTrackAsset;
+    @input private BGMSfxVolume: number = 0.8;
+    @ui.group_end
+    @ui.separator
     @ui.group_start("Note Creation Sounds")
     @input
     @allowUndefined
@@ -52,6 +57,7 @@ export class SoundEffectsController extends BaseScriptComponent {
     private cropCapturedSfxVolume: number = 1.0;
     @ui.group_end
 
+    private bgmPlayer: AudioComponent | undefined;
     private activateDwellPlayer: AudioComponent | undefined;
     private dwellReadyPlayer: AudioComponent | undefined;
     private noteSpawnedPlayer: AudioComponent | undefined;
@@ -65,13 +71,23 @@ export class SoundEffectsController extends BaseScriptComponent {
     }
 
     private onStart(): void {
+        this.bgmPlayer = this.createPlayer(this.BGMSfx, this.BGMSfxVolume);
+        this.playBGM();
         this.activateDwellPlayer = this.createPlayer(this.activateDwellSfx, this.activateDwellSfxVolume);
         this.dwellReadyPlayer = this.createPlayer(this.dwellReadySfx, this.dwellReadySfxVolume);
         this.noteSpawnedPlayer = this.createPlayer(this.noteSpawnedSfx, this.noteSpawnedSfxVolume);
         this.dwellCancelledPlayer = this.createPlayer(this.dwellCancelledSfx, this.dwellCancelledSfxVolume);
         this.loadingStartPlayer = this.createPlayer(this.loadingStartSfx, this.loadingStartSfxVolume);
         this.loadingDonePlayer = this.createPlayer(this.loadingDoneSfx, this.loadingDoneSfxVolume);
-        this.cropCapturedPlayer = this.createPlayer(this.cropCapturedSfx, this.cropCapturedSfxVolume);
+        this.cropCapturedPlayer = this.createPlayer(this.cropCapturedSfx, this.cropCapturedSfxVolume);    
+    }
+
+    public playBGM(): void {
+        if (!this.bgmPlayer) return;
+
+        if (this.bgmPlayer.isPlaying()) return;
+
+        this.bgmPlayer.play(-1);
     }
 
     public playActivateDwell(): void {
