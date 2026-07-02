@@ -388,14 +388,18 @@ export class Note extends BaseScriptComponent {
     this.recordAudioUpdateEvent.enabled = false;
 
     this.recordButton?.onButtonPinched.add(() => {
-      const shouldRecord = !this.isRecording;
-      // Keep mic icon feedback responsive even if recording startup fails.
-      this.microphoneButtonShowsRecordingTexture = shouldRecord;
-      this.updateMicrophoneButtonVisualState();
-      this.recordMicrophoneAudio(shouldRecord);
+      this.handleRecordButtonPinched();
     });
 
     this.updateVoiceStatusText("Press record button");
+  }
+
+  private handleRecordButtonPinched(): void {
+    const shouldRecord = !this.isRecording;
+    // Keep mic icon feedback responsive even if recording startup fails.
+    this.microphoneButtonShowsRecordingTexture = shouldRecord;
+    this.updateMicrophoneButtonVisualState();
+    this.recordMicrophoneAudio(shouldRecord);
   }
 
   private getAsrModule(): AsrModule | undefined {
@@ -438,6 +442,8 @@ export class Note extends BaseScriptComponent {
           this._textField.text = (this.voiceTranscription || "").trim();
           this.onTranscriptionFinalEvent.invoke();
           this.sendCompleteNoteData();
+          // mock record button pinched behaviour
+          if (this.isRecording) this.handleRecordButtonPinched();
         } else {
           // Partial chunk — show live preview.
           const committed = (this.voiceTranscription || "").trim();
