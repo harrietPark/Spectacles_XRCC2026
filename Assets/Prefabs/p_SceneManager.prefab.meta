@@ -58,3 +58,21 @@
     []
   Components:
     - !<own> 1b8a3182-e53d-4927-4ecf-590d4803f079
+    - !<own> 79a79792-70da-477a-a2b7-a108a26a0c25
+- !<AudioComponent/79a79792-70da-477a-a2b7-a108a26a0c25>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 5e7938c2-bb7d-4095-aecd-2ce6299aa8d7
+  EnableAutoplayLoop: true
+  Volume: 0.800000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false

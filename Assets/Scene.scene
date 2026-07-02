@@ -3402,6 +3402,7 @@
   PrefabRemaps:
     - 398d0c72-50da-4a11-89a4-7241c0cb7cfc: 1b8a3182-e53d-4927-4ecf-590d4803f079
     - 4be171e2-d1f6-4b93-9876-1edec0ef6cb0: 4f7526f3-e5f7-4e54-549d-efbf714df514
+    - 72d59329-5b1f-4493-b6de-08abbce14daa: 79a79792-70da-477a-a2b7-a108a26a0c25
   Name: SceneManager
   Enabled: true
   Layers: 1
@@ -3414,6 +3415,7 @@
     []
   Components:
     - !<own> 398d0c72-50da-4a11-89a4-7241c0cb7cfc
+    - !<own> 72d59329-5b1f-4493-b6de-08abbce14daa
 - !<SceneObject/4ca61d1f-7756-4804-bbd6-02101288bea6>
   PrefabRemaps:
     []
@@ -4908,6 +4910,23 @@
     - !<own> 493cdf8d-ce80-43f5-b0e1-11cd54abcb19
   Components:
     []
+- !<AudioComponent/72d59329-5b1f-4493-b6de-08abbce14daa>
+  PrefabRemaps:
+    []
+  Name: Audio
+  Enabled: true
+  AudioTrack: !<reference> 5e7938c2-bb7d-4095-aecd-2ce6299aa8d7
+  EnableAutoplayLoop: true
+  Volume: 0.800000
+  EnableMixToSnap: false
+  RecordVolume: 1.000000
+  EnableSpatialAudio: false
+  EnableDistanceEffect: false
+  CurveType: Logarithm
+  MinDistance: 0.000000
+  MaxDistance: 100.000000
+  EnableDirectivityEffect: false
+  EnablePositionEffect: false
 - !<SceneObject/739d74d7-bb35-471a-b64e-fa68c83ee950>
   PrefabRemaps:
     []
