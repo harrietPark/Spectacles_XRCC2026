@@ -849,7 +849,7 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    cameraIndicatorImage: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -870,8 +870,7 @@
       voiceStatusText: !<reference.Text> 2a789837-f16e-4053-6e42-0acf8ecac4dc
       sampleRate: !<float> 44100.000000
       cameraIndicatorContainer: !<reference.SceneObject> d2b8be6e-52f7-497a-910c-99e141e1ff63
-      cameraIndicatorActive: !<reference.SceneObject> 02421058-1581-4cfe-ba08-a599bdc9787b
-      cameraIndicatorInactive: !<reference.SceneObject> 86900391-f4ab-43b9-bad8-560480549049
+      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       cameraStatusText: !<reference.Text> a75ea5a0-6b3b-4f04-9739-709c1a3a3e10
   ScriptTypes:
     "":

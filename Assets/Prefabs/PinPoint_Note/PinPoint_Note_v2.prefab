@@ -960,7 +960,7 @@
   Enabled: true
   ScriptAsset: !<reference> a3e74958-6f6b-42c6-b1ce-8f2587f3e81e
   ScriptInputsDefault:
-    {}
+    cameraIndicatorImage: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -981,7 +981,7 @@
       voiceStatusText: !<reference.Text> 2a789837-f16e-4053-91bd-f53071353b23
       sampleRate: !<float> 44100.000000
       cameraIndicatorContainer: !<reference.SceneObject> c1f99462-42d0-4df5-a38d-47f43d0b19fa
-      cameraIndicatorImage: !<reference.Image> 9dcafd38-21c7-4b0a-8d38-77545fc87c63
+      cameraIndicatorImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
       cameraStatusText: !<reference.Text> 4cbaf730-6a9c-419e-89e0-bcfeb3f1756d
   ScriptTypes:
     "":
@@ -1723,7 +1723,6 @@
     - 00e60ae9-5b00-45cf-a280-1e44c1df2109: 00e60ae9-5b00-45cf-5d7f-e1bb3e20def6
     - 01d4cd3e-e1b6-416d-8fa6-c985c7fd161d: 01d4cd3e-e1b6-416d-7059-367a3802e9e2
     - 030b974d-e9d1-4e84-a826-d705800dba84: 030b974d-e9d1-4e84-57d9-28fa7ff2457b
-    - 0571a8ca-3d1b-41bd-b97b-6deebc010c37: a39f9532-44fa-455b-b0f7-0d06c7272aca
     - 072ab31d-ead0-4860-a036-8efffd9c3b9c: 072ab31d-ead0-4860-5fc9-71000263c463
     - 0b29f2a7-4420-4e21-b735-40f6686662e0: 0b29f2a7-4420-4e21-48ca-bf0997999d1f
     - 144b5658-184b-4d47-85be-0992ebd0eee2: 144b5658-184b-4d47-7a41-f66d142f111d
@@ -1768,14 +1767,12 @@
     - 981f4abb-7b69-44f1-adb8-cdffeed829fb: ba2799d0-21aa-4e2b-bdec-00253abdaacb
     - 98aa0dcd-cf00-4278-95b0-3233897f77d7: 902dec2d-44ff-463e-8713-0e8618ea4ea7
     - 9b7f5442-5b4f-4679-8250-412014c9acf5: 9b7f5442-5b4f-4679-7daf-bedfeb36530a
-    - 9dcafd38-21c7-4b0a-8d38-77545fc87c63: 86cefcaa-d479-4439-bde5-46af8929ea49
     - 9e52993c-ce08-4553-b328-d7c7610d0d67: 9e52993c-ce08-4553-4cd7-28389ef2f298
     - 9fd58023-b1f3-48be-b183-9e3e1a8276a2: 9383c67b-ba50-4324-87a7-b8da504c7d2f
     - a1672f13-9304-40cb-adf2-7d9e0245c63b: cd98910c-bc03-45e4-9cd3-96c6fd0a52d1
     - a53bc3d9-aae2-4cf9-ac4e-103492768915: a53bc3d9-aae2-4cf9-53b1-efcb6d8976ea
     - aa30d380-8af9-4a29-940b-69f1102a2aa2: aa30d380-8af9-4a29-6bf4-960eefd5d55d
     - aaa085f4-df19-4344-bc8d-60cdb9bda1c5: aaa085f4-df19-4344-4372-9f3246425e3a
-    - ab6df738-8c94-4aea-8871-4829bff21e1a: e9530886-f6da-40cb-9bb7-e97fdbf69e62
     - af87ccab-e7cc-46cd-9eb5-2dab774a6f1b: af87ccab-e7cc-46cd-614a-d25488b590e4
     - b04a0b38-393d-4bfe-a01e-659820f65cf2: b04a0b38-393d-4bfe-5fe1-9a67df09a30d
     - b218100d-6c4e-4279-9062-baa3929873ff: b218100d-6c4e-4279-6f9d-455c6d678c00

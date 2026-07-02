@@ -32,7 +32,6 @@
   PrefabRemaps:
     - 1b8a3182-e53d-4927-b130-a6f2b7fc0f86: 1b8a3182-e53d-4927-4ecf-590d4803f079
     - 4f7526f3-e5f7-4e54-ab62-10408eb20aeb: 4f7526f3-e5f7-4e54-549d-efbf714df514
-    - d607015a-dd4e-4511-b35d-60139d56c38d: 79a79792-70da-477a-a2b7-a108a26a0c25
   Name: SceneManager
   Enabled: true
   Layers: 1
