@@ -88,12 +88,15 @@ export class Note extends BaseScriptComponent {
   // Camera indicator setup
   @ui.separator
   @ui.group_start("Camera Indicator")
-  @input
-  private cameraIndicatorContainer: SceneObject;
-  @input private cameraIndicatorActive: SceneObject;
-  @input private cameraIndicatorInactive: SceneObject;
+  @input private cameraIndicatorContainer: SceneObject;
+  @input private cameraIndicatorImage: Image;
   @input private cameraStatusText: Text;
   @ui.group_end
+
+  // // Audio feedback setup
+  // @input private audio: AudioComponent;
+  // @input private sfxDeletion: AudioTrackAsset;
+  
   private lastHoveredTime: number = -1;
   private timeToShowButtonsAfterHover = 2;
   private outlineFeedback: InteractableOutlineFeedback;
@@ -255,6 +258,7 @@ export class Note extends BaseScriptComponent {
 
     if (this.deleteButton && this.deleteButton.onButtonPinched) {
       this.deleteButton.onButtonPinched.add(() => {
+        // this.playDeletionFeedback();
         this.stopAllVoiceActivity();
         if (this.widget) {
           this.widget.delete();
@@ -574,6 +578,16 @@ export class Note extends BaseScriptComponent {
       this.recordMicrophoneAudio(false);
     }
   }
+
+  // private playDeletionFeedback(): void {
+  //   if (!this.audio || !this.sfxDeletion) {
+  //     return;
+  //   }
+
+  //   this.audio.stop(false);
+  //   this.audio.audioTrack = this.sfxDeletion;
+  //   this.audio.play(1);
+  // }
 
   private updateVoiceStatusText(message: string): void {
     if (!this.voiceStatusText) {
@@ -934,9 +948,12 @@ export class Note extends BaseScriptComponent {
   }
 
   private setCameraIndicatorActiveVisual(isActive: boolean): void {
-    // this.cameraIndicatorContainer.enabled = true;
-    this.cameraIndicatorActive.enabled = isActive;
-    this.cameraIndicatorInactive.enabled = !isActive;
+    const mainMat = this.cameraIndicatorImage.mainMaterial;
+    if(isActive) {
+      mainMat.mainPass.baseColor = vec4.one();
+    } else {
+      mainMat.mainPass.baseColor = vec4.zero();
+    }
   }
 
   private playSSTStartFeedback(): void {
